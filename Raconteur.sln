@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raconteur", "Raconteur\Raconteur.csproj", "{EA882F82-3468-44E0-8473-C01C1E091BCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Features", "Features\Features.csproj", "{F90D901A-DFEC-47E3-946E-37414C9456BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs", "Specs\Specs.csproj", "{D22327EF-5584-4936-9857-4046E4498CE6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA882F82-3468-44E0-8473-C01C1E091BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA882F82-3468-44E0-8473-C01C1E091BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA882F82-3468-44E0-8473-C01C1E091BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA882F82-3468-44E0-8473-C01C1E091BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F90D901A-DFEC-47E3-946E-37414C9456BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F90D901A-DFEC-47E3-946E-37414C9456BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F90D901A-DFEC-47E3-946E-37414C9456BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F90D901A-DFEC-47E3-946E-37414C9456BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D22327EF-5584-4936-9857-4046E4498CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22327EF-5584-4936-9857-4046E4498CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22327EF-5584-4936-9857-4046E4498CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22327EF-5584-4936-9857-4046E4498CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

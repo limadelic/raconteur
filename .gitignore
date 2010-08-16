@@ -1,0 +1,12 @@
+raconteur.dll
+raconteur.pdb
+*.suo
+*.user
+bin/
+obj/
+*ReSharper*/
+ErrorLogs/
+testResults/
+TestResults/
+.idea/
+RecentChanges/

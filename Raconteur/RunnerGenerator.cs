@@ -7,7 +7,7 @@ namespace Raconteur
             return @"
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Features 
+namespace " + FeatureFile.Namespace + @" 
 {
     [TestClass]
     public class " + FeatureFile.Name + @"Runner {}

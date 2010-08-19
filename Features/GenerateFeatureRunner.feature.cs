@@ -65,6 +65,8 @@ testRunner.When("the Runner for a Feature is generated");
 testRunner.Then("it should be a TestClass");
 #line 8
 testRunner.And("it should be named Feature File + Runner");
+#line 9
+testRunner.And("it should be on the Feature Namespace");
 #line hidden
             testRunner.CollectScenarioErrors();
         }

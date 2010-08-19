@@ -45,6 +45,7 @@ namespace Raconteur.IDEIntegration
                 {
                     var featureFile = new FeatureFile(fileName);
                     var ns = projectItem.Properties.Item("CustomToolNamespace").Value as string;
+                    featureFile.Namespace = Project.DefaultNamespace;
                     if (!String.IsNullOrEmpty(ns)) featureFile.CustomNamespace = ns;
                     Project.FeatureFiles.Add(featureFile);
                 }

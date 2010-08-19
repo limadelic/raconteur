@@ -16,6 +16,7 @@ namespace Raconteur.IDEIntegration
         protected override string GenerateCode(string InputFileContent)
         {
             var Project = DteProjectReader.LoadProjectFrom(CurrentProject);
+            Project.DefaultNamespace = Project.DefaultNamespace ?? CodeFileNameSpace;
             var Generator = new RaconteurGenerator(Project);
 
             using (var Writer = new StringWriter(new StringBuilder()))

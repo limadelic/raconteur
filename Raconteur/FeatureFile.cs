@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Raconteur
 {
@@ -9,6 +10,7 @@ namespace Raconteur
         
         public string Name { get; set; }
         public string Content { get; set; }
+        public string Namespace { get; set; }
 
         public string GetFullPath(Project Project)
         {

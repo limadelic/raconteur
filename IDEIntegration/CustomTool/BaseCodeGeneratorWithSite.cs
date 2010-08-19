@@ -105,8 +105,7 @@ namespace Raconteur.IDEIntegration
         {
             get
             {
-                var dte = Dte;
-                return GetProjectForSourceFile(dte);
+                return GetProjectForSourceFile(Dte);
             }
         }
 

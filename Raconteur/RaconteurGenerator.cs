@@ -16,6 +16,7 @@ namespace Raconteur
             CodeDomProvider CodeProvider, TextReader InputReader,
             TextWriter OutputWriter)
         {
+            FeatureFile.Namespace = Project.DefaultNamespace;
             OutputWriter.Write(new RunnerGenerator().RunnerFor(FeatureFile));
         }
     }

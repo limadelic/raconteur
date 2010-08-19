@@ -14,7 +14,8 @@ namespace Features.StepDefinitions
         {
             var FeatureFile = new FeatureFile
             {
-                Name = "RaconteurFeature1"
+                Name = "RaconteurFeature1",
+                Namespace = "Features"
             };
 
             var RunnerGenerator = new RunnerGenerator();
@@ -32,6 +33,12 @@ namespace Features.StepDefinitions
         public void ThenItShouldBeNamedFeatureFileRunner()
         {
             Runner.ShouldContain("public class RaconteurFeature1Runner");
+        }
+
+        [Then(@"it should be on the Feature Namespace")]
+        public void ThenItShouldBeOnTheFeatureNamespace()
+        {
+            Runner.ShouldContain("namespace Features");
         }
     }
 }

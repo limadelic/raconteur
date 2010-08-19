@@ -6,3 +6,4 @@ Scenario: MSTest Runner
 	When the Runner for a Feature is generated
 	Then it should be a TestClass
 	And it should be named Feature File + Runner
+	And it should be on the Feature Namespace

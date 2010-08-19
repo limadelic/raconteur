@@ -6,14 +6,20 @@ namespace Raconteur
     {
         public string ProjectRelativePath { get; private set; }
         public string CustomNamespace { get; set; }
-        public string GetFullPath(Project project)
+        
+        public string Name { get; set; }
+        public string Content { get; set; }
+
+        public string GetFullPath(Project Project)
         {
-            return Path.GetFullPath(Path.Combine(project.ProjectFolder, ProjectRelativePath));
+            return Path.GetFullPath(Path.Combine(Project.ProjectFolder, ProjectRelativePath));
         }
 
-        public FeatureFile(string path)
+        public FeatureFile(string Path)
         {
-            ProjectRelativePath = path;
+            ProjectRelativePath = Path;
         }
+
+        public FeatureFile() { }
     }
 }

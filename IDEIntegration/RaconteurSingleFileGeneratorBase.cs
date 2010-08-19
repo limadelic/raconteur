@@ -18,7 +18,7 @@ namespace Raconteur.IDEIntegration
         {
             var provider = GetCodeProvider();
 
-            return ".feature." + provider.FileExtension;
+            return "Runner." + provider.FileExtension;
         }
 
         protected override string GenerateCode(string InputFileContent)

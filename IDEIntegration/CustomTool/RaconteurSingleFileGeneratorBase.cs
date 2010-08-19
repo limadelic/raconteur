@@ -10,15 +10,11 @@ namespace Raconteur.IDEIntegration
     {
         protected override string GetDefaultExtension()
         {
-            var provider = GetCodeProvider();
-
-            return "Runner." + provider.FileExtension;
+            return "Runner." + GetCodeProvider().FileExtension;
         }
 
         protected override string GenerateCode(string InputFileContent)
         {
-            var Provider = GetCodeProvider();
-
             var Project = DteProjectReader.LoadProjectFrom(CurrentProject);
             var Generator = new RaconteurGenerator(Project);
 
@@ -27,10 +23,11 @@ namespace Raconteur.IDEIntegration
                 Generator.GenerateTestFile
                 (
                     Project.GetOrCreateFeatureFile(CodeFilePath), 
-                    Provider,
+                    GetCodeProvider(),
                     new StringReader(InputFileContent), 
                     Writer
                 );
+
                 return Writer.ToString();
             }
         }

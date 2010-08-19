@@ -52,10 +52,10 @@
       <DependentUpon>GenerateFeatureRunner.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RaconteurFeature1Runner.cs">
+    <Compile Include="RaconteurFeature2.Runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>RaconteurFeature1.feature</DependentUpon>
+      <DependentUpon>RaconteurFeature2.feature</DependentUpon>
     </Compile>
     <Compile Include="StepDefinitions\GenerateFeatureRunner.cs" />
   </ItemGroup>
@@ -65,9 +65,9 @@
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GenerateFeatureRunner.feature.cs</LastGenOutput>
     </None>
-    <None Include="RaconteurFeature1.feature">
+    <None Include="RaconteurFeature2.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>RaconteurFeature1Runner.cs</LastGenOutput>
+      <LastGenOutput>RaconteurFeature2.Runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

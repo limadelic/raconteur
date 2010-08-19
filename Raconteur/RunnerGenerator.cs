@@ -2,9 +2,17 @@ namespace Raconteur
 {
     public class RunnerGenerator
     {
-        public string RunnerFrom(FeatureFile FeatureFile)
+        public string RunnerFor(FeatureFile FeatureFile)
         {
-            return "";
+            return @"
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Features 
+{
+    [TestClass]
+    public class " + FeatureFile.Name + @"Runner {}
+}
+            ";
         }
     }
 }

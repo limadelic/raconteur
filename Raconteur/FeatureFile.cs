@@ -18,6 +18,7 @@ namespace Raconteur
         public FeatureFile(string Path)
         {
             ProjectRelativePath = Path;
+            Name = System.IO.Path.GetFileNameWithoutExtension(Path);
         }
 
         public FeatureFile() { }

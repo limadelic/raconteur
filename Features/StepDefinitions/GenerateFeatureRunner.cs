@@ -14,12 +14,12 @@ namespace Features.StepDefinitions
         {
             var FeatureFile = new FeatureFile
             {
-                Name = "RaconteurFeature1.feature"
+                Name = "RaconteurFeature1"
             };
 
             var RunnerGenerator = new RunnerGenerator();
 
-            Runner = RunnerGenerator.RunnerFrom(FeatureFile);
+            Runner = RunnerGenerator.RunnerFor(FeatureFile);
         }
 
         [Then(@"it should be a TestClass")]

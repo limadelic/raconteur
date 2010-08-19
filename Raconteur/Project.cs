@@ -10,6 +10,7 @@ namespace Raconteur
         public string AssemblyName { get; set; }
         public string ProjectFolder { get; set; }
         public string DefaultNamespace { get; set; }
+
         public List<FeatureFile> FeatureFiles { get; private set; }
 
         public Project()
@@ -17,13 +18,14 @@ namespace Raconteur
             FeatureFiles = new List<FeatureFile>();
         }
 
-        public FeatureFile GetOrCreateFeatureFile(string featureFileName)
+        public FeatureFile GetOrCreateFeatureFile(string FeatureFileName)
         {
-            featureFileName = Path.GetFullPath(Path.Combine(ProjectFolder, featureFileName));
+            FeatureFileName = Path.GetFullPath(
+                Path.Combine(ProjectFolder, FeatureFileName));
 
-            return FeatureFiles.Find(ff => 
-                ff.GetFullPath(this).Equals(featureFileName, StringComparison.InvariantCultureIgnoreCase)) ??
-                    new FeatureFile(featureFileName);
+            return FeatureFiles.Find(File => 
+                File.GetFullPath(this).Equals(FeatureFileName, StringComparison.InvariantCultureIgnoreCase)) 
+                ?? new FeatureFile(FeatureFileName);
         }
     }
 }

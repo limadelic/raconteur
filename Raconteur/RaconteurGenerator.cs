@@ -5,17 +5,18 @@ namespace Raconteur
 {
     public class RaconteurGenerator
     {
-        readonly Project project;
+        readonly Project Project;
 
-        public RaconteurGenerator(Project project) { this.project = project; }
-
-        public void GenerateCSharpTestFile(FeatureFile featureFile, TextWriter outputWriter)
+        public RaconteurGenerator(Project Project)
         {
+            this.Project = Project;
         }
 
-        public void GenerateTestFile(FeatureFile featureFile, CodeDomProvider codeProvider, TextReader inputReader,
-            TextWriter outputWriter)
+        public void GenerateTestFile(FeatureFile FeatureFile, 
+            CodeDomProvider CodeProvider, TextReader InputReader,
+            TextWriter OutputWriter)
         {
+            OutputWriter.Write(new RunnerGenerator().RunnerFor(FeatureFile));
         }
     }
 }

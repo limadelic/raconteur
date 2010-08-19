@@ -97,6 +97,7 @@
     <Compile Include="BaseCodeGenerator.cs" />
     <Compile Include="BaseCodeGeneratorWithSite.cs" />
     <Compile Include="CodeGeneratorRegistrationAttribute.cs" />
+    <Compile Include="DteProjectReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RaconteurSingleFileGenerator.cs" />
     <Compile Include="SingleFileGeneratorSupportRegistrationAttribute.cs" />

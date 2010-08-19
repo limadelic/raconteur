@@ -103,6 +103,7 @@
     <Compile Include="RaconteurSingleFileGeneratorBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="release.bat" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -111,6 +112,7 @@
     <None Include="vs64.reg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="install.txt" />
     <Content Include="Resources\gherkin.ico">
       <Link>gherkin.ico</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -133,9 +135,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <ZipItem Include="Templates\RaconteurFeature.vstemplate" />
+    <ZipItem Include="Templates\RaconteurFeature.vstemplate">
+      <SubType>Designer</SubType>
+    </ZipItem>
     <ZipItem Include="Templates\RaconteurFeatureIcon.ico" />
-    <None Include="install.bat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raconteur\Raconteur.csproj">

@@ -38,6 +38,13 @@ namespace Specs
                 The.FeatureFrom("Feature: Feature Name").Name
                     .ShouldBe("FeatureName");
             }
+
+            [Test]
+            public void should_cammel_case_the_name()
+            {
+                The.FeatureFrom("Feature: feature name").Name
+                    .ShouldBe("FeatureName");
+            }
         }
     }
 }

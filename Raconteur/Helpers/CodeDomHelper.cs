@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Raconteur.Helpers
+namespace Raconteur
 {
     public enum GenerationTargetLanguage
     {

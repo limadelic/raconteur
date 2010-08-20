@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Raconteur.Parsers
@@ -26,13 +25,7 @@ namespace Raconteur.Parsers
             
             var Match = Regex.Match(Content);
 
-            var FeatureName = Match.Groups[1].Value;
-
-            return FeatureName.Split(new [] {' '})
-                .Aggregate("", (Result, Current) => 
-                    Result + Current.Capitalize());
-
-            return FeatureName.Replace(" ", string.Empty);
+            return Match.Groups[1].Value.CammelCase();
         }}
 
     }

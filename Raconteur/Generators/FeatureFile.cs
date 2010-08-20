@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
-namespace Raconteur
+namespace Raconteur.Generators
 {
     public class FeatureFile
     {
@@ -14,7 +15,8 @@ namespace Raconteur
 
         public string GetFullPath(Project Project)
         {
-            return Path.GetFullPath(Path.Combine(Project.ProjectFolder, ProjectRelativePath));
+            return Path.GetFullPath(
+                Path.Combine(Project.ProjectFolder, ProjectRelativePath));
         }
 
         public FeatureFile(string Path)
@@ -24,5 +26,14 @@ namespace Raconteur
         }
 
         public FeatureFile() { }
+
+        public void Load(Project Project)
+        {
+            Namespace = Project.DefaultNamespace;
+
+            Content = File.ReadAllLines(GetFullPath(Project)).ToList()
+                .Aggregate("", (Result, Current) => 
+                    Result + Environment.NewLine + Current);
+        }
     }
 }

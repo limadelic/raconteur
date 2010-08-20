@@ -52,11 +52,11 @@ namespace Features
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("MSTest Runner")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Generate Runner Class")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generate Feature Runner")]
-        public virtual void MSTestRunner()
+        public virtual void GenerateRunnerClass()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("MSTest Runner", ((string[])(null)));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generate Runner Class", ((string[])(null)));
 #line 5
 this.ScenarioSetup(scenarioInfo);
 #line 6
@@ -64,9 +64,25 @@ testRunner.When("the Runner for a Feature is generated");
 #line 7
 testRunner.Then("it should be a TestClass");
 #line 8
-testRunner.And("it should be named Feature File + Runner");
+testRunner.And("it should be named FeatureFileNameRunner");
 #line 9
 testRunner.And("it should be on the Feature Namespace");
+#line hidden
+            testRunner.CollectScenarioErrors();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Generate Step Definition Reference")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Generate Feature Runner")]
+        public virtual void GenerateStepDefinitionReference()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Generate Step Definition Reference", ((string[])(null)));
+#line 11
+this.ScenarioSetup(scenarioInfo);
+#line 12
+testRunner.When("the Runner for a Feature is generated");
+#line 13
+testRunner.Then("it should generate a class reference named FeatureName under StepDefinitions");
 #line hidden
             testRunner.CollectScenarioErrors();
         }

@@ -1,7 +1,7 @@
 ﻿using System.CodeDom.Compiler;
 using System.IO;
 
-namespace Raconteur
+namespace Raconteur.Generators
 {
     public class RaconteurGenerator
     {
@@ -16,8 +16,10 @@ namespace Raconteur
             CodeDomProvider CodeProvider, TextReader InputReader,
             TextWriter OutputWriter)
         {
-            FeatureFile.Namespace = Project.DefaultNamespace;
-            OutputWriter.Write(new RunnerGenerator().RunnerFor(FeatureFile));
+            FeatureFile.Load(Project);
+
+            OutputWriter.Write(ObjectFactory.NewRunnerGenerator
+                .RunnerFor(FeatureFile));
         }
     }
 }

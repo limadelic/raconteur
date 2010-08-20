@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using Raconteur.Generators;
 
 namespace Raconteur.IDEIntegration
 {
@@ -10,7 +11,7 @@ namespace Raconteur.IDEIntegration
     {
         protected override string GetDefaultExtension()
         {
-            return "Runner." + GetCodeProvider().FileExtension;
+            return "." + GetCodeProvider().FileExtension;
         }
 
         protected override string GenerateCode(string InputFileContent)

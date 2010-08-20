@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using EnvDTE;
 using Microsoft.VisualStudio;
+using Raconteur.Generators;
 
 namespace Raconteur.IDEIntegration
 {

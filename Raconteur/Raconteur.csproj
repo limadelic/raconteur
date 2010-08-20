@@ -36,12 +36,16 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CodeDomHelper.cs" />
-    <Compile Include="FeatureFile.cs" />
+    <Compile Include="Generators\FeatureFile.cs" />
+    <Compile Include="Helpers\CodeDomHelper.cs" />
+    <Compile Include="Feature.cs" />
+    <Compile Include="ObjectFactory.cs" />
+    <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Project.cs" />
-    <Compile Include="RaconteurGenerator.cs" />
-    <Compile Include="RunnerGenerator.cs" />
+    <Compile Include="Generators\RaconteurGenerator.cs" />
+    <Compile Include="Generators\RunnerGenerator.cs" />
+    <Compile Include="Parsers\FeatureParserClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

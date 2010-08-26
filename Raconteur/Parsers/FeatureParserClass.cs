@@ -30,14 +30,16 @@ namespace Raconteur.Parsers
 
             var Matches = Regex.Matches(Content);
 
-            var Scenarios = (from object Match in Matches select new Scenario()).ToList();
-
-            return Scenarios;
+            return (from Match Match in Matches 
+                             select new Scenario
+                                    { Name = 
+                                        Match.Groups[1].Value.CamelCase() })
+                             .ToList();
         }
 
         string Name { get 
         {
-            var Regex = new Regex(@"^Feature: (\w.+)(" + 
+            var Regex = new Regex(@"Feature: (\w.+)(" + 
                 Environment.NewLine + "|$)");
             
             var Match = Regex.Match(Content);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
@@ -17,7 +18,7 @@ namespace Specs
             public void should_generate_the_step_definition_reference() 
             {
                 var FeatureFile = new FeatureFile { Content = "FeatureFileContent" };
-                var Feature = new Feature { Name = "FeatureName" };
+                var Feature = new Feature { Name = "FeatureName", Scenarios = new List<Scenario>() };
 
                 Given.Parser.FeatureFrom("FeatureFileContent").Is(Feature);
 
@@ -59,6 +60,12 @@ namespace Specs
                     .Scenarios.Count.ShouldBe(3);
             }
 
+            [Test]
+            public void should_name_scenarios()
+            {
+               The.FeatureFrom("Scenario: Scenario Name")
+                   .Scenarios[0].Name.ShouldBe("ScenarioName");
+            }
         }
     }
 }

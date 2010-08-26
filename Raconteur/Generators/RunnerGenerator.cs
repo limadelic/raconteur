@@ -34,7 +34,8 @@ namespace " + FeatureFile.Namespace + @"
         public void " + Scenario.Name + @"()
         {
 
-        }"));
+        }
+"));
 
             code.Append(@"
     }

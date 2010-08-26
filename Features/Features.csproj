@@ -51,14 +51,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GenerateFeatureRunner.feature</DependentUpon>
     </Compile>
+    <Compile Include="GenerateScenario.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateScenario.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StepDefinitions\GenerateFeatureRunner.cs" />
+    <Compile Include="StepDefinitions\GenerateScenario.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="GenerateFeatureRunner.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>GenerateFeatureRunner.feature.cs</LastGenOutput>
+    </None>
+    <None Include="GenerateScenario.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>GenerateScenario.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

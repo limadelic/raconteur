@@ -32,19 +32,33 @@ namespace Specs
             [Test]
             public void should_read_the_name()
             {
-                The.FeatureFrom("Feature: Feature Name" + Environment.NewLine + "whatever").Name
+                The.FeatureFrom(Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever").Name
                     .ShouldBe("FeatureName");
 
-                The.FeatureFrom("Feature: Feature Name").Name
+                The.FeatureFrom(Actors.FeatureWithNoScenarios).Name
                     .ShouldBe("FeatureName");
             }
 
             [Test]
-            public void should_cammel_case_the_name()
+            public void should_camel_case_the_name()
             {
                 The.FeatureFrom("Feature: feature name").Name
                     .ShouldBe("FeatureName");
             }
+
+            [Test]
+            public void should_populate_scenarios()
+            {
+                The.FeatureFrom(Actors.FeatureWithNoScenarios)
+                    .Scenarios.Count.ShouldBe(0);
+
+                The.FeatureFrom(Actors.FeatureWithOneScenario)
+                    .Scenarios.Count.ShouldBe(1);
+
+                The.FeatureFrom(Actors.FeatureWithThreeScenarios)
+                    .Scenarios.Count.ShouldBe(3);
+            }
+
         }
     }
 }

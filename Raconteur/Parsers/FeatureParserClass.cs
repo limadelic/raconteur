@@ -14,12 +14,10 @@ namespace Raconteur.Parsers
             if (Content == null) return new Feature();
             this.Content = Content;
 
-            var Scenarios = BuildScenarios();
-
             return new Feature
             {
                 Name = Name,
-                Scenarios = Scenarios
+                Scenarios = BuildScenarios()
             };
         }
 

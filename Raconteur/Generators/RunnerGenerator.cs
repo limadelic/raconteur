@@ -6,43 +6,55 @@ namespace Raconteur.Generators
     public class RunnerGenerator
     {
         private Feature Feature;
+        private string Namespace;
+        private string FeatureFileName;
 
         public string RunnerFor(FeatureFile FeatureFile)
         {
             Feature = Parser.FeatureFrom(FeatureFile.Content);
+            Namespace = FeatureFile.Namespace;
+            FeatureFileName = FeatureFile.Name;
 
-            return BuildRunnerCode(FeatureFile);
+            return BuildRunnerCode();
         }
 
-        private string BuildRunnerCode(FeatureFile FeatureFile)
+        private string BuildRunnerCode()
         {
-            var code = new StringBuilder();
-            code.Append(
-@"
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+            var featureCode = new StringBuilder();
+            var scenarioCode = new StringBuilder();
 
-namespace " + FeatureFile.Namespace + @" 
-{
+            Feature.Scenarios.ForEach(Scenario => scenarioCode.Append(ScenarioCodeFrom(Scenario)));
+            
+            featureCode.Append(FeatureCodeFrom(scenarioCode.ToString()));
+
+            return featureCode.ToString();
+        }
+
+        private string FeatureCodeFrom(string ScenarioCode)
+        {
+            return string.Format(@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace {0} 
+{{
     [TestClass]
-    public class " + FeatureFile.Name + @"Runner 
-    {
-        " + StepDefinitionFullClassName + " Steps = new " + StepDefinitionFullClassName  + @"();
-");
-            Feature.Scenarios.ForEach( Scenario => code.Append(
-@"
+    public class {1}Runner 
+    {{
+        {2} Steps = new {2}();
+{3}
+    }}
+}}
+", Namespace, FeatureFileName, StepDefinitionFullClassName, ScenarioCode);
+        }
+
+        private static string ScenarioCodeFrom(Scenario Scenario)
+        {
+            return @"
         [TestMethod]
         public void " + Scenario.Name + @"()
         {
 
         }
-"));
-
-            code.Append(@"
-    }
-}
-            ");
-
-            return code.ToString();
+";
         }
 
         protected string StepDefinitionFullClassName

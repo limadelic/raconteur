@@ -42,6 +42,8 @@
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
+    <Compile Include="Parsers\ScenarioParser.cs" />
+    <Compile Include="Parsers\ScenarioParserClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Project.cs" />
     <Compile Include="Generators\RaconteurGenerator.cs" />

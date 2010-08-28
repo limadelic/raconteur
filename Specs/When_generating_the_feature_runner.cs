@@ -46,25 +46,46 @@ namespace Specs
                 The.FeatureFrom("Feature: feature name").Name
                     .ShouldBe("FeatureName");
             }
-
+            
             [Test]
-            public void should_populate_scenarios()
+            public void should_build_scenarios()
             {
-                The.FeatureFrom(Actors.FeatureWithNoScenarios)
-                    .Scenarios.Count.ShouldBe(0);
+                When.FeatureFrom(Actors.FeatureWithThreeScenarios);
+                Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
+            }
+        }
 
-                The.FeatureFrom(Actors.FeatureWithOneScenario)
-                    .Scenarios.Count.ShouldBe(1);
+        [TestFixture]
+        public class A_scenario_parser : BehaviorOf<ScenarioParserClass>
+        {
+            [Test]
+            public void should_create_scenarios()
+            {
+                The.ScenariosFrom(Actors.FeatureWithNoScenarios)
+                    .Count.ShouldBe(0);
 
-                The.FeatureFrom(Actors.FeatureWithThreeScenarios)
-                    .Scenarios.Count.ShouldBe(3);
+                The.ScenariosFrom(Actors.FeatureWithOneScenario)
+                    .Count.ShouldBe(1);
+
+                The.ScenariosFrom(Actors.FeatureWithThreeScenarios)
+                    .Count.ShouldBe(3);
             }
 
             [Test]
             public void should_name_scenarios()
             {
-               The.FeatureFrom("Scenario: Scenario Name")
-                   .Scenarios[0].Name.ShouldBe("ScenarioName");
+                The.ScenariosFrom("Scenario: Scenario Name")[0]
+                    .Name.ShouldBe("ScenarioName");
+            }
+
+            [Test]
+            public void should_create_steps()
+            {
+                The.ScenariosFrom(Actors.ScenarioWithNoSteps)[0]
+                    .Steps.Count.ShouldBe(0);
+
+                The.ScenariosFrom(Actors.ScenarioWithThreeSteps)[0]
+                    .Steps.Count.ShouldBe(3);
             }
         }
     }

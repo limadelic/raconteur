@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Raconteur.Parsers
@@ -8,6 +6,7 @@ namespace Raconteur.Parsers
     public class FeatureParserClass : FeatureParser 
     {
         string Content;
+        public ScenarioParser ScenarioParser { get; set; }
 
         public Feature FeatureFrom(string Content)
         {
@@ -17,22 +16,8 @@ namespace Raconteur.Parsers
             return new Feature
             {
                 Name = Name,
-                Scenarios = BuildScenarios()
+                Scenarios = ScenarioParser.ScenariosFrom(Content)
             };
-        }
-
-        private List<Scenario> BuildScenarios()
-        {
-            var Regex = new Regex(@"Scenario: (\w.+)(" +
-                Environment.NewLine + "|$)");
-
-            var Matches = Regex.Matches(Content);
-
-            return (from Match Match in Matches 
-                             select new Scenario
-                                    { Name = 
-                                        Match.Groups[1].Value.CamelCase() })
-                             .ToList();
         }
 
         string Name { get 

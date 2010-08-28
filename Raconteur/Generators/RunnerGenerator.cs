@@ -23,10 +23,11 @@ namespace Raconteur.Generators
             var featureCode = new StringBuilder();
             var scenarioCode = new StringBuilder();
 
-            Feature.Scenarios.ForEach(Scenario => scenarioCode.Append(ScenarioCodeFrom(Scenario)));
+            Feature.Scenarios.ForEach(Scenario => 
+                scenarioCode.Append(ScenarioCodeFrom(Scenario)));
             
             featureCode.Append(FeatureCodeFrom(scenarioCode.ToString()));
-
+            
             return featureCode.ToString();
         }
 

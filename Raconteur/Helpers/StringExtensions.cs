@@ -17,5 +17,15 @@ namespace Raconteur
                 .Aggregate(string.Empty, (Result, Current) => 
                     Result + Current.Capitalize());
         }
+
+        public static string Underscores(this string Sentence)
+        {
+            return Sentence.Trim().Replace(' ', '_');
+        }
+
+        public static bool IsScenarioDeclaration(this string Line)
+        {
+            return Line.StartsWith("Scenario: ");
+        }
     }
 }

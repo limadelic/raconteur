@@ -84,8 +84,19 @@ namespace Specs
                 The.ScenariosFrom(Actors.ScenarioWithNoSteps)[0]
                     .Steps.Count.ShouldBe(0);
 
+                The.ScenariosFrom(Actors.ScenarioWithOneStep)[0]
+                    .Steps.Count.ShouldBe(1);
+
                 The.ScenariosFrom(Actors.ScenarioWithThreeSteps)[0]
                     .Steps.Count.ShouldBe(3);
+            }
+
+            [Test]
+            public void should_name_steps()
+            {
+                The.ScenariosFrom("Scenario: Scenario Name" + Environment.NewLine +
+                    "   Do what you like")[0].Steps[0]
+                    .ShouldBe("Do_what_you_like");
             }
         }
     }

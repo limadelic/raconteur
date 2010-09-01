@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
   <Identifier Id="IDEIntegration">
     <Name>Racoteur</Name>
@@ -10,7 +10,7 @@
     <GettingStartedGuide>http://github.com/limadelic/raconteur</GettingStartedGuide>
     <Icon>specflowsetup.ico</Icon>
     <PreviewImage>specflow_preview.png</PreviewImage>
-    <InstalledByMsi>false</InstalledByMsi>
+    <InstalledByMsi>true</InstalledByMsi>
     <SupportedProducts>
       <VisualStudio Version="10.0">
         <Edition>Ultimate</Edition>

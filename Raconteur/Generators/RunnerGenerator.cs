@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using Raconteur.Parsers;
 
@@ -5,6 +6,24 @@ namespace Raconteur.Generators
 {
     public class RunnerGenerator
     {
+        private const string FeatureDeclaration = @"using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace {0} 
+{{
+    [TestClass]
+    public class {1}Runner 
+    {{
+        readonly {2} Steps = new {2}();
+{3}
+    }}
+}}
+";
+        private const string ScenarioDeclaration = @"
+        [TestMethod]
+        public void {0}()
+        {{ {1}
+        }}
+";
         private Feature Feature;
         private string Namespace;
         private string FeatureFileName;
@@ -20,42 +39,26 @@ namespace Raconteur.Generators
 
         private string BuildRunnerCode()
         {
-            var featureCode = new StringBuilder();
-            var scenarioCode = new StringBuilder();
+            var ScenarioCode = new StringBuilder();
 
             Feature.Scenarios.ForEach(Scenario => 
-                scenarioCode.Append(ScenarioCodeFrom(Scenario)));
+                ScenarioCode.Append(ScenarioCodeFrom(Scenario)));
             
-            featureCode.Append(FeatureCodeFrom(scenarioCode.ToString()));
-            
-            return featureCode.ToString();
+            return FeatureCodeFrom(ScenarioCode.ToString());
         }
 
         private string FeatureCodeFrom(string ScenarioCode)
         {
-            return string.Format(@"using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace {0} 
-{{
-    [TestClass]
-    public class {1}Runner 
-    {{
-        {2} Steps = new {2}();
-{3}
-    }}
-}}
-", Namespace, FeatureFileName, StepDefinitionFullClassName, ScenarioCode);
+            return string.Format(FeatureDeclaration, Namespace, FeatureFileName, StepDefinitionFullClassName, ScenarioCode);
         }
 
         private static string ScenarioCodeFrom(Scenario Scenario)
         {
-            return @"
-        [TestMethod]
-        public void " + Scenario.Name + @"()
-        {
+            var StepCode = string.Empty;
+            Scenario.Steps.ForEach(Step => StepCode += @"
+            Steps." + Step + "();");
 
-        }
-";
+            return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
         }
 
         protected string StepDefinitionFullClassName

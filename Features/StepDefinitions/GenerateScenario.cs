@@ -8,7 +8,7 @@ namespace Features.StepDefinitions
     [Binding]
     public class GenerateScenario
     {
-        private string runner;
+        private string Runner;
 
         [When(@"the Scenario for a feature is generated")]
         public void TheScenarioForAFeatureIsGenerated()
@@ -16,30 +16,27 @@ namespace Features.StepDefinitions
             var featureFile = new FeatureFile
             {
                 Content =  
-@"Feature: Feature Name
-    In order to do something
-    Another thing should happen
+                    @"Feature: Feature Name
+                        In order to do something
+                        Another thing should happen
 
-Scenario: Scenario Name"
+                    Scenario: Scenario Name"
             };
 
-            var runnerGenerator = ObjectFactory.NewRunnerGenerator;
-            runner = runnerGenerator.RunnerFor(featureFile);
+            Runner = ObjectFactory.NewRunnerGenerator
+                .RunnerFor(featureFile);
         }
 
         [Then(@"it should be a Test Method")]
         public void ThenItShouldBeATestMethod()
         {
-            runner.ShouldContain("[TestMethod]");
+            Runner.ShouldContain("[TestMethod]");
         }
 
         [Then(@"it should be named After the Scenario name")]
         public void ThenItShouldBeNamedAfterTheScenarioName()
         {
-            runner.ShouldContain(@"public void ScenarioName()
-        {
-
-        }");
+            Runner.ShouldContain(@"public void ScenarioName()");
         }
     }
 }

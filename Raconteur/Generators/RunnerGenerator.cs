@@ -6,7 +6,9 @@ namespace Raconteur.Generators
 {
     public class RunnerGenerator
     {
-        private const string FeatureDeclaration = @"using Microsoft.VisualStudio.TestTools.UnitTesting;
+        private const string FeatureDeclaration = 
+
+@"using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace {0} 
 {{
@@ -18,7 +20,8 @@ namespace {0}
     }}
 }}
 ";
-        private const string ScenarioDeclaration = @"
+        private const string ScenarioDeclaration = 
+@"        
         [TestMethod]
         public void {0}()
         {{ {1}

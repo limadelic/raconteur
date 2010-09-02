@@ -25,7 +25,7 @@ namespace Raconteur
 
         public static bool IsScenarioDeclaration(this string Line)
         {
-            return Line.StartsWith("Scenario: ");
+            return Line.TrimStart().StartsWith("Scenario: ");
         }
     }
 }

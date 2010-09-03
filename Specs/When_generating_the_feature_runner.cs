@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
@@ -24,6 +25,18 @@ namespace Specs
 
                 The.RunnerFor(FeatureFile).ShouldContain("StepDefinitions" +
                 ".FeatureName Steps = new StepDefinitions.FeatureName();");
+            }
+
+            [Test]
+            public void it()
+            {
+                var dte2 = (DTE2) System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+
+                var clazz = dte2.ActiveDocument.ProjectItem.FileCodeModel.CodeElements.Item("A_runner_generator") as CodeElement2;
+
+                clazz.RenameSymbol("A_runner_generation");
+
+                dte2.ShouldNotBeNull();
             }
         }
 

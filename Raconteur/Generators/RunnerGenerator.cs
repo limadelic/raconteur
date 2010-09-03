@@ -1,4 +1,5 @@
 using System.Text;
+using EnvDTE80;
 using Raconteur.Parsers;
 
 namespace Raconteur.Generators
@@ -33,6 +34,7 @@ namespace {0}
         public string RunnerFor(FeatureFile FeatureFile)
         {
             Feature = Parser.FeatureFrom(FeatureFile.Content);
+
             Namespace = FeatureFile.Namespace;
             FeatureFileName = FeatureFile.Name;
 

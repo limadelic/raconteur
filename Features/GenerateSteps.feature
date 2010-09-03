@@ -4,5 +4,5 @@
 
 Scenario: Generate Step Calls
 	When a Scenario with steps is generated
-	Then it should call each step in order
+	it should call each step in order
 	

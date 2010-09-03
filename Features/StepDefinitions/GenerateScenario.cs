@@ -1,42 +1,39 @@
 using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
-using TechTalk.SpecFlow;
 
 namespace Features.StepDefinitions
 {
-    [Binding]
     public class GenerateScenario
     {
         private string Runner;
 
-        [When(@"the Scenario for a feature is generated")]
-        public void TheScenarioForAFeatureIsGenerated()
+        public void When_the_Scenario_for_a_feature_is_generated()
         {
             var featureFile = new FeatureFile
             {
                 Content =  
-                    @"Feature: Feature Name
+                @"
+                    Feature: Feature Name
                         In order to do something
                         Another thing should happen
 
-                    Scenario: Scenario Name"
+                    Scenario: Scenario Name
+                "
             };
 
             Runner = ObjectFactory.NewRunnerGenerator
                 .RunnerFor(featureFile);
         }
 
-        [Then(@"it should be a Test Method")]
-        public void ThenItShouldBeATestMethod()
+        public void Then_it_should_be_a_Test_Method()
         {
             Runner.ShouldContain("[TestMethod]");
         }
 
-        [Then(@"it should be named After the Scenario name")]
-        public void ThenItShouldBeNamedAfterTheScenarioName()
+        public void And_it_should_be_named_After_the_Scenario_name()
         {
-            Runner.ShouldContain(@"public void ScenarioName()");
+            Runner.ShouldContain(@"public void ScenarioName()");            
         }
     }
 }

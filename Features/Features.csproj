@@ -41,9 +41,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="TechTalk.SpecFlow">
-      <HintPath>..\lib\SpecFlow\TechTalk.SpecFlow.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenerateFeatureRunner.feature.cs">
@@ -65,19 +62,20 @@
     <Compile Include="StepDefinitions\GenerateFeatureRunner.cs" />
     <Compile Include="StepDefinitions\GenerateScenario.cs" />
     <Compile Include="StepDefinitions\GenerateSteps.cs" />
+    <Compile Include="StepDefinitions\ShouldAssertions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="GenerateFeatureRunner.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateFeatureRunner.feature.cs</LastGenOutput>
     </None>
     <None Include="GenerateScenario.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateScenario.feature.cs</LastGenOutput>
     </None>
     <None Include="GenerateSteps.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateSteps.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>

@@ -1,17 +1,14 @@
 ﻿using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
-using TechTalk.SpecFlow;
 
 namespace Features.StepDefinitions
 {
-    [Binding]
     public class GenerateFeatureRunner
     {
         protected string Runner;
 
-        [When(@"the Runner for a Feature is generated")]
-        public void WhenTheRunnerForAFeatureIsGenerated()
+        public void When_the_Runner_for_a_Feature_is_generated()
         {
             var FeatureFile = new FeatureFile
             {
@@ -25,26 +22,22 @@ namespace Features.StepDefinitions
             Runner = RunnerGenerator.RunnerFor(FeatureFile);
         }
 
-        [Then(@"it should be a TestClass")]
-        public void ThenItShouldBeATestClass()
+        public void Then_it_should_be_a_TestClass()
         {
             Runner.ShouldContain("[TestClass]");
         }
 
-        [Then(@"it should be named FeatureFileNameRunner")]
-        public void ThenItShouldBeNamedFeatureFileNameRunner()
+        public void And_it_should_be_named_FeatureFileNameRunner()
         {
             Runner.ShouldContain("public class RaconteurFeature1Runner");
         }
 
-        [Then(@"it should be on the Feature Namespace")]
-        public void ThenItShouldBeOnTheFeatureNamespace()
+        public void And_it_should_be_on_the_Feature_Namespace()
         {
             Runner.ShouldContain("namespace Features");
         }
 
-        [Then(@"it should generate a class reference named FeatureName under StepDefinitions")]
-        public void ThenItShouldGenerateAClassReferenceNamedFeatureNameUnderStepDefinitions()
+        public void Then_it_should_generate_a_class_reference_named_FeatureName_under_StepDefinitions()
         {
             Runner.ShouldContain("StepDefinitions.FeatureName Steps " +
                 "= new StepDefinitions.FeatureName();");

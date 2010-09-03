@@ -94,9 +94,12 @@ namespace Specs
             [Test]
             public void should_name_steps()
             {
-                The.ScenariosFrom("Scenario: Scenario Name" + Environment.NewLine +
-                    "   Do what you like")[0].Steps[0]
-                    .ShouldBe("Do_what_you_like");
+                The.ScenariosFrom(
+                @"
+                    Scenario: Scenario Name
+                        Do what you like
+                ")[0].Steps[0]
+                .ShouldBe("Do_what_you_like");
             }
         }
     }

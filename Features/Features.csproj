@@ -59,9 +59,15 @@
       <DependentUpon>GenerateSteps.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefactorFeature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RefactorFeature.feature</DependentUpon>
+    </Compile>
     <Compile Include="StepDefinitions\GenerateFeatureRunner.cs" />
     <Compile Include="StepDefinitions\GenerateScenario.cs" />
     <Compile Include="StepDefinitions\GenerateSteps.cs" />
+    <Compile Include="StepDefinitions\RefactorFeature.cs" />
     <Compile Include="StepDefinitions\ShouldAssertions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -78,11 +84,19 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateSteps.feature.cs</LastGenOutput>
     </None>
+    <None Include="RefactorFeature.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>RefactorFeature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raconteur\Raconteur.csproj">
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Specs\Specs.csproj">
+      <Project>{D22327EF-5584-4936-9857-4046E4498CE6}</Project>
+      <Name>Specs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using EnvDTE;
 using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
@@ -30,13 +32,37 @@ namespace Specs
             [Test]
             public void it()
             {
-                var dte2 = (DTE2) System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+                var dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+                var CodeElements = dte2.ActiveDocument.ProjectItem.FileCodeModel.CodeElements;
 
-                var clazz = dte2.ActiveDocument.ProjectItem.FileCodeModel.CodeElements.Item("A_runner_generator") as CodeElement2;
+                var namespazz = CodeElements.Cast<CodeElement>().Where(CodeElement =>
+                {
+                    try
+                    {
+                        return !string.IsNullOrEmpty(CodeElement.Name);
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }).FirstOrDefault();
 
-                clazz.RenameSymbol("A_runner_generation");
+                var clazz = namespazz.Children.Cast<CodeElement2>().Where(CodeElement =>
+                {
+                    try
+                    {
+                        return !string.IsNullOrEmpty(CodeElement.Name);
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }).FirstOrDefault();
 
-                dte2.ShouldNotBeNull();
+                var fullname = clazz.FullName;
+                //                clazz.RenameSymbol("When_generating_the_number");
+
+                namespazz.ShouldNotBeNull();
             }
         }
 

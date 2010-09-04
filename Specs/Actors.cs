@@ -1,4 +1,6 @@
-﻿namespace Specs
+﻿using System;
+
+namespace Specs
 {
     public class Actors
     {
@@ -32,6 +34,17 @@
             This is one step
             This is another step
             This is the last step
+        ";
+
+        public const string DefinitionCode =
+        @"
+            namespace Feature.StepDefinitions
+            {
+                public class Definition
+                {
+
+                }
+            }
         ";
     }
 }

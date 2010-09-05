@@ -22,7 +22,10 @@ namespace Features.StepDefinitions
                 "
             };
 
-            Runner = ObjectFactory.NewRunnerGenerator.RunnerFor(featureFile);
+            var Parser = ObjectFactory.NewFeatureParser;
+            
+            Runner = ObjectFactory.NewRunnerGenerator.RunnerFor(
+                Parser.FeatureFrom(featureFile));
         }
 
         public void it_should_call_each_step_in_order() 

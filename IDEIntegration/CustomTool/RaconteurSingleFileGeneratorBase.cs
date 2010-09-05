@@ -18,11 +18,11 @@ namespace Raconteur.IDEIntegration
         {
             var Project = DteProjectReader.LoadProjectFrom(CurrentProject);
             Project.DefaultNamespace = Project.DefaultNamespace ?? CodeFileNameSpace;
-            var Generator = new RaconteurGenerator(Project);
+            var Generator = ObjectFactory.NewRaconteurGenerator(Project);
 
             using (var Writer = new StringWriter(new StringBuilder()))
             {
-                Generator.GenerateTestFile
+                Generator.GenerateFeature
                 (
                     Project.GetOrCreateFeatureFile(CodeFilePath), 
                     GetCodeProvider(),

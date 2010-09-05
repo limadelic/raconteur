@@ -1,7 +1,9 @@
-﻿namespace Raconteur.Parsers
+﻿using Raconteur.Generators;
+
+namespace Raconteur.Parsers
 {
     public interface FeatureParser 
     {
-        Feature FeatureFrom(string Content);
+        Feature FeatureFrom(FeatureFile FeatureFile);
     }
 }

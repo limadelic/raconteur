@@ -25,9 +25,9 @@ namespace Features.StepDefinitions
         //going to refactor this... see if we can simplyfy the call.
         public void If_the_Feature_Name_has_changed()
         {
-            var Generator = new RaconteurGenerator(new Project());
+            var Generator = ObjectFactory.NewRaconteurGenerator(new Project());
 
-            Generator.GenerateTestFile(new FeatureFile(), 
+            Generator.GenerateFeature(new FeatureFile(), 
                 CodeDomProvider.CreateProvider("C#"),
                 TextReader.Null, TextWriter.Null);
         }

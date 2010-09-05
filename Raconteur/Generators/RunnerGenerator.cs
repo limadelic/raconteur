@@ -28,16 +28,10 @@ namespace {0}
         }}
 ";
         private Feature Feature;
-        private string Namespace;
-        private string FeatureFileName;
 
-        public string RunnerFor(FeatureFile FeatureFile)
+        public string RunnerFor(Feature Feature)
         {
-            Feature = Parser.FeatureFrom(FeatureFile.Content);
-
-            Namespace = FeatureFile.Namespace;
-            FeatureFileName = FeatureFile.Name;
-
+            this.Feature = Feature;
             return BuildRunnerCode();
         }
 
@@ -53,7 +47,8 @@ namespace {0}
 
         private string FeatureCodeFrom(string ScenarioCode)
         {
-            return string.Format(FeatureDeclaration, Namespace, FeatureFileName, StepDefinitionFullClassName, ScenarioCode);
+            return string.Format(FeatureDeclaration, Feature.Namespace, Feature.FileName,
+                StepDefinitionFullClassName, ScenarioCode);
         }
 
         private static string ScenarioCodeFrom(Scenario Scenario)
@@ -69,7 +64,5 @@ namespace {0}
         {
             get { return "StepDefinitions." + Feature.Name; } 
         }
-
-        public FeatureParser Parser { get; set; }
     }
 }

@@ -20,12 +20,9 @@ namespace Specs
             [Test]
             public void should_generate_the_step_definition_reference() 
             {
-                var FeatureFile = new FeatureFile { Content = "FeatureFileContent" };
                 var Feature = new Feature { Name = "FeatureName", Scenarios = new List<Scenario>() };
 
-                Given.Parser.FeatureFrom("FeatureFileContent").Is(Feature);
-
-                The.RunnerFor(FeatureFile).ShouldContain("StepDefinitions" +
+                The.RunnerFor(Feature).ShouldContain("StepDefinitions" +
                 ".FeatureName Steps = new StepDefinitions.FeatureName();");
             }
 
@@ -69,28 +66,52 @@ namespace Specs
         [TestFixture]
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
         {
+            readonly FeatureFile FeatureFile = new FeatureFile();
+
             [Test]
             public void should_read_the_name()
             {
-                The.FeatureFrom(Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever").Name
+                FeatureFile.Content = Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever";
+                
+                The.FeatureFrom(FeatureFile).Name
                     .ShouldBe("FeatureName");
 
-                The.FeatureFrom(Actors.FeatureWithNoScenarios).Name
+                FeatureFile.Content = Actors.FeatureWithNoScenarios;
+                
+                The.FeatureFrom(FeatureFile).Name
                     .ShouldBe("FeatureName");
             }
 
             [Test]
             public void should_camel_case_the_name()
             {
-                The.FeatureFrom("Feature: feature name").Name
+                FeatureFile.Content = "Feature: feature name";
+                
+                The.FeatureFrom(FeatureFile).Name
                     .ShouldBe("FeatureName");
             }
             
             [Test]
             public void should_build_scenarios()
             {
-                When.FeatureFrom(Actors.FeatureWithThreeScenarios);
+                FeatureFile.Content = Actors.FeatureWithThreeScenarios;
+
+                When.FeatureFrom(FeatureFile);
+
                 Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
+            }
+
+            [Test]
+            public void should_extract_namespace_and_file_name()
+            {
+                FeatureFile.Namespace = "MyNamespace";
+                FeatureFile.Name = "MyFileName";
+
+                The.FeatureFrom(FeatureFile).Namespace
+                    .ShouldBe("MyNamespace");
+
+                The.FeatureFrom(FeatureFile).FileName
+                    .ShouldBe("MyFileName");
             }
         }
 

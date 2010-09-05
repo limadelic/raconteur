@@ -1,6 +1,7 @@
 ﻿using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
+using Raconteur.Parsers;
 
 namespace Features.StepDefinitions
 {
@@ -18,8 +19,9 @@ namespace Features.StepDefinitions
             };
 
             var RunnerGenerator = ObjectFactory.NewRunnerGenerator;
+            var Parser = ObjectFactory.NewFeatureParser;
 
-            Runner = RunnerGenerator.RunnerFor(FeatureFile);
+            Runner = RunnerGenerator.RunnerFor(Parser.FeatureFrom(FeatureFile));
         }
 
         public void Then_it_should_be_a_TestClass()

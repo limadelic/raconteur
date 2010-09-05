@@ -22,8 +22,10 @@ namespace Features.StepDefinitions
                 "
             };
 
+            var Parser = ObjectFactory.NewFeatureParser;
+
             Runner = ObjectFactory.NewRunnerGenerator
-                .RunnerFor(featureFile);
+                .RunnerFor(Parser.FeatureFrom(featureFile));
         }
 
         public void Then_it_should_be_a_Test_Method()

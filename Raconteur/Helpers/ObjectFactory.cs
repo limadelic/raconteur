@@ -9,11 +9,21 @@ namespace Raconteur
         {
             get
             {
-                return new RunnerGenerator
-                {
-                    Parser = new FeatureParserClass
-                    { ScenarioParser = new ScenarioParserClass() }
-                };
+                return new RunnerGenerator();
+            }
+        }
+
+        public static RaconteurGenerator NewRaconteurGenerator(Project Project)
+        {
+            return new RaconteurGenerator(Project, NewFeatureParser);
+        }
+
+        public static FeatureParser NewFeatureParser
+        {
+            get 
+            {
+                return new FeatureParserClass 
+                { ScenarioParser = new ScenarioParserClass() };
             }
         }
     }

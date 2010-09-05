@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Raconteur.Generators;
 
 namespace Raconteur.Parsers
 {
@@ -8,13 +9,15 @@ namespace Raconteur.Parsers
         string Content;
         public ScenarioParser ScenarioParser { get; set; }
 
-        public Feature FeatureFrom(string Content)
+        public Feature FeatureFrom(FeatureFile FeatureFile)
         {
-            if (Content == null) return new Feature();
-            this.Content = Content;
+            if (FeatureFile == null) return new Feature();
+            Content = FeatureFile.Content;
 
             return new Feature
             {
+                FileName = FeatureFile.Name,
+                Namespace = FeatureFile.Namespace,
                 Name = Name,
                 Scenarios = ScenarioParser.ScenariosFrom(Content)
             };

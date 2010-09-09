@@ -7,7 +7,9 @@ using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
 using Raconteur.Generators;
+using Raconteur.IDEIntegration;
 using Raconteur.Parsers;
+using Project = Raconteur.Project;
 
 namespace Specs
 {
@@ -29,37 +31,10 @@ namespace Specs
             [Test]
             public void it()
             {
-                var dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-                var CodeElements = dte2.ActiveDocument.ProjectItem.FileCodeModel.CodeElements;
-
-                var namespazz = CodeElements.Cast<CodeElement>().Where(CodeElement =>
-                {
-                    try
-                    {
-                        return !string.IsNullOrEmpty(CodeElement.Name);
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
-                }).FirstOrDefault();
-
-                var clazz = namespazz.Children.Cast<CodeElement2>().Where(CodeElement =>
-                {
-                    try
-                    {
-                        return !string.IsNullOrEmpty(CodeElement.Name);
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
-                }).FirstOrDefault();
-
-                var fullname = clazz.FullName;
-                //                clazz.RenameSymbol("When_generating_the_number");
-
-                namespazz.ShouldNotBeNull();
+                var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+                var projectItem = Dte2.Solution.FindProjectItem(@"A:\dev\raconteur\Features\StepDefinitions\GenerateFeatureRunner.cs");
+                var FileContents = DteProjectReader.GetFileContent(projectItem);
+                FileContents.ShouldNotBeNull();
             }
         }
 
@@ -67,18 +42,19 @@ namespace Specs
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
         {
             readonly FeatureFile FeatureFile = new FeatureFile();
+            readonly Project Project = new Project();
 
             [Test]
             public void should_read_the_name()
             {
                 FeatureFile.Content = Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever";
                 
-                The.FeatureFrom(FeatureFile).Name
+                The.FeatureFrom(FeatureFile, Project).Name
                     .ShouldBe("FeatureName");
 
                 FeatureFile.Content = Actors.FeatureWithNoScenarios;
                 
-                The.FeatureFrom(FeatureFile).Name
+                The.FeatureFrom(FeatureFile, Project).Name
                     .ShouldBe("FeatureName");
             }
 
@@ -87,7 +63,7 @@ namespace Specs
             {
                 FeatureFile.Content = "Feature: feature name";
                 
-                The.FeatureFrom(FeatureFile).Name
+                The.FeatureFrom(FeatureFile, Project).Name
                     .ShouldBe("FeatureName");
             }
             
@@ -96,7 +72,7 @@ namespace Specs
             {
                 FeatureFile.Content = Actors.FeatureWithThreeScenarios;
 
-                When.FeatureFrom(FeatureFile);
+                When.FeatureFrom(FeatureFile, Project);
 
                 Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
             }
@@ -104,13 +80,13 @@ namespace Specs
             [Test]
             public void should_extract_namespace_and_file_name()
             {
-                FeatureFile.Namespace = "MyNamespace";
+                Project.DefaultNamespace = "MyNamespace";
                 FeatureFile.Name = "MyFileName";
 
-                The.FeatureFrom(FeatureFile).Namespace
+                The.FeatureFrom(FeatureFile, Project).Namespace
                     .ShouldBe("MyNamespace");
 
-                The.FeatureFrom(FeatureFile).FileName
+                The.FeatureFrom(FeatureFile, Project).FileName
                     .ShouldBe("MyFileName");
             }
         }

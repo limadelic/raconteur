@@ -14,14 +14,18 @@ namespace Features.StepDefinitions
             var FeatureFile = new FeatureFile
             {
                 Name = "RaconteurFeature1",
-                Namespace = "Features",
                 Content = "Feature: Feature Name",
+            };
+
+            var Project = new Project
+            {
+                DefaultNamespace = "Features",
             };
 
             var RunnerGenerator = ObjectFactory.NewRunnerGenerator;
             var Parser = ObjectFactory.NewFeatureParser;
 
-            Runner = RunnerGenerator.RunnerFor(Parser.FeatureFrom(FeatureFile));
+            Runner = RunnerGenerator.RunnerFor(Parser.FeatureFrom(FeatureFile, Project));
         }
 
         public void Then_it_should_be_a_TestClass()

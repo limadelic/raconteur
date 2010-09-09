@@ -59,6 +59,10 @@
     <Compile Include="When_generating_the_feature_runner.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IDEIntegration\IDEIntegration.csproj">
+      <Project>{96294E6F-8875-4D12-8577-4EC83E60BD6C}</Project>
+      <Name>IDEIntegration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Raconteur\Raconteur.csproj">
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>

@@ -1,5 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.IO;
+﻿using System.IO;
 using Raconteur.Parsers;
 
 namespace Raconteur.Generators
@@ -15,17 +14,14 @@ namespace Raconteur.Generators
             this.FeatureParser = FeatureParser;
         }
 
-        public void GenerateFeature(FeatureFile FeatureFile, 
-            CodeDomProvider CodeProvider, TextReader InputReader,
-            TextWriter OutputWriter)
+        public void GenerateFeature(FeatureFile FeatureFile, TextWriter OutputWriter)
         {
-            FeatureFile.Load(Project);
-            var Feature = FeatureParser.FeatureFrom(FeatureFile);
+            var Feature = FeatureParser.FeatureFrom(FeatureFile, Project);
             
             GenerateTestFile(Feature, OutputWriter);
         }
 
-        private void GenerateTestFile(Feature Feature, TextWriter OutputWriter)
+        void GenerateTestFile(Feature Feature, TextWriter OutputWriter)
         {
             OutputWriter.Write(ObjectFactory.NewRunnerGenerator
                                    .RunnerFor(Feature));

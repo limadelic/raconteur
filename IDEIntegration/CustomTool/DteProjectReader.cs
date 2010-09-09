@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using EnvDTE;
-using Microsoft.VisualStudio;
-using Raconteur.Generators;
 
 namespace Raconteur.IDEIntegration
 {
-    class DteProjectReader
+    public class DteProjectReader
     {
         public static List<ProjectItem> GetAllProjectItem(EnvDTE.Project Project)
         {
@@ -27,37 +24,13 @@ namespace Raconteur.IDEIntegration
 
         public static Project LoadProjectFrom(EnvDTE.Project project)
         {
-            var ProjectFolder = Path.GetDirectoryName(project.FullName);
-
-            var Project = new Project
+            return new Project
             {
-                ProjectFolder = ProjectFolder,
+                ProjectFolder = Path.GetDirectoryName(project.FullName),
                 ProjectName = Path.GetFileNameWithoutExtension(project.FullName),
                 AssemblyName = project.Properties.Item("AssemblyName").Value as string,
                 DefaultNamespace = project.Properties.Item("DefaultNamespace").Value as string
             };
-
-            foreach (var projectItem in GetAllProjectItem(project).Where(IsPhysicalFile))
-            {
-                var fileName = GetRelativePath(GetFileName(projectItem), ProjectFolder);
-
-                var extension = Path.GetExtension(fileName);
-                if (extension.Equals(".feature", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    var featureFile = new FeatureFile(fileName);
-                    var ns = projectItem.Properties.Item("CustomToolNamespace").Value as string;
-                    featureFile.Namespace = Project.DefaultNamespace;
-                    if (!String.IsNullOrEmpty(ns)) featureFile.CustomNamespace = ns;
-                    Project.FeatureFiles.Add(featureFile);
-                }
-            }
-            return Project;
-        }
-
-        static bool IsPhysicalFile(ProjectItem projectItem)
-        {
-            return string.Equals(projectItem.Kind, VSConstants.GUID_ItemType_PhysicalFile.ToString("B"),
-                StringComparison.InvariantCultureIgnoreCase);
         }
 
         public static string GetFileContent(ProjectItem projectItem)

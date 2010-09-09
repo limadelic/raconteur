@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Raconteur.Generators;
@@ -24,9 +25,7 @@ namespace Raconteur.IDEIntegration
             {
                 Generator.GenerateFeature
                 (
-                    Project.GetOrCreateFeatureFile(CodeFilePath), 
-                    GetCodeProvider(),
-                    new StringReader(InputFileContent), 
+                    new FeatureFile(CodeFilePath){Content = InputFileContent}, 
                     Writer
                 );
 

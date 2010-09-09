@@ -4,6 +4,6 @@ namespace Raconteur.Parsers
 {
     public interface FeatureParser 
     {
-        Feature FeatureFrom(FeatureFile FeatureFile);
+        Feature FeatureFrom(FeatureFile FeatureFile, Project Project);
     }
 }

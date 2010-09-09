@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generators\FeatureFile.cs" />
-    <Compile Include="Helpers\CodeDomHelper.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />

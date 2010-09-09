@@ -22,7 +22,7 @@ namespace Features.StepDefinitions
                 DefaultNamespace = "Features",
             };
 
-            var RunnerGenerator = ObjectFactory.NewRunnerGenerator;
+            var RunnerGenerator = new RunnerGenerator();
             var Parser = ObjectFactory.NewFeatureParser;
 
             Runner = RunnerGenerator.RunnerFor(Parser.FeatureFrom(FeatureFile, Project));

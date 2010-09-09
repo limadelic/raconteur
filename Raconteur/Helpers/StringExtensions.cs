@@ -22,10 +22,5 @@ namespace Raconteur
         {
             return Sentence.Trim().Replace(' ', '_');
         }
-
-        public static bool IsScenarioDeclaration(this string Line)
-        {
-            return Line.TrimStart().StartsWith("Scenario: ");
-        }
     }
 }

@@ -5,14 +5,6 @@ namespace Raconteur
 {
     public static class ObjectFactory
     {
-        public static RunnerGenerator NewRunnerGenerator
-        {
-            get
-            {
-                return new RunnerGenerator();
-            }
-        }
-
         public static RaconteurGenerator NewRaconteurGenerator(Project Project)
         {
             return new RaconteurGenerator(Project, NewFeatureParser);
@@ -22,8 +14,10 @@ namespace Raconteur
         {
             get 
             {
-                return new FeatureParserClass 
-                { ScenarioParser = new ScenarioParserClass() };
+                return new FeatureParserClass
+                {
+                    ScenarioParser = new ScenarioParserClass()
+                };
             }
         }
     }

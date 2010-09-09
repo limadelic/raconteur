@@ -23,8 +23,7 @@ namespace Raconteur.Generators
 
         void GenerateTestFile(Feature Feature, TextWriter OutputWriter)
         {
-            OutputWriter.Write(ObjectFactory.NewRunnerGenerator
-                                   .RunnerFor(Feature));
+            OutputWriter.Write(new RunnerGenerator().RunnerFor(Feature));
         }
     }
 }

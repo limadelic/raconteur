@@ -4,7 +4,7 @@ namespace Raconteur.Generators
 {
     public class RunnerGenerator
     {
-        private const string FeatureDeclaration = 
+        const string FeatureDeclaration = 
 
 @"using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,7 +25,7 @@ namespace {0}
         {{ {1}
         }}
 ";
-        private Feature Feature;
+        Feature Feature;
 
         public string RunnerFor(Feature Feature)
         {
@@ -33,7 +33,7 @@ namespace {0}
             return BuildRunnerCode();
         }
 
-        private string BuildRunnerCode()
+        string BuildRunnerCode()
         {
             var ScenarioCode = new StringBuilder();
 
@@ -43,13 +43,13 @@ namespace {0}
             return FeatureCodeFrom(ScenarioCode.ToString());
         }
 
-        private string FeatureCodeFrom(string ScenarioCode)
+        string FeatureCodeFrom(string ScenarioCode)
         {
             return string.Format(FeatureDeclaration, Feature.Namespace, Feature.FileName,
                 StepDefinitionFullClassName, ScenarioCode);
         }
 
-        private static string ScenarioCodeFrom(Scenario Scenario)
+        static string ScenarioCodeFrom(Scenario Scenario)
         {
             var StepCode = string.Empty;
             Scenario.Steps.ForEach(Step => StepCode += @"

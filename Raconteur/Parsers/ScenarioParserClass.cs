@@ -6,9 +6,9 @@ namespace Raconteur.Parsers
 {
     public class ScenarioParserClass : ScenarioParser
     {
-        static readonly char[] NewLine = Environment.NewLine.ToCharArray();
+        readonly char[] NewLine = Environment.NewLine.ToCharArray();
 
-        private const string ScenarioDeclaration = "Scenario: ";
+        const string ScenarioDeclaration = "Scenario: ";
 
         public List<Scenario> ScenariosFrom(string Content)
         {
@@ -17,12 +17,16 @@ namespace Raconteur.Parsers
             return Definitions.Select(BuildScenario).ToList();
         }
 
-        private static IEnumerable<List<string>> ExtractScenarionDefinitionsFrom(string Content)
+        bool IsScenarioDeclaration(string Line)
+        {
+            return Line.TrimStart().StartsWith("Scenario: ");
+        }
+
+        IEnumerable<List<string>> ExtractScenarionDefinitionsFrom(string Content)
         {
             var Lines = Content.Split(NewLine).ToList();
             
-            var Declarations = Lines.Where(Line => 
-                Line.IsScenarioDeclaration()).ToList();
+            var Declarations = Lines.Where(IsScenarioDeclaration).ToList();
 
             var PreviousDeclaration = -1;
 
@@ -44,14 +48,14 @@ namespace Raconteur.Parsers
                     Lines.Count - PreviousDeclaration);
         }
 
-        private static string ExtractNameFrom(string Line)
+        string ExtractNameFrom(string Line)
         {
             return Line.Trim()
                 .Substring(ScenarioDeclaration.Length - 1)
                 .CamelCase();
         }
 
-        private static Scenario BuildScenario(List<string> ScenarioDefinition)
+        Scenario BuildScenario(List<string> ScenarioDefinition)
         {
             var Name = ExtractNameFrom(ScenarioDefinition[0]);
             ScenarioDefinition.RemoveAt(0);

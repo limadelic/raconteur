@@ -24,7 +24,7 @@ namespace Features.StepDefinitions
 
             var Parser = ObjectFactory.NewFeatureParser;
             
-            Runner = ObjectFactory.NewRunnerGenerator.RunnerFor(
+            Runner = new RunnerGenerator().RunnerFor(
                 Parser.FeatureFrom(featureFile, new Project()));
         }
 

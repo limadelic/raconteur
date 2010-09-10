@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Raconteur.Generators
 {
@@ -35,17 +33,24 @@ namespace {0}
             throw new System.NotImplementedException(""Pending Step {0}"");
         }}
 ";
-        Feature Feature;
 
-        public string RunnerFor(Feature Feature)
+        readonly Feature Feature;
+
+        public RunnerGenerator(Feature Feature)
         {
             this.Feature = Feature;
+        }
 
-            return string.Format(FeatureDeclaration, 
-                Feature.Namespace, 
-                Feature.FileName, 
-                ScenariosImpl,
-                StepsDeclaration);
+        public string Runner
+        {
+            get
+            {
+                return string.Format(FeatureDeclaration, 
+                    Feature.Namespace, 
+                    Feature.FileName, 
+                    ScenariosImpl,
+                    StepsDeclaration);
+            }
         }
 
         string ScenariosImpl

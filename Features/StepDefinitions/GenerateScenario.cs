@@ -24,8 +24,9 @@ namespace Features.StepDefinitions
 
             var Parser = ObjectFactory.NewFeatureParser;
 
-            Runner = new RunnerGenerator().RunnerFor(
-                Parser.FeatureFrom(featureFile, new Project()));
+            Runner = new RunnerGenerator(
+                Parser.FeatureFrom(featureFile, new Project()))
+                .Runner;
         }
 
         public void Then_it_should_be_a_Test_Method()

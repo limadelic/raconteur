@@ -34,9 +34,9 @@ namespace Features.StepDefinitions
             Runner.ShouldContain("[TestClass]");
         }
 
-        public void And_it_should_be_named_FeatureFileNameRunner()
+        public void And_it_should_be_named_FeatureFileName()
         {
-            Runner.ShouldContain("public class RaconteurFeature1Runner");
+            Runner.ShouldContain("public partial class RaconteurFeature1");
         }
 
         public void And_it_should_be_on_the_Feature_Namespace()

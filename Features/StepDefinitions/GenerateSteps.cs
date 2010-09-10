@@ -41,13 +41,5 @@ namespace Features.StepDefinitions
                 "If_something_happens();",
                 "And_another_thing_too();");
         }
-
-        public void and_declare_the_StepDefinition()
-        {
-            Runner.ShouldContainInOrder(
-                RunnerGenerator.DeclareStep("If_something_happens"),
-                RunnerGenerator.DeclareStep("Then_something_else_should_happen"),
-                RunnerGenerator.DeclareStep("And_another_thing_too"));
-        }
     }
 }

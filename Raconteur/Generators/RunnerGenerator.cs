@@ -12,10 +12,9 @@ namespace Raconteur.Generators
 namespace {0} 
 {{
     [TestClass]
-    public class {1}Runner 
+    public partial class {1} 
     {{
 {2}
-{3}
     }}
 }}
 ";
@@ -54,8 +53,7 @@ namespace {0}
                 return string.Format(FeatureDeclaration, 
                     Feature.Namespace, 
                     Feature.FileName, 
-                    ScenariosImpl,
-                    StepsDeclaration);
+                    ScenariosImpl);
             }
         }
 

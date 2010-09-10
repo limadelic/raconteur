@@ -6,5 +6,5 @@ Feature: Generate Feature Runner
 Scenario: Generate Runner Class
 	When the Runner for a Feature is generated
 	Then it should be a TestClass
-	And it should be named FeatureFileNameRunner
+	And it should be named FeatureFileName
 	And it should be on the Feature Namespace

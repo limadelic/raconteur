@@ -5,7 +5,9 @@ namespace Features.StepDefinitions
 {
     public class GenerateSteps
     {
-        private string Runner;
+        string Runner;
+
+        readonly RunnerGenerator RunnerGenerator = new RunnerGenerator();
 
         public void When_a_Scenario_with_steps_is_generated()
         {
@@ -23,8 +25,8 @@ namespace Features.StepDefinitions
             };
 
             var Parser = ObjectFactory.NewFeatureParser;
-            
-            Runner = new RunnerGenerator().RunnerFor(
+
+            Runner = RunnerGenerator.RunnerFor(
                 Parser.FeatureFrom(featureFile, new Project()));
         }
 
@@ -34,6 +36,14 @@ namespace Features.StepDefinitions
                 "If_something_happens();",
                 "Then_something_else_should_happen();",
                 "And_another_thing_too();");
+        }
+
+        public void and_declare_the_StepDefinition()
+        {
+            Runner.ShouldContainInOrder(
+                RunnerGenerator.DeclareStep("If_something_happens"),
+                RunnerGenerator.DeclareStep("Then_something_else_should_happen"),
+                RunnerGenerator.DeclareStep("And_another_thing_too"));
         }
     }
 }

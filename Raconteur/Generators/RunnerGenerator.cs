@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Raconteur.Generators
@@ -14,6 +17,7 @@ namespace {0}
     public class {1}Runner 
     {{
 {2}
+{3}
     }}
 }}
 ";
@@ -24,27 +28,34 @@ namespace {0}
         {{ {1}
         }}
 ";
+        private const string StepDeclaration = 
+@"        
+        void {0}()
+        {{ 
+            throw new System.NotImplementedException(""Pending Step {0}"");
+        }}
+";
         Feature Feature;
 
         public string RunnerFor(Feature Feature)
         {
             this.Feature = Feature;
-            return BuildRunnerCode();
+
+            return string.Format(FeatureDeclaration, 
+                Feature.Namespace, 
+                Feature.FileName, 
+                ScenariosImpl,
+                StepsDeclaration);
         }
 
-        string BuildRunnerCode()
+        string ScenariosImpl
         {
-            var ScenarioCode = new StringBuilder();
-
-            Feature.Scenarios.ForEach(Scenario => 
-                ScenarioCode.Append(ScenarioCodeFrom(Scenario)));
-            
-            return FeatureCodeFrom(ScenarioCode.ToString());
-        }
-
-        string FeatureCodeFrom(string ScenarioCode)
-        {
-            return string.Format(FeatureDeclaration, Feature.Namespace, Feature.FileName, ScenarioCode);
+            get 
+            {
+                return Feature.Scenarios.Aggregate(string.Empty,
+                    (Scenarios, Scenario) => 
+                        Scenarios + ScenarioCodeFrom(Scenario)); 
+            } 
         }
 
         static string ScenarioCodeFrom(Scenario Scenario)
@@ -59,6 +70,21 @@ namespace {0}
         protected string StepDefinitionFullClassName
         {
             get { return "StepDefinitions." + Feature.Name; } 
+        }
+
+        public string DeclareStep(string Step) 
+        { 
+            return string.Format(StepDeclaration, Step);
+        }
+
+        protected string StepsDeclaration 
+        {
+            get
+            {
+                return Feature.Scenarios.Aggregate(new List<string>(),
+                    (Steps, Scenario) => Steps.Union(Scenario.Steps).ToList())
+                    .Aggregate("", (Steps, Step) => Steps + DeclareStep(Step));
+            } 
         }
     }
 }

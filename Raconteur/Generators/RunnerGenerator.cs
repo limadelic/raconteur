@@ -13,7 +13,7 @@ namespace {0}
     [TestClass]
     public class {1}Runner 
     {{
-{3}
+{2}
     }}
 }}
 ";
@@ -44,15 +44,14 @@ namespace {0}
 
         string FeatureCodeFrom(string ScenarioCode)
         {
-            return string.Format(FeatureDeclaration, Feature.Namespace, Feature.FileName,
-                StepDefinitionFullClassName, ScenarioCode);
+            return string.Format(FeatureDeclaration, Feature.Namespace, Feature.FileName, ScenarioCode);
         }
 
         static string ScenarioCodeFrom(Scenario Scenario)
         {
             var StepCode = string.Empty;
             Scenario.Steps.ForEach(Step => StepCode += @"
-            Steps." + Step + "();");
+            " + Step + "();");
 
             return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
         }

@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using EnvDTE;
 using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
-using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDEIntegration;
 using Raconteur.Parsers;

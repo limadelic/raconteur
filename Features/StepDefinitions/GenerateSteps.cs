@@ -31,9 +31,9 @@ namespace Features.StepDefinitions
         public void it_should_call_each_step_in_order() 
         {
             Runner.ShouldContainInOrder(
-                "Steps.If_something_happens();",
-                "Steps.Then_something_else_should_happen();",
-                "Steps.And_another_thing_too();");
+                "If_something_happens();",
+                "Then_something_else_should_happen();",
+                "And_another_thing_too();");
         }
     }
 }

@@ -21,10 +21,12 @@ namespace Features.StepDefinitions
                 DefaultNamespace = "Features",
             };
 
-            var RunnerGenerator = new RunnerGenerator();
             var Parser = ObjectFactory.NewFeatureParser;
 
-            Runner = RunnerGenerator.RunnerFor(Parser.FeatureFrom(FeatureFile, Project));
+            var RunnerGenerator = new RunnerGenerator(
+                Parser.FeatureFrom(FeatureFile, Project));
+
+            Runner = RunnerGenerator.Runner;
         }
 
         public void Then_it_should_be_a_TestClass()

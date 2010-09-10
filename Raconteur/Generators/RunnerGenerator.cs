@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Raconteur.Generators
 {
@@ -21,6 +19,7 @@ namespace {0}
     }}
 }}
 ";
+
         private const string ScenarioDeclaration = 
 @"        
         [TestMethod]
@@ -28,6 +27,11 @@ namespace {0}
         {{ {1}
         }}
 ";
+
+        private const string StepExecution = 
+@"        
+            {0}();";
+
         private const string StepDeclaration = 
 @"        
         void {0}()
@@ -35,17 +39,24 @@ namespace {0}
             throw new System.NotImplementedException(""Pending Step {0}"");
         }}
 ";
-        Feature Feature;
 
-        public string RunnerFor(Feature Feature)
+        readonly Feature Feature;
+
+        public RunnerGenerator(Feature Feature)
         {
             this.Feature = Feature;
+        }
 
-            return string.Format(FeatureDeclaration, 
-                Feature.Namespace, 
-                Feature.FileName, 
-                ScenariosImpl,
-                StepsDeclaration);
+        public string Runner
+        {
+            get
+            {
+                return string.Format(FeatureDeclaration, 
+                    Feature.Namespace, 
+                    Feature.FileName, 
+                    ScenariosImpl,
+                    StepsDeclaration);
+            }
         }
 
         string ScenariosImpl
@@ -58,18 +69,17 @@ namespace {0}
             } 
         }
 
-        static string ScenarioCodeFrom(Scenario Scenario)
+        string ScenarioCodeFrom(Scenario Scenario)
         {
-            var StepCode = string.Empty;
-            Scenario.Steps.ForEach(Step => StepCode += @"
-            " + Step + "();");
+            var StepCode = Scenario.Steps.Aggregate("",
+                (Steps, Step) => Steps + ExecuteStep(Step));
 
             return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
         }
 
-        protected string StepDefinitionFullClassName
+        string ExecuteStep(string Step)
         {
-            get { return "StepDefinitions." + Feature.Name; } 
+            return string.Format(StepExecution, Step);
         }
 
         public string DeclareStep(string Step) 
@@ -77,7 +87,7 @@ namespace {0}
             return string.Format(StepDeclaration, Step);
         }
 
-        protected string StepsDeclaration 
+        string StepsDeclaration 
         {
             get
             {

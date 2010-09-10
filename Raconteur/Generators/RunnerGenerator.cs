@@ -63,7 +63,7 @@ namespace {0}
         {
             get 
             {
-                return Feature.Scenarios.Aggregate(string.Empty,
+                return Feature.Scenarios.Aggregate("",
                     (Scenarios, Scenario) => 
                         Scenarios + ScenarioCodeFrom(Scenario)); 
             } 
@@ -91,8 +91,8 @@ namespace {0}
         {
             get
             {
-                return Feature.Scenarios.Aggregate(new List<string>(),
-                    (Steps, Scenario) => Steps.Union(Scenario.Steps).ToList())
+                return Feature.Scenarios.Aggregate(new List<string>() as IEnumerable<string>,
+                    (Steps, Scenario) => Steps.Union(Scenario.Steps))
                     .Aggregate("", (Steps, Step) => Steps + DeclareStep(Step));
             } 
         }

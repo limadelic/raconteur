@@ -16,26 +16,13 @@ namespace Specs
     [TestFixture]
     public class When_generating_the_feature_runner
     {
-        [TestFixture]
-        public class A_runner_generator : BehaviorOf<RunnerGenerator>
+        [Test]
+        public void it()
         {
-            [Test]
-            public void should_generate_the_step_definition_reference() 
-            {
-                var Feature = new Feature { Name = "FeatureName", Scenarios = new List<Scenario>() };
-
-                The.RunnerFor(Feature).ShouldContain("StepDefinitions" +
-                ".FeatureName Steps = new StepDefinitions.FeatureName();");
-            }
-
-            [Test]
-            public void it()
-            {
-                var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-                var projectItem = Dte2.Solution.FindProjectItem(@"A:\dev\raconteur\Features\StepDefinitions\GenerateFeatureRunner.cs");
-                var FileContents = DteProjectReader.GetFileContent(projectItem);
-                FileContents.ShouldNotBeNull();
-            }
+            var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+            var projectItem = Dte2.Solution.FindProjectItem(@"A:\dev\raconteur\Features\StepDefinitions\GenerateFeatureRunner.cs");
+            var FileContents = DteProjectReader.GetFileContent(projectItem);
+            FileContents.ShouldNotBeNull();
         }
 
         [TestFixture]

@@ -13,7 +13,6 @@ namespace {0}
     [TestClass]
     public class {1}Runner 
     {{
-        readonly {2} Steps = new {2}();
 {3}
     }}
 }}

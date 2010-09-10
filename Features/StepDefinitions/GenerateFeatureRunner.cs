@@ -42,11 +42,5 @@ namespace Features.StepDefinitions
         {
             Runner.ShouldContain("namespace Features");
         }
-
-        public void Then_it_should_generate_a_class_reference_named_FeatureName_under_StepDefinitions()
-        {
-            Runner.ShouldContain("StepDefinitions.FeatureName Steps " +
-                "= new StepDefinitions.FeatureName();");
-        }
     }
 }

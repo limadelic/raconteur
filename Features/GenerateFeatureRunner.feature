@@ -8,7 +8,3 @@ Scenario: Generate Runner Class
 	Then it should be a TestClass
 	And it should be named FeatureFileNameRunner
 	And it should be on the Feature Namespace
-
-Scenario: Generate Step Definition Reference
-	When the Runner for a Feature is generated
-	Then it should generate a class reference named FeatureName under StepDefinitions

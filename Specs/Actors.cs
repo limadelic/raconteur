@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Specs
+﻿namespace Specs
 {
     public class Actors
     {

@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Runtime.InteropServices;
-using Raconteur.Generators;
+﻿using System.Runtime.InteropServices;
 using Raconteur.IDE;
 
 namespace Raconteur.IDEIntegration
@@ -32,15 +30,8 @@ namespace Raconteur.IDEIntegration
 
         public override string GenerateCode(string InputFileContent)
         {
-            var Generator = ObjectFactory.NewRaconteurGenerator(Project);
-            var FeatureFile = new FeatureFile(CodeFilePath){Content = InputFileContent};
-
-            using (var Writer = new StringWriter())
-            {
-                Generator.GenerateFeature(FeatureFile, Writer);
-
-                return Writer.ToString();
-            }
+            return ObjectFactory.NewRaconteurGenerator(Project)
+                .Generate(CodeFilePath, InputFileContent);
         }
     }
 }

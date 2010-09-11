@@ -13,10 +13,5 @@ namespace Raconteur.IDEIntegration
         { 
             this.Project = Project;
         }
-
-        protected override void RefreshMsTestWindow()
-        {
-            //the automatic refresh of the test window causes problems in VS2010 -> skip
-        }
     }
 }

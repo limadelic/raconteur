@@ -8,7 +8,11 @@ namespace Raconteur
     {
         public static RaconteurGenerator NewRaconteurGenerator(Project Project)
         {
-            return new RaconteurGenerator(Project, NewFeatureParser);
+            return new RaconteurGeneratorClass
+            {
+                Project = Project,
+                FeatureParser = NewFeatureParser
+            };
         }
 
         public static FeatureParser NewFeatureParser

@@ -2,7 +2,6 @@ using System;
 using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
-using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.IDEIntegration;
@@ -11,7 +10,7 @@ using Raconteur.Parsers;
 namespace Specs
 {
     [TestFixture]
-    public class When_generating_the_feature_runner
+    public class When_generating_the_FeatureRunner
     {
         [Test]
         public void it()

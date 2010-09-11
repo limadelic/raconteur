@@ -2,10 +2,11 @@ using System;
 using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
+using Raconteur;
 using Raconteur.Generators;
+using Raconteur.IDE;
 using Raconteur.IDEIntegration;
 using Raconteur.Parsers;
-using Project = Raconteur.Project;
 
 namespace Specs
 {
@@ -25,19 +26,19 @@ namespace Specs
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
         {
             readonly FeatureFile FeatureFile = new FeatureFile();
-            readonly Project Project = new Project();
+            readonly ProjectClass ProjectClass = new ProjectClass();
 
             [Test]
             public void should_read_the_name()
             {
                 FeatureFile.Content = Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever";
                 
-                The.FeatureFrom(FeatureFile, Project).Name
+                The.FeatureFrom(FeatureFile, ProjectClass).Name
                     .ShouldBe("FeatureName");
 
                 FeatureFile.Content = Actors.FeatureWithNoScenarios;
                 
-                The.FeatureFrom(FeatureFile, Project).Name
+                The.FeatureFrom(FeatureFile, ProjectClass).Name
                     .ShouldBe("FeatureName");
             }
 
@@ -46,7 +47,7 @@ namespace Specs
             {
                 FeatureFile.Content = "Feature: feature name";
                 
-                The.FeatureFrom(FeatureFile, Project).Name
+                The.FeatureFrom(FeatureFile, ProjectClass).Name
                     .ShouldBe("FeatureName");
             }
             
@@ -55,7 +56,7 @@ namespace Specs
             {
                 FeatureFile.Content = Actors.FeatureWithThreeScenarios;
 
-                When.FeatureFrom(FeatureFile, Project);
+                When.FeatureFrom(FeatureFile, ProjectClass);
 
                 Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
             }
@@ -63,13 +64,13 @@ namespace Specs
             [Test]
             public void should_extract_namespace_and_file_name()
             {
-                Project.DefaultNamespace = "MyNamespace";
+                ProjectClass.DefaultNamespace = "MyNamespace";
                 FeatureFile.Name = "MyFileName";
 
-                The.FeatureFrom(FeatureFile, Project).Namespace
+                The.FeatureFrom(FeatureFile, ProjectClass).Namespace
                     .ShouldBe("MyNamespace");
 
-                The.FeatureFrom(FeatureFile, Project).FileName
+                The.FeatureFrom(FeatureFile, ProjectClass).FileName
                     .ShouldBe("MyFileName");
             }
         }

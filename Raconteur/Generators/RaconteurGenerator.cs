@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Raconteur.IDE;
 using Raconteur.Parsers;
 
 namespace Raconteur.Generators

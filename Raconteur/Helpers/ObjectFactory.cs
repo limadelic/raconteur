@@ -1,4 +1,5 @@
 using Raconteur.Generators;
+using Raconteur.IDE;
 using Raconteur.Parsers;
 
 namespace Raconteur
@@ -19,6 +20,14 @@ namespace Raconteur
                     ScenarioParser = new ScenarioParserClass()
                 };
             }
+        }
+
+        public static StepDefinitionsGenerator NewStepDefinitionsGenerator
+        {
+            get
+            {
+                return null;
+            } 
         }
     }
 }

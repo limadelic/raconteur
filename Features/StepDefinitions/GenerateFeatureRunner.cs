@@ -1,6 +1,7 @@
 ﻿using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
+using Raconteur.IDE;
 
 namespace Features.StepDefinitions
 {
@@ -16,7 +17,7 @@ namespace Features.StepDefinitions
                 Content = "Feature: Feature Name",
             };
 
-            var Project = new Project
+            var Project = new ProjectClass
             {
                 DefaultNamespace = "Features",
             };

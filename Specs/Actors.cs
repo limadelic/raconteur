@@ -10,6 +10,8 @@
             Scenario: Third Scenario
         ";
 
+        public const string StepDefinitionsForFeatureWithOneScenario = "";
+
         public const string FeatureWithOneScenario = 
         @"
             Feature: has one scenario

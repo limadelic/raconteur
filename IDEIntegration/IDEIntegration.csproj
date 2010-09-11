@@ -104,16 +104,16 @@
     <Compile Include="CustomTool\RaconteurSingleFileGeneratorBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="release.bat" />
-    <None Include="source.extension.vsixmanifest">
+    <None Include="Install\release.bat" />
+    <None Include="Install\source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
     <ZipItem Include="Templates\RaconteurFeature1.feature" />
-    <None Include="vs.reg" />
-    <None Include="vs64.reg" />
+    <None Include="Install\vs.reg" />
+    <None Include="Install\vs64.reg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="install.txt" />
+    <Content Include="Install\install.txt" />
     <Content Include="Resources\gherkin.ico">
       <Link>gherkin.ico</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -128,11 +128,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="specflowsetup.ico">
+    <Content Include="Install\specflowsetup.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="specflow_preview.png">
+    <Content Include="Install\specflow_preview.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

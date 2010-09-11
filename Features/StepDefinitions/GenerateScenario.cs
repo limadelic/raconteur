@@ -1,6 +1,7 @@
 using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
+using Raconteur.IDE;
 
 namespace Features.StepDefinitions
 {
@@ -25,7 +26,7 @@ namespace Features.StepDefinitions
             var Parser = ObjectFactory.NewFeatureParser;
 
             Runner = new RunnerGenerator(
-                Parser.FeatureFrom(featureFile, new Project()))
+                Parser.FeatureFrom(featureFile, new ProjectClass()))
                 .Runner;
         }
 

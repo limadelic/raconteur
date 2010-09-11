@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
+using Raconteur.IDE;
 
 namespace Raconteur.IDEIntegration
 {
@@ -8,6 +9,11 @@ namespace Raconteur.IDEIntegration
     [ProvideObject(typeof(RaconteurSingleFileGenerator))]
     public class RaconteurSingleFileGenerator : RaconteurSingleFileGeneratorBase
     {
+        public RaconteurSingleFileGenerator(Project Project) 
+        { 
+            this.Project = Project;
+        }
+
         protected override void RefreshMsTestWindow()
         {
             //the automatic refresh of the test window causes problems in VS2010 -> skip

@@ -101,7 +101,7 @@ namespace Raconteur.IDEIntegration
             }
         }
 
-        public EnvDTE.Project CurrentProject
+        public Project CurrentProject
         {
             get
             {
@@ -109,7 +109,7 @@ namespace Raconteur.IDEIntegration
             }
         }
 
-        EnvDTE.Project GetProjectForSourceFile(DTE dte)
+        Project GetProjectForSourceFile(DTE dte)
         {
             if (dte != null)
             {

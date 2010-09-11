@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 using Raconteur.Generators;
+using Raconteur.IDE;
 
 namespace Raconteur.Parsers
 {

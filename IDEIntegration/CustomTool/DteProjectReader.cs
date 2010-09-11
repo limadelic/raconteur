@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using EnvDTE;
+using Raconteur.IDE;
 
 namespace Raconteur.IDEIntegration
 {
@@ -22,9 +23,9 @@ namespace Raconteur.IDEIntegration
             return retval;
         }
 
-        public static Project LoadProjectFrom(EnvDTE.Project project)
+        public static ProjectClass LoadProjectFrom(EnvDTE.Project project)
         {
-            return new Project
+            return new ProjectClass
             {
                 ProjectFolder = Path.GetDirectoryName(project.FullName),
                 ProjectName = Path.GetFileNameWithoutExtension(project.FullName),

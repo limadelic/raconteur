@@ -34,9 +34,14 @@
     <Reference Include="FluentSpec">
       <HintPath>..\lib\fluentspec\FluentSpec.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="NSubstitute">
+      <HintPath>..\lib\nsubstitute\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +58,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GenerateScenario.feature</DependentUpon>
     </Compile>
+    <Compile Include="DeclareStepDefinitions.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeclareStepDefinitions.feature</DependentUpon>
+    </Compile>
     <Compile Include="GenerateSteps.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -64,6 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RefactorFeature.feature</DependentUpon>
     </Compile>
+    <Compile Include="StepDefinitions\DeclareStepDefinitions.cs" />
     <Compile Include="StepDefinitions\GenerateFeatureRunner.cs" />
     <Compile Include="StepDefinitions\GenerateScenario.cs" />
     <Compile Include="StepDefinitions\GenerateSteps.cs" />
@@ -80,6 +91,10 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateScenario.feature.cs</LastGenOutput>
     </None>
+    <None Include="DeclareStepDefinitions.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>DeclareStepDefinitions.cs</LastGenOutput>
+    </None>
     <None Include="GenerateSteps.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateSteps.feature.cs</LastGenOutput>
@@ -90,6 +105,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IDEIntegration\IDEIntegration.csproj">
+      <Project>{96294E6F-8875-4D12-8577-4EC83E60BD6C}</Project>
+      <Name>IDEIntegration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Raconteur\Raconteur.csproj">
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>

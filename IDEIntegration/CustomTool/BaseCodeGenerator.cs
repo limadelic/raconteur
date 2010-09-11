@@ -18,7 +18,11 @@ namespace Raconteur.IDEIntegration
 
         public string CodeFileNameSpace { get { return codeFileNameSpace; } }
 
-        public string CodeFilePath { get { return codeFilePath; } }
+        public string CodeFilePath
+        {
+            get { return codeFilePath; } 
+            set { codeFilePath = value; }
+        }
 
         public IVsGeneratorProgress CodeGeneratorProgress { get { return codeGeneratorProgress; } }
 
@@ -94,6 +98,6 @@ namespace Raconteur.IDEIntegration
         }
 
         protected abstract string GetDefaultExtension();
-        protected abstract string GenerateCode(string inputFileContent);
+        public abstract string GenerateCode(string inputFileContent);
     }
 }

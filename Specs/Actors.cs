@@ -10,7 +10,15 @@
             Scenario: Third Scenario
         ";
 
-        public const string StepDefinitionsForFeatureWithOneScenario = "";
+        public const string StepDefinitionsForFeatureWithOneScenario = 
+        @"
+namespace  
+{
+    public partial class Feature 
+    {
+    }
+}
+";
 
         public const string FeatureWithOneScenario = 
         @"

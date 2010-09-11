@@ -10,7 +10,7 @@ using Raconteur.Parsers;
 namespace Specs
 {
     [TestFixture]
-    public class When_generating_the_FeatureRunner
+    public class When_parsing_a_FeatureFile
     {
         [Test]
         public void it()

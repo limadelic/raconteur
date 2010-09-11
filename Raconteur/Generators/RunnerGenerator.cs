@@ -5,7 +5,7 @@ namespace Raconteur.Generators
 {
     public class RunnerGenerator
     {
-        const string FeatureDeclaration = 
+        const string RunnerClass = 
 
 @"using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -43,7 +43,7 @@ namespace {0}
         public string RunnerFor(Feature Feature)
         {
             this.Feature = Feature;
-            return string.Format(FeatureDeclaration, 
+            return string.Format(RunnerClass, 
                 Feature.Namespace, 
                 Feature.FileName, 
                 ScenariosImpl);

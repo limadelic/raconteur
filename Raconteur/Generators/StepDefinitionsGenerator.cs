@@ -1,7 +1,10 @@
 namespace Raconteur.Generators
 {
-    public interface StepDefinitionsGenerator
+    public class StepDefinitionsGenerator
     {
-        
+        public string StepDefinitionsFor(Feature Feature)
+        {
+            return "";
+        }
     }
 }

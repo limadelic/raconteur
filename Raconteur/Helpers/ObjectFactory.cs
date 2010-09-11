@@ -12,7 +12,8 @@ namespace Raconteur
             {
                 Project = Project,
                 FeatureParser = NewFeatureParser,
-                RunnerGenerator = new RunnerGenerator()
+                RunnerGenerator = new RunnerGenerator(),
+                StepDefinitionsGenerator = new StepDefinitionsGenerator(),
             };
         }
 

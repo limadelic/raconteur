@@ -39,22 +39,14 @@ namespace {0}
         }}
 ";
 
-        readonly Feature Feature;
-
-        public RunnerGenerator(Feature Feature)
+        Feature Feature;
+        public string RunnerFor(Feature Feature)
         {
             this.Feature = Feature;
-        }
-
-        public string Runner
-        {
-            get
-            {
-                return string.Format(FeatureDeclaration, 
-                    Feature.Namespace, 
-                    Feature.FileName, 
-                    ScenariosImpl);
-            }
+            return string.Format(FeatureDeclaration, 
+                Feature.Namespace, 
+                Feature.FileName, 
+                ScenariosImpl);
         }
 
         string ScenariosImpl

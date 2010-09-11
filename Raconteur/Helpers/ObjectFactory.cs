@@ -11,7 +11,8 @@ namespace Raconteur
             return new RaconteurGeneratorClass
             {
                 Project = Project,
-                FeatureParser = NewFeatureParser
+                FeatureParser = NewFeatureParser,
+                RunnerGenerator = new RunnerGenerator()
             };
         }
 

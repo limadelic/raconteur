@@ -28,10 +28,11 @@ namespace Features.StepDefinitions
 
             var Parser = ObjectFactory.NewFeatureParser;
 
-            RunnerGenerator = new RunnerGenerator(
-                Parser.FeatureFrom(featureFile, new ProjectClass()));
+            RunnerGenerator = new RunnerGenerator();
 
-            Runner = RunnerGenerator.Runner;
+            var Feature = Parser.FeatureFrom(featureFile, new ProjectClass());
+
+            Runner = RunnerGenerator.RunnerFor(Feature);
         }
 
         public void it_should_call_each_step_in_order() 

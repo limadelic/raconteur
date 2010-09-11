@@ -101,7 +101,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomTool\RaconteurSingleFileGenerator.cs" />
     <Compile Include="CustomTool\SingleFileGeneratorSupportRegistrationAttribute.cs" />
-    <Compile Include="CustomTool\RaconteurSingleFileGeneratorBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Install\release.bat" />

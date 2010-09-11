@@ -7,6 +7,7 @@ namespace Raconteur.Generators
     {
         public Project Project { get; set; }
         public FeatureParser FeatureParser { get; set; }
+        public RunnerGenerator RunnerGenerator { get; set; }
 
         public string Generate(string FeatureFilePath, string Content)
         {
@@ -14,7 +15,7 @@ namespace Raconteur.Generators
             
             var Feature = FeatureParser.FeatureFrom(FeatureFile, Project);
 
-            return new RunnerGenerator(Feature).Runner;
+            return RunnerGenerator.RunnerFor(Feature);
         }
     }
 }

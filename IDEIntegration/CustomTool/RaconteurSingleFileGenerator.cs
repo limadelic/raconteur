@@ -7,11 +7,38 @@ namespace Raconteur.IDEIntegration
     [ComVisible(true)]
     [Guid("747D47AC-4681-4B88-8218-623AC7C70145")]
     [ProvideObject(typeof(RaconteurSingleFileGenerator))]
-    public class RaconteurSingleFileGenerator : RaconteurSingleFileGeneratorBase
+    public class RaconteurSingleFileGenerator : BaseCodeGeneratorWithSite
     {
         public RaconteurSingleFileGenerator(Project Project) 
         { 
             this.Project = Project;
+        }
+
+        Project project;
+        protected Project Project
+        {
+            get { return project ?? LoadProject; } 
+            set { project = value; } 
+        }
+        Project LoadProject
+        {
+            get
+            {
+                var NewProject = DteProjectReader.LoadProjectFrom(CurrentProject);
+                NewProject.DefaultNamespace = NewProject.DefaultNamespace ?? CodeFileNameSpace;
+                return NewProject;
+            }
+        }
+
+        protected override string GetDefaultExtension()
+        {
+            return "." + GetCodeProvider().FileExtension;
+        }
+
+        public override string GenerateCode(string InputFileContent)
+        {
+            return ObjectFactory.NewRaconteurGenerator(Project)
+                .Generate(CodeFilePath, InputFileContent);
         }
     }
 }

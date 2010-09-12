@@ -96,11 +96,8 @@
   <ItemGroup>
     <Compile Include="CustomTool\BaseCodeGenerator.cs" />
     <Compile Include="CustomTool\BaseCodeGeneratorWithSite.cs" />
-    <Compile Include="CustomTool\CodeGeneratorRegistrationAttribute.cs" />
-    <Compile Include="CustomTool\DteProjectReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomTool\RaconteurSingleFileGenerator.cs" />
-    <Compile Include="CustomTool\SingleFileGeneratorSupportRegistrationAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Install\release.bat" />

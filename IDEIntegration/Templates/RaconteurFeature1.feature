@@ -1,11 +1,14 @@
-﻿Feature: Addition
-	In order to avoid silly mistakes
-	As a math idiot
-	I want to be told the sum of two numbers
+﻿Feature: Name
+	Description
 
-@mytag
-Scenario: Add two numbers
-	Given I have entered 50 into the calculator
-	And I have entered 70 into the calculator
-	When I press add
-	Then the result should be 120 on the screen
+Scenario: BDD style
+	Given some stuff
+	When I do something with them
+	Then some stuff should happen
+	And some stuff should change
+
+Scenario: Free style
+	Setup some stuff
+	Do something with them
+	Check some stuff should happen
+	Write it however you like

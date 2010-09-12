@@ -15,120 +15,113 @@ namespace Raconteur.IDEIntegration
     [Guid("B10546A6-B06B-4305-8D7C-A84BBF82AB52")]
     public abstract class BaseCodeGeneratorWithSite : BaseCodeGenerator, IObjectWithSite
     {
-        object site;
-        ServiceProvider serviceProvider;
-        CodeDomProvider codeDomProvider;
+        object Site;
+        CodeDomProvider CodeDomProvider;
 
-        void IObjectWithSite.SetSite(object pUnkSite)
+        void IObjectWithSite.SetSite(object PUnkSite)
         {
-            site = pUnkSite;
-            codeDomProvider = null;
-            serviceProvider = null;
+            Site = PUnkSite;
+            CodeDomProvider = null;
+            ServiceProvider = null;
         }
 
-        void IObjectWithSite.GetSite(ref Guid riid, out IntPtr ppvSite)
+        void IObjectWithSite.GetSite(ref Guid Riid, out IntPtr PpvSite)
         {
-            if (site == null) throw new COMException("object is not sited", VSConstants.E_FAIL);
-            var pUnknownPointer = Marshal.GetIUnknownForObject(site);
-            IntPtr intPointer;
-            Marshal.QueryInterface(pUnknownPointer, ref riid, out intPointer);
-            if (intPointer == IntPtr.Zero) throw new COMException("site does not support requested interface", VSConstants.E_NOINTERFACE);
-            ppvSite = intPointer;
+            if (Site == null) throw new COMException("object is not sited", VSConstants.E_FAIL);
+
+            var PUnknownPointer = Marshal.GetIUnknownForObject(Site);
+
+            IntPtr IntPointer;
+
+            Marshal.QueryInterface(PUnknownPointer, ref Riid, out IntPointer);
+
+            if (IntPointer == IntPtr.Zero) throw new COMException("site does not support requested interface", VSConstants.E_NOINTERFACE);
+
+            PpvSite = IntPointer;
         }
 
+        ServiceProvider ServiceProvider;
         ServiceProvider SiteServiceProvider
         {
-            get { return serviceProvider ?? (serviceProvider = new ServiceProvider(site as IServiceProvider)); }
+            get { return ServiceProvider ?? (ServiceProvider = new ServiceProvider(Site as IServiceProvider)); }
         }
 
         protected object GetService(Type serviceType) { return SiteServiceProvider.GetService(serviceType); }
 
         protected virtual CodeDomProvider GetCodeProvider()
         {
-            if (codeDomProvider == null)
+            if (CodeDomProvider == null)
             {
-                var provider = GetService(typeof (SVSMDCodeDomProvider)) as IVSMDCodeDomProvider;
-                if (provider != null) codeDomProvider = provider.CodeDomProvider as CodeDomProvider;
-                else codeDomProvider = CodeDomProvider.CreateProvider("C#");
+                var Provider = GetService(typeof(SVSMDCodeDomProvider)) as IVSMDCodeDomProvider;
+
+                CodeDomProvider = (Provider != null) ? 
+                    Provider.CodeDomProvider as CodeDomProvider :
+                    CodeDomProvider.CreateProvider("C#");
             }
-            return codeDomProvider;
+
+            return CodeDomProvider;
         }
 
-        public static bool Failed(int hr) { return (hr < 0); }
+        public static bool Failed(int HResult) { return (HResult < 0); }
 
-        protected DTE Dte
+        protected IVsHierarchy VsHierarchy { get { return GetService(typeof (IVsHierarchy)) as IVsHierarchy; } }
+
+        protected DTE DTE
         {
             get
             {
-                DTE objectForIUnknown = null;
-                var service = GetService(typeof (IVsHierarchy)) as IVsHierarchy;
-                if (service != null)
-                {
-                    IServiceProvider ppSP;
-                    if (!Failed(service.GetSite(out ppSP)) && (ppSP != null))
-                    {
-                        var gUID = typeof (DTE).GUID;
-                        IntPtr zero;
-                        ErrorHandler.ThrowOnFailure(ppSP.QueryService(ref gUID, ref gUID, out zero));
-                        if (zero != IntPtr.Zero) objectForIUnknown = Marshal.GetObjectForIUnknown(zero) as DTE;
-                    }
-                }
-                return objectForIUnknown;
+                return Get<DTE>(
+                    typeof(DTE).GUID, 
+                    typeof(DTE).GUID);
             }
         }
-
-        protected IVsHierarchy VsHierarchy { get { return GetService(typeof (IVsHierarchy)) as IVsHierarchy; } }
 
         protected IVsErrorList ErrorList
         {
             get
             {
-                IVsErrorList objectForIUnknown = null;
-                var service = GetService(typeof (IVsHierarchy)) as IVsHierarchy;
-                if (service != null)
-                {
-                    IServiceProvider ppSP;
-                    if (!Failed(service.GetSite(out ppSP)) && (ppSP != null))
-                    {
-                        var gUID = typeof (SVsErrorList).GUID;
-                        var riid = typeof (IVsErrorList).GUID;
-                        IntPtr zero;
-                        ErrorHandler.ThrowOnFailure(ppSP.QueryService(ref gUID, ref riid, out zero));
-                        if (zero != IntPtr.Zero) objectForIUnknown = Marshal.GetObjectForIUnknown(zero) as IVsErrorList;
-                    }
-                }
-                return objectForIUnknown;
+                return Get<IVsErrorList>(
+                    typeof(SVsErrorList).GUID, 
+                    typeof(IVsErrorList).GUID);
             }
         }
 
         public Project CurrentProject
         {
-            get
-            {
-                return GetProjectForSourceFile(Dte);
-            }
+            get { return GetProjectForSourceFile(DTE); }
         }
 
-        Project GetProjectForSourceFile(DTE dte)
+        readonly Exception NoDTE = new InvalidOperationException("Unable to detect current project.");
+
+        Project GetProjectForSourceFile(DTE Dte)
         {
-            if (dte != null)
-            {
-                var prjItem = dte.Solution.FindProjectItem(CodeFilePath);
-                if (prjItem != null) return prjItem.ContainingProject;
-            }
-            throw new InvalidOperationException("Unable to detect current project.");
+            if (Dte == null) throw NoDTE;
+
+            var ProjectItem = Dte.Solution.FindProjectItem(CodeFilePath);
+
+            if (ProjectItem == null) throw NoDTE;
+            
+            return ProjectItem.ContainingProject;
         }
 
-        protected override void AfterCodeGenerated(bool error)
+        T Get<T>(Guid ServiceId, Guid Id)
         {
-            base.AfterCodeGenerated(error);
+            var Service = GetService(typeof (IVsHierarchy)) as IVsHierarchy;
+            if (Service == null) return default(T);
 
-            if (!error) return;
-            var errorList = ErrorList;
-            if (errorList == null) return;
+            IServiceProvider CurrentServiceProvider;
+            if (Failed(Service.GetSite(out CurrentServiceProvider)) 
+                && CurrentServiceProvider != null) return default(T);
 
-            errorList.BringToFront();
-            errorList.ForceShowErrors();
+            IntPtr Result;
+
+            ErrorHandler.ThrowOnFailure(
+                CurrentServiceProvider.QueryService(ref ServiceId, ref Id, out Result));
+
+            if (Result == IntPtr.Zero) return default(T);
+                
+            return (T) Marshal.GetObjectForIUnknown(Result);
         }
+
     }
 }

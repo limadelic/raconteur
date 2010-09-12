@@ -2,8 +2,6 @@
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.OLE.Interop;
-using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
 namespace Raconteur.IDEIntegration
@@ -12,6 +10,10 @@ namespace Raconteur.IDEIntegration
     [Guid("AA602DCE-8B40-4C5A-BD46-B037C63C3813")]
     public abstract class BaseCodeGenerator : IVsSingleFileGenerator
     {
+        protected abstract string GetDefaultExtension();
+
+        public abstract string GenerateCode(string inputFileContent);
+
         IVsGeneratorProgress codeGeneratorProgress;
         string codeFileNameSpace = String.Empty;
         string codeFilePath = String.Empty;
@@ -46,58 +48,34 @@ namespace Raconteur.IDEIntegration
             codeFilePath = wszInputFilePath;
             codeFileNameSpace = wszDefaultNamespace;
             codeGeneratorProgress = pGenerateProgress;
-            byte[] bytes;
+
+            string Output;
             try
             {
-                BeforeCodeGenerated();
-                bytes = Encoding.UTF8.GetBytes(GenerateCode(bstrInputFileContents));
-                AfterCodeGenerated(false);
-            } catch (Exception ex)
+                Output = GenerateCode(bstrInputFileContents);
+            } 
+            catch (Exception e)
             {
-                var message = GenerateError(pGenerateProgress, ex);
-                AfterCodeGenerated(true);
-                bytes = Encoding.UTF8.GetBytes(message);
+                Output = GenerateError(pGenerateProgress, e);
             }
 
-            var outputLength = bytes.Length;
-            rgbOutputFileContents[0] = Marshal.AllocCoTaskMem(outputLength);
-            Marshal.Copy(bytes, 0, rgbOutputFileContents[0], outputLength);
-            pcbOutput = (uint) outputLength;
+            var OutputBytes = Encoding.UTF8.GetBytes(Output);
+            var OutputLength = OutputBytes.Length;
 
-            RefreshMsTestWindow();
+            rgbOutputFileContents[0] = Marshal.AllocCoTaskMem(OutputLength);
+            Marshal.Copy(OutputBytes, 0, rgbOutputFileContents[0], OutputLength);
+            pcbOutput = (uint) OutputLength;
 
             return VSConstants.S_OK;
         }
 
-        protected virtual void RefreshMsTestWindow()
-        {
-            //refreshCmdGuid,cmdID is the command id of refresh command.
-            var refreshCmdGuid = new Guid("{B85579AA-8BE0-4C4F-A850-90902B317571}");
-            var cmdTarget = Package.GetGlobalService(typeof (SUIHostCommandDispatcher)) as IOleCommandTarget;
-            const uint cmdID = 13109;
-            if (cmdTarget != null)
-                cmdTarget.Exec(ref refreshCmdGuid, cmdID, (uint) OLECMDEXECOPT.OLECMDEXECOPT_DONTPROMPTUSER, IntPtr.Zero,
-                    IntPtr.Zero);
-        }
-
         protected virtual string GenerateError(IVsGeneratorProgress pGenerateProgress, Exception ex)
         {
-            var message = GetMessage(ex);
-            pGenerateProgress.GeneratorError(0, 4, message, 0xFFFFFFFF, 0xFFFFFFFF);
-            return message;
-        }
+            var Message = GetMessage(ex);
 
-        protected virtual void BeforeCodeGenerated()
-        {
-            //nop
-        }
+            pGenerateProgress.GeneratorError(0, 4, Message, 0xFFFFFFFF, 0xFFFFFFFF);
 
-        protected virtual void AfterCodeGenerated(bool error)
-        {
-            //nop
+            return Message;
         }
-
-        protected abstract string GetDefaultExtension();
-        public abstract string GenerateCode(string inputFileContent);
     }
 }

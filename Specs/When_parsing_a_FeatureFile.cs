@@ -1,10 +1,8 @@
 using System;
-using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur.Generators;
 using Raconteur.IDE;
-using Raconteur.IDEIntegration;
 using Raconteur.Parsers;
 
 namespace Specs
@@ -15,10 +13,10 @@ namespace Specs
         [Test]
         public void it()
         {
-            var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-            var projectItem = Dte2.Solution.FindProjectItem(@"A:\dev\raconteur\Features\StepDefinitions\GenerateFeatureRunner.cs");
-            var FileContents = DteProjectReader.GetFileContent(projectItem);
-            FileContents.ShouldNotBeNull();
+//            var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
+//            var projectItem = Dte2.Solution.FindProjectItem(@"A:\dev\raconteur\Features\StepDefinitions\GenerateFeatureRunner.cs");
+//            var FileContents = DteProjectReader.GetFileContent(projectItem);
+//            FileContents.ShouldNotBeNull();
         }
 
         [TestFixture]

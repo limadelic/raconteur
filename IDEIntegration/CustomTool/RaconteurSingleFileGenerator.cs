@@ -9,13 +9,8 @@ namespace Raconteur.IDEIntegration
     [ProvideObject(typeof(RaconteurSingleFileGenerator))]
     public class RaconteurSingleFileGenerator : BaseCodeGeneratorWithSite
     {
-        public RaconteurSingleFileGenerator(Project Project) 
-        { 
-            this.Project = Project;
-        }
-
         Project project;
-        protected Project Project
+        public Project Project
         {
             get { return project ?? LoadProject; } 
             set { project = value; } 

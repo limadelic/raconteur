@@ -1,1 +1,3 @@
-copy bin\Debug\IDEIntegration\. ..\live /y
+copy ..\bin\Debug\IDEIntegration\. ..\..\live /y
+
+pause

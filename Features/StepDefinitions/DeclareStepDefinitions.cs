@@ -16,7 +16,7 @@ namespace Features.StepDefinitions
         public DeclareStepDefinitions()
         {
             Project = Substitute.For<Project>();
-            Generator = new RaconteurSingleFileGenerator(Project);
+            Generator = new RaconteurSingleFileGenerator {Project = Project};
         }
 
         public void When_a_Feature_is_declared_for_the_first_time()

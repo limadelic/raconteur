@@ -1,5 +1,3 @@
-using System;
-
 namespace Raconteur.IDE
 {
     public class ProjectClass : Project
@@ -11,7 +9,6 @@ namespace Raconteur.IDE
 
         public void AddStepDefinitions(string FeatureFile, string Content)
         {
-            throw new NotImplementedException();
         }
     }
 }

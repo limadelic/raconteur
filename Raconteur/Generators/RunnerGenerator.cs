@@ -31,14 +31,6 @@ namespace {0}
 @"        
             {0}();";
 
-        private const string StepDeclaration = 
-@"        
-        void {0}()
-        {{ 
-            throw new System.NotImplementedException(""Pending Step {0}"");
-        }}
-";
-
         Feature Feature;
         public string RunnerFor(Feature Feature)
         {
@@ -70,21 +62,6 @@ namespace {0}
         string ExecuteStep(string Step)
         {
             return string.Format(StepExecution, Step);
-        }
-
-        public string DeclareStep(string Step) 
-        { 
-            return string.Format(StepDeclaration, Step);
-        }
-
-        string StepsDeclaration 
-        {
-            get
-            {
-                return Feature.Scenarios.Aggregate(new List<string>() as IEnumerable<string>,
-                    (Steps, Scenario) => Steps.Union(Scenario.Steps))
-                    .Aggregate("", (Steps, Step) => Steps + DeclareStep(Step));
-            } 
         }
     }
 }

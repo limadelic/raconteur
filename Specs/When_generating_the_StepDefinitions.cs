@@ -16,14 +16,43 @@ namespace Specs
             {
                 StepDefinitions = The.StepDefinitionsFor(new Feature
                 {
-                    FileName = "Name"
+                    FileName = "Name",
+                    Namespace = "Features",
+                    Scenarios =
+                    {
+                        new Scenario
+                        {
+                            Name = "Scenario 1",
+                            Steps = { "Unique step", "Repeated step" }
+                        },                            
+                        new Scenario
+                        {
+                            Name = "Scenario 2",
+                            Steps = { "Repeated step", "Another unique step" }
+                        },                            
+                    }
                 });
+            }
+
+            [Test]
+            public void should_generate_the_StepDefinitions_namespace()
+            {
+                StepDefinitions.ShouldContain("namespace Features");
             }
 
             [Test]
             public void should_generate_the_StepDefinitions_class()
             {
                 StepDefinitions.ShouldContain("public partial class Name");
+            }
+
+            [Test]
+            public void should_declare_the_StepDefinitions()
+            {
+                StepDefinitions.ShouldContain(
+                    The.DeclareStep("Unique step") +
+                    The.DeclareStep("Repeated step") +
+                    The.DeclareStep("Another unique step"));
             }
         }
     }

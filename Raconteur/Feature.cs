@@ -8,5 +8,10 @@ namespace Raconteur
         public string Name { get; set; }
         public string Namespace { get; set; }
         public string FileName { get; set; }
+
+        public Feature()
+        {
+            Scenarios = new List<Scenario>();
+        }
     }
 }

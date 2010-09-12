@@ -27,7 +27,7 @@ namespace Raconteur.IDEIntegration
 
         protected override string GetDefaultExtension()
         {
-            return "." + GetCodeProvider().FileExtension;
+            return ".runner." + GetCodeProvider().FileExtension;
         }
 
         public override string GenerateCode(string InputFileContent)

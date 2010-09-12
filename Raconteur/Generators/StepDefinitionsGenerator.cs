@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Raconteur.Generators
 {
     public class StepDefinitionsGenerator
@@ -12,7 +9,6 @@ namespace {0}
 {{
     public partial class {1} 
     {{
-{2}
     }}
 }}
 ";
@@ -25,30 +21,16 @@ namespace {0}
         }}
 ";
 
-        Feature Feature;
         public string StepDefinitionsFor(Feature Feature)
         {
-            this.Feature = Feature;
-
             return string.Format(StepDefinitionsClass, 
                 Feature.Namespace, 
-                Feature.FileName,
-                StepDeclarations);
+                Feature.FileName);
         }
 
         public string DeclareStep(string Step) 
         { 
             return string.Format(StepDeclaration, Step);
-        }
-
-        string StepDeclarations 
-        {
-            get
-            {
-                return Feature.Scenarios.Aggregate(new List<string>() as IEnumerable<string>,
-                    (Steps, Scenario) => Steps.Union(Scenario.Steps))
-                    .Aggregate("", (Steps, Step) => Steps + DeclareStep(Step));
-            } 
         }
     }
 }

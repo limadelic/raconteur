@@ -16,12 +16,6 @@ namespace
 {
     public partial class Feature 
     {
-        
-        void This_is_one_step()
-        { 
-            throw new System.NotImplementedException(""Pending Step This_is_one_step"");
-        }
-
     }
 }
 ";
@@ -30,7 +24,6 @@ namespace
         @"
             Feature: has one scenario
             Scenario: One Scenario
-                This is one step
         ";
 
         public const string FeatureWithNoScenarios = @"Feature: Feature Name";

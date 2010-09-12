@@ -45,15 +45,6 @@ namespace Specs
             {
                 StepDefinitions.ShouldContain("public partial class Name");
             }
-
-            [Test]
-            public void should_declare_the_StepDefinitions()
-            {
-                StepDefinitions.ShouldContain(
-                    The.DeclareStep("Unique step") +
-                    The.DeclareStep("Repeated step") +
-                    The.DeclareStep("Another unique step"));
-            }
         }
     }
 }

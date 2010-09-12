@@ -23,19 +23,19 @@ namespace Specs
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
         {
             readonly FeatureFile FeatureFile = new FeatureFile();
-            readonly ProjectClass ProjectClass = new ProjectClass();
+            readonly VsProject VsProject = new VsProject();
 
             [Test]
             public void should_read_the_name()
             {
                 FeatureFile.Content = Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever";
                 
-                The.FeatureFrom(FeatureFile, ProjectClass).Name
+                The.FeatureFrom(FeatureFile, VsProject).Name
                     .ShouldBe("FeatureName");
 
                 FeatureFile.Content = Actors.FeatureWithNoScenarios;
                 
-                The.FeatureFrom(FeatureFile, ProjectClass).Name
+                The.FeatureFrom(FeatureFile, VsProject).Name
                     .ShouldBe("FeatureName");
             }
 
@@ -44,7 +44,7 @@ namespace Specs
             {
                 FeatureFile.Content = "Feature: feature name";
                 
-                The.FeatureFrom(FeatureFile, ProjectClass).Name
+                The.FeatureFrom(FeatureFile, VsProject).Name
                     .ShouldBe("FeatureName");
             }
             
@@ -53,7 +53,7 @@ namespace Specs
             {
                 FeatureFile.Content = Actors.FeatureWithThreeScenarios;
 
-                When.FeatureFrom(FeatureFile, ProjectClass);
+                When.FeatureFrom(FeatureFile, VsProject);
 
                 Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
             }
@@ -61,13 +61,13 @@ namespace Specs
             [Test]
             public void should_extract_namespace_and_file_name()
             {
-                ProjectClass.DefaultNamespace = "MyNamespace";
+                VsProject.DefaultNamespace = "MyNamespace";
                 FeatureFile.Name = "MyFileName";
 
-                The.FeatureFrom(FeatureFile, ProjectClass).Namespace
+                The.FeatureFrom(FeatureFile, VsProject).Namespace
                     .ShouldBe("MyNamespace");
 
-                The.FeatureFrom(FeatureFile, ProjectClass).FileName
+                The.FeatureFrom(FeatureFile, VsProject).FileName
                     .ShouldBe("MyFileName");
             }
         }

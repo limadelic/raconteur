@@ -17,7 +17,7 @@ namespace Features.StepDefinitions
                 Content = "Feature: Feature Name",
             };
 
-            var Project = new ProjectClass
+            var Project = new VsProject
             {
                 DefaultNamespace = "Features",
             };

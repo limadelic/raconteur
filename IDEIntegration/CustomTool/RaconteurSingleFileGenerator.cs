@@ -19,7 +19,7 @@ namespace Raconteur.IDEIntegration
         {
             get
             {
-                var NewProject = ProjectClass.LoadProjectFrom(CurrentProject);
+                var NewProject = ObjectFactory.ProjectFrom(CurrentProject);
                 NewProject.DefaultNamespace = NewProject.DefaultNamespace ?? CodeFileNameSpace;
                 return NewProject;
             }

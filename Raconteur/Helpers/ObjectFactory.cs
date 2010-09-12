@@ -35,5 +35,10 @@ namespace Raconteur
                 return null;
             } 
         }
+
+        public static Project ProjectFrom(EnvDTE.Project Project)
+        {
+            return new VsProject(Project);
+        }
     }
 }

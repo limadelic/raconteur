@@ -58,10 +58,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GenerateScenario.feature</DependentUpon>
     </Compile>
-    <Compile Include="DeclareStepDefinitions.cs">
+    <Compile Include="GenerateStepDefinitions.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DeclareStepDefinitions.feature</DependentUpon>
+      <DependentUpon>GenerateStepDefinitions.feature</DependentUpon>
     </Compile>
     <Compile Include="GenerateSteps.feature.cs">
       <AutoGen>True</AutoGen>
@@ -74,7 +74,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RefactorFeature.feature</DependentUpon>
     </Compile>
-    <Compile Include="StepDefinitions\DeclareStepDefinitions.cs" />
+    <Compile Include="GenerateStepDefinitions.stepdefinitions.cs" />
     <Compile Include="StepDefinitions\GenerateFeatureRunner.cs" />
     <Compile Include="StepDefinitions\GenerateScenario.cs" />
     <Compile Include="StepDefinitions\GenerateSteps.cs" />
@@ -91,9 +91,9 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateScenario.feature.cs</LastGenOutput>
     </None>
-    <None Include="DeclareStepDefinitions.feature">
+    <None Include="GenerateStepDefinitions.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>DeclareStepDefinitions.cs</LastGenOutput>
+      <LastGenOutput>GenerateStepDefinitions.runner.cs</LastGenOutput>
     </None>
     <None Include="GenerateSteps.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

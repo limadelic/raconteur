@@ -10,5 +10,10 @@ namespace Raconteur.IDE
         public void AddStepDefinitions(string FeatureFile, string Content)
         {
         }
+
+        public bool ContainsStepDefinitions(string FeatureFile) 
+        { 
+            return false;
+        }
     }
 }

@@ -31,29 +31,46 @@ namespace Raconteur.IDE
             this.Project = Project;
             DefaultNamespace = Project.Properties.Item("DefaultNamespace").Value as string;
         }
-        
+
+        string FeatureFile { get; set; }
+
         public virtual void AddStepDefinitions(string FeatureFile, string Content)
         {
-            var FeatureFileItem = Project.ProjectItems.Cast<ProjectItem>()
-                .FirstOrDefault(Item => Item.Name == FeatureFile + ".feature");
+            this.FeatureFile = FeatureFile;
 
-            var DefinitionPath = FeatureFileItem.FileNames[0]
-                .Replace(".feature", ".steps.cs");
+            AddFile(StepsFile, Content);
 
-            AddFile(DefinitionPath, Content);
-
-            FeatureFileItem.ProjectItems.AddFromFile(DefinitionPath);
+            FeatureFileItem.ProjectItems.AddFromFile(StepsFile);
         }
 
-        void AddFile(string DefinitionPath, string Content) 
+        ProjectItem FeatureFileItem
         {
-            using (var FileWriter = new StreamWriter(DefinitionPath))
+            get
+            {
+                return Project.ProjectItems.Cast<ProjectItem>()
+                    .FirstOrDefault(Item => Item.Name == FeatureFile + ".feature");
+            }
+        }
+
+        void AddFile(string Name, string Content) 
+        {
+            using (var FileWriter = new StreamWriter(Name))
                 FileWriter.Write(Content);
+        }
+
+        string StepsFile
+        {
+            get
+            {
+                return FeatureFileItem.FileNames[0].Replace(".feature", ".steps.cs");
+            } 
         }
 
         public bool ContainsStepDefinitions(string FeatureFile) 
         { 
-            return File.Exists(FeatureFile + ".steps.cs");
+            this.FeatureFile = FeatureFile;
+
+            return File.Exists(StepsFile);
         }
     }
 }

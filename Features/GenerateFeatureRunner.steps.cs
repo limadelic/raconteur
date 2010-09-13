@@ -1,11 +1,11 @@
-﻿using FluentSpec;
+using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 
-namespace Features.StepDefinitions
+namespace Features 
 {
-    public class GenerateFeatureRunner
+    public partial class GenerateFeatureRunner 
     {
         protected string Runner;
 

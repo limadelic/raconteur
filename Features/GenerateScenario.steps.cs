@@ -3,9 +3,9 @@ using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 
-namespace Features.StepDefinitions
+namespace Features 
 {
-    public class GenerateScenario
+    public partial class GenerateScenario 
     {
         private string Runner;
 

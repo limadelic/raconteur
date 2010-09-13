@@ -2,9 +2,9 @@ using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 
-namespace Features.StepDefinitions
+namespace Features 
 {
-    public class GenerateSteps
+    public partial class GenerateSteps 
     {
         string Runner;
 

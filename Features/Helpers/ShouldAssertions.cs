@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using FluentSpec;
 
-namespace Features.StepDefinitions
+namespace Features
 {
     static class ShouldAssertions
     {

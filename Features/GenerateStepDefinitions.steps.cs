@@ -4,9 +4,10 @@ using Raconteur.IDE;
 using Raconteur.IDEIntegration;
 using Specs;
 
-namespace Features
+
+namespace Features 
 {
-    public partial class GenerateStepDefinitions
+    public partial class GenerateStepDefinitions 
     {
         RaconteurSingleFileGenerator Generator;
 

@@ -37,7 +37,7 @@ namespace {0}
             this.Feature = Feature;
             return string.Format(RunnerClass, 
                 Feature.Namespace, 
-                Feature.FileName, 
+                Feature.Name, 
                 ScenariosImpl);
         }
 

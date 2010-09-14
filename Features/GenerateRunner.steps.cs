@@ -5,7 +5,7 @@ using Raconteur.IDE;
 
 namespace Features 
 {
-    public partial class GenerateFeatureRunner 
+    public partial class GenerateRunner 
     {
         protected string Runner;
 
@@ -36,9 +36,9 @@ namespace Features
             Runner.ShouldContain("[TestClass]");
         }
 
-        public void And_it_should_be_named_FeatureFileName()
+        void And_it_should_be_named_FeatureName()
         {
-            Runner.ShouldContain("public partial class RaconteurFeature1");
+            Runner.ShouldContain("public partial class FeatureName");
         }
 
         public void And_it_should_be_on_the_Feature_Namespace()

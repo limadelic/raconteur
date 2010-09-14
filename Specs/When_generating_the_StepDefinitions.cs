@@ -16,7 +16,8 @@ namespace Specs
             {
                 StepDefinitions = The.StepDefinitionsFor(new Feature
                 {
-                    FileName = "Name",
+                    Name = "Name",
+                    FileName = "File Name",
                     Namespace = "Features",
                     Scenarios =
                     {

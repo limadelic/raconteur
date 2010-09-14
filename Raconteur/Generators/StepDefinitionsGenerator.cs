@@ -25,7 +25,7 @@ namespace {0}
         {
             return string.Format(StepDefinitionsClass, 
                 Feature.Namespace, 
-                Feature.FileName);
+                Feature.Name);
         }
 
         public string DeclareStep(string Step) 

@@ -14,7 +14,7 @@
         @"
 namespace  
 {
-    public partial class Feature 
+    public partial class HasOneScenario 
     {
     }
 }

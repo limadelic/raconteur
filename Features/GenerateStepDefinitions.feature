@@ -9,3 +9,4 @@ Scenario: Create Step Definitions file
 Scenario: Update Feature file
 	When the Feature file is updated
 	The StepDefinitions file should not be recreated
+

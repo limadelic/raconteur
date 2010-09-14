@@ -1,6 +1,8 @@
+using EnvDTE;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.Parsers;
+using Project = Raconteur.IDE.Project;
 
 namespace Raconteur
 {
@@ -36,9 +38,9 @@ namespace Raconteur
             } 
         }
 
-        public static Project ProjectFrom(EnvDTE.Project Project)
+        public static Project ProjectFrom(ProjectItem FeatureFile)
         {
-            return new VsProject(Project);
+            return new VsProject(FeatureFile);
         }
     }
 }

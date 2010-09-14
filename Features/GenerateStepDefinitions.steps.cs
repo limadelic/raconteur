@@ -34,18 +34,18 @@ namespace Features
 
         public void The_StepDefinitions_file_should_be_created()
         {
-            Project.Received().AddStepDefinitions("Feature", StepDefinitions);
+            Project.Received().AddStepDefinitions(StepDefinitions);
         }
 
         void When_the_Feature_file_is_updated()
         {
-            Project.ContainsStepDefinitions("Feature").Returns(true);
+            Project.ContainsStepDefinitions.Returns(true);
             Generator.GenerateCode(Actors.FeatureWithOneScenario);
         }
 
         void The_StepDefinitions_file_should_not_be_recreated()
         {
-            Project.DidNotReceive().AddStepDefinitions("Feature", StepDefinitions);
+            Project.DidNotReceive().AddStepDefinitions(StepDefinitions);
         }
     }
 }

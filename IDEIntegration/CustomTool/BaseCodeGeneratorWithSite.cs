@@ -86,14 +86,14 @@ namespace Raconteur.IDEIntegration
             }
         }
 
-        public Project CurrentProject
+        public ProjectItem FeatureFile
         {
-            get { return GetProjectForSourceFile(DTE); }
+            get { return GetProjectItemForSourceFile(DTE); }
         }
 
         readonly Exception NoDTE = new InvalidOperationException("Unable to detect current project.");
 
-        Project GetProjectForSourceFile(DTE Dte)
+        ProjectItem GetProjectItemForSourceFile(DTE Dte)
         {
             if (Dte == null) throw NoDTE;
 
@@ -101,7 +101,7 @@ namespace Raconteur.IDEIntegration
 
             if (ProjectItem == null) throw NoDTE;
             
-            return ProjectItem.ContainingProject;
+            return ProjectItem;
         }
 
         T Get<T>(Guid ServiceId, Guid Id)

@@ -6,7 +6,8 @@ namespace Raconteur.IDE
 {
     public class VsProject : Project
     {
-        public readonly EnvDTE.Project Project;
+        public EnvDTE.Project Project { get { return FeatureItem.ContainingProject; } }
+
         public string DefaultNamespace { get; set; }
         
         public string ProjectName
@@ -26,30 +27,44 @@ namespace Raconteur.IDE
 
         public VsProject() {}
 
-        public VsProject(EnvDTE.Project Project)
+        public VsProject(ProjectItem FeatureItem)
         {
-            this.Project = Project;
+            this.FeatureItem = FeatureItem;
+
+            StepsItem = FeatureItem.ProjectItems.Cast<ProjectItem>()
+                .FirstOrDefault(Item => Item.Name.EndsWith(".steps.cs"));
+
             DefaultNamespace = Project.Properties.Item("DefaultNamespace").Value as string;
         }
 
-        string FeatureFile { get; set; }
+        ProjectItem FeatureItem { get; set;  }    
+        ProjectItem StepsItem { get; set;  }    
 
-        public virtual void AddStepDefinitions(string FeatureFile, string Content)
+        public virtual void AddStepDefinitions(string Content)
         {
-            this.FeatureFile = FeatureFile;
-
-            AddFile(StepsFile, Content);
-
-            FeatureFileItem.ProjectItems.AddFromFile(StepsFile);
+            if (HasSteps) RenameSteps();
+            else AddFile(StepsFile, Content);
+                
+            FeatureItem.ProjectItems.AddFromFile(StepsFile);
         }
 
-        ProjectItem FeatureFileItem
+        void RenameSteps() 
+        { 
+            File.Move(ExistingStepsFile, StepsFile);
+            StepsItem.Remove();
+        }
+
+        protected string ExistingStepsFile
         {
             get
             {
-                return Project.ProjectItems.Cast<ProjectItem>()
-                    .FirstOrDefault(Item => Item.Name == FeatureFile + ".feature");
-            }
+                return StepsItem == null ? null : StepsItem.FileNames[0];
+            } 
+        }
+
+        protected bool HasSteps
+        {
+            get { return StepsItem != null; } 
         }
 
         void AddFile(string Name, string Content) 
@@ -62,15 +77,13 @@ namespace Raconteur.IDE
         {
             get
             {
-                return FeatureFileItem.FileNames[0].Replace(".feature", ".steps.cs");
+                return FeatureItem.FileNames[0].Replace(".feature", ".steps.cs");
             } 
         }
 
-        public bool ContainsStepDefinitions(string FeatureFile) 
-        { 
-            this.FeatureFile = FeatureFile;
-
-            return File.Exists(StepsFile);
+        public bool ContainsStepDefinitions 
+        {
+            get { return File.Exists(StepsFile); } 
         }
     }
 }

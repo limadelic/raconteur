@@ -1,22 +1,33 @@
 using System;
+using System.Linq;
+using EnvDTE;
+using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.Parsers;
+using Raconteur;
 
 namespace Specs
 {
     [TestFixture]
     public class When_parsing_a_FeatureFile
     {
+        string FeatureFile;
+
         [Test]
         public void it()
         {
 //            var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-//            var projectItem = Dte2.Solution.FindProjectItem(@"A:\dev\raconteur\Features\StepDefinitions\GenerateFeatureRunner.cs");
-//            var FileContents = DteProjectReader.GetFileContent(projectItem);
-//            FileContents.ShouldNotBeNull();
+//
+//            FeatureFile = @"A:\dev\raconteur\Features\RaconteurFeature2.feature";
+//
+//            var ProjectItem = Dte2.Solution.FindProjectItem(FeatureFile);
+//
+//            var Project = ObjectFactory.ProjectFrom(ProjectItem);
+//
+//            Project.AddStepDefinitions(null);
         }
 
         [TestFixture]

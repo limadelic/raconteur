@@ -4,7 +4,7 @@ namespace Raconteur.IDE
     {
         string DefaultNamespace { get; set; }
 
-        void AddStepDefinitions(string FeatureFile, string Content);
-        bool ContainsStepDefinitions(string FeatureFile);
+        void AddStepDefinitions(string Content);
+        bool ContainsStepDefinitions { get; }
     }
 }

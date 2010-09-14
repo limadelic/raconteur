@@ -17,8 +17,8 @@ namespace Raconteur.Generators
             var Runner = RunnerGenerator.RunnerFor(Feature);
             var StepDefinitions = StepDefinitionsGenerator.StepDefinitionsFor(Feature);
 
-            if (!Project.ContainsStepDefinitions(Feature.FileName))
-                Project.AddStepDefinitions(Feature.FileName, StepDefinitions);
+            if (!Project.ContainsStepDefinitions)
+                Project.AddStepDefinitions(StepDefinitions);
 
             return Runner;
         }

@@ -55,13 +55,15 @@
     </Compile>
     <Compile Include="GenerateRunner.steps.cs">
       <DependentUpon>GenerateRunner.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GenerateScenario.steps.cs">
+      <DependentUpon>GenerateScenario.feature</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="GenerateScenario.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GenerateScenario.feature</DependentUpon>
-    </Compile>
-    <Compile Include="GenerateScenario.steps.cs">
       <DependentUpon>GenerateScenario.feature</DependentUpon>
     </Compile>
     <Compile Include="GenerateStepDefinitions.runner.cs">

@@ -5,7 +5,7 @@ using Raconteur.IDE;
 
 namespace Features 
 {
-    public partial class GenerateRunner 
+    public partial class GenerateFeatureRunner 
     {
         protected string Runner;
 

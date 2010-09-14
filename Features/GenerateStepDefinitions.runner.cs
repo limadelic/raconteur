@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Features 
 {
     [TestClass]
-    public partial class GenerateStepDefinitions 
+    public partial class GenerateStepDefinitionsFile 
     {
         
         [TestMethod]

@@ -7,7 +7,7 @@ using Specs;
 
 namespace Features 
 {
-    public partial class GenerateStepDefinitions 
+    public partial class GenerateStepDefinitionsFile 
     {
         RaconteurSingleFileGenerator Generator;
 

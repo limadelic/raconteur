@@ -104,16 +104,17 @@
     <None Include="Install\source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <ZipItem Include="Templates\RaconteurFeature1.feature" />
+    <ZipItem Include="Templates\RaconteurFeature.feature" />
     <None Include="Install\vs.reg" />
     <None Include="Install\vs64.reg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Install\install.txt" />
-    <Content Include="Templates\RaconteurFeatureIcon.ico">
+    <Content Include="Icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <ZipItem Include="Templates\RaconteurFeatureIcon.ico" />
     <ZipItem Include="Templates\RaconteurFeature.vstemplate">
       <SubType>Designer</SubType>
     </ZipItem>

@@ -4,9 +4,9 @@ using EnvDTE;
 
 namespace Raconteur.IDE
 {
-    public class VsProject : Project
+    public class VsFeatureItem : FeatureItem
     {
-        public EnvDTE.Project Project { get { return FeatureItem.ContainingProject; } }
+        public Project Project { get { return FeatureItem.ContainingProject; } }
 
         public string DefaultNamespace { get; set; }
         
@@ -25,9 +25,9 @@ namespace Raconteur.IDE
             get { return Path.GetFileNameWithoutExtension(Project.FullName); }
         }
 
-        public VsProject() {}
+        public VsFeatureItem() {}
 
-        public VsProject(ProjectItem FeatureItem)
+        public VsFeatureItem(ProjectItem FeatureItem)
         {
             this.FeatureItem = FeatureItem;
 
@@ -84,6 +84,17 @@ namespace Raconteur.IDE
         public bool ContainsStepDefinitions 
         {
             get { return File.Exists(StepsFile); } 
+        }
+
+        public string ExistingStepDefinitions
+        {
+            get 
+            { 
+                if (!ContainsStepDefinitions) return null;
+
+                using (var FileReader = new StreamReader(StepsFile))
+                    return FileReader.ReadToEnd();
+            }
         }
     }
 }

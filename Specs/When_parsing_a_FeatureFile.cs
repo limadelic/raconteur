@@ -1,52 +1,32 @@
 using System;
-using System.Linq;
-using EnvDTE;
-using EnvDTE80;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.Parsers;
-using Raconteur;
 
 namespace Specs
 {
     [TestFixture]
     public class When_parsing_a_FeatureFile
     {
-        string FeatureFile;
-
-        [Test]
-        public void it()
-        {
-//            var Dte2 = (DTE2)System.Runtime.InteropServices.Marshal.GetActiveObject("VisualStudio.DTE.10.0");
-//
-//            FeatureFile = @"A:\dev\raconteur\Features\RaconteurFeature2.feature";
-//
-//            var ProjectItem = Dte2.Solution.FindProjectItem(FeatureFile);
-//
-//            var Project = ObjectFactory.ProjectFrom(ProjectItem);
-//
-//            Project.AddStepDefinitions(null);
-        }
-
         [TestFixture]
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
         {
             readonly FeatureFile FeatureFile = new FeatureFile();
-            readonly VsProject VsProject = new VsProject();
+            readonly VsFeatureItem VsFeatureItem = new VsFeatureItem();
 
             [Test]
             public void should_read_the_name()
             {
                 FeatureFile.Content = Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever";
                 
-                The.FeatureFrom(FeatureFile, VsProject).Name
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Name
                     .ShouldBe("FeatureName");
 
                 FeatureFile.Content = Actors.FeatureWithNoScenarios;
                 
-                The.FeatureFrom(FeatureFile, VsProject).Name
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Name
                     .ShouldBe("FeatureName");
             }
 
@@ -55,7 +35,7 @@ namespace Specs
             {
                 FeatureFile.Content = "Feature: feature name";
                 
-                The.FeatureFrom(FeatureFile, VsProject).Name
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Name
                     .ShouldBe("FeatureName");
             }
             
@@ -64,7 +44,7 @@ namespace Specs
             {
                 FeatureFile.Content = Actors.FeatureWithThreeScenarios;
 
-                When.FeatureFrom(FeatureFile, VsProject);
+                When.FeatureFrom(FeatureFile, VsFeatureItem);
 
                 Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
             }
@@ -72,13 +52,13 @@ namespace Specs
             [Test]
             public void should_extract_namespace_and_file_name()
             {
-                VsProject.DefaultNamespace = "MyNamespace";
+                VsFeatureItem.DefaultNamespace = "MyNamespace";
                 FeatureFile.Name = "MyFileName";
 
-                The.FeatureFrom(FeatureFile, VsProject).Namespace
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Namespace
                     .ShouldBe("MyNamespace");
 
-                The.FeatureFrom(FeatureFile, VsProject).FileName
+                The.FeatureFrom(FeatureFile, VsFeatureItem).FileName
                     .ShouldBe("MyFileName");
             }
         }

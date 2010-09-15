@@ -85,6 +85,14 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\ShouldAssertions.cs" />
+    <Compile Include="RefactorFeature.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RefactorFeature.feature</DependentUpon>
+    </Compile>
+    <Compile Include="RefactorFeature.steps.cs">
+      <DependentUpon>RefactorFeature.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GenerateRunner.feature">
@@ -102,6 +110,10 @@
     <None Include="GenerateSteps.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateSteps.runner.cs</LastGenOutput>
+    </None>
+    <None Include="RefactorFeature.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>RefactorFeature.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

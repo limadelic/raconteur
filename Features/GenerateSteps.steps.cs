@@ -30,7 +30,7 @@ namespace Features
 
             RunnerGenerator = new RunnerGenerator();
 
-            var Feature = Parser.FeatureFrom(featureFile, new VsProject());
+            var Feature = Parser.FeatureFrom(featureFile, new VsFeatureItem());
 
             Runner = RunnerGenerator.RunnerFor(Feature);
         }

@@ -54,5 +54,26 @@ namespace
                 }
             }
         ";
+
+        public static class DefinedFeature
+        {
+            public const string FeatureDefintion =
+            @"
+                Feature: Feature Name
+                Scenario: has one step
+                This is a step
+            ";
+
+            public const string StepsDefintion =
+            @"
+                public partial class FeatureName 
+                {
+                    public void This_is_one_step()
+                    {
+                        var thing = string.Empty;
+                    }
+                }
+            ";
+        }
     }
 }

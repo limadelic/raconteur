@@ -2,17 +2,16 @@ using EnvDTE;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.Parsers;
-using Project = Raconteur.IDE.Project;
 
 namespace Raconteur
 {
     public static class ObjectFactory
     {
-        public static RaconteurGenerator NewRaconteurGenerator(Project Project)
+        public static RaconteurGenerator NewRaconteurGenerator(FeatureItem FeatureItem)
         {
             return new RaconteurGeneratorClass
             {
-                Project = Project,
+                FeatureItem = FeatureItem,
                 FeatureParser = NewFeatureParser,
                 RunnerGenerator = new RunnerGenerator(),
                 StepDefinitionsGenerator = new StepDefinitionsGenerator(),
@@ -38,9 +37,9 @@ namespace Raconteur
             } 
         }
 
-        public static Project ProjectFrom(ProjectItem FeatureFile)
+        public static FeatureItem FeatureItemFrom(ProjectItem FeatureFile)
         {
-            return new VsProject(FeatureFile);
+            return new VsFeatureItem(FeatureFile);
         }
     }
 }

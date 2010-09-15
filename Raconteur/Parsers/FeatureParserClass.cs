@@ -10,7 +10,7 @@ namespace Raconteur.Parsers
         string Content;
         public ScenarioParser ScenarioParser { get; set; }
 
-        public Feature FeatureFrom(FeatureFile FeatureFile, Project Project)
+        public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
             if (FeatureFile == null) return new Feature();
             Content = FeatureFile.Content;
@@ -18,7 +18,7 @@ namespace Raconteur.Parsers
             return new Feature
             {
                 FileName = FeatureFile.Name,
-                Namespace = Project.DefaultNamespace,
+                Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
                 Scenarios = ScenarioParser.ScenariosFrom(Content)
             };

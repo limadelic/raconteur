@@ -11,18 +11,18 @@ namespace Features
     {
         RaconteurSingleFileGenerator Generator;
 
-        Project Project;
+        FeatureItem FeatureItem;
 
         const string StepDefinitions = Actors.StepDefinitionsForFeatureWithOneScenario;
 
         [TestInitialize]
         public void SetUp()
         {
-            Project = Substitute.For<Project>();
+            FeatureItem = Substitute.For<FeatureItem>();
 
             Generator = new RaconteurSingleFileGenerator
             {
-                Project = Project, 
+                FeatureItem = FeatureItem, 
                 CodeFilePath = "Feature"
             };
         }
@@ -34,18 +34,7 @@ namespace Features
 
         public void The_StepDefinitions_file_should_be_created()
         {
-            Project.Received().AddStepDefinitions(StepDefinitions);
-        }
-
-        void When_the_Feature_file_is_updated()
-        {
-            Project.ContainsStepDefinitions.Returns(true);
-            Generator.GenerateCode(Actors.FeatureWithOneScenario);
-        }
-
-        void The_StepDefinitions_file_should_not_be_recreated()
-        {
-            Project.DidNotReceive().AddStepDefinitions(StepDefinitions);
+            FeatureItem.Received().AddStepDefinitions(StepDefinitions);
         }
     }
 }

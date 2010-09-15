@@ -9,19 +9,19 @@ namespace Raconteur.IDEIntegration
     [ProvideObject(typeof(RaconteurSingleFileGenerator))]
     public class RaconteurSingleFileGenerator : BaseCodeGeneratorWithSite
     {
-        Project project;
-        public Project Project
+        FeatureItem featureItem;
+        public FeatureItem FeatureItem
         {
-            get { return project ?? LoadProject; } 
-            set { project = value; } 
+            get { return featureItem ?? LoadFeatureItem; } 
+            set { featureItem = value; } 
         }
-        Project LoadProject
+        FeatureItem LoadFeatureItem
         {
             get
             {
-                var NewProject = ObjectFactory.ProjectFrom(FeatureFile);
-                NewProject.DefaultNamespace = NewProject.DefaultNamespace ?? CodeFileNameSpace;
-                return NewProject;
+                var NewFeatureItem = ObjectFactory.FeatureItemFrom(FeatureFile);
+                NewFeatureItem.DefaultNamespace = NewFeatureItem.DefaultNamespace ?? CodeFileNameSpace;
+                return NewFeatureItem;
             }
         }
 
@@ -32,7 +32,7 @@ namespace Raconteur.IDEIntegration
 
         public override string GenerateCode(string InputFileContent)
         {
-            return ObjectFactory.NewRaconteurGenerator(Project)
+            return ObjectFactory.NewRaconteurGenerator(FeatureItem)
                 .Generate(CodeFilePath, InputFileContent);
         }
     }

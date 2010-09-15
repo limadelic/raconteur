@@ -17,7 +17,7 @@ namespace Features
                 Content = "Feature: Feature Name",
             };
 
-            var Project = new VsProject
+            var Project = new VsFeatureItem
             {
                 DefaultNamespace = "Features",
             };

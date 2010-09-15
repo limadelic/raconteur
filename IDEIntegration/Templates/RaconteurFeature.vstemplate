@@ -1,13 +1,13 @@
 <VSTemplate Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
   <TemplateData>
-    <DefaultName>RaconteurFeature.feature</DefaultName>
-    <Name>Raconteur Feature File</Name>
-    <Description>Raconteur Feature</Description>
+    <DefaultName>Feature1.feature</DefaultName>
+    <Name>Feature File</Name>
+    <Description>Feature</Description>
     <ProjectType>CSharp</ProjectType>
     <SortOrder>10</SortOrder>
     <Icon>RaconteurFeatureIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <ProjectItem SubType="" TargetFileName="$fileinputname$.feature" ReplaceParameters="false">RaconteurFeature1.feature</ProjectItem>
+    <ProjectItem SubType="" TargetFileName="$fileinputname$.feature" ReplaceParameters="false">Feature1.feature</ProjectItem>
   </TemplateContent>
 </VSTemplate>

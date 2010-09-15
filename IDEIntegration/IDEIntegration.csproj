@@ -110,32 +110,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Install\install.txt" />
-    <Content Include="Resources\gherkin.ico">
-      <Link>gherkin.ico</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\specflowsetup.ico">
-      <Link>specflowsetup.ico</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Resources\specflow_preview.png">
-      <Link>specflow_preview.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Install\specflowsetup.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Install\specflow_preview.png">
+    <Content Include="Templates\RaconteurFeatureIcon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <ZipItem Include="Templates\RaconteurFeature.vstemplate">
       <SubType>Designer</SubType>
     </ZipItem>
-    <ZipItem Include="Templates\RaconteurFeatureIcon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Raconteur\Raconteur.csproj">

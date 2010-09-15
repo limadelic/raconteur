@@ -114,7 +114,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <ZipItem Include="Templates\RaconteurFeatureIcon.ico" />
+    <ZipItem Include="Templates\RaconteurFeature.ico" />
     <ZipItem Include="Templates\RaconteurFeature.vstemplate">
       <SubType>Designer</SubType>
     </ZipItem>

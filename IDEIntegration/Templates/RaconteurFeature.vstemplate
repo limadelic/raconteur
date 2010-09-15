@@ -5,7 +5,7 @@
     <Description>Feature</Description>
     <ProjectType>CSharp</ProjectType>
     <SortOrder>10</SortOrder>
-    <Icon>RaconteurFeatureIcon.ico</Icon>
+    <Icon>RaconteurFeature.ico</Icon>
   </TemplateData>
   <TemplateContent>
     <ProjectItem SubType="" TargetFileName="$fileinputname$.feature" ReplaceParameters="false">RaconteurFeature.feature</ProjectItem>

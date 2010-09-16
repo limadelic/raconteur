@@ -88,7 +88,8 @@ namespace
 
             public const string StepsDefinition =
             @"
-                public partial class FeatureName {
+                public partial class FeatureName
+                {
 
                     public void This_is_one_step() {
 
@@ -106,7 +107,8 @@ namespace
 
             public const string RenamedStepsDefinition =
             @"
-                public partial class RenamedFeature {
+                public partial class RenamedFeature
+                {
 
                     public void This_is_one_step() {
 

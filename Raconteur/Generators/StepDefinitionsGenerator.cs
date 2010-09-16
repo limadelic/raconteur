@@ -25,7 +25,7 @@ namespace {0}
         {
             const string ClassDeclaration = "public partial class ";
 
-            var Regex = new Regex(ClassDeclaration + @"(.+)[{]");
+            var Regex = new Regex(ClassDeclaration + @"(.+)\b");
             var ClassName = Regex.Match(ExistingStepDefinitions).Groups[1].Value.Trim();
 
             return ExistingStepDefinitions.Replace(

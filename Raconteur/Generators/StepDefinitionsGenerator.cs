@@ -24,9 +24,11 @@ namespace {0}
         private string RefactorStepDefinitions(Feature Feature, string ExistingStepDefinitions)
         {
             var Regex = new Regex(@"public partial class (.+)");
-            var Match = Regex.Match(ExistingStepDefinitions).Groups[1].Value.Trim();
+            var ClassName = Regex.Match(ExistingStepDefinitions).Groups[1].Value.Trim();
 
-            return ExistingStepDefinitions.Replace(Match, Feature.Name);
+            return ExistingStepDefinitions.Replace(
+                "class " + ClassName, 
+                "class " + Feature.Name);
         }
 
         private string CreateNewStepDefinitions(Feature Feature)

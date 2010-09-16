@@ -15,25 +15,21 @@ namespace Features
         {
             Item.ContainsStepDefinitions.Returns(true);
             Item.ExistingStepDefinitions
-                .Returns(Actors.DefinedFeature.StepsDefintion);
+                .Returns(Actors.DefinedFeature.StepsDefinition);
 
             Generator = ObjectFactory.NewRaconteurGenerator(Item);
         }
 
         void If_I_rename_it()
         {
-            var RenamedFeature = Actors.DefinedFeature.FeatureDefintion
-                .Replace("Feature Name", "Renamed Feature");
-
-            Generator.Generate("FileName.cs", RenamedFeature);
+            Generator.Generate("FileName.cs", 
+                Actors.DefinedFeature.RenamedFeatureDefinition);
         }
 
         void Then_the_steps_and_the_runner_should_reflect_the_change()
         {
-            var NewDefinitions = Actors.DefinedFeature.StepsDefintion
-                .Replace("FeatureName", "RenamedFeature");
-
-            Item.Received().AddStepDefinitions(NewDefinitions);
+            Item.Received().AddStepDefinitions(
+                Actors.DefinedFeature.RenamedStepsDefinition);
         }
     }
 }

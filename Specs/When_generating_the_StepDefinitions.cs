@@ -37,7 +37,7 @@ namespace Specs
             [FixtureSetUp]
             public void SetUp()
             {
-                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefintion);
+                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefinition);
             }
 
             [Test]
@@ -50,7 +50,7 @@ namespace Specs
             [Test]
             public void should_keep_defined_content()
             {
-                StepDefinitions.ShouldContain("var thing = string.Empty");
+                StepDefinitions.ShouldContain("var thing = FeatureName");
             }
         }
     }

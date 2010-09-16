@@ -79,20 +79,38 @@ namespace
 
         public static class DefinedFeature
         {
-            public const string FeatureDefintion =
+            public const string FeatureDefinition =
             @"
                 Feature: Feature Name
                 Scenario: has one step
                 This is a step
             ";
 
-            public const string StepsDefintion =
+            public const string StepsDefinition =
             @"
                 public partial class FeatureName 
                 {
                     public void This_is_one_step()
                     {
-                        var thing = string.Empty;
+                        var thing = FeatureName;
+                    }
+                }
+            ";
+
+            public const string RenamedFeatureDefinition =
+            @"
+                Feature: Renamed Feature
+                Scenario: has one step
+                This is a step
+            ";
+
+            public const string RenamedStepsDefinition =
+            @"
+                public partial class RenamedFeature 
+                {
+                    public void This_is_one_step()
+                    {
+                        var thing = FeatureName;
                     }
                 }
             ";

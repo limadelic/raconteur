@@ -7,78 +7,49 @@ namespace Specs
 {
     public class When_generating_the_StepDefinitions
     {
+        static string StepDefinitions;
+
         [TestFixture]
-        public class a_generator : BehaviorOf<StepDefinitionsGenerator>
+        public class for_the_first_time : BehaviorOf<StepDefinitionsGenerator>
         {
-            string StepDefinitions;
-
-            public void given_no_existing_defintions_a_generator()
+            [FixtureSetUp]
+            public void SetUp()
             {
-                StepDefinitions = The.StepDefinitionsFor(new Feature
-                {
-                    Name = "Name",
-                    FileName = "File Name",
-                    Namespace = "Features",
-                    Scenarios =
-                        {
-                            new Scenario
-                                {
-                                    Name = "Scenario 1",
-                                    Steps = { "Unique step", "Repeated step" }
-                                },                            
-                            new Scenario
-                                {
-                                    Name = "Scenario 2",
-                                    Steps = { "Repeated step", "Another unique step" }
-                                },                            
-                        }
-                }, null);
-            }
-
-            public void given_existing_defintions_a_generator()
-            {
-                StepDefinitions = The.StepDefinitionsFor(new Feature
-                {
-                    Name = "Name",
-                    FileName = "File Name",
-                    Namespace = "Features",
-                    Scenarios =
-                    {
-                        new Scenario
-                            {
-                                Name = "Scenario 1",
-                                Steps = { "Unique step", "Repeated step" }
-                            },                            
-                        new Scenario
-                            {
-                                Name = "Scenario 2",
-                                Steps = { "Repeated step", "Another unique step" }
-                            },                            
-                    }
-                }, Actors.DefinedFeature.StepsDefintion);
+                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, null);
             }
 
             [Test]
             public void should_generate_the_StepDefinitions_namespace()
             {
-                given_no_existing_defintions_a_generator();
                 StepDefinitions.ShouldContain("namespace Features");
             }
 
             [Test]
             public void should_generate_the_StepDefinitions_class()
             {
-                given_no_existing_defintions_a_generator();
                 StepDefinitions.ShouldContain("public partial class Name");
+            }
+        }
+
+        [TestFixture]
+        public class with_existing_steps : BehaviorOf<StepDefinitionsGenerator>
+        {
+            [FixtureSetUp]
+            public void SetUp()
+            {
+                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefintion);
+            }
+
+            [Test]
+            public void should_change_the_class_name()
+            {
+                StepDefinitions.ShouldContain("public partial class Name");
+                StepDefinitions.ShouldNotContain("public partial class FeatureName");
             }
 
             [Test]
             public void should_keep_defined_content()
             {
-                given_existing_defintions_a_generator();
-
-                StepDefinitions.ShouldContain("public partial class Name");
-                StepDefinitions.ShouldNotContain("public partial class FeatureName");
                 StepDefinitions.ShouldContain("var thing = string.Empty");
             }
         }

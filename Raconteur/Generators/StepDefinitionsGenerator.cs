@@ -32,8 +32,8 @@ namespace {0}
         private string CreateNewStepDefinitions(Feature Feature)
         {
             return string.Format(StepDefinitionsClass, 
-                                 Feature.Namespace, 
-                                 Feature.Name);
+                Feature.Namespace, 
+                Feature.Name);
         }
     }
 }

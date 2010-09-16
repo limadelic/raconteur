@@ -43,7 +43,8 @@ namespace Raconteur.IDE
         public virtual void AddStepDefinitions(string Content)
         {
             if (HasSteps) RenameSteps();
-            else AddFile(StepsFile, Content);
+            
+            Write(StepsFile, Content);
                 
             FeatureItem.ProjectItems.AddFromFile(StepsFile);
         }
@@ -67,7 +68,7 @@ namespace Raconteur.IDE
             get { return StepsItem != null; } 
         }
 
-        void AddFile(string Name, string Content) 
+        void Write(string Name, string Content) 
         {
             using (var FileWriter = new StreamWriter(Name))
                 FileWriter.Write(Content);

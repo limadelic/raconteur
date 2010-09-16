@@ -1,4 +1,6 @@
-﻿namespace Specs
+﻿using Raconteur;
+
+namespace Specs
 {
     public class Actors
     {
@@ -54,6 +56,26 @@ namespace
                 }
             }
         ";
+
+        public readonly static Feature Feature = new Feature
+        {
+            Name = "Name",
+            FileName = "File Name",
+            Namespace = "Features",
+            Scenarios =
+                {
+                    new Scenario
+                    {
+                        Name = "Scenario 1",
+                        Steps = { "Unique step", "Repeated step" }
+                    },                            
+                    new Scenario
+                    {
+                        Name = "Scenario 2",
+                        Steps = { "Repeated step", "Another unique step" }
+                    },                            
+                }
+        };
 
         public static class DefinedFeature
         {

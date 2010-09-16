@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?include Common.wxi?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <ComponentGroup Id="CompGroup_CoreFiles">
+      <ComponentRef Id="Comp_CoreFiles" />
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Component Id="Comp_CoreFiles" Guid="e8c005c1-1263-4941-9a70-91d505ba01ff">
+        <File Name="LICENSE.txt" Source="$(var.SolutionDir)\LICENSE.txt" />
+        <File Name="changelog.txt" Source="$(var.SolutionDir)\changelog.txt" />
+        <File Name="Raconteur.targets" Source="$(var.Raconteur.Tools.ProjectDir)\MsBuild\Raconteur.targets" />
+        <File Name="Raconteur.tasks" Source="$(var.Raconteur.Tools.ProjectDir)\MsBuild\Raconteur.tasks" />
+        <!-- File associations -->
+        <ProgId Id="FeatureFile" Description="Feature File" Icon="Icon.ico">
+          <Extension Id="feature" ContentType='application/text' />
+        </ProgId>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

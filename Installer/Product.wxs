@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?define ProductShortName = "Raconteur" ?>
+<?define ProductVersion = "0.0.1.1" ?>
+<?define ProductVersionText = "0.0.1.1" ?>
+<?define ProductUrl = "http://raconteur.github.com" ?>
+<?define Manufacturer = "Limadelic" ?>
+<?define UpgradeCode = "92df6b9f-8f85-4af8-bf63-d7b72650c323" ?>
+
+<?include Common.wxi?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" 
+           UpgradeCode="$(var.UpgradeCode)" 
+           Name="$(var.ProductShortName) $(var.ProductVersionText)" 
+           Version="$(var.ProductVersion)" 
+           Language="1033" 
+           Manufacturer="$(var.Manufacturer)">
+    
+    <Package Compressed="yes" InstallerVersion="200" ShortNames="no" Manufacturer="$(var.Manufacturer)"
+             Description="$(var.ProductShortName) $(var.ProductVersionText) ($(var.ProductVersion))"  />
+    <Media Id="1" Cabinet="Raconteur.cab" EmbedCab="yes" />
+
+    <!-- Major upgrade -->
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.ProductVersion)" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="0.0.0" IncludeMinimum="yes" Maximum="$(var.ProductVersion)" IncludeMaximum="no" Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+
+    <!-- Properties -->
+    <Property Id="ALLUSERS" Value="1" />
+    <Property Id="ARPHELPLINK" Value="$(var.ProductUrl)" />
+    <Property Id="ARPURLINFOABOUT" Value="$(var.ProductUrl)" />
+    <Property Id="ARPURLUPDATEINFO" Value="$(var.ProductUrl)" />
+
+    <PropertyRef Id="VS2010DEVENV" />
+
+    <!-- Launch conditions -->
+    <Condition Message="An administrator must approve or install [ProductName]."> Privileged </Condition>
+    <Condition Message="The same or a later version of [ProductName] is already installed."> NOT NEWERVERSIONDETECTED </Condition>
+
+    <!-- Root directories -->
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				  <Directory Id="INSTALLLOCATION" Name="$(var.ProductShortName)">
+				  </Directory>
+			</Directory>
+    </Directory>
+
+    <!-- core feature -->
+		<Feature Id="Feature_Complete" ConfigurableDirectory="INSTALLLOCATION" 
+             Absent="disallow" AllowAdvertise="no" Display="expand" Level="1" InstallDefault="local"
+             Title="$(var.ProductShortName) $(var.ProductVersionText)" >
+
+      <Feature Id="Feature_Core" Absent="disallow" AllowAdvertise="no" Level="1"
+               Title="Core Components">
+        <ComponentGroupRef Id="CompGroup_CoreFiles" />
+			  <ComponentGroupRef Id="Product.Generated" />
+      </Feature>
+
+      <Feature Id="Feature_VS2010" Level="1" AllowAdvertise="no"
+               Title="Visual Studio 2010 Integration" Description="Visual Studio 2010 Integration">
+        <Condition Level="0"> NOT VS2010DEVENV </Condition>
+        <ComponentGroupRef Id="CompGroup_VS2010" />
+      </Feature>
+
+    </Feature>
+
+    <!-- Custom actions -->
+    <CustomActionRef Id="VS2010InstallVSTemplates" />
+
+    <!-- icons -->
+    <Icon Id="Raconteur.ico" SourceFile="$(var.SetupResourcesDir)\Raconteur.ico"/>
+    <Property Id="ARPPRODUCTICON" Value="Raconteur.ico" />
+
+    <!-- Sequences -->
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallValidate" />
+      <!-- Runs during both install and uninstall -->
+      <InstallFinalize Sequence="7800" />
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <!-- Because we have a launch condition that uses the results of FindRelatedProducts, put it first. -->
+      <LaunchConditions After="FindRelatedProducts" />
+    </InstallUISequence>
+
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SetupResourcesDir)\EULA.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.SetupResourcesDir)\welcome_dialog.bmp" />
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.SetupResourcesDir)\header.bmp" />
+
+    <!-- User interface -->
+    <UIRef Id="WixUI_FeatureTree" />
+
+  </Product>
+  
+  
+</Wix>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define SetupResourcesDir = "$(var.SolutionDir)\Installer\Resources" ?>
+
+  <?define Vs2010RegPath = "Software\Microsoft\VisualStudio\10.0" ?>
+  
+  <?define CSharpLangId = "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}" ?>
+</Include>

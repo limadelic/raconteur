@@ -1,6 +1,5 @@
 using FluentSpec;
 using MbUnit.Framework;
-using Raconteur;
 using Raconteur.Generators;
 
 namespace Specs

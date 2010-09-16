@@ -21,17 +21,19 @@ namespace {0}
                 RefactorStepDefinitions(Feature, ExistingStepDefinitions);
         }
 
-        private string RefactorStepDefinitions(Feature Feature, string ExistingStepDefinitions)
+        string RefactorStepDefinitions(Feature Feature, string ExistingStepDefinitions)
         {
-            var Regex = new Regex(@"public partial class (.+)");
+            const string ClassDeclaration = "public partial class ";
+
+            var Regex = new Regex(ClassDeclaration + @"(.+)[{]");
             var ClassName = Regex.Match(ExistingStepDefinitions).Groups[1].Value.Trim();
 
             return ExistingStepDefinitions.Replace(
-                "class " + ClassName, 
-                "class " + Feature.Name);
+                ClassDeclaration + ClassName, 
+                ClassDeclaration + Feature.Name);
         }
 
-        private string CreateNewStepDefinitions(Feature Feature)
+        string CreateNewStepDefinitions(Feature Feature)
         {
             return string.Format(StepDefinitionsClass, 
                 Feature.Namespace, 

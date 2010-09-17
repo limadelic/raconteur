@@ -10,12 +10,10 @@
 
     <DirectoryRef Id="INSTALLLOCATION">
       <Component Id="Comp_CoreFiles" Guid="e8c005c1-1263-4941-9a70-91d505ba01ff">
-        <File Name="LICENSE.txt" Source="$(var.SolutionDir)\LICENSE.txt" />
-        <File Name="changelog.txt" Source="$(var.SolutionDir)\changelog.txt" />
-        <File Name="Raconteur.targets" Source="$(var.Raconteur.Tools.ProjectDir)\MsBuild\Raconteur.targets" />
-        <File Name="Raconteur.tasks" Source="$(var.Raconteur.Tools.ProjectDir)\MsBuild\Raconteur.tasks" />
+        <File Name="LICENSE.txt" Source="$(var.SolutionDir)LICENSE.txt" />
+        <File Name="FeatureIcon.ico" Source="$(var.SetupResourcesDir)Icon.ico" />
         <!-- File associations -->
-        <ProgId Id="FeatureFile" Description="Feature File" Icon="Icon.ico">
+        <ProgId Id="FeatureFile" Description="Feature File" Icon="FeatureIcon.ico">
           <Extension Id="feature" ContentType='application/text' />
         </ProgId>
       </Component>

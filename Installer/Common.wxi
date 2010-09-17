@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-  <?define SetupResourcesDir = "$(var.SolutionDir)\Installer\Resources" ?>
+  <?define SetupResourcesDir = "$(var.SolutionDir)Installer\Resources\" ?>
+  <?define LiveDir = "$(var.SolutionDir)Live\" ?>
 
   <?define Vs2010RegPath = "Software\Microsoft\VisualStudio\10.0" ?>
   

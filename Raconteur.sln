@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs", "Specs\Specs.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDEIntegration", "IDEIntegration\IDEIntegration.csproj", "{96294E6F-8875-4D12-8577-4EC83E60BD6C}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RaconteurInstaller", "Installer\RaconteurInstaller.wixproj", "{89167EB9-F458-48DA-9D8F-F639A74F5871}"
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{89167EB9-F458-48DA-9D8F-F639A74F5871}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

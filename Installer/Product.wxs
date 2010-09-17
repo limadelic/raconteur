@@ -70,7 +70,7 @@
     <CustomActionRef Id="VS2010InstallVSTemplates" />
 
     <!-- icons -->
-    <Icon Id="Raconteur.ico" SourceFile="$(var.SetupResourcesDir)\Raconteur.ico"/>
+    <Icon Id="InstallIcon.ico" SourceFile="$(var.SetupResourcesDir)Icon.ico"/>
     <Property Id="ARPPRODUCTICON" Value="Raconteur.ico" />
 
     <!-- Sequences -->

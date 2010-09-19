@@ -1,4 +1,7 @@
+using System.CodeDom.Compiler;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.CSharp;
 
 namespace Raconteur
 {
@@ -18,9 +21,18 @@ namespace Raconteur
                     Result + Current.Capitalize());
         }
 
-        public static string Underscores(this string Sentence)
+        public static string ToValidIdentifier(this string Sentence)
         {
-            return Sentence.Trim().Replace(' ', '_');
+            var Regex = new Regex(
+                @"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+
+            var Result = Regex.Replace(Sentence.Trim(), "_"); 
+            
+            if (!char.IsLetter(Result, 0))
+                Result = string.Concat("_", Result);
+            
+            return CodeDomProvider.CreateProvider("C#")
+                .CreateEscapedIdentifier(Result);
         }
     }
 }

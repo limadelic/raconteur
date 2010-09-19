@@ -65,7 +65,7 @@ namespace Raconteur.Parsers
                 Name = Name,
                 Steps = (from Step in ScenarioDefinition 
                          where !string.IsNullOrWhiteSpace(Step)
-                         select Step.Underscores()).ToList()
+                         select Step.ToValidIdentifier()).ToList()
             };
         }
     }

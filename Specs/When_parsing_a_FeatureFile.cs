@@ -1,6 +1,7 @@
 using System;
 using FluentSpec;
 using MbUnit.Framework;
+using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.Parsers;
@@ -108,6 +109,25 @@ namespace Specs
                         Do what you like
                 ")[0].Steps[0]
                 .ShouldBe("Do_what_you_like");
+            }
+
+            [Test]
+            public void should_ensure_valid_identifier_names()
+            {
+                "1 invalid scenario".ToValidIdentifier()
+                    .ShouldBe("_1_invalid_scenario");
+
+                "Is this scenario invalid?".ToValidIdentifier()
+                    .ShouldBe("Is_this_scenario_invalid_");
+
+                "This scenario shouldn't be valid".ToValidIdentifier()
+                    .ShouldBe("This_scenario_shouldn_t_be_valid");
+
+                "false".ToValidIdentifier()
+                    .ShouldBe("@false");
+
+                "  this is a pretty valid scenario   ".ToValidIdentifier()
+                    .ShouldBe("this_is_a_pretty_valid_scenario");
             }
         }
     }

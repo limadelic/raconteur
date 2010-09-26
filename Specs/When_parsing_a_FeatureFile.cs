@@ -103,6 +103,9 @@ namespace Specs
             [Test]
             public void should_name_steps()
             {
+                Given.StepParser.StepFrom("Do what you like")
+                    .Is("Do_what_you_like");
+
                 The.ScenariosFrom(
                 @"
                     Scenario: Scenario Name
@@ -128,6 +131,17 @@ namespace Specs
 
                 "  this is a pretty valid scenario   ".ToValidIdentifier()
                     .ShouldBe("this_is_a_pretty_valid_scenario");
+            }
+        }
+
+        [TestFixture]
+        public class A_step_parser : BehaviorOf<StepParserClass>
+        {
+            [Test]
+            public void should_build_steps_from_sentences()
+            {
+                The.StepFrom("Do what you like")
+                    .ShouldBe("Do_what_you_like");
             }
         }
     }

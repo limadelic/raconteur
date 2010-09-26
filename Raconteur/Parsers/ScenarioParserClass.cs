@@ -9,6 +9,7 @@ namespace Raconteur.Parsers
         readonly char[] NewLine = Environment.NewLine.ToCharArray();
 
         const string ScenarioDeclaration = "Scenario: ";
+        public StepParser StepParser { get; set; }
 
         public List<Scenario> ScenariosFrom(string Content)
         {
@@ -63,9 +64,9 @@ namespace Raconteur.Parsers
             return new Scenario
             {
                 Name = Name,
-                Steps = (from Step in ScenarioDefinition 
-                         where !string.IsNullOrWhiteSpace(Step)
-                         select Step.ToValidIdentifier()).ToList()
+                Steps = (from Sentence in ScenarioDefinition 
+                         where !string.IsNullOrWhiteSpace(Sentence)
+                         select StepParser.StepFrom(Sentence.Trim())).ToList()
             };
         }
     }

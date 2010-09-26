@@ -4,7 +4,7 @@ using Raconteur.Generators;
 
 namespace Specs
 {
-    public class When_generating_the_StepDefinitions
+    public class When_generating_the_Steps
     {
         static string StepDefinitions;
 

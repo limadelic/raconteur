@@ -2,9 +2,9 @@
 {
     public class StepParserClass : StepParser 
     {
-        public string StepFrom(string Sentence)
+        public Step StepFrom(string Sentence)
         {
-            return Sentence.ToValidIdentifier();
+            return new Step{ Name = Sentence.ToValidIdentifier()};
         }
     }
 }

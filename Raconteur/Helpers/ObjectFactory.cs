@@ -24,7 +24,10 @@ namespace Raconteur
             {
                 return new FeatureParserClass
                 {
-                    ScenarioParser = new ScenarioParserClass()
+                    ScenarioParser = new ScenarioParserClass
+                    {
+                        StepParser = new StepParserClass()
+                    }
                 };
             }
         }

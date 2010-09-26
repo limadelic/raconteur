@@ -5,11 +5,11 @@ namespace Raconteur
     public class Scenario
     {
         public string Name { get; set; }
-        public List<string> Steps { get; set; }
+        public List<Step> Steps { get; set; }
 
         public Scenario()
         {
-            Steps = new List<string>();
+            Steps = new List<Step>();
         }
     }
 }

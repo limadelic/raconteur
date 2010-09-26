@@ -103,15 +103,14 @@ namespace Specs
             [Test]
             public void should_name_steps()
             {
-                Given.StepParser.StepFrom("Do what you like")
-                    .Is("Do_what_you_like");
+                var Step = TestObjectFor<Step>();
+                Given.StepParser.StepFrom("Do what you like").Is(Step);
 
                 The.ScenariosFrom(
                 @"
                     Scenario: Scenario Name
                         Do what you like
-                ")[0].Steps[0]
-                .ShouldBe("Do_what_you_like");
+                ")[0].Steps[0].ShouldBe(Step);
             }
 
             [Test]
@@ -141,7 +140,7 @@ namespace Specs
             public void should_build_steps_from_sentences()
             {
                 The.StepFrom("Do what you like")
-                    .ShouldBe("Do_what_you_like");
+                    .Name.ShouldBe("Do_what_you_like");
             }
         }
     }

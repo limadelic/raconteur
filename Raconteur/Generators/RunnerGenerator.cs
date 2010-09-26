@@ -54,7 +54,7 @@ namespace {0}
         string ScenarioCodeFrom(Scenario Scenario)
         {
             var StepCode = Scenario.Steps.Aggregate("",
-                (Steps, Step) => Steps + ExecuteStep(Step));
+                (Steps, Step) => Steps + ExecuteStep(Step.Name));
 
             return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
         }

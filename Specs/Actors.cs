@@ -67,12 +67,20 @@ namespace
                     new Scenario
                     {
                         Name = "Scenario 1",
-                        Steps = { "Unique step", "Repeated step" }
+                        Steps = 
+                        { 
+                            new Step{ Name = "Unique step" }, 
+                            new Step{ Name = "Repeated step" }
+                        }
                     },                            
                     new Scenario
                     {
                         Name = "Scenario 2",
-                        Steps = { "Repeated step", "Another unique step" }
+                        Steps =
+                        {
+                            new Step{ Name = "Repeated step" }, 
+                            new Step{ Name = "Another unique step" }
+                        }
                     },                            
                 }
         };

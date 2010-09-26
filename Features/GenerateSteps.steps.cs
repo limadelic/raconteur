@@ -1,47 +1,40 @@
-using Raconteur;
-using Raconteur.Generators;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using Raconteur.IDE;
+using Raconteur.IDEIntegration;
+using Specs;
+
 
 namespace Features 
 {
-    public partial class GenerateSteps 
+    public partial class GenerateStepDefinitionsFile 
     {
-        string Runner;
+        RaconteurSingleFileGenerator Generator;
 
-        RunnerGenerator RunnerGenerator;
+        FeatureItem FeatureItem;
 
-        public void When_a_Scenario_with_steps_is_generated()
+        const string StepDefinitions = Actors.StepDefinitionsForFeatureWithOneScenario;
+
+        [TestInitialize]
+        public void SetUp()
         {
-            var featureFile = new FeatureFile
+            FeatureItem = Substitute.For<FeatureItem>();
+
+            Generator = new RaconteurSingleFileGenerator
             {
-                Content = 
-                @"
-                    Feature: Feature Name
-
-                    Scenario: Scenario Name
-                        If something happens
-                        Then something else should happen
-                        If something happens
-                        And another thing too
-                "
+                FeatureItem = FeatureItem, 
+                CodeFilePath = "Feature"
             };
-
-            var Parser = ObjectFactory.NewFeatureParser;
-
-            RunnerGenerator = new RunnerGenerator();
-
-            var Feature = Parser.FeatureFrom(featureFile, new VsFeatureItem());
-
-            Runner = RunnerGenerator.RunnerFor(Feature);
         }
 
-        public void it_should_call_each_step_in_order() 
+        public void When_a_Feature_is_declared_for_the_first_time()
         {
-            Runner.ShouldContainInOrder(
-                "If_something_happens();",
-                "Then_something_else_should_happen();",
-                "If_something_happens();",
-                "And_another_thing_too();");
+            Generator.GenerateCode(Actors.FeatureWithOneScenario);
+        }
+
+        public void The_StepDefinitions_file_should_be_created()
+        {
+            FeatureItem.Received().AddStepDefinitions(StepDefinitions);
         }
     }
 }

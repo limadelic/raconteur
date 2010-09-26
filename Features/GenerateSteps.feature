@@ -1,7 +1,7 @@
-﻿Feature: Generate Steps
-	In order to run a Scenario
-	Raconteur should generate a Scenario's steps
+﻿Feature: Generate Step Definitions file
+	In order simplify the implemententation a Feature
+	Raconteur should declare the StepDefinitions
 
-Scenario: Generate Step Calls
-	When a Scenario with steps is generated
-	it should call each step in order
+Scenario: Create Step Definitions file
+	When a Feature is declared for the first time
+	The StepDefinitions file should be created

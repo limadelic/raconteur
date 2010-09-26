@@ -3,14 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Features 
 {
     [TestClass]
-    public partial class GenerateSteps 
+    public partial class GenerateStepDefinitionsFile 
     {
         
         [TestMethod]
-        public void GenerateStepCalls()
+        public void CreateStepDefinitionsFile()
         {         
-            When_a_Scenario_with_steps_is_generated();        
-            it_should_call_each_step_in_order();
+            When_a_Feature_is_declared_for_the_first_time();        
+            The_StepDefinitions_file_should_be_created();
         }
 
     }

@@ -13,6 +13,13 @@ namespace Features
             Then_it_should_be_a_Test_Method();        
             And_it_should_be_named_After_the_Scenario_name();
         }
+        
+        [TestMethod]
+        public void GenerateStepCalls()
+        {         
+            When_a_Scenario_with_steps_is_generated();        
+            it_should_call_each_step_in_order();
+        }
 
     }
 }

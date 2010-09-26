@@ -120,8 +120,8 @@ namespace Specs
                 "Is this scenario invalid?".ToValidIdentifier()
                     .ShouldBe("Is_this_scenario_invalid_");
 
-                "This scenario shouldn't be valid".ToValidIdentifier()
-                    .ShouldBe("This_scenario_shouldn_t_be_valid");
+                "This scenario shouldn't be valid!".ToValidIdentifier()
+                    .ShouldBe("This_scenario_shouldn_t_be_valid_");
 
                 "false".ToValidIdentifier()
                     .ShouldBe("@false");

@@ -32,14 +32,6 @@ namespace Raconteur
             }
         }
 
-        public static StepDefinitionsGenerator NewStepDefinitionsGenerator
-        {
-            get
-            {
-                return null;
-            } 
-        }
-
         public static FeatureItem FeatureItemFrom(ProjectItem FeatureFile)
         {
             return new VsFeatureItem(FeatureFile);

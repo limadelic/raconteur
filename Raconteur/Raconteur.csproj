@@ -46,6 +46,7 @@
     <Compile Include="Feature.cs" />
     <Compile Include="Generators\RaconteurGenerator.cs" />
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />
+    <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="IDE\FeatureItem.cs" />

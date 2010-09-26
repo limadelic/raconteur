@@ -34,7 +34,7 @@ namespace Features
         
         void The_runner_should_pass_them_in_the_call()
         {
-            Runner.ShouldContain(@"If_happens(""X"");");
+            Runner.ShouldContain(@"If__happens(""X"");");
         }
     }
 }

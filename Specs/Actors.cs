@@ -1,4 +1,5 @@
-﻿using Raconteur;
+﻿using System.Collections.Generic;
+using Raconteur;
 
 namespace Specs
 {
@@ -83,6 +84,33 @@ namespace
                         }
                     },                            
                 }
+        };
+
+        public static Feature FeatureWithArgs = new Feature
+        {
+            Name = "Name",
+            FileName = "File Name",
+            Namespace = "Features",
+            Scenarios =
+            {
+                new Scenario
+                {
+                    Name = "Scenario_1",
+                    Steps = 
+                    { 
+                        new Step
+                        { 
+                            Name = "If__happens",
+                            Args = new List<string>{"\"X\""},
+                        },
+                        new Step
+                        { 
+                            Name = "If__and__happens",
+                            Args = new List<string>{"\"X\"", "\"Y\""}
+                        }
+                    }
+                }
+            }                            
         };
 
         public static class DefinedFeature

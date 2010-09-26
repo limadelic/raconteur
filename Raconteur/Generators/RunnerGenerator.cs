@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Generators
@@ -29,7 +28,7 @@ namespace {0}
 
         private const string StepExecution = 
 @"        
-            {0}();";
+            {0}({1});";
 
         Feature Feature;
         public string RunnerFor(Feature Feature)
@@ -54,14 +53,15 @@ namespace {0}
         string ScenarioCodeFrom(Scenario Scenario)
         {
             var StepCode = Scenario.Steps.Aggregate("",
-                (Steps, Step) => Steps + ExecuteStep(Step.Name));
+                (Steps, Step) => Steps + ExecuteStep(Step));
 
             return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
         }
 
-        string ExecuteStep(string Step)
+        string ExecuteStep(Step Step)
         {
-            return string.Format(StepExecution, Step);
+            var Args = string.Join(", ", Step.Args);
+            return string.Format(StepExecution, Step.Name, Args);
         }
     }
 }

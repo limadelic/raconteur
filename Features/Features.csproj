@@ -48,6 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\FeatureRunner.cs" />
     <Compile Include="GenerateRunner.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +95,15 @@
     <Compile Include="StepArguments.steps.cs">
       <DependentUpon>StepArguments.feature</DependentUpon>
     </Compile>
+    <Compile Include="StepTable.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StepTable.feature</DependentUpon>
+    </Compile>
+    <Compile Include="StepTable.steps.cs">
+      <DependentUpon>StepTable.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="GenerateRunner.feature">
@@ -115,6 +125,10 @@
     <None Include="StepArguments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StepArguments.runner.cs</LastGenOutput>
+    </None>
+    <None Include="StepTable.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>StepTable.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

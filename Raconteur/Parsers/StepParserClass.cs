@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Parsers
@@ -45,18 +45,64 @@ namespace Raconteur.Parsers
 
         void StopParsingTable() { ParsedHeader = false; }
 
-        protected Step ParseStepTable
+        Step ParseStepTable
         {
             get
             {
-                if (!ParsedHeader)
-                {
-                    ParsedHeader = true;
-                    return null;
-                }
-
-                return new Step {Name = LastStep.Name};
+                return !ParsedHeader ? ParseStepTableHeader :
+                    ParseStepTableRow;
             } 
+        }
+
+        Step ParseStepTableRow
+        {
+            get
+            {
+                CopyColumnsToLastStepArgs();
+
+                return new Step
+                {
+                    Name = LastStep.Name,
+                    Args = LastStep.Args.ToList()
+                };
+            }
+        }
+
+        Step ParseStepTableHeader
+        {
+            get
+            {
+                SetUpInLastStepOneArgPerColumn();
+
+                ParsedHeader = true;
+
+                return null;
+            } 
+        }
+
+        List<string> Columns
+        {
+            get
+            {
+                return Sentence.Split(new[] {'|'}).Trim(1).ToList();
+            }
+        }
+
+        void SetUpInLastStepOneArgPerColumn()
+        {
+            LastStep.Args = new List<string>();
+            Columns.ForEach(LastStep.Args.Add);
+        }
+
+        void CopyColumnsToLastStepArgs() 
+        {
+            var i = 0;
+            foreach (var Column in Columns)
+            {
+                if (!string.IsNullOrWhiteSpace(Column)) 
+                    LastStep.Args[i] = Column;
+                i++;
+            }
         }
     }
 }

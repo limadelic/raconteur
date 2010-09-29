@@ -12,7 +12,8 @@ namespace Raconteur.Parsers
         {
             this.Sentence = Sentence;
 
-            return IsTable ? ParseStepTable : ParseStep;
+            return IsTable ? ParseStepTable : 
+                LastStep = ParseStep;
         }
 
         Step ParseStep
@@ -75,6 +76,7 @@ namespace Raconteur.Parsers
                 SetUpInLastStepOneArgPerColumn();
 
                 ParsedHeader = true;
+                LastStep.Skip = true;
 
                 return null;
             } 
@@ -100,7 +102,7 @@ namespace Raconteur.Parsers
             foreach (var Column in Columns)
             {
                 if (!string.IsNullOrWhiteSpace(Column)) 
-                    LastStep.Args[i] = Column;
+                    LastStep.Args[i] = '"' + Column + '"';
                 i++;
             }
         }

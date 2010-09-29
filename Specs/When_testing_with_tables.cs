@@ -17,6 +17,15 @@ namespace Specs
             }
 
             [Test]
+            public void should_keep_last_Step_and_skip_it_from_output()
+            {
+                Given.StepFrom("Verify some values");
+                When.StepFrom("|X|Y|");
+                Then.LastStep.Name.ShouldBe("Verify_some_values");
+                 And.LastStep.Skip.ShouldBeTrue();
+            }
+
+            [Test]
             public void should_should_skip_the_first_row()
             {
                 The.StepFrom("|X|Y|").ShouldBeNull();
@@ -48,7 +57,7 @@ namespace Specs
                 var Args = The.StepFrom("|0|1|").Args;
                 
                 Args.Count.ShouldBe(2);
-                Args.ShouldBe("0", "1");
+                Args.ShouldBe("\"0\"", "\"1\"");
             }
         }
     }

@@ -66,7 +66,10 @@ namespace Raconteur.Parsers
                 Name = Name,
                 Steps = (from Sentence in ScenarioDefinition 
                          where !string.IsNullOrWhiteSpace(Sentence)
-                         select StepParser.StepFrom(Sentence.Trim())).ToList()
+                         select StepParser.StepFrom(Sentence.Trim()))
+                         .ToList()
+                         .Where(Step => Step != null && !Step.Skip)
+                         .ToList()
             };
         }
     }

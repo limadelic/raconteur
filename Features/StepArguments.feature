@@ -5,3 +5,13 @@
 Scenario: Generate Arguments
 	When a step contains arguments
 	The runner should pass them in the call
+
+Scenario: Type Inference
+	When an argument is a string
+	It should be passed as a string
+
+	When an argument is an integer
+	It should be passed as a number
+
+	When an argument is a date
+	It should be passed as a date

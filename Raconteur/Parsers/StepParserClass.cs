@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Parsers
@@ -25,9 +26,18 @@ namespace Raconteur.Parsers
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().Select(x => '"' + x + '"').ToList()
+                    Args = Tokens.Odds().Select(x => ValueOf(x)).ToList()
                 };
             }
+        }
+
+        private string ValueOf(string Arg)
+        {
+            if (Arg.IsDateTime()) return @"DateTime.Parse(""" + Arg + @""")";
+
+            if (Arg.IsNumeric()) return Arg;
+
+            return '"' + Arg + '"';
         }
 
         bool IsTable 

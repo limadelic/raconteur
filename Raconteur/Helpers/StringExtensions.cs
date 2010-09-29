@@ -1,3 +1,4 @@
+using System;
 using System.CodeDom.Compiler;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -32,6 +33,22 @@ namespace Raconteur
             
             return CodeDomProvider.CreateProvider("C#")
                 .CreateEscapedIdentifier(Result);
+        }
+
+        public static bool IsNumeric(this string It)
+        {
+            var dummyInt = 0;
+            var dummyDouble = 0.0;
+
+            return int.TryParse(It, out dummyInt)
+                || double.TryParse(It, out dummyDouble);
+        }
+
+        public static bool IsDateTime(this string It)
+        {
+            var dummyDate = new DateTime();
+
+            return DateTime.TryParse(It, out dummyDate);
         }
     }
 }

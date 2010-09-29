@@ -107,7 +107,7 @@ namespace
                         { 
                             Name = "If__and__happens",
                             Args = new List<string>{"\"X\"", "\"Y\""}
-                        }
+                        },
                     }
                 }
             }                            

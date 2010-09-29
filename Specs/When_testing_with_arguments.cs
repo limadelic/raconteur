@@ -38,6 +38,28 @@ namespace Specs
                 The.StepFrom(Sentence)
                     .Args[1].ShouldBe("\"Y\"");
             }
+
+            [Test]
+            public void should_create_steps_with_numeric_args()
+            {
+                const string Sentence = @"The pin should be ""234"" "
+                    + @"and the amount should be ""450.23""";
+
+                The.StepFrom(Sentence)
+                    .Args[0].ShouldBe("234");
+
+                The.StepFrom(Sentence)
+                    .Args[1].ShouldBe("450.23");
+            }
+
+            [Test]
+            public void should_create_steps_with_date_args()
+            {
+                const string Sentence = @"The user gets paid on ""02/08/1986""";
+
+                The.StepFrom(Sentence)
+                    .Args[0].ShouldBe(@"DateTime.Parse(""02/08/1986"")");
+            }
         }
 
         [TestFixture]

@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="StepArguments.steps.cs">
       <DependentUpon>StepArguments.feature</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="StepTable.runner.cs">
       <AutoGen>True</AutoGen>

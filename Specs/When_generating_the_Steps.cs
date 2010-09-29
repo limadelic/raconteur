@@ -51,6 +51,12 @@ namespace Specs
             {
                 StepDefinitions.ShouldContain("var thing = FeatureName");
             }
+
+            [Test]
+            public void should_keep_inheritance()
+            {
+                StepDefinitions.ShouldContain(": BaseClass");
+            }
         }
     }
 }

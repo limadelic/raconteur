@@ -50,5 +50,12 @@ namespace Raconteur
 
             return DateTime.TryParse(It, out dummyDate);
         }
+
+        public static bool IsBoolean(this string It)
+        {
+            var dummyBool = false;
+
+            return bool.TryParse(It, out dummyBool);
+        }
     }
 }

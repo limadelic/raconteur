@@ -35,8 +35,9 @@ namespace Raconteur.Parsers
         {
             if (Arg.IsDateTime()) return @"DateTime.Parse(""" + Arg + @""")";
 
-            if (Arg.IsNumeric()) return Arg;
-
+            if (Arg.IsNumeric() || Arg.IsBoolean() || Arg == "null") 
+                return Arg;
+             
             return '"' + Arg + '"';
         }
 

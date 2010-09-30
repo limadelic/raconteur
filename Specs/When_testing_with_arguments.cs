@@ -60,6 +60,27 @@ namespace Specs
                 The.StepFrom(Sentence)
                     .Args[0].ShouldBe(@"DateTime.Parse(""02/08/1986"")");
             }
+
+            [Test]
+            public void should_create_steps_with_boolean_args()
+            {
+                const string Sentence = @"""true"" should not equal ""false""";
+
+                The.StepFrom(Sentence)
+                    .Args[0].ShouldBe(@"true");
+
+                The.StepFrom(Sentence)
+                    .Args[1].ShouldBe(@"false");
+            }
+
+            [Test]
+            public void should_create_steps_with_null_args()
+            {
+                const string Sentence = @"when I pass a ""null""";
+
+                The.StepFrom(Sentence)
+                    .Args[0].ShouldBe(@"null");
+            }
         }
 
         [TestFixture]

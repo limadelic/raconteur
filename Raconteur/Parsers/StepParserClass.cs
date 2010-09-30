@@ -25,19 +25,19 @@ namespace Raconteur.Parsers
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().Select(Value).ToList()
+                    Args = Tokens.Odds().Select(Arg).ToList()
                 };
             }
         }
 
-        string Value(string Arg)
+        string Arg(string Value)
         {
-            if (Arg.IsDateTime()) return @"DateTime.Parse(""" + Arg + @""")";
+            if (Value.IsDateTime()) return @"DateTime.Parse(""" + Value + @""")";
 
-            if (Arg.IsNumeric() || Arg.IsBoolean() || Arg == "null") 
-                return Arg;
+            if (Value.IsNumeric() || Value.IsBoolean() || Value == "null") 
+                return Value;
              
-            return '"' + Arg + '"';
+            return '"' + Value + '"';
         }
 
         bool IsTable 
@@ -92,7 +92,8 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Sentence.Split(new[] {'|'}).Trim(1);
+                return Sentence.Split(new[] {'|'}).Trim(1).
+                    Select(x => x.Trim());
             }
         }
 
@@ -100,7 +101,7 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Columns.Select(Value).ToList();
+                return LastStep.Args.Concat(Columns.Select(Arg)).ToList();
             } 
         }
     }

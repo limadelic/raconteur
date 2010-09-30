@@ -45,8 +45,8 @@ namespace Features
         {
             Runner.ShouldContainInOrder
             (
-                @"Verify_some_values_(""X"", ""one"");",
-                @"Verify_some_values_(""X"", ""another"");"
+                @"Given_stuff_in__place(""X"", ""one"");",
+                @"Given_stuff_in__place(""X"", ""another"");"
             );
         }
     }

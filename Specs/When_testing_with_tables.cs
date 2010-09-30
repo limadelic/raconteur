@@ -47,10 +47,19 @@ namespace Specs
                 Given.LastStep.Name = "Verify_some_values";
                  And.StepFrom("|X|Y|");
 
-                var Args = The.StepFrom("|0|1|").Args;
-                
-                Args.Count.ShouldBe(2);
-                Args.ShouldBe("0", "1");
+                The.StepFrom("|0|1|")
+                    .Args.ShouldBe("0", "1");
+            }
+
+            [Test]
+            public void should_combine_Table_Args_with_col_as_Args()
+            {
+                Given.LastStep.Name = "Given_stuff_in__place";
+                 And.LastStep.Args.Add("\"X\"");
+                 And.StepFrom("| stuff |");
+
+                The.StepFrom("| one |")
+                    .Args.ShouldBe("\"X\"", "\"one\"");
             }
         }
     }

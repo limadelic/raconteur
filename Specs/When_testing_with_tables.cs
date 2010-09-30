@@ -32,13 +32,6 @@ namespace Specs
             }
 
             [Test]
-            public void should_prepare_the_args_based_on_header_row()
-            {
-                When.StepFrom("|X|Y|");
-                Then.LastStep.Args.Count.ShouldBe(2);
-            }
-
-            [Test]
             public void should_name_every_row_as_last_Step()
             {
                 Given.LastStep.Name = "Verify_some_values";
@@ -57,7 +50,7 @@ namespace Specs
                 var Args = The.StepFrom("|0|1|").Args;
                 
                 Args.Count.ShouldBe(2);
-                Args.ShouldBe("\"0\"", "\"1\"");
+                Args.ShouldBe("0", "1");
             }
         }
     }

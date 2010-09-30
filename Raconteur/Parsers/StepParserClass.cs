@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Parsers
@@ -26,12 +25,12 @@ namespace Raconteur.Parsers
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().Select(x => ValueOf(x)).ToList()
+                    Args = Tokens.Odds().Select(Value).ToList()
                 };
             }
         }
 
-        private string ValueOf(string Arg)
+        string Value(string Arg)
         {
             if (Arg.IsDateTime()) return @"DateTime.Parse(""" + Arg + @""")";
 
@@ -70,12 +69,10 @@ namespace Raconteur.Parsers
         {
             get
             {
-                CopyColumnsToLastStepArgs();
-
                 return new Step
                 {
                     Name = LastStep.Name,
-                    Args = LastStep.Args.ToList()
+                    Args = Args
                 };
             }
         }
@@ -84,8 +81,6 @@ namespace Raconteur.Parsers
         {
             get
             {
-                SetUpInLastStepOneArgPerColumn();
-
                 ParsedHeader = true;
                 LastStep.Skip = true;
 
@@ -93,29 +88,20 @@ namespace Raconteur.Parsers
             } 
         }
 
-        List<string> Columns
+        IEnumerable<string> Columns
         {
             get
             {
-                return Sentence.Split(new[] {'|'}).Trim(1).ToList();
+                return Sentence.Split(new[] {'|'}).Trim(1);
             }
         }
 
-        void SetUpInLastStepOneArgPerColumn()
+        List<string> Args 
         {
-            LastStep.Args = new List<string>();
-            Columns.ForEach(LastStep.Args.Add);
-        }
-
-        void CopyColumnsToLastStepArgs() 
-        {
-            var i = 0;
-            foreach (var Column in Columns)
+            get
             {
-                if (!string.IsNullOrWhiteSpace(Column)) 
-                    LastStep.Args[i] = '"' + Column + '"';
-                i++;
-            }
+                return Columns.Select(Value).ToList();
+            } 
         }
     }
 }

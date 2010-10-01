@@ -9,67 +9,71 @@ namespace Raconteur.Parsers
         readonly char[] NewLine = Environment.NewLine.ToCharArray();
 
         const string ScenarioDeclaration = "Scenario: ";
+
         public StepParser StepParser { get; set; }
+
+        string Content;
 
         public List<Scenario> ScenariosFrom(string Content)
         {
-            var Definitions = ExtractScenarionDefinitionsFrom(Content);
-            
-            return Definitions.Select(BuildScenario).ToList();
+            this.Content = Content;
+
+            return ScenarioDefinitions.Select(Scenario).ToList();
         }
+
+        IEnumerable<string> Lines { get { return 
+            
+            Content
+            .Split(NewLine)
+            .SkipWhile(IsNotScenarioDeclaration)
+            .Where(Line => !string.IsNullOrWhiteSpace(Line))
+            .Select(Line => Line.Trim());    
+        }}
 
         bool IsScenarioDeclaration(string Line)
         {
-            return Line.TrimStart().StartsWith("Scenario: ");
+            return Line.TrimStart().StartsWith(ScenarioDeclaration);
         }
 
-        IEnumerable<List<string>> ExtractScenarionDefinitionsFrom(string Content)
+        bool IsNotScenarioDeclaration(string Line)
         {
-            var Lines = Content.Split(NewLine).ToList();
-            
-            var Declarations = Lines.Where(IsScenarioDeclaration).ToList();
+            return !IsScenarioDeclaration(Line);
+        }
 
-            var PreviousDeclaration = -1;
-
-            foreach (var Declaration in Declarations)
+        IEnumerable<List<string>> ScenarioDefinitions
+        {
+            get
             {
-                var CurrentDeclaration = Lines.IndexOf(Declaration);
+                var Results = new List<List<string>>();
 
-                if (PreviousDeclaration >= 0)
+                foreach (var Line in Lines)
                 {
-                    yield return Lines.GetRange(PreviousDeclaration, 
-                        CurrentDeclaration - PreviousDeclaration);
+                    if (IsScenarioDeclaration(Line))
+                        Results.Add(new List<string>());
+                    
+                    Results.Last().Add(Line);
                 }
 
-                PreviousDeclaration = Lines.IndexOf(Declaration);
+                return Results;
             }
-
-            if (PreviousDeclaration >= 0)
-                yield return Lines.GetRange(PreviousDeclaration, 
-                    Lines.Count - PreviousDeclaration);
         }
 
-        string ExtractNameFrom(string Line)
+        string NameFrom(string Line)
         {
-            return Line.Trim()
-                .Substring(ScenarioDeclaration.Length - 1)
-                .CamelCase();
+            return Line.Replace(ScenarioDeclaration, "").CamelCase();
         }
 
-        Scenario BuildScenario(List<string> ScenarioDefinition)
+        Scenario Scenario(List<string> ScenarioDefinition)
         {
-            var Name = ExtractNameFrom(ScenarioDefinition[0]);
-            ScenarioDefinition.RemoveAt(0);
-
             return new Scenario
             {
-                Name = Name,
-                Steps = (from Sentence in ScenarioDefinition 
-                         where !string.IsNullOrWhiteSpace(Sentence)
-                         select StepParser.StepFrom(Sentence.Trim()))
-                         .ToList()
-                         .Where(Step => Step != null && !Step.Skip)
-                         .ToList()
+                Name = NameFrom(ScenarioDefinition.First()),
+                Steps = 
+                    ScenarioDefinition.Skip(1)
+                    .Select(Line => StepParser.StepFrom(Line))
+                    .ToList()
+                    .Where(Step => Step != null && !Step.Skip)
+                    .ToList()
             };
         }
     }

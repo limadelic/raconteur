@@ -1,5 +1,3 @@
-
-using System;
 using Specs;
 
 namespace Features 

@@ -11,10 +11,12 @@ namespace Raconteur.Parsers
         const string ScenarioDeclaration = "Scenario: ";
         public StepParser StepParser { get; set; }
 
+        List<string> Lines;
+
         public List<Scenario> ScenariosFrom(string Content)
         {
-            var Definitions = ExtractScenarionDefinitionsFrom(Content);
-            
+            Lines = Content.Split(NewLine).ToList();
+
             return Definitions.Select(BuildScenario).ToList();
         }
 
@@ -23,31 +25,26 @@ namespace Raconteur.Parsers
             return Line.TrimStart().StartsWith("Scenario: ");
         }
 
-        IEnumerable<List<string>> ExtractScenarionDefinitionsFrom(string Content)
+        IEnumerable<List<string>> Definitions
         {
-            var Lines = Content.Split(NewLine).ToList();
-            
-            var Declarations = Lines.Where(IsScenarioDeclaration).ToList();
-
-            var PreviousDeclaration = -1;
-
-            foreach (var Declaration in Declarations)
+            get
             {
-                var CurrentDeclaration = Lines.IndexOf(Declaration);
+                var PreviousDeclaration = -1;
 
-                if (PreviousDeclaration >= 0)
+                foreach (var Declaration in Declarations)
                 {
-                    yield return Lines.GetRange(PreviousDeclaration, 
-                        CurrentDeclaration - PreviousDeclaration);
+                    var CurrentDeclaration = Lines.IndexOf(Declaration);
+
+                    if (PreviousDeclaration >= 0) yield return Lines.GetRange(PreviousDeclaration, CurrentDeclaration - PreviousDeclaration);
+
+                    PreviousDeclaration = Lines.IndexOf(Declaration);
                 }
 
-                PreviousDeclaration = Lines.IndexOf(Declaration);
+                if (PreviousDeclaration >= 0) yield return Lines.GetRange(PreviousDeclaration, Lines.Count - PreviousDeclaration);
             }
-
-            if (PreviousDeclaration >= 0)
-                yield return Lines.GetRange(PreviousDeclaration, 
-                    Lines.Count - PreviousDeclaration);
         }
+
+        IEnumerable<string> Declarations { get { return Lines.Where(IsScenarioDeclaration); } }
 
         string ExtractNameFrom(string Line)
         {

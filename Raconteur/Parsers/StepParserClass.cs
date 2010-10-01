@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Parsers
@@ -6,26 +7,45 @@ namespace Raconteur.Parsers
     public class StepParserClass : StepParser 
     {
         public Step LastStep { get; set; }
+        public List<Step> Steps { get; set; }
+
+        public StepParserClass()
+        {
+            Steps = new List<Step>();
+        }
 
         string Sentence;
         public Step StepFrom(string Sentence)
         {
             this.Sentence = Sentence;
 
-            return IsTable ? ParseStepTable : 
-                LastStep = ParseStep;
+            if (IsTable) return ParseStepTable;
+
+            var Step = LastStep = ParseStep;
+            Steps.Add(Step);
+            return Step;
         }
 
         Step ParseStep
         {
             get
             {
-                var Tokens = Sentence.Split(new[] {'"'});
+                var sentence = Sentence;
+                var IsOutline = Sentence.Contains('<') && Sentence.Contains('>');
+
+                if (IsOutline)
+                {
+                    Steps.ForEach(Step => Step.Skip = true);
+                    sentence = sentence.Replace('<', '"').Replace('>', '"');
+                }
+
+                var Tokens = sentence.Split(new[] {'"'});
 
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().Select(Arg).ToList()
+                    Args = Tokens.Odds().Select(Arg).ToList(),
+                    Skip = IsOutline
                 };
             }
         }

@@ -19,7 +19,7 @@ namespace Features
                     
                     |account|amount|interest|
                     |23     |42    |1       |
-                    |56     |23    |3       |                    
+                    |56     |23    |3       |    
             ";
         }
 

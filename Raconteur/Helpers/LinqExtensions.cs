@@ -15,7 +15,7 @@ namespace Raconteur
             return Items.Where((Item, Index) => Index % 2 != 0);
         }
 
-        public static IEnumerable<T> Trim<T>(this IEnumerable<T> Items, int Length)
+        public static IEnumerable<T> Chop<T>(this IEnumerable<T> Items, int Length)
         {
             return Items.Skip(Length).Take(Items.Count() - 2 * Length);
         }

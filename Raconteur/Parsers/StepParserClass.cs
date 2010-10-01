@@ -92,7 +92,7 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Sentence.Split(new[] {'|'}).Trim(1).
+                return Sentence.Split(new[] {'|'}).Chop(1).
                     Select(x => x.Trim());
             }
         }

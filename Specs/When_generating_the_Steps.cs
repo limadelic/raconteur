@@ -36,7 +36,7 @@ namespace Specs
             [FixtureSetUp]
             public void SetUp()
             {
-                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefinition);
+                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefinitionWithBase);
             }
 
             [Test]

@@ -86,6 +86,15 @@
       <DependentUpon>RefactorFeature.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ScenarioOutlines.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScenarioOutlines.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ScenarioOutlines.steps.cs">
+      <DependentUpon>ScenarioOutlines.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="StepArguments.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,6 +130,10 @@
     <None Include="RefactorFeature.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>RefactorFeature.runner.cs</LastGenOutput>
+    </None>
+    <None Include="ScenarioOutlines.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ScenarioOutlines.runner.cs</LastGenOutput>
     </None>
     <None Include="StepArguments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

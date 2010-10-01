@@ -124,6 +124,18 @@ namespace
 
             public const string StepsDefinition =
             @"
+                public partial class FeatureName
+                {
+
+                    public void This_is_one_step() {
+
+                        var thing = FeatureName;
+                    }
+                }
+            ";
+
+            public const string StepsDefinitionWithBase =
+            @"
                 public partial class FeatureName : BaseClass
                 {
 
@@ -143,7 +155,7 @@ namespace
 
             public const string RenamedStepsDefinition =
             @"
-                public partial class RenamedFeature : BaseClass
+                public partial class RenamedFeature
                 {
 
                     public void This_is_one_step() {

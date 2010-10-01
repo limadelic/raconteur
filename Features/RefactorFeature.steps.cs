@@ -22,7 +22,7 @@ namespace Features
 
         void If_I_rename_it()
         {
-            Generator.Generate("FileName.cs", 
+            Generator.Generate("RenamedFeature.cs", 
                 Actors.DefinedFeature.RenamedFeatureDefinition);
         }
 

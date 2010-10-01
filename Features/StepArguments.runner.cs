@@ -16,12 +16,8 @@ namespace Features
         [TestMethod]
         public void TypeInference()
         {         
-            When_an_argument_is_a_string();        
-            It_should_be_passed_as_a_string();        
             When_an_argument_is_an_integer();        
-            It_should_be_passed_as_a_number();        
-            When_an_argument_is_a_date();        
-            It_should_be_passed_as_a_date();
+            It_should_be_passed_as_a_number();
         }
 
     }

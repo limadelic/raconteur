@@ -8,10 +8,12 @@ namespace Raconteur.Parsers
     {
         public Step LastStep { get; set; }
         public List<Step> Steps { get; set; }
+        public List<List<string>> ArgColMap { get; set; }
 
         public StepParserClass()
         {
             Steps = new List<Step>();
+            ArgColMap = new List<List<string>>();
         }
 
         string Sentence;
@@ -31,7 +33,7 @@ namespace Raconteur.Parsers
             get
             {
                 var sentence = Sentence;
-                var IsOutline = Sentence.Contains('<') && Sentence.Contains('>');
+                var IsOutline = sentence.Contains('<') && sentence.Contains('>');
 
                 if (IsOutline)
                 {
@@ -104,8 +106,27 @@ namespace Raconteur.Parsers
                 ParsedHeader = true;
                 LastStep.Skip = true;
 
+                SetUpArgColMap();
+
                 return null;
             } 
+        }
+
+        void SetUpArgColMap()
+        {
+            foreach (var Column in Columns)
+                ArgColMap.Add(ArgsMatching(Column));
+        }
+
+        List<string> ArgsMatching(string Column)
+        {
+            return 
+            (
+                from Step in Steps 
+                from arg in Step.Args 
+                where Arg(Column).Equals(arg) 
+                select arg
+            ).ToList();
         }
 
         IEnumerable<string> Columns

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
@@ -47,7 +48,7 @@ namespace Specs
 
                 When.FeatureFrom(FeatureFile, VsFeatureItem);
 
-                Then.ScenarioParser.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
+                Then.ScenarioTokenizer.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
             }
 
             [Test]
@@ -65,7 +66,7 @@ namespace Specs
         }
 
         [TestFixture]
-        public class A_scenario_parser : BehaviorOf<ScenarioParserClass>
+        public class A_scenario_tokenizer : BehaviorOf<ScenarioTokenizerClass>
         {
             [Test]
             public void should_create_scenarios()
@@ -78,39 +79,6 @@ namespace Specs
 
                 The.ScenariosFrom(Actors.FeatureWithThreeScenarios)
                     .Count.ShouldBe(3);
-            }
-
-            [Test]
-            public void should_name_scenarios()
-            {
-                The.ScenariosFrom("Scenario: Scenario Name")[0]
-                    .Name.ShouldBe("ScenarioName");
-            }
-
-            [Test]
-            public void should_create_steps()
-            {
-                The.ScenariosFrom(Actors.ScenarioWithNoSteps)[0]
-                    .Steps.Count.ShouldBe(0);
-
-                The.ScenariosFrom(Actors.ScenarioWithOneStep)[0]
-                    .Steps.Count.ShouldBe(1);
-
-                The.ScenariosFrom(Actors.ScenarioWithThreeSteps)[0]
-                    .Steps.Count.ShouldBe(3);
-            }
-
-            [Test]
-            public void should_name_steps()
-            {
-                var Step = TestObjectFor<Step>();
-                Given.StepParser.StepFrom("Do what you like").Is(Step);
-
-                The.ScenariosFrom(
-                @"
-                    Scenario: Scenario Name
-                        Do what you like
-                ")[0].Steps[0].ShouldBe(Step);
             }
 
             [Test]
@@ -130,6 +98,51 @@ namespace Specs
 
                 "  this is a pretty valid scenario   ".ToValidIdentifier()
                     .ShouldBe("this_is_a_pretty_valid_scenario");
+            }
+        }
+
+        [TestFixture]
+        public class A_scenario_parser : BehaviorOf<ScenarioParserClass>
+        {
+            List<string> Definition = new List<string>();
+
+            [Test]
+            public void should_name_steps()
+            {
+                var Step = TestObjectFor<Step>();
+                Given.StepParser.StepFrom("    Do what you like").Is(Step);
+
+                Definition = new List<string>
+                {
+                    "Scenario: Scenario Name",
+                    "    Do what you like"
+                };
+
+                The.ScenarioFrom(Definition)
+                    .Steps[0].ShouldBe(Step);
+            }
+
+            [Test]
+            public void should_name_scenarios()
+            {
+                Definition = new List<string>
+                {
+                    "Scenario: Scenario Name"
+                };
+
+                The.ScenarioFrom(Definition)
+                    .Name.ShouldBe("ScenarioName");
+            }
+
+            [Test]
+            public void should_create_steps()
+            {
+                The.ScenarioFrom(Actors.ScenarioWithNoSteps)
+                    .Steps.Count.ShouldBe(0);
+
+                The.ScenarioFrom(Actors.ScenarioWithTwoSteps)
+                    .Steps.Count.ShouldBe(2);
+
             }
         }
 

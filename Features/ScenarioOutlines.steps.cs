@@ -10,11 +10,12 @@ namespace Features
             @"
                 Feature: Feature Name
 
-                Scenario: Outline
-                    Given <account> has <amount>
-                    When interest is calculated
-                    It should be <interest>
+                Scenario Outline: Interest Rate
+                  Given <account> has <amount>
+                  When interest is calculated
+                  It should be <interest>
                     
+                  Examples:
                     |account|amount|interest|
                     |23     |42    |1       |
                     |56     |23    |3       |    

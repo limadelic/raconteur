@@ -31,21 +31,17 @@ namespace
 
         public const string FeatureWithNoScenarios = @"Feature: Feature Name";
 
-        public const string ScenarioWithNoSteps = @"Scenario: Scenario Name";
+        public static readonly List<string> ScenarioWithNoSteps = new List<string>
+        {
+            "Scenario: Scenario Name"
+        };
 
-        public const string ScenarioWithOneStep = 
-        @"
-            Scenario: has one step
-            This is a step
-        ";
-
-        public const string ScenarioWithThreeSteps = 
-        @"
-            Scenario: has three steps
-            This is one step
-            This is another step
-            This is the last step
-        ";
+        public static readonly List<string> ScenarioWithTwoSteps = new List<string>
+        {
+            "Scenario: has one step",
+            "This is a step",
+            "this is another step"
+        };
 
         public const string DefinitionCode =
         @"

@@ -8,7 +8,7 @@ namespace Raconteur.Parsers
     public class FeatureParserClass : FeatureParser 
     {
         string Content;
-        public ScenarioParser ScenarioParser { get; set; }
+        public ScenarioTokenizer ScenarioTokenizer { get; set; }
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
@@ -20,19 +20,21 @@ namespace Raconteur.Parsers
                 FileName = FeatureFile.Name,
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
-                Scenarios = ScenarioParser.ScenariosFrom(Content)
+                Scenarios = ScenarioTokenizer.ScenariosFrom(Content)
             };
         }
 
-        string Name { get 
-        {
-            var Regex = new Regex(@"Feature: (\w.+)(" + 
-                Environment.NewLine + "|$)");
+        string Name 
+        { 
+            get 
+            {
+                var Regex = new Regex(@"Feature: (\w.+)(" + 
+                    Environment.NewLine + "|$)");
             
-            var Match = Regex.Match(Content);
+                var Match = Regex.Match(Content);
 
-            return Match.Groups[1].Value.CamelCase();
-        }}
-
+                return Match.Groups[1].Value.CamelCase();
+            }
+        }
     }
 }

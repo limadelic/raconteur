@@ -4,6 +4,6 @@ namespace Raconteur.Parsers
 {
     public interface ScenarioParser
     {
-        List<Scenario> ScenariosFrom(string Content);
+        Scenario ScenarioFrom(List<string> Definition);
     }
 }

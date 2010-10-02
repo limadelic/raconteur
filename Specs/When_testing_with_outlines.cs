@@ -1,34 +1,64 @@
+using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
+using Raconteur;
 using Raconteur.Parsers;
 
 namespace Specs
 {
     public class When_testing_with_outlines
     {
+/*
+        [TestFixture]
+        public class while_parsing_Scenarios : BehaviorOf<ScenarioParserClass>
+        {
+            List<Scenario> Scenarios;
+
+            [SetUp]
+            public void SetUp()
+            {
+                Scenarios = The.ScenariosFrom
+                (@"
+                    Scenario Outline: Add
+                      The sum of <A> + <B> should be <C>
+                      Examples:
+                        |A|B|C|
+                        |0|0|0|
+                        |0|1|1|
+                ");
+            }
+
+            [Test]
+            public void should_get_a_Scenario_per_Example()
+            {
+                Scenarios.Count.ShouldBe(2);
+            }
+
+            [Test]
+            public void should_use_the_name_in_all_Scenarios_plus_index()
+            {
+                Scenarios[0].Name.ShouldBe("Add1");
+                Scenarios[1].Name.ShouldBe("Add2");
+            }
+
+            [Test]
+            public void should_substitute_Example_in_Outline()
+            {
+                Scenarios[0].Steps[0]
+                    .ShouldBe("The_sum_of____should_be_", 0, 0, 0);
+
+                Scenarios[1].Steps[0]
+                    .ShouldBe("The_sum_of____should_be_", 0, 1, 1);
+            }
+        }
+
         [TestFixture]
         public class The_parser : BehaviourOf<StepParserClass>
         {
             [Test]
-            public void should_keep_track_of_every_Step()
-            {
-                Given.StepFrom("Step 1");
-                And.StepFrom("Step 2");
-                Then.Steps.Count.ShouldBe(2);
-            }
-
-            [Test]
-            public void should_skip_already_generated_Steps_if_encounters_an_Outline_Arg()
-            {
-                Given.StepFrom("Step 1");
-                When.StepFrom("Step <2>");
-                Then.Steps.ForEach(Step => Step.Skip.ShouldBeTrue());
-            }
-
-            [Test]
             public void the_Outline_Arg_should_become_a_regular_Arg()
             {
-                The.StepFrom("Step <2>").Args[0].ShouldBe("2");
+                The.OutlineStepFrom("Step <2>").Args[0].ShouldBe("2");
             }
 
             [Test]
@@ -45,5 +75,6 @@ namespace Specs
                 
             }
         }
+*/
     }
 }

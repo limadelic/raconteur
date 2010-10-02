@@ -27,26 +27,22 @@ namespace Raconteur.Parsers
             return Step;
         }
 
+        public Step OutlineStepFrom(string Sentence) 
+        {
+            this.Sentence = Sentence.Replace('<', '"').Replace('>', '"');
+            return ParseStep;
+        }
+
         Step ParseStep
         {
             get
             {
-                var sentence = Sentence;
-                var IsOutline = sentence.Contains('<') && sentence.Contains('>');
-
-                if (IsOutline)
-                {
-                    Steps.ForEach(Step => Step.Skip = true);
-                    sentence = sentence.Replace('<', '"').Replace('>', '"');
-                }
-
-                var Tokens = sentence.Split(new[] {'"'});
+                var Tokens = Sentence.Split(new[] {'"'});
 
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
                     Args = Tokens.Odds().Select(Arg).ToList(),
-                    Skip = IsOutline
                 };
             }
         }

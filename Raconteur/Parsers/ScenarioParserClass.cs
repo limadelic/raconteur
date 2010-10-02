@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,75 +5,169 @@ namespace Raconteur.Parsers
 {
     public class ScenarioParserClass : ScenarioParser
     {
-        readonly char[] NewLine = Environment.NewLine.ToCharArray();
-
-        const string ScenarioDeclaration = "Scenario: ";
+        readonly char[] Colon = {':'};
 
         public StepParser StepParser { get; set; }
 
-        string Content;
-
-        public List<Scenario> ScenariosFrom(string Content)
+        List<string> Definition;
+        public Scenario ScenarioFrom(List<string> Definition)
         {
-            this.Content = Content;
+            this.Definition = Definition;
 
-            return ScenarioDefinitions.Select(Scenario).ToList();
+            return new Scenario
+            {
+                Name = Name,
+                Steps = Steps
+            };
         }
 
-        IEnumerable<string> Lines { get { return 
-            
-            Content
-            .Split(NewLine)
-            .SkipWhile(IsNotScenarioDeclaration)
-            .Where(Line => !string.IsNullOrWhiteSpace(Line))
-            .Select(Line => Line.Trim());    
-        }}
-
-        bool IsScenarioDeclaration(string Line)
-        {
-            return Line.TrimStart().StartsWith(ScenarioDeclaration);
-        }
-
-        bool IsNotScenarioDeclaration(string Line)
-        {
-            return !IsScenarioDeclaration(Line);
-        }
-
-        IEnumerable<List<string>> ScenarioDefinitions
+        string Name
         {
             get
             {
-                var Results = new List<List<string>>();
+                return Definition
+                    .First()
+                    .Split(Colon)[1]
+                    .Trim()
+                    .CamelCase();    
+            } 
+        }
 
-                foreach (var Line in Lines)
-                {
-                    if (IsScenarioDeclaration(Line))
-                        Results.Add(new List<string>());
-                    
-                    Results.Last().Add(Line);
-                }
-
-                return Results;
+        List<Step> Steps
+        {
+            get
+            {
+                return Definition
+                    .Skip(1)
+                    .Select(Step)
+                    .ToList()
+                    .Where(IsValid)
+                    .ToList();
             }
         }
 
-        string NameFrom(string Line)
-        {
-            return Line.Replace(ScenarioDeclaration, "").CamelCase();
-        }
+        Step Step(string Line) { return StepParser.StepFrom(Line); }
 
-        Scenario Scenario(List<string> ScenarioDefinition)
+        bool IsValid(Step Step) { return Step != null && !Step.Skip; }
+
+
+        //        public List<Scenario> ScenariosFrom(string Content)
+//        {
+//            this.Content = Content;
+//            Scenarios = new List<Scenario>();
+//
+//            ScenarioDefinitions.ForEach(Parse);
+//
+//            return Scenarios;
+//        }
+
+//        IEnumerable<string> Lines { get { return 
+//            
+//            Content
+//            .Split(NewLine)
+//            .SkipWhile(IsNotScenarioDeclaration)
+//            .Where(Line => !string.IsNullOrWhiteSpace(Line))
+//            .Select(Line => Line.Trim());    
+//        }}
+//
+//        bool IsScenarioDeclaration(string Line)
+//        {
+//            return Line.TrimStart().StartsWith(ScenarioDeclaration);
+//        }
+//
+//        bool IsNotScenarioDeclaration(string Line)
+//        {
+//            return !IsScenarioDeclaration(Line);
+//        }
+//
+//        List<List<string>> ScenarioDefinitions
+//        {
+//            get
+//            {
+//                var Results = new List<List<string>>();
+//
+//                foreach (var Line in Lines)
+//                {
+//                    if (IsScenarioDeclaration(Line))
+//                        Results.Add(new List<string>());
+//                    
+//                    Results.Last().Add(Line);
+//                }
+//
+//                return Results;
+//            }
+//        }
+
+        /*
+        void Parse(List<string> ScenarioDefinition)
         {
-            return new Scenario
-            {
-                Name = NameFrom(ScenarioDefinition.First()),
-                Steps = 
-                    ScenarioDefinition.Skip(1)
-                    .Select(Line => StepParser.StepFrom(Line))
-                    .ToList()
-                    .Where(Step => Step != null && !Step.Skip)
-                    .ToList()
-            };
+            this.ScenarioDefinition = ScenarioDefinition;
+
+            if (IsScenarioOutline) 
+                ParseScenarioOutline();
+            else ParseScenario();
         }
+*/
+
+/*
+        bool IsScenarioOutline { get { return 
+            
+            ScenarioDefinition.First()
+            .StartsWith(ScenarioOutlineDeclaration)
+        ;}}
+
+        void ParseScenario()
+        {
+            AddScenario
+            (
+                Name, 
+                StepsFrom(ScenarioDefinition.Skip(1))
+            );
+        }
+*/
+
+        //        void ParseScenarioOutline()
+//        {
+//            ParseLines();
+//
+//            var Outline = new Scenario
+//            {
+//                Name = Name,
+//                Steps = OutlineSteps
+//            };
+//
+//            var i = 1;
+//            foreach (var Line in ExampleLines)
+//                AddScenario(Name + i++, null);
+//        }
+//
+//        string NameLine;
+//        List<string> OutlineLines;
+//        string ExampleHeaderLine;
+//        List<string> ExampleLines;
+
+//        void ParseLines()
+//        {
+//            NameLine = ScenarioDefinition.First();
+//            OutlineLines = ScenarioDefinition.Skip(1)
+//                .TakeWhile(IsNotExample).ToList();
+//            ExampleHeaderLine = ScenarioDefinition.Skip(OutlineLines.Count + 1).First();
+//            ExampleLines = ScenarioDefinition.Skip(OutlineLines.Count + 2).ToList();
+//        }
+
+//        bool IsNotExample(string Line) 
+//        { 
+//            return !Line.StartsWith(ExamplesDeclaration);
+//        }
+//
+//        List<Step> OutlineSteps
+//        {
+//            get { return OutlineLines.Select(OutlineStep).ToList(); }
+//        }
+//
+//        Step OutlineStep(string Line)
+//        {
+//            return StepParser.OutlineStepFrom(Line);
+//        }
     }
 }

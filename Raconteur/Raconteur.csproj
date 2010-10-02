@@ -54,6 +54,8 @@
     <Compile Include="Parsers\ScenarioParser.cs" />
     <Compile Include="Parsers\ScenarioParserClass.cs" />
     <Compile Include="IDE\VsFeatureItem.cs" />
+    <Compile Include="Parsers\ScenarioTokenizer.cs" />
+    <Compile Include="Parsers\ScenarioTokenizerClass.cs" />
     <Compile Include="Parsers\StepParser.cs" />
     <Compile Include="Parsers\StepParserClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

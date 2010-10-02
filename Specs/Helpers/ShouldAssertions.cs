@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FluentSpec;
+using Raconteur;
 
 namespace Specs
 {
@@ -21,6 +22,13 @@ namespace Specs
             
             for (var i = 0; i < Ones.Count; i++)
                 Ones[i].ShouldBe(Others[i]);
+        }
+
+        public static Step ShouldBe(this Step Step, string Name, params object[] Args)
+        {
+            Step.Name.ShouldBe(Name);
+            Step.Args.ShouldBe(Args);
+            return Step;
         }
     }
 }

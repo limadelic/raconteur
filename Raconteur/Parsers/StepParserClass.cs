@@ -20,18 +20,30 @@ namespace Raconteur.Parsers
         {
             this.Sentence = Sentence;
 
-            if (IsTable) return ParseStepTable;
+            if (IsTable)
+            {
+                AddRowToStep();
+                return null;
+            }
 
-            var Step = LastStep = ParseStep;
-            Steps.Add(Step);
-            return Step;
+            return LastStep = ParseStep;
         }
 
-        public Step OutlineStepFrom(string Sentence) 
+        void AddRowToStep()
         {
-            this.Sentence = Sentence.Replace('<', '"').Replace('>', '"');
-            return ParseStep;
+            LastStep.Table.Add(ParseTableRow());
         }
+
+        List<string> ParseTableRow()
+        {
+            return Sentence
+                .Split(new[] {'|'})
+                .Chop(1)
+                .Select(x => x.Trim())
+                .ToList();
+        }
+
+        bool IsTable { get { return Sentence.StartsWith("|"); } }
 
         Step ParseStep
         {
@@ -42,11 +54,12 @@ namespace Raconteur.Parsers
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().Select(Arg).ToList(),
+                    Args = Tokens.Odds().ToList(),
                 };
             }
         }
 
+/*
         string Arg(string Value)
         {
             if (Value.IsDateTime()) return @"DateTime.Parse(""" + Value + @""")";
@@ -56,31 +69,28 @@ namespace Raconteur.Parsers
              
             return '"' + Value + '"';
         }
+*/
 
-        bool IsTable 
-        { 
-            get
-            {
-                var isTable = Sentence.StartsWith("|");
+//        void ParseStepTable()
+//        {
+//            LastStep.Table.Add(Sentence)
+//        }
+//
+//        protected bool ParsedHeader
+//        {
+//            get { return LastStep.Table != null; } 
+//        }
 
-                if (!isTable) StopParsingTable();
 
-                return isTable;
-            }
-        }
-
-        bool ParsedHeader;
-
-        void StopParsingTable() { ParsedHeader = false; }
-
-        Step ParseStepTable
+        /*
+        public Step OutlineStepFrom(string Sentence) 
         {
-            get
-            {
-                return !ParsedHeader ? ParseStepTableHeader :
-                    ParseStepTableRow;
-            } 
+            this.Sentence = Sentence.Replace('<', '"').Replace('>', '"');
+            return ParseStep;
         }
+
+*/
+/*
 
         Step ParseStepTableRow
         {
@@ -140,5 +150,6 @@ namespace Raconteur.Parsers
                 return LastStep.Args.Concat(Columns.Select(Arg)).ToList();
             } 
         }
+*/
     }
 }

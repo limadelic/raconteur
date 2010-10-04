@@ -97,12 +97,12 @@ namespace
                         new Step
                         { 
                             Name = "If__happens",
-                            Args = new List<string>{"\"X\""},
+                            Args = new List<string>{"X"},
                         },
                         new Step
                         { 
                             Name = "If__and__happens",
-                            Args = new List<string>{"\"X\"", "\"Y\""}
+                            Args = new List<string>{"X", "Y"}
                         },
                     }
                 }

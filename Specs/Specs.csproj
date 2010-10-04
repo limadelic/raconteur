@@ -58,8 +58,7 @@
     <Compile Include="BehaviourOf.cs" />
     <Compile Include="Helpers\ShouldAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="When_parsing_a_FeatureFile.cs" />
-    <Compile Include="When_generating_the_Steps.cs" />
+    <Compile Include="When_testing_with_simple_steps.cs" />
     <Compile Include="When_testing_with_arguments.cs" />
     <Compile Include="When_testing_with_outlines.cs" />
     <Compile Include="When_testing_with_tables.cs" />

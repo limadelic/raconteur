@@ -46,6 +46,7 @@
     <Compile Include="Feature.cs" />
     <Compile Include="Generators\RaconteurGenerator.cs" />
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />
+    <Compile Include="Helpers\ArgFormatter.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Parsers\FeatureParserClass.cs" />
     <Compile Include="Scenario.cs" />
     <Compile Include="Step.cs" />
+    <Compile Include="Table.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

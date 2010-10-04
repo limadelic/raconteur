@@ -10,6 +10,7 @@ namespace Raconteur.Parsers
         public StepParser StepParser { get; set; }
 
         List<string> Definition;
+
         public Scenario ScenarioFrom(List<string> Definition)
         {
             this.Definition = Definition;
@@ -37,18 +38,11 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Definition
-                    .Skip(1)
-                    .Select(Step)
-                    .ToList()
-                    .Where(IsValid)
-                    .ToList();
+                return Definition.Skip(1).Select(Step).ToList();
             }
         }
 
         Step Step(string Line) { return StepParser.StepFrom(Line); }
-
-        bool IsValid(Step Step) { return Step != null && !Step.Skip; }
 
 
         //        public List<Scenario> ScenariosFrom(string Content)

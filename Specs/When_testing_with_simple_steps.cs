@@ -10,7 +10,7 @@ using Raconteur.Parsers;
 namespace Specs
 {
     [TestFixture]
-    public class When_parsing_a_FeatureFile
+    public class When_testing_with_simple_steps
     {
         [TestFixture]
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
@@ -110,12 +110,12 @@ namespace Specs
             public void should_name_steps()
             {
                 var Step = TestObjectFor<Step>();
-                Given.StepParser.StepFrom("    Do what you like").Is(Step);
+                Given.StepParser.StepFrom("Do what you like").Is(Step);
 
                 Definition = new List<string>
                 {
                     "Scenario: Scenario Name",
-                    "    Do what you like"
+                      "Do what you like"
                 };
 
                 The.ScenarioFrom(Definition)
@@ -154,6 +154,59 @@ namespace Specs
             {
                 The.StepFrom("Do what you like")
                     .Name.ShouldBe("Do_what_you_like");
+            }
+        }
+
+               static string StepDefinitions;
+
+        [TestFixture]
+        public class for_the_first_time : BehaviorOf<StepDefinitionsGenerator>
+        {
+            [FixtureSetUp]
+            public void SetUp()
+            {
+                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, null);
+            }
+
+            [Test]
+            public void should_generate_the_StepDefinitions_namespace()
+            {
+                StepDefinitions.ShouldContain("namespace Features");
+            }
+
+            [Test]
+            public void should_generate_the_StepDefinitions_class()
+            {
+                StepDefinitions.ShouldContain("public partial class Name");
+            }
+        }
+
+        [TestFixture]
+        public class with_existing_steps : BehaviorOf<StepDefinitionsGenerator>
+        {
+            [FixtureSetUp]
+            public void SetUp()
+            {
+                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefinitionWithBase);
+            }
+
+            [Test]
+            public void should_change_the_class_name()
+            {
+                StepDefinitions.ShouldContain("public partial class Name");
+                StepDefinitions.ShouldNotContain("public partial class FeatureName");
+            }
+
+            [Test]
+            public void should_keep_defined_content()
+            {
+                StepDefinitions.ShouldContain("var thing = FeatureName");
+            }
+
+            [Test]
+            public void should_keep_inheritance()
+            {
+                StepDefinitions.ShouldContain(": BaseClass");
             }
         }
     }

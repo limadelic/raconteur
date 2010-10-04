@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Generators
@@ -58,9 +60,32 @@ namespace {0}
             return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
         }
 
-        string ExecuteStep(Step Step)
+        string ExecuteStep(Step Step) 
         {
-            var Args = string.Join(", ", Step.Args);
+            return Step.HasTable ?
+                ExecuteStepWithTable(Step) :
+                ExecuteSimpleStep(Step);
+        }
+
+        string ExecuteStepWithTable(Step Step)
+        {
+//            var FixedArgs = Step.Args;
+
+            return Step.Table.Rows.Skip(1)
+                .Aggregate(string.Empty, (Steps, Row) => 
+                    Steps + ExecuteStepRow(Step, Row));
+        }
+
+        string ExecuteStepRow(Step Step, List<string> Row) 
+        { 
+            Step.Args = Row;
+            return ExecuteSimpleStep(Step) + Environment.NewLine;
+        }
+
+        string ExecuteSimpleStep(Step Step) {
+            var ArgsValues = Step.Args.Select(ArgFormatter.ValueOf);
+
+            var Args = string.Join(", ", ArgsValues);
             return string.Format(StepExecution, Step.Name, Args);
         }
     }

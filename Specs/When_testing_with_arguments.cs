@@ -1,5 +1,7 @@
-﻿using FluentSpec;
+﻿using System;
+using FluentSpec;
 using MbUnit.Framework;
+using Raconteur;
 using Raconteur.Generators;
 using Raconteur.Parsers;
 
@@ -22,7 +24,7 @@ namespace Specs
                     .Args.Count.ShouldBe(1);
                 
                 The.StepFrom(Sentence)
-                    .Args[0].ShouldBe("\"X\"");
+                    .Args[0].ShouldBe("X");
             }
 
             [Test]
@@ -36,50 +38,7 @@ namespace Specs
                 The.StepFrom(Sentence).Args.Count.ShouldBe(2);
                 
                 The.StepFrom(Sentence)
-                    .Args[1].ShouldBe("\"Y\"");
-            }
-
-            [Test]
-            public void should_create_steps_with_numeric_args()
-            {
-                const string Sentence = @"The pin should be ""234"" "
-                    + @"and the amount should be ""450.23""";
-
-                The.StepFrom(Sentence)
-                    .Args[0].ShouldBe("234");
-
-                The.StepFrom(Sentence)
-                    .Args[1].ShouldBe("450.23");
-            }
-
-            [Test]
-            public void should_create_steps_with_date_args()
-            {
-                const string Sentence = @"The user gets paid on ""02/08/1986""";
-
-                The.StepFrom(Sentence)
-                    .Args[0].ShouldBe(@"DateTime.Parse(""02/08/1986"")");
-            }
-
-            [Test]
-            public void should_create_steps_with_boolean_args()
-            {
-                const string Sentence = @"""true"" should not equal ""false""";
-
-                The.StepFrom(Sentence)
-                    .Args[0].ShouldBe(@"true");
-
-                The.StepFrom(Sentence)
-                    .Args[1].ShouldBe(@"false");
-            }
-
-            [Test]
-            public void should_create_steps_with_null_args()
-            {
-                const string Sentence = @"when I pass a ""null""";
-
-                The.StepFrom(Sentence)
-                    .Args[0].ShouldBe(@"null");
+                    .Args[1].ShouldBe("Y");
             }
         }
 
@@ -94,6 +53,22 @@ namespace Specs
 
                 The.RunnerFor(Actors.FeatureWithArgs)
                     .ShouldContain(@"If__and__happens(""X"", ""Y"");");
+            }
+        }
+
+        [TestFixture]
+        public class The_arg_formatter
+        {
+            [Row("234", "234")]
+            [Row("450.23", "450.23")]
+            [Row("02/08/1986", @"System.DateTime.Parse(""02/08/1986"")")]
+            [Row("true", "true")]
+            [Row("false", "false")]
+            [Row("null", "null")]
+            [Row("string", "\"string\"")]
+            public void should_format_Args_by_type(string Arg, string Value)
+            {
+                ArgFormatter.ValueOf(Arg).ShouldBe(Value);
             }
         }
     }

@@ -38,7 +38,8 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Definition.Skip(1).Select(Step).ToList();
+                return Definition.Skip(1).Select(Step)
+                    .Where(Current => Current != null).ToList();
             }
         }
 

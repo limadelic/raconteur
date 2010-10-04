@@ -54,33 +54,39 @@ namespace
             }
         ";
 
-        public readonly static Feature Feature = new Feature
-        {
-            Name = "Name",
-            FileName = "File Name",
-            Namespace = "Features",
-            Scenarios =
+        public static Feature Feature 
+        { 
+            get
+            {
+                return new Feature
                 {
-                    new Scenario
-                    {
-                        Name = "Scenario 1",
-                        Steps = 
-                        { 
-                            new Step{ Name = "Unique step" }, 
-                            new Step{ Name = "Repeated step" }
-                        }
-                    },                            
-                    new Scenario
-                    {
-                        Name = "Scenario 2",
-                        Steps =
+                    Name = "Name",
+                    FileName = "File Name",
+                    Namespace = "Features",
+                    Scenarios =
                         {
-                            new Step{ Name = "Repeated step" }, 
-                            new Step{ Name = "Another unique step" }
+                            new Scenario
+                            {
+                                Name = "Scenario 1",
+                                Steps = 
+                                { 
+                                    new Step{ Name = "Unique step" }, 
+                                    new Step{ Name = "Repeated step" }
+                                }
+                            },                            
+                            new Scenario
+                            {
+                                Name = "Scenario 2",
+                                Steps =
+                                {
+                                    new Step{ Name = "Repeated step" }, 
+                                    new Step{ Name = "Another unique step" }
+                                }
+                            },                            
                         }
-                    },                            
-                }
-        };
+                };
+            } 
+        } 
 
         public static Feature FeatureWithArgs = new Feature
         {

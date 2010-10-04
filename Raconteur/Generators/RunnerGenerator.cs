@@ -69,17 +69,17 @@ namespace {0}
 
         string ExecuteStepWithTable(Step Step)
         {
-//            var FixedArgs = Step.Args;
+            var FixedArgs = Step.Args.ToList();
 
             return Step.Table.Rows.Skip(1)
                 .Aggregate(string.Empty, (Steps, Row) => 
-                    Steps + ExecuteStepRow(Step, Row));
+                    Steps + ExecuteStepRow(Step, Row, FixedArgs));
         }
 
-        string ExecuteStepRow(Step Step, List<string> Row) 
+        string ExecuteStepRow(Step Step, List<string> Row, List<string> FixedArgs) 
         { 
-            Step.Args = Row;
-            return ExecuteSimpleStep(Step) + Environment.NewLine;
+            Step.Args = FixedArgs.Union(Row).ToList();
+            return ExecuteSimpleStep(Step);
         }
 
         string ExecuteSimpleStep(Step Step) {

@@ -6,6 +6,9 @@ namespace Raconteur
     {
         public string Name { get; set; }
         public List<Step> Steps { get; set; }
+        
+        public bool IsOutline { get { return Examples != null;  } }
+        public Table Examples { get; set; }
 
         public Scenario()
         {

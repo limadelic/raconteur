@@ -71,7 +71,7 @@ namespace Specs
             Step Step;
 
             [SetUp]
-            public void SetUp() 
+            public new void SetUp() 
             {
                 Feature = Actors.Feature;
                 Step = Feature.Scenarios[0].Steps[0];

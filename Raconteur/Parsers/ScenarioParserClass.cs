@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -18,8 +19,37 @@ namespace Raconteur.Parsers
             return new Scenario
             {
                 Name = Name,
-                Steps = Steps
+                Steps = Steps,
+                Examples = Examples
             };
+        }
+
+        protected Table Examples
+        {
+            get
+            {
+                var Rows = Definition
+                    .SkipWhile(IsNotExample)
+                    .Skip(1)
+                    .Select(ParseTableRow).ToList();
+
+                return Rows.Count == 0 ? null : 
+                    new Table { Rows = Rows };
+            }
+        }
+
+        protected bool IsNotExample(string Line)
+        {
+            return !Line.StartsWith("Examples:");
+        }
+
+        List<string> ParseTableRow(string Row)
+        {
+            return Row
+                .Split(new[] {'|'})
+                .Chop(1)
+                .Select(x => x.Trim())
+                .ToList();
         }
 
         string Name
@@ -38,7 +68,9 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Definition.Skip(1).Select(Step)
+                return Definition.Skip(1)
+                    .TakeWhile(IsNotExample)
+                    .Select(Step)
                     .Where(Current => Current != null).ToList();
             }
         }

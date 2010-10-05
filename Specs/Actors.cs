@@ -67,7 +67,7 @@ namespace
                         {
                             new Scenario
                             {
-                                Name = "Scenario 1",
+                                Name = "Scenario1",
                                 Steps = 
                                 { 
                                     new Step{ Name = "Unique step" }, 
@@ -76,7 +76,7 @@ namespace
                             },                            
                             new Scenario
                             {
-                                Name = "Scenario 2",
+                                Name = "Scenario2",
                                 Steps =
                                 {
                                     new Step{ Name = "Repeated step" }, 

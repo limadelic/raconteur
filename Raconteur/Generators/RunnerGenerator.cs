@@ -52,9 +52,29 @@ namespace {0}
             } 
         }
 
-        string ScenarioCodeFrom(Scenario Scenario)
+        string ScenarioCodeFrom(Scenario Scenario) 
         {
-            var StepCode = Scenario.Steps.Aggregate("",
+            return (Scenario.IsOutline) ?
+                ScenarioCodeFromOutline(Scenario):
+                ScenarioCodeFromSimple(Scenario);
+        }
+
+        string ScenarioCodeFromOutline(Scenario Scenario)
+        {
+            var Name = Scenario.Name;
+            var i = 1;
+
+            return Scenario.Examples.Rows.Skip(1).Aggregate(string.Empty,
+            (Scenarios, Current) => 
+            { 
+                Scenario.Name = Name + i++;
+                return Scenarios + ScenarioCodeFromSimple(Scenario);
+            });  
+        }
+
+        string ScenarioCodeFromSimple(Scenario Scenario) 
+        {
+            var StepCode = Scenario.Steps.Aggregate(string.Empty,
                 (Steps, Step) => Steps + ExecuteStep(Step));
 
             return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);

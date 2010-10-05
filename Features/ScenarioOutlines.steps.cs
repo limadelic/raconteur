@@ -10,10 +10,10 @@ namespace Features
             @"
                 Feature: Feature Name
 
-                Scenario Outline: Interest Rate
-                  Given <account> has <amount>
+                Scenario: Interest Rate
+                  Given ""account"" has ""amount""
                   When interest is calculated
-                  It should be <interest>
+                  It should be ""interest""
                     
                   Examples:
                     |account|amount|interest|
@@ -26,12 +26,12 @@ namespace Features
         {
             Runner.ShouldContainInOrder
             (
-                @"public void Outline1()",
+                @"public void InterestRate1()",
                     @"Given__has(23, 42)",
                     @"When_interest_is_calculated()",
                     @"It_should_be(1)",
 
-                @"public void Outline2()",
+                @"public void InterestRate2()",
                     @"Given__has(56, 23)",
                     @"When_interest_is_calculated()",
                     @"It_should_be(3)"

@@ -31,7 +31,7 @@ namespace Raconteur.Parsers
 
         void AddRowToStep()
         {
-            LastStep.Table.Add(ParseTableRow());
+            LastStep.AddRow(ParseTableRow());
         }
 
         List<string> ParseTableRow()
@@ -58,98 +58,5 @@ namespace Raconteur.Parsers
                 };
             }
         }
-
-/*
-        string Arg(string Value)
-        {
-            if (Value.IsDateTime()) return @"DateTime.Parse(""" + Value + @""")";
-
-            if (Value.IsNumeric() || Value.IsBoolean() || Value == "null") 
-                return Value;
-             
-            return '"' + Value + '"';
-        }
-*/
-
-//        void ParseStepTable()
-//        {
-//            LastStep.Table.Add(Sentence)
-//        }
-//
-//        protected bool ParsedHeader
-//        {
-//            get { return LastStep.Table != null; } 
-//        }
-
-
-        /*
-        public Step OutlineStepFrom(string Sentence) 
-        {
-            this.Sentence = Sentence.Replace('<', '"').Replace('>', '"');
-            return ParseStep;
-        }
-
-*/
-/*
-
-        Step ParseStepTableRow
-        {
-            get
-            {
-                return new Step
-                {
-                    Name = LastStep.Name,
-                    Args = Args
-                };
-            }
-        }
-
-        Step ParseStepTableHeader
-        {
-            get
-            {
-                ParsedHeader = true;
-                LastStep.Skip = true;
-
-                SetUpArgColMap();
-
-                return null;
-            } 
-        }
-
-        void SetUpArgColMap()
-        {
-            foreach (var Column in Columns)
-                ArgColMap.Add(ArgsMatching(Column));
-        }
-
-        List<string> ArgsMatching(string Column)
-        {
-            return 
-            (
-                from Step in Steps 
-                from arg in Step.Args 
-                where Arg(Column).Equals(arg) 
-                select arg
-            ).ToList();
-        }
-
-        IEnumerable<string> Columns
-        {
-            get
-            {
-                return Sentence.Split(new[] {'|'}).Chop(1).
-                    Select(x => x.Trim());
-            }
-        }
-
-        List<string> Args 
-        {
-            get
-            {
-                return LastStep.Args.Concat(Columns.Select(Arg)).ToList();
-            } 
-        }
-*/
     }
 }

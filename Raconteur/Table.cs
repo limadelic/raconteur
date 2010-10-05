@@ -5,6 +5,7 @@ namespace Raconteur
     public class Table
     {
         public List<List<string>> Rows { get; set; }
+        public List<string> Header { get { return Rows[0]; } }
 
         public Table()
         {

@@ -36,17 +36,21 @@ namespace {0}
         public string RunnerFor(Feature Feature)
         {
             this.Feature = Feature;
-            return string.Format(RunnerClass, 
+            
+            return string.Format
+            (
+                RunnerClass, 
                 Feature.Namespace, 
                 Feature.Name, 
-                ScenariosImpl);
+                ScenariosCode
+            );
         }
 
-        string ScenariosImpl
+        string ScenariosCode
         {
             get 
             {
-                return Feature.Scenarios.Aggregate("",
+                return Feature.Scenarios.Aggregate(string.Empty,
                     (Scenarios, Scenario) => 
                         Scenarios + ScenarioCodeFrom(Scenario)); 
             } 
@@ -61,15 +65,26 @@ namespace {0}
 
         string ScenarioCodeFromOutline(Scenario Scenario)
         {
-            var Name = Scenario.Name;
-            var i = 1;
+            var OutlineCode = ScenarioCodeFromSimple(Scenario);
 
-            return Scenario.Examples.Rows.Skip(1).Aggregate(string.Empty,
-            (Scenarios, Current) => 
-            { 
-                Scenario.Name = Name + i++;
-                return Scenarios + ScenarioCodeFromSimple(Scenario);
-            });  
+            var i = 1;
+            return Scenario.Examples.Rows.Skip(1)
+                .Aggregate(string.Empty, (Scenarios, Example) => Scenarios + 
+                    ScenarioCodeFromOutlineExample(Scenario, i++, Example, OutlineCode));
+        }
+
+        string ScenarioCodeFromOutlineExample(Scenario Scenario, int Index, List<string> Example, string OutlineCode)
+        {
+            OutlineCode = OutlineCode.Replace(Scenario.Name + "()", Scenario.Name + Index + "()");
+
+            for (var i = 0; i < Scenario.Examples.Header.Count; i++)
+                OutlineCode = OutlineCode.Replace
+                (
+                    "\"" + Scenario.Examples.Header[i] + "\"", 
+                    ArgFormatter.ValueOf(Example[i])
+                );
+
+            return OutlineCode;
         }
 
         string ScenarioCodeFromSimple(Scenario Scenario) 
@@ -89,20 +104,25 @@ namespace {0}
 
         string ExecuteStepWithTable(Step Step)
         {
-            var FixedArgs = Step.Args.ToList();
-
             return Step.Table.Rows.Skip(1)
                 .Aggregate(string.Empty, (Steps, Row) => 
-                    Steps + ExecuteStepRow(Step, Row, FixedArgs));
+                    Steps + ExecuteStepRow(Step, Row));
         }
 
-        string ExecuteStepRow(Step Step, List<string> Row, List<string> FixedArgs) 
+        string ExecuteStepRow(Step Step, List<string> Row) 
         { 
-            Step.Args = FixedArgs.Union(Row).ToList();
-            return ExecuteSimpleStep(Step);
+            return ExecuteSimpleStep
+            (
+                new Step
+                {
+                    Name = Step.Name,
+                    Args = Step.Args.Union(Row).ToList()
+                }
+            );
         }
 
-        string ExecuteSimpleStep(Step Step) {
+        string ExecuteSimpleStep(Step Step) 
+        {
             var ArgsValues = Step.Args.Select(ArgFormatter.ValueOf);
 
             var Args = string.Join(", ", ArgsValues);

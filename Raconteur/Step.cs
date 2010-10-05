@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Raconteur
@@ -7,15 +6,20 @@ namespace Raconteur
     {
         public string Name { get; set; }
         public List<string> Args { get; set; }
-        public bool Skip { get; set; }
+        
+        public bool HasTable { get { return Table != null; } }
         public Table Table { get; set; }
-
-        public bool HasTable { get { return Table.Rows.Count != 0; } }
 
         public Step()
         {
-            Table = new Table();
             Args = new List<string>();
+        }
+
+        public void AddRow(List<string> Row)
+        {
+            if (!HasTable) Table = new Table();
+
+            Table.Add(Row);
         }
     }
 }

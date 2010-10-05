@@ -70,8 +70,8 @@ namespace
                                 Name = "Scenario1",
                                 Steps = 
                                 { 
-                                    new Step{ Name = "Unique step" }, 
-                                    new Step{ Name = "Repeated step" }
+                                    new Step{ Name = "Unique_step" }, 
+                                    new Step{ Name = "Repeated_step" }
                                 }
                             },                            
                             new Scenario
@@ -79,8 +79,8 @@ namespace
                                 Name = "Scenario2",
                                 Steps =
                                 {
-                                    new Step{ Name = "Repeated step" }, 
-                                    new Step{ Name = "Another unique step" }
+                                    new Step{ Name = "Repeated_step" }, 
+                                    new Step{ Name = "Another_unique_step" }
                                 }
                             },                            
                         }

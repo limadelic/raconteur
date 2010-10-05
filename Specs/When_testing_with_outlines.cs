@@ -44,14 +44,13 @@ namespace Specs
         [TestFixture]
         public class a_generator : BehaviourOf<RunnerGenerator>
         {
-            Feature Feature;
-            Scenario Scenario;
+            string Runner;
 
             [SetUp]
             public new void SetUp()
             {
-                Feature = Actors.Feature;
-                Scenario = Feature.Scenarios[0];
+                var Feature = Actors.Feature;
+                var Scenario = Feature.Scenarios[0];
                 
                 Scenario.Examples = new Table
                 {
@@ -63,17 +62,33 @@ namespace Specs
                     }
                 };
 
-//                Scenario.Steps[0].Args = new List<string> {"X"};
-//                Scenario.Steps[1].Args = new List<string> {"Y"};
+                Scenario.Steps[0].Args = new List<string> {"X"};
+                Scenario.Steps[1].Args = new List<string> {"Y"};
+
+                Runner = The.RunnerFor(Feature);
             }
 
             [Test]
             public void should_create_a_Test_per_Example()
             {
-                The.RunnerFor(Feature).ShouldContainInOrder
+                Runner.ShouldContainInOrder
                 (
-                    "public void Scenario11", 
-                    "public void Scenario12"
+                    "public void Scenario11()", 
+                    "public void Scenario12()"
+                );
+            }
+
+            [Test]
+            public void should_pass_Examples_as_Args()
+            {
+                Runner.ShouldContainInOrder
+                (
+                    "public void Scenario11()", 
+                        "Unique_step(1)", 
+                        "Repeated_step(2)",
+                    "public void Scenario12()",
+                        "Unique_step(3)", 
+                        "Repeated_step(4)"
                 );
             }
         }

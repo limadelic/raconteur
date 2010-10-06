@@ -26,7 +26,6 @@ namespace Raconteur.Generators
             }
         }
 
-
         string CodeForStepWithTable
         {
             get
@@ -54,6 +53,7 @@ namespace Raconteur.Generators
             var ArgsValues = Step.Args.Select(ArgFormatter.ValueOf);
 
             var Args = string.Join(", ", ArgsValues);
+
             return string.Format(StepExecution, Step.Name, Args);
         }
     }

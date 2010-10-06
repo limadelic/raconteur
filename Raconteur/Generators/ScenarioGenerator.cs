@@ -46,12 +46,12 @@ namespace Raconteur.Generators
         {
             get
             {
-                var Outline = ScenarioCode;
                 var Result = string.Empty;
+                var Outline = ScenarioCode;
 
                 for (var Row = 0; Row < Scenario.Examples.Count; Row++)
                 {
-                    var CurrentCode = ReplaceNameIn(Outline, Scenario.Name, Row + 1);
+                    var CurrentCode = ReplaceNameIn(Outline, Row);
 
                     for (var Col = 0; Col < Scenario.Examples.Header.Count; Col++) 
                         CurrentCode = ReplaceExampleIn(CurrentCode, Row, Col);
@@ -63,18 +63,18 @@ namespace Raconteur.Generators
             }
         }
 
-        string ReplaceExampleIn(string CurrentScenarioCode, int Row, int Col)
+        string ReplaceNameIn(string Outline, int Row)
         {
-            return CurrentScenarioCode.Replace
+            return Outline.Replace(Scenario.Name+"()", Scenario.Name+(Row + 1)+"()");
+        }
+
+        string ReplaceExampleIn(string Outline, int Row, int Col)
+        {
+            return Outline.Replace
             (
                 Scenario.Examples.Header[Col].Quote(), 
                 ArgFormatter.ValueOf(Scenario.Examples[Row, Col])
             );
-        }
-
-        string ReplaceNameIn(string Outline, string Name, int Index)
-        {
-            return Outline.Replace(Name+"()", Name+Index+"()");
         }
     }
 }

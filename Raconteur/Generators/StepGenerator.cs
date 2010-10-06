@@ -43,7 +43,7 @@ namespace Raconteur.Generators
                 new Step
                 {
                     Name = Step.Name,
-                    Args = Step.Args.Union(Row).ToList()
+                    Args = Step.Args.Concat(Row).ToList()
                 }
             );
         }

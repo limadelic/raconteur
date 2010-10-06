@@ -13,7 +13,7 @@ namespace Features
                 Scenario: Scenario Name
                     Verify some values:
                     |X|Y|
-                    |1|0|
+                    |0|0|
                     |0|1|
             ";
         }
@@ -22,7 +22,7 @@ namespace Features
         {
             Runner.ShouldContainInOrder
             (
-                @"Verify_some_values_(1, 0);",
+                @"Verify_some_values_(0, 0);",
                 @"Verify_some_values_(0, 1);"
             );
         }

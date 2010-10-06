@@ -42,7 +42,7 @@ namespace Specs
                     Rows = new List<List<string>>
                     {
                         new List<string> {"X", "Y"},
-                        new List<string> {"1", "2"},
+                        new List<string> {"1", "1"},
                         new List<string> {"3", "4"}
                     }
                 };
@@ -59,7 +59,7 @@ namespace Specs
             [Test]
             public void should_create_a_step_for_every_row_with_cols_as_Args()
             {
-                Runner.ShouldContain(Step.Name + @"(1, 2);");
+                Runner.ShouldContain(Step.Name + @"(1, 1);");
                 Runner.ShouldContain(Step.Name + @"(3, 4);");
             }
         }

@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raconteur", "Raconteur\Raconteur.csproj", "{EA882F82-3468-44E0-8473-C01C1E091BCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Features", "Features\Features.csproj", "{F90D901A-DFEC-47E3-946E-37414C9456BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Features", "Tests\Features\Features.csproj", "{F90D901A-DFEC-47E3-946E-37414C9456BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs", "Specs\Specs.csproj", "{D22327EF-5584-4936-9857-4046E4498CE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Specs", "Tests\Specs\Specs.csproj", "{D22327EF-5584-4936-9857-4046E4498CE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IDEIntegration", "IDEIntegration\IDEIntegration.csproj", "{96294E6F-8875-4D12-8577-4EC83E60BD6C}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Installer\Installer.wixproj", "{89167EB9-F458-48DA-9D8F-F639A74F5871}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{041FA850-5929-4F70-853B-AB7579FBC814}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,5 +76,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F90D901A-DFEC-47E3-946E-37414C9456BD} = {041FA850-5929-4F70-853B-AB7579FBC814}
+		{D22327EF-5584-4936-9857-4046E4498CE6} = {041FA850-5929-4F70-853B-AB7579FBC814}
 	EndGlobalSection
 EndGlobal

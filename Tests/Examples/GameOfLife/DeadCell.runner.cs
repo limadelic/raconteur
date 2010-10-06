@@ -13,7 +13,7 @@ namespace Examples
             Given_the_following_setup(".", ".", ".");        
             Given_the_following_setup(".", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -23,7 +23,7 @@ namespace Examples
             Given_the_following_setup(".", ".", ".");        
             Given_the_following_setup(".", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -33,7 +33,7 @@ namespace Examples
             Given_the_following_setup(".", ".", "x");        
             Given_the_following_setup(".", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -43,7 +43,7 @@ namespace Examples
             Given_the_following_setup(".", ".", ".");        
             Given_the_following_setup(".", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_alive();
+            Then_the_center_cell_should_be("alive");
         }
         
         [TestMethod]
@@ -53,7 +53,7 @@ namespace Examples
             Given_the_following_setup(".", ".", "x");        
             Given_the_following_setup(".", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -63,7 +63,7 @@ namespace Examples
             Given_the_following_setup("x", ".", "x");        
             Given_the_following_setup(".", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -73,7 +73,7 @@ namespace Examples
             Given_the_following_setup("x", ".", "x");        
             Given_the_following_setup("x", ".", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -83,7 +83,7 @@ namespace Examples
             Given_the_following_setup("x", ".", "x");        
             Given_the_following_setup("x", "x", ".");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
         
         [TestMethod]
@@ -93,7 +93,7 @@ namespace Examples
             Given_the_following_setup("x", ".", "x");        
             Given_the_following_setup("x", "x", "x");        
             When_I_evolve_the_board();        
-            Then_the_center_cell_should_be_dead();
+            Then_the_center_cell_should_be("dead");
         }
 
     }

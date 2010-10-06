@@ -1,3 +1,4 @@
+using System.Linq;
 using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,9 +14,14 @@ namespace Examples
             Game = new GameOfLife();    
         }
 
-        public void Given_the_following_setup(string P0, string P1, string P2)
+        public void Given_the_following_setup(params string[] Cells)
         {
-            Game.AddRow(Bool(P0), Bool(P1), Bool(P2));
+            Game.AddRow(Cells.Select(Bool).ToArray());
+        }
+
+        public void Then_I_should_see_the_following_board(params string[] Cells)
+        {
+            
         }
 
         bool Bool(string Value) { return Value != "."; }

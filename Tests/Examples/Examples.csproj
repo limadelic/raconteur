@@ -55,6 +55,23 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GameOfLife\GameOfLife.cs" />
+    <Compile Include="GameOfLife\LiveCell.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCell.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\LiveCell.steps.cs">
+      <DependentUpon>LiveCell.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleCells.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultipleCells.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleCells.steps.cs">
+      <DependentUpon>MultipleCells.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -62,6 +79,14 @@
     <None Include="GameOfLife\DeadCell.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>DeadCell.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\LiveCell.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>LiveCell.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\MultipleCells.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultipleCells.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

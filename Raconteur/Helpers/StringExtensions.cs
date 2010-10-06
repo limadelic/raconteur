@@ -14,6 +14,11 @@ namespace Raconteur
             return Word[0].ToString().ToUpperInvariant() + Word.Substring(1);
         }
 
+        public static string Quote(this string Word)
+        {
+            return "\"" + Word + "\"";
+        }
+
         public static string CamelCase(this string Sentence)
         {
             return Sentence.Split(new [] {' '})
@@ -37,8 +42,8 @@ namespace Raconteur
 
         public static bool IsNumeric(this string It)
         {
-            var dummyInt = 0;
-            var dummyDouble = 0.0;
+            int dummyInt;
+            double dummyDouble;
 
             return int.TryParse(It, out dummyInt)
                 || double.TryParse(It, out dummyDouble);
@@ -46,14 +51,14 @@ namespace Raconteur
 
         public static bool IsDateTime(this string It)
         {
-            var dummyDate = new DateTime();
+            DateTime dummyDate;
 
             return DateTime.TryParse(It, out dummyDate);
         }
 
         public static bool IsBoolean(this string It)
         {
-            var dummyBool = false;
+            bool dummyBool;
 
             return bool.TryParse(It, out dummyBool);
         }

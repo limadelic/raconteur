@@ -7,8 +7,8 @@ namespace Raconteur.Generators
     {
         public FeatureItem FeatureItem { get; set; }
         public FeatureParser FeatureParser { get; set; }
-        public virtual RunnerGenerator RunnerGenerator { get; set; }
-        public virtual StepDefinitionsGenerator StepDefinitionsGenerator { get; set; }
+        public RunnerGenerator RunnerGenerator { get; set; }
+        public StepDefinitionsGenerator StepDefinitionsGenerator { get; set; }
 
         public string Generate(string FeatureFilePath, string Content)
         {
@@ -19,7 +19,7 @@ namespace Raconteur.Generators
 
             FeatureItem.AddStepDefinitions(StepDefinitions);
 
-            return RunnerGenerator.RunnerFor(Feature);
+            return new RunnerGenerator(Feature).Code;
         }
 
         Feature FeatureFrom(string FeatureFilePath, string Content)

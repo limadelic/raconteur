@@ -13,7 +13,6 @@ namespace Raconteur
             {
                 FeatureItem = FeatureItem,
                 FeatureParser = NewFeatureParser,
-                RunnerGenerator = new RunnerGenerator(),
                 StepDefinitionsGenerator = new StepDefinitionsGenerator(),
             };
         }

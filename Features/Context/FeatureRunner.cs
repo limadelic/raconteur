@@ -16,13 +16,11 @@ namespace Features
 
                 var Parser = ObjectFactory.NewFeatureParser;
 
-                var RunnerGenerator = new RunnerGenerator();
-
                 var Project = new VsFeatureItem { DefaultNamespace = "Features" };
 
                 var NewFeature = Parser.FeatureFrom(FeatureFile, Project);
 
-                return RunnerGenerator.RunnerFor(NewFeature);
+                return new RunnerGenerator(NewFeature).Code;
             } 
         }
     }

@@ -42,10 +42,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generators\CodeGenerator.cs" />
     <Compile Include="Generators\FeatureFile.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="Generators\RaconteurGenerator.cs" />
+    <Compile Include="Generators\ScenarioGenerator.cs" />
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />
+    <Compile Include="Generators\StepGenerator.cs" />
     <Compile Include="Helpers\ArgFormatter.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />

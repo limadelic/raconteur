@@ -42,7 +42,7 @@ namespace Specs
         }
 
         [TestFixture]
-        public class a_generator : BehaviourOf<RunnerGenerator>
+        public class a_generator
         {
             string Runner;
 
@@ -65,7 +65,7 @@ namespace Specs
                 Scenario.Steps[0].Args = new List<string> {"X"};
                 Scenario.Steps[1].Args = new List<string> {"Y"};
 
-                Runner = The.RunnerFor(Feature);
+                Runner = new RunnerGenerator(Feature).Code;            
             }
 
             [Test]

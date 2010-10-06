@@ -157,7 +157,7 @@ namespace Specs
             }
         }
 
-               static string StepDefinitions;
+        static string StepDefinitions;
 
         [TestFixture]
         public class for_the_first_time : BehaviorOf<StepDefinitionsGenerator>

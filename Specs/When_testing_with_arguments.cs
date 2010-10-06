@@ -1,5 +1,4 @@
-﻿using System;
-using FluentSpec;
+﻿using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
 using Raconteur.Generators;
@@ -42,18 +41,14 @@ namespace Specs
             }
         }
 
-        [TestFixture]
-        public class The_generator : BehaviorOf<RunnerGenerator>
+        [Test]
+        public void should_pass_the_parameters_into_the_step_call()
         {
-            [Test]
-            public void should_pass_the_parameters_into_the_step_call()
-            {
-                The.RunnerFor(Actors.FeatureWithArgs)
-                    .ShouldContain(@"If__happens(""X"");");
+            var Runner = new RunnerGenerator(Actors.FeatureWithArgs).Code;
+            
+            Runner.ShouldContain(@"If__happens(""X"");");
 
-                The.RunnerFor(Actors.FeatureWithArgs)
-                    .ShouldContain(@"If__and__happens(""X"", ""Y"");");
-            }
+            Runner.ShouldContain(@"If__and__happens(""X"", ""Y"");");
         }
 
         [TestFixture]

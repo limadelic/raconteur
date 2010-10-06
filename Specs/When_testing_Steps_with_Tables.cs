@@ -25,7 +25,7 @@ namespace Specs
         }
 
         [TestFixture]
-        public class simple_Steps : BehaviourOf<RunnerGenerator>
+        public class simple_Steps
         {
             Feature Feature;
             Step Step;
@@ -47,7 +47,7 @@ namespace Specs
                     }
                 };
 
-                Runner = The.RunnerFor(Feature);            
+                Runner = new RunnerGenerator(Feature).Code;            
             }
 
             [Test]
@@ -65,13 +65,13 @@ namespace Specs
         }
 
         [TestFixture]
-        public class Steps_with_Args : BehaviourOf<RunnerGenerator>
+        public class Steps_with_Args
         {
             Feature Feature;
             Step Step;
 
             [SetUp]
-            public new void SetUp() 
+            public void SetUp() 
             {
                 Feature = Actors.Feature;
                 Step = Feature.Scenarios[0].Steps[0];
@@ -92,8 +92,9 @@ namespace Specs
             {
                 Step.Args.Add("arg");
 
-                The.RunnerFor(Feature)
-                    .ShouldContain(Step.Name + @"(""arg"", 1, 2);");
+                var Runner = new RunnerGenerator(Feature).Code;            
+
+                Runner.ShouldContain(Step.Name + @"(""arg"", 1, 2);");
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Raconteur.Generators
 {
-    class StepGenerator : CodeGenerator
+    public class StepGenerator : CodeGenerator
     {
         private const string StepExecution = 
 @"        

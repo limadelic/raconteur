@@ -72,6 +72,23 @@
       <DependentUpon>MultipleCells.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GameOfLife\MultipleGenerations.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultipleGenerations.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleGenerations.steps.cs">
+      <DependentUpon>MultipleGenerations.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameOfLife\StaticStructures.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticStructures.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\StaticStructures.steps.cs">
+      <DependentUpon>StaticStructures.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -87,6 +104,14 @@
     <None Include="GameOfLife\MultipleCells.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>MultipleCells.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\MultipleGenerations.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultipleGenerations.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\StaticStructures.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>StaticStructures.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

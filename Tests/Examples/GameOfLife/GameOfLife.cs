@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Examples
+namespace Examples.GameOfLife
 {
     public class GameOfLife
     {

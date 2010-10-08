@@ -44,6 +44,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bowling\BowlingGame.cs" />
+    <Compile Include="Bowling\Context.steps.cs" />
+    <Compile Include="Bowling\ScoreCalculation.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScoreCalculation.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Bowling\ScoreCalculation.steps.cs">
+      <DependentUpon>ScoreCalculation.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bowling\ScoreCalculationAlternatives.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScoreCalculationAlternatives.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Bowling\ScoreCalculationAlternatives.steps.cs">
+      <DependentUpon>ScoreCalculationAlternatives.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GameOfLife\Context.cs" />
     <Compile Include="GameOfLife\DeadCell.runner.cs">
       <AutoGen>True</AutoGen>
@@ -93,6 +113,14 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <None Include="Bowling\ScoreCalculation.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ScoreCalculation.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Bowling\ScoreCalculationAlternatives.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ScoreCalculationAlternatives.runner.cs</LastGenOutput>
+    </None>
     <None Include="GameOfLife\DeadCell.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>DeadCell.runner.cs</LastGenOutput>

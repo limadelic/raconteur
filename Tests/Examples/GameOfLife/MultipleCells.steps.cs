@@ -1,3 +1,4 @@
+using Examples.GameOfLife;
 
 namespace Examples 
 {

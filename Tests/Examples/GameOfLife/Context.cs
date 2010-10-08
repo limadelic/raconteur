@@ -3,7 +3,7 @@ using System.Linq;
 using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Examples
+namespace Examples.GameOfLife
 {
     public class Context
     {
@@ -45,8 +45,8 @@ namespace Examples
 
         public void When_I_evolve_the_board()
         {
-            Game.Evolve();
             Board = new List<bool[]>();
+            Game.Evolve();
         }
 
         const string Alive = "alive";

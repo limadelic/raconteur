@@ -4,7 +4,7 @@
 
 Scenario: Using Tables
 	When a Table is declared
-	Each row should become a Step with cols as Args
+	It should be passed into a Step Args
 
 Scenario: Tables with Args
 	When a Table declaration has Args

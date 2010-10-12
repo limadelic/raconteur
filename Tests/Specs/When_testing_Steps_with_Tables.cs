@@ -29,13 +29,16 @@ namespace Specs
                 var Step = 
                 When.StepFrom("Step table:");
                 And.StepFrom("[X|Y]");
-                
-                Step.Table.Rows.Count.ShouldBe(1);
+
+                var Table = Step.Table;
+
+                Table.Rows.Count.ShouldBe(1);
+                Table.HasHeader.ShouldBeTrue();
             }
         }
 
         [TestFixture]
-        public class simple_Steps
+        public class by_default
         {
             Feature Feature;
             Step Step;
@@ -51,17 +54,54 @@ namespace Specs
                 {
                     Rows = new List<List<string>>
                     {
-                        new List<string> {"X", "Y"},
                         new List<string> {"1", "1"},
                         new List<string> {"3", "4"}
-                    }
+                    },
                 };
 
                 Runner = new RunnerGenerator(Feature).Code;            
             }
 
             [Test]
-            public void should_should_skip_the_first_row()
+            public void should_create_a_step_and_pass_the_table()
+            {
+/*
+                Runner.ShouldContain(Step.Name);
+                Runner.ShouldContain(@"new[] {1, 1},");
+                Runner.ShouldContain(@"new[] {3, 4},");
+*/
+            }
+        }
+
+        [TestFixture]
+        public class with_Header
+        {
+            Feature Feature;
+            Step Step;
+            string Runner;
+            
+            [SetUp]
+            public void SetUp() 
+            {
+                Feature = Actors.Feature;
+                Step = Feature.Scenarios[0].Steps[0];
+                
+                Step.Table = new Table
+                {
+                    HasHeader = true,
+                    Rows = new List<List<string>>
+                    {
+                        new List<string> {"X", "Y"},
+                        new List<string> {"1", "1"},
+                        new List<string> {"3", "4"}
+                    },
+                };
+
+                Runner = new RunnerGenerator(Feature).Code;            
+            }
+
+            [Test]
+            public void should_skip_the_first_row()
             {
                 Runner.ShouldNotContain(Step.Name + @"(""X"", ""Y"");");
             }

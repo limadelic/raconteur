@@ -9,6 +9,8 @@ namespace Raconteur
 
         public int Count { get { return Rows.Count - 1; } }
 
+        public bool HasHeader { get; set; }
+
         public string this[int Row, int Col]
         {
             get { return Rows[Row + 1][Col]; }

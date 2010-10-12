@@ -19,12 +19,15 @@ namespace Features
             ";
         }
 
-        void Each_row_should_become_a_Step_with_cols_as_Args()
+        void It_should_be_passed_into_a_Step_Args()
         {
             Runner.ShouldContainInOrder
             (
-                @"Verify_some_values_(0, 0);",
-                @"Verify_some_values_(0, 1);"
+                @"Verify_some_values_",
+                @"(",
+                    @"new[] {0, 0},",
+                    @"new[] {0, 1}",
+                @");"
             );
         }
 
@@ -72,7 +75,11 @@ namespace Features
 
         void And_each_row_should_become_a_Step_with_cols_as_Args()
         {
-            Each_row_should_become_a_Step_with_cols_as_Args();
+            Runner.ShouldContainInOrder
+            (
+                @"Verify_some_values_(0, 0);",
+                @"Verify_some_values_(0, 1);"
+            );
         }
     }
 }

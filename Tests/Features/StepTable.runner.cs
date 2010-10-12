@@ -10,7 +10,7 @@ namespace Features
         public void UsingTables()
         {         
             When_a_Table_is_declared();        
-            Each_row_should_become_a_Step_with_cols_as_Args();
+            It_should_be_passed_into_a_Step_Args();
         }
         
         [TestMethod]

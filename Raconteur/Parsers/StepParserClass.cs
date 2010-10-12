@@ -20,35 +20,8 @@ namespace Raconteur.Parsers
         {
             this.Sentence = Sentence;
 
-            if (IsTable)
-            {
-                AddRowToStep();
-                return null;
-            }
-
-            return LastStep = ParseStep;
-        }
-
-        void AddRowToStep()
-        {
-            LastStep.AddRow(ParseTableRow());
-        }
-
-        List<string> ParseTableRow()
-        {
-            return Sentence
-                .Split(new[] {'|'})
-                .Chop(1)
-                .Select(x => x.Trim())
-                .ToList();
-        }
-
-        bool IsTable
-        {
-            get
-            {
-                return Sentence.StartsWith("|") || Sentence.StartsWith("[");
-            }
+            return IsTable ? ParseTable :
+                LastStep = ParseStep;
         }
 
         Step ParseStep
@@ -64,5 +37,30 @@ namespace Raconteur.Parsers
                 };
             }
         }
+
+        protected Step ParseTable
+        {
+            get
+            {
+                LastStep.AddRow(ParseTableRow());
+
+                if (IsHeader) LastStep.Table.HasHeader = true;
+
+                return null;
+            } 
+        }
+
+        List<string> ParseTableRow()
+        {
+            return Sentence
+                .Split(new[] {'|'})
+                .Chop(1)
+                .Select(x => x.Trim())
+                .ToList();
+        }
+
+        bool IsTable { get { return Sentence.StartsWith("|") || IsHeader; } }
+
+        bool IsHeader { get { return Sentence.StartsWith("["); } }
     }
 }

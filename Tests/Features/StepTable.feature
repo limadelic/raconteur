@@ -9,3 +9,9 @@ Scenario: Using Tables
 Scenario: Tables with Args
 	When a Table declaration has Args
 	Each Step will start with the Args
+
+Scenario: Tables with Header
+	When a Table declaration has a Header row
+	The Header should be skipped
+	And each row should become a Step with cols as Args
+

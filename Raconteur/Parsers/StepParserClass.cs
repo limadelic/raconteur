@@ -43,7 +43,13 @@ namespace Raconteur.Parsers
                 .ToList();
         }
 
-        bool IsTable { get { return Sentence.StartsWith("|"); } }
+        bool IsTable
+        {
+            get
+            {
+                return Sentence.StartsWith("|") || Sentence.StartsWith("[");
+            }
+        }
 
         Step ParseStep
         {

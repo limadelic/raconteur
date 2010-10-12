@@ -22,6 +22,16 @@ namespace Specs
                 
                 Step.Table.Rows.Count.ShouldBe(2);
             }
+
+            [Test] 
+            public void should_include_header_in_Table()
+            {
+                var Step = 
+                When.StepFrom("Step table:");
+                And.StepFrom("[X|Y]");
+                
+                Step.Table.Rows.Count.ShouldBe(1);
+            }
         }
 
         [TestFixture]

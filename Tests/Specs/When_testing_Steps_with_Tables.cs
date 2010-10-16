@@ -65,11 +65,9 @@ namespace Specs
             [Test]
             public void should_create_a_step_and_pass_the_table()
             {
-/*
                 Runner.ShouldContain(Step.Name);
                 Runner.ShouldContain(@"new[] {1, 1},");
-                Runner.ShouldContain(@"new[] {3, 4},");
-*/
+                Runner.ShouldContain(@"new[] {3, 4}");
             }
         }
 
@@ -128,6 +126,7 @@ namespace Specs
                 
                 Step.Table = new Table
                 {
+                    HasHeader = true,
                     Rows = new List<List<string>>
                     {
                         new List<string> {"X", "Y"},

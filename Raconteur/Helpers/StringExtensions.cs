@@ -14,6 +14,13 @@ namespace Raconteur
             return Word[0].ToString().ToUpperInvariant() + Word.Substring(1);
         }
 
+        public static string RemoveTail(this string Word, int Lenght)
+        {
+            if (string.IsNullOrEmpty(Word)) return Word;
+
+            return Word.Remove(Word.Length - Lenght);
+        }
+
         public static string Quote(this string Word)
         {
             return "\"" + Word + "\"";

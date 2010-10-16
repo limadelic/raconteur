@@ -13,7 +13,6 @@ namespace Features
 
                 Scenario: Scenario Name
                     Verify some values:
-                    |X|Y|
                     |0|0|
                     |0|1|
             ";
@@ -39,7 +38,7 @@ namespace Features
 
                 Scenario: Scenario Name
                     Given stuff in ""X"" place
-                    | stuff |
+                    [ stuff ]
                     |one    |
                     |another|
             ";

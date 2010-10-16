@@ -5,7 +5,6 @@
 
   Scenario: Dead cell with 0 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | . | . | . |
       | . | . | . |
       | . | . | . |
@@ -14,7 +13,6 @@
 
   Scenario: Dead cell with 1 neighbor stays dead
     Given the following setup
-      |___|___|___|
       | . | x | . |
       | . | . | . |
       | . | . | . |
@@ -23,7 +21,6 @@
     
   Scenario: Dead cell with 2 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | . | x | . |
       | . | . | x |
       | . | . | . |
@@ -32,7 +29,6 @@
     
   Scenario: Dead cell with 3 neighbors comes to life
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | . | . | . |
       | . | . | . |
@@ -41,7 +37,6 @@
     
   Scenario: Dead cell with 4 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | . | . | x |
       | . | . | . |
@@ -50,7 +45,6 @@
     
   Scenario: Dead cell with 5 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | . | x |
       | . | . | . |
@@ -59,7 +53,6 @@
     
   Scenario: Dead cell with 6 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | . | x |
       | x | . | . |
@@ -68,7 +61,6 @@
 
   Scenario: Dead cell with 7 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | . | x |
       | x | x | . |
@@ -77,7 +69,6 @@
     
   Scenario: Dead cell with 8 neighbors stays dead
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | . | x |
       | x | x | x |

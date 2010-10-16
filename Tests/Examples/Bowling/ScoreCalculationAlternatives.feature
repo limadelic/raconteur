@@ -18,7 +18,7 @@ Scenario: All spares
 Scenario: Yet another beginners game
   Given a new bowling game
   When my rolls are
-  | Pins	|
+  [ Pins	]
   |	2		|
   |	7		|
   |	1		|

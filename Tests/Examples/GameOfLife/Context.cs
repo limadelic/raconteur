@@ -21,6 +21,12 @@ namespace Examples.GameOfLife
             Game.AddRow(Cells.Select(Bool).ToArray());
         }
 
+        public void Given_the_following_setup(params string[][] Cells)
+        {
+            foreach (var Cell in Cells)
+                Game.AddRow(Cell.Select(Bool).ToArray());
+        }
+
         public void Then_I_should_see_the_following_board(params string[] Cells)
         {
             Board.Add(Cells.Select(Bool).ToArray());

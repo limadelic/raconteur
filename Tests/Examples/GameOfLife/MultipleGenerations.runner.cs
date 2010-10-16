@@ -9,23 +9,32 @@ namespace Examples
         [TestMethod]
         public void CellsComeAliveThenDieOff()
         {         
-            Given_the_following_setup(".", ".", ".", ".", ".");        
-            Given_the_following_setup(".", ".", ".", ".", ".");        
-            Given_the_following_setup(".", "x", "x", "x", ".");        
-            Given_the_following_setup(".", ".", ".", ".", ".");        
-            Given_the_following_setup(".", ".", ".", ".", ".");        
+            Given_the_following_setup
+            (        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", "x", "x", "x", "."},        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", ".", ".", ".", "."}
+            );        
             When_I_evolve_the_board();        
-            Then_I_should_see_the_following_board(".", ".", ".", ".", ".");        
-            Then_I_should_see_the_following_board(".", ".", "x", ".", ".");        
-            Then_I_should_see_the_following_board(".", ".", "x", ".", ".");        
-            Then_I_should_see_the_following_board(".", ".", "x", ".", ".");        
-            Then_I_should_see_the_following_board(".", ".", ".", ".", ".");        
+            Then_I_should_see_the_following_board
+            (        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", ".", "x", ".", "."},        
+                new[] {".", ".", "x", ".", "."},        
+                new[] {".", ".", "x", ".", "."},        
+                new[] {".", ".", ".", ".", "."}
+            );        
             When_I_evolve_the_board();        
-            Then_I_should_see_the_following_board(".", ".", ".", ".", ".");        
-            Then_I_should_see_the_following_board(".", ".", ".", ".", ".");        
-            Then_I_should_see_the_following_board(".", "x", "x", "x", ".");        
-            Then_I_should_see_the_following_board(".", ".", ".", ".", ".");        
-            Then_I_should_see_the_following_board(".", ".", ".", ".", ".");
+            Then_I_should_see_the_following_board
+            (        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", "x", "x", "x", "."},        
+                new[] {".", ".", ".", ".", "."},        
+                new[] {".", ".", ".", ".", "."}
+            );
         }
 
     }

@@ -5,7 +5,6 @@
 
   Scenario: Living cell with 0 neighbors dies
     Given the following setup
-      |___|___|___|
       | . | . | . |
       | . | x | . |
       | . | . | . |
@@ -14,7 +13,6 @@
 
   Scenario: Living cell with 1 neighbor dies
     Given the following setup
-      |___|___|___|
       | . | x | . |
       | . | x | . |
       | . | . | . |
@@ -23,7 +21,6 @@
 
   Scenario: Living cell with 2 neighbors lives
     Given the following setup
-      |___|___|___|
       | . | x | . |
       | . | x | x |
       | . | . | . |
@@ -32,7 +29,6 @@
 
   Scenario: Living cell with 3 neighbors lives
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | . | x | . |
       | . | . | . |
@@ -41,7 +37,6 @@
 
   Scenario: Living cell with 4 neighbors dies
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | . | x | x |
       | . | . | . |
@@ -50,7 +45,6 @@
 
   Scenario: Living cell with 5 neighbors dies
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | x | x |
       | . | . | . |
@@ -59,7 +53,6 @@
 
   Scenario: Living cell with 6 neighbors dies
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | x | x |
       | x | . | . |
@@ -68,7 +61,6 @@
 
   Scenario: Living cell with 7 neighbors dies
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | x | x |
       | x | x | . |
@@ -77,7 +69,6 @@
 
   Scenario: Living cell with 8 neighbors dies
     Given the following setup
-      |___|___|___|
       | x | x | x |
       | x | x | x |
       | x | x | x |

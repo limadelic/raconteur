@@ -5,7 +5,6 @@
 
   Scenario: Block
     Given the following setup
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | x | x | . | . |
       | . | x | x | . | . |
@@ -13,7 +12,6 @@
       | . | . | . | . | . |
     When I evolve the board
     Then I should see the following board
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | x | x | . | . |
       | . | x | x | . | . |
@@ -22,7 +20,6 @@
 
   Scenario: Beehive
     Given the following setup
-      |___|___|___|___|___|___|
       | . | . | . | . | . | . |
       | . | . | x | x | . | . |
       | . | x | . | . | x | . |
@@ -30,7 +27,6 @@
       | . | . | . | . | . | . |
     When I evolve the board
     Then I should see the following board
-      |___|___|___|___|___|___|
       | . | . | . | . | . | . |
       | . | . | x | x | . | . |
       | . | x | . | . | x | . |
@@ -39,7 +35,6 @@
 
   Scenario: Loaf
     Given the following setup
-      |___|___|___|___|___|___|
       | . | . | . | . | . | . |
       | . | . | x | x | . | . |
       | . | x | . | . | x | . |
@@ -48,7 +43,6 @@
       | . | . | . | . | . | . |
     When I evolve the board
     Then I should see the following board
-      |___|___|___|___|___|___|
       | . | . | . | . | . | . |
       | . | . | x | x | . | . |
       | . | x | . | . | x | . |
@@ -58,7 +52,6 @@
 
   Scenario: Boat
     Given the following setup
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | x | x | . | . |
       | . | x | . | x | . |
@@ -66,7 +59,6 @@
       | . | . | . | . | . |
     When I evolve the board
     Then I should see the following board
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | x | x | . | . |
       | . | x | . | x | . |

@@ -5,7 +5,6 @@
 
   Scenario: Cells come alive then die off
     Given the following setup
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | . | . | . | . |
       | . | x | x | x | . |
@@ -13,7 +12,6 @@
       | . | . | . | . | . |
     When I evolve the board
     Then I should see the following board
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | . | x | . | . |
       | . | . | x | . | . |
@@ -21,7 +19,6 @@
       | . | . | . | . | . |
     When I evolve the board
     Then I should see the following board
-      |___|___|___|___|___|
       | . | . | . | . | . |
       | . | . | . | . | . |
       | . | x | x | x | . |

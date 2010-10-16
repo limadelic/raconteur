@@ -16,20 +16,16 @@ namespace Examples.GameOfLife
             Game = new GameOfLife();    
         }
 
-        public void Given_the_following_setup(params string[] Cells)
-        {
-            Game.AddRow(Cells.Select(Bool).ToArray());
-        }
-
         public void Given_the_following_setup(params string[][] Cells)
         {
-            foreach (var Cell in Cells)
-                Game.AddRow(Cell.Select(Bool).ToArray());
+            foreach (var Row in Cells)
+                Game.AddRow(Row.Select(Bool).ToArray());
         }
 
-        public void Then_I_should_see_the_following_board(params string[] Cells)
+        public void Then_I_should_see_the_following_board(params string[][] Cells)
         {
-            Board.Add(Cells.Select(Bool).ToArray());
+            foreach (var Row in Cells)
+                Board.Add(Row.Select(Bool).ToArray());
         }
 
         [TestCleanup]

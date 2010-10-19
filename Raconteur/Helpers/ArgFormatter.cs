@@ -1,4 +1,6 @@
-﻿namespace Raconteur
+﻿using System;
+
+namespace Raconteur
 {
     public static class ArgFormatter 
     {
@@ -8,7 +10,10 @@
 
             if (Arg.IsNumeric() || Arg.IsBoolean() || Arg == "null") 
                 return Arg;
-             
+            
+            if (Arg.IsMultiline()) 
+                return Environment.NewLine + @"@""" + Arg + '"';
+
             return '"' + Arg + '"';
         }
     }

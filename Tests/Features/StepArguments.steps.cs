@@ -53,14 +53,13 @@ namespace Features
 
         void It_should_expand_until_it_s_closed_in_another_line()
         {
-            Runner.ShouldContain(
-            @"
-                Step_Arg_with_multiple_lines(
-                ""
-                could start on one line
-                and finish on another
-                "");
-            ");
+            Runner.ShouldContain("Step_Arg_with_multiple_lines(");
+            Runner.ShouldContain
+            (
+@"@""could start on one line
+and finish on another
+"");"
+            );
         }
     }
 }

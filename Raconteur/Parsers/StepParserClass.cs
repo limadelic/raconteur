@@ -73,6 +73,7 @@ namespace Raconteur.Parsers
                 return ParsingArg || IsArgSeparator;
             } 
         }
+        bool IsArgSeparator { get { return Sentence.StartsWith("\""); } }
 
         string Arg = string.Empty;
         Step ParseArg
@@ -86,8 +87,6 @@ namespace Raconteur.Parsers
                 return null;
             }
         }
-
-        bool IsArgSeparator { get { return Sentence.StartsWith("\""); } }
 
         void CloseArg() 
         {

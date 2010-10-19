@@ -56,6 +56,11 @@ namespace Raconteur
                 || double.TryParse(It, out dummyDouble);
         }
 
+        public static bool IsMultiline(this string It)
+        {
+            return It.Contains(Environment.NewLine);
+        }
+
         public static bool IsDateTime(this string It)
         {
             DateTime dummyDate;

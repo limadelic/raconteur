@@ -1,4 +1,5 @@
-﻿using FluentSpec;
+﻿using System;
+using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
 using Raconteur.Generators;
@@ -38,6 +39,24 @@ namespace Specs
                 
                 The.StepFrom(Sentence)
                     .Args[1].ShouldBe("Y");
+            }
+
+            [Test]
+            public void should_append_a_multiline_Arg_to_the_Step()
+            {
+                Given.StepFrom("A multiline step arg");
+                And.StepFrom("\"");
+                And.StepFrom("line 1");
+                And.StepFrom("line 2");
+                
+                When.StepFrom("\"");
+
+                The.LastStep.Name.ShouldBe("A_multiline_step_arg");
+                The.LastStep.Args[0].ShouldBe
+                (
+                    "line 1" + Environment.NewLine + 
+                    "line 2" + Environment.NewLine
+                );
             }
         }
 

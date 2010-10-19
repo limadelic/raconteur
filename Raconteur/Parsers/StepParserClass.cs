@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Raconteur.Parsers
@@ -20,7 +21,8 @@ namespace Raconteur.Parsers
         {
             this.Sentence = Sentence;
 
-            return IsTable ? ParseTable :
+            return IsArg ? ParseArg :
+                IsTable ? ParseTable :
                 LastStep = ParseStep;
         }
 
@@ -38,7 +40,7 @@ namespace Raconteur.Parsers
             }
         }
 
-        protected Step ParseTable
+        Step ParseTable
         {
             get
             {
@@ -62,5 +64,35 @@ namespace Raconteur.Parsers
         bool IsTable { get { return Sentence.StartsWith("|") || IsHeader; } }
 
         bool IsHeader { get { return Sentence.StartsWith("["); } }
+
+        string Arg = string.Empty;
+        Step ParseArg
+        {
+            get
+            {
+                if (ParsingArg && Sentence.StartsWith("\""))
+                {
+                    LastStep.Args.Add(Arg);
+                    Arg = string.Empty;
+                    ParsingArg = false;
+                    return null;
+                }
+
+                if (ParsingArg)
+                    Arg += Sentence + Environment.NewLine;
+
+                ParsingArg = true;
+                return null;
+            }
+        }
+
+        bool ParsingArg;
+        bool IsArg 
+        { 
+            get
+            {
+                return ParsingArg || Sentence.StartsWith("\"");
+            } 
+        }
     }
 }

@@ -9,3 +9,7 @@ Scenario: Generate Arguments
 Scenario: Type Inference
 	When an argument is an integer
 	It should be passed as a number
+
+Scenario: Multiline Arg
+	When an Arg is not finish in a Sentence
+	It should expand until it's closed in another line

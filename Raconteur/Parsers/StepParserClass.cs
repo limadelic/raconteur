@@ -40,6 +40,10 @@ namespace Raconteur.Parsers
             }
         }
 
+        bool IsTable { get { return Sentence.StartsWith("|") || IsHeader; } }
+
+        bool IsHeader { get { return Sentence.StartsWith("["); } }
+
         Step ParseTable
         {
             get
@@ -61,38 +65,35 @@ namespace Raconteur.Parsers
                 .ToList();
         }
 
-        bool IsTable { get { return Sentence.StartsWith("|") || IsHeader; } }
-
-        bool IsHeader { get { return Sentence.StartsWith("["); } }
+        bool ParsingArg;
+        bool IsArg 
+        { 
+            get
+            {
+                return ParsingArg || IsArgSeparator;
+            } 
+        }
 
         string Arg = string.Empty;
         Step ParseArg
         {
             get
             {
-                if (ParsingArg && Sentence.StartsWith("\""))
-                {
-                    LastStep.Args.Add(Arg);
-                    Arg = string.Empty;
-                    ParsingArg = false;
-                    return null;
-                }
+                if (!ParsingArg) ParsingArg = true;
+                else if (!IsArgSeparator) Arg += Sentence + Environment.NewLine;
+                else CloseArg();
 
-                if (ParsingArg)
-                    Arg += Sentence + Environment.NewLine;
-
-                ParsingArg = true;
                 return null;
             }
         }
 
-        bool ParsingArg;
-        bool IsArg 
-        { 
-            get
-            {
-                return ParsingArg || Sentence.StartsWith("\"");
-            } 
+        bool IsArgSeparator { get { return Sentence.StartsWith("\""); } }
+
+        void CloseArg() 
+        {
+            LastStep.Args.Add(Arg);
+            Arg = string.Empty;
+            ParsingArg = false;
         }
     }
 }

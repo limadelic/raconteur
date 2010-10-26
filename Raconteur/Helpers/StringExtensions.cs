@@ -74,5 +74,15 @@ namespace Raconteur
 
             return bool.TryParse(It, out dummyBool);
         }
+
+        public static bool IsEmpty(this string It)
+        {
+            return string.IsNullOrEmpty(It);
+        }
+
+        public static string Times(this int Count, char c)
+        {
+            return new string(c, Count);
+        }
     }
 }

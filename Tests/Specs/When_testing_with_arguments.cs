@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
@@ -57,6 +58,41 @@ namespace Specs
                     "line 1" + Environment.NewLine + 
                     "line 2" + Environment.NewLine
                 );
+            }
+        }
+
+        [TestFixture]
+        public class A_scenario_tokenizer : BehaviorOf<ScenarioTokenizerClass>
+        {
+            [Test]
+            public void should_respect_empty_lines_inside_Multiline_Args()
+            {
+                Given.Content = 
+                @"
+                    Scenario: Name
+                        Step with multiline Arg with empty line
+                        ""
+
+                        ""
+                ";
+
+                Then.ScenarioDefinitions[0]
+                    .Count().ShouldBe(5);
+            }
+
+            [Test]
+            public void should_ignore_content_inside_Args()
+            {
+                Given.Content = 
+                @"
+                    Scenario: Name
+                        Step with multiline Arg with Scenario declaration
+                        ""
+                            Scenario: That should not be interpreted
+                        ""
+                ";
+
+                Then.ScenarioDefinitions.Count().ShouldBe(1);
             }
         }
 

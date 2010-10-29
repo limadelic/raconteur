@@ -7,6 +7,20 @@ namespace Features
     {
         
         [TestMethod]
+        public void Test()
+        {         
+            Given_the_Feature(
+@"Feature: Feature Name
+In order to do something
+Another thing should happen
+");        
+            The_Runner_should_contain(
+@"[TestMethod]
+public void ScenarioName() {}
+");
+        }
+        
+        [TestMethod]
         public void GenerateTestMethods()
         {         
             When_the_Scenario_for_a_feature_is_generated();        

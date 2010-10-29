@@ -5,6 +5,10 @@ namespace Features
 {
     public partial class GenerateScenario : FeatureRunner
     {
+        void Given_the_Feature(string Feature) { this.Feature = Feature; }
+
+        void The_Runner_should_contain(string Text) { /*Runner.ShouldContain(Text);*/ }
+        
         public void When_the_Scenario_for_a_feature_is_generated()
         {
             Feature =  

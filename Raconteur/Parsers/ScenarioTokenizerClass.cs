@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Raconteur.Parsers
 {
@@ -8,7 +9,7 @@ namespace Raconteur.Parsers
     {
         public ScenarioParser ScenarioParser { get; set; }
 
-        string Content;
+        public string Content;
         public List<Scenario> ScenariosFrom(string Content)
         {
             this.Content = Content;
@@ -20,7 +21,7 @@ namespace Raconteur.Parsers
             ).ToList();
         }
 
-        List<List<string>> ScenarioDefinitions
+        public List<List<string>> ScenarioDefinitions
         {
             get
             {
@@ -38,24 +39,30 @@ namespace Raconteur.Parsers
             }
         }
 
-        readonly char[] NewLine = Environment.NewLine.ToCharArray();
         const string ScenarioDeclaration = "Scenario";
 
         IEnumerable<string> Lines
         {
             get
             {
-                return Content
-                    .Split(NewLine)
+                return Regex.Split(Content, Environment.NewLine)
                     .SkipWhile(IsNotScenarioDeclaration)
-                    .Where(Line => !string.IsNullOrWhiteSpace(Line))
-                    .Select(Line => Line.Trim());
+                    .Select(Line => Line.Trim())
+                    .Where(IsNotEmpty);
             }
+        }
+
+        bool InsideArg;
+        bool IsNotEmpty(string Line)
+        {
+            if (Line.StartsWith("\"")) InsideArg = !InsideArg;
+
+            return InsideArg || !string.IsNullOrWhiteSpace(Line);
         }
 
         bool IsScenarioDeclaration(string Line)
         {
-            return Line.TrimStart().StartsWith(ScenarioDeclaration);
+            return !InsideArg && Line.TrimStart().StartsWith(ScenarioDeclaration);
         }
 
         bool IsNotScenarioDeclaration(string Line)

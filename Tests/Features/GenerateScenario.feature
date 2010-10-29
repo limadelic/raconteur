@@ -2,6 +2,19 @@
 	In order to run a Scenario
 	Raconteur should generate the Scenario defintion
 
+Scenario: Test
+	Given the Feature
+	"
+        Feature: Feature Name
+            In order to do something
+            Another thing should happen
+	"
+	The Runner should contain
+	"
+		[TestMethod]
+		public void ScenarioName() {}
+	"
+
 Scenario: Generate Test Methods
 	When the Scenario for a feature is generated
 	Then it should be a Test Method

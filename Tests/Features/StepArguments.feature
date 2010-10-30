@@ -3,12 +3,28 @@
 	I want to paramerize them
 
 Scenario: Generate Arguments
-	When a step contains arguments
-	The runner should pass them in the call
+
+	Given the Feature contains
+	"
+		Scenario: Scenario Name
+			If ""X"" happens
+	"
+	The Runner should contain
+	"
+		If__happens(""X"");
+	"
 
 Scenario: Type Inference
-	When an argument is an integer
-	It should be passed as a number
+
+	Given the Feature contains
+	"
+		Scenario: Scenario Name
+			If the balance is ""42""
+	"
+	The Runner should contain
+	"
+		If_the_balance_is(42);
+	"
 
 Scenario: Multiline Arg
 	When an Arg is not finish in a Sentence

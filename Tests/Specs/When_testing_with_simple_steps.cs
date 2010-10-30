@@ -42,6 +42,15 @@ namespace Specs
             }
             
             [Test]
+            public void should_ensure_the_name_is_a_valid_identifier()
+            {
+                FeatureFile.Content = "Feature: feature + name";
+                
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Name
+                    .ShouldBe("Feature_Name");
+            }
+            
+            [Test]
             public void should_build_scenarios()
             {
                 FeatureFile.Content = Actors.FeatureWithThreeScenarios;
@@ -132,6 +141,18 @@ namespace Specs
 
                 The.ScenarioFrom(Definition)
                     .Name.ShouldBe("ScenarioName");
+            }
+
+            [Test]
+            public void should_ensure_valid_identifier_fo_scenario_names()
+            {
+                Definition = new List<string>
+                {
+                    "Scenario: Scenario + Name"
+                };
+
+                The.ScenarioFrom(Definition)
+                    .Name.ShouldBe("Scenario_Name");
             }
 
             [Test]

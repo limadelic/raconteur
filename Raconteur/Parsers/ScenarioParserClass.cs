@@ -9,7 +9,7 @@ namespace Raconteur.Parsers
 
         public StepParser StepParser { get; set; }
 
-        List<string> Definition;
+        public List<string> Definition;
 
         public Scenario ScenarioFrom(List<string> Definition)
         {
@@ -37,9 +37,13 @@ namespace Raconteur.Parsers
             }
         }
 
+        bool InsideArg;
+
         protected bool IsNotExample(string Line)
         {
-            return !Line.StartsWith("Examples:");
+            if (Line.StartsWith("\"")) InsideArg = !InsideArg;
+
+            return InsideArg || !Line.StartsWith("Examples:");
         }
 
         List<string> ParseTableRow(string Row)
@@ -59,11 +63,12 @@ namespace Raconteur.Parsers
                     .First()
                     .Split(Colon)[1]
                     .Trim()
-                    .CamelCase();    
+                    .CamelCase()
+                    .ToValidIdentifier();    
             } 
         }
 
-        List<Step> Steps
+        public List<Step> Steps
         {
             get
             {

@@ -3,7 +3,21 @@
 	Raconteur should generate its Runner
 
 Scenario: Generate Runner Class
-	When the Runner for a Feature is generated
-	Then it should be a TestClass
-	And it should be named FeatureName
-	And it should be on the Feature Namespace
+
+	Given the Feature is
+	"
+		Feature: Feature Name
+	"
+
+	The Runner should be
+	"
+		using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+		namespace Features
+		{
+			[TestClass]
+			public partial class FeatureName 
+			{
+			}
+		}
+	"

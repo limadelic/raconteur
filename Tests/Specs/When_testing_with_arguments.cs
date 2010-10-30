@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentSpec;
 using MbUnit.Framework;
@@ -62,7 +63,7 @@ namespace Specs
         }
 
         [TestFixture]
-        public class A_scenario_tokenizer : BehaviorOf<ScenarioTokenizerClass>
+        public class a_scenario_tokenizer : BehaviorOf<ScenarioTokenizerClass>
         {
             [Test]
             public void should_respect_empty_lines_inside_Multiline_Args()
@@ -93,6 +94,27 @@ namespace Specs
                 ";
 
                 Then.ScenarioDefinitions.Count().ShouldBe(1);
+            }
+        }
+
+        [TestFixture]
+        public class a_scenario_parser : BehaviorOf<ScenarioParserClass>
+        {
+            [Test]
+            public void should_ignore_content_inside_Args()
+            {
+                Given.Definition = new List<string>
+                {
+                    "Scenario: Name", 
+                        "Step with multiline Arg with Examples declaration",
+                        "\"",
+                        "Examples:",
+                        "\"",
+                };
+                And.StepParser.StepFrom(null)
+                    .IgnoringArgs().WillReturn(new Step());
+                
+                The.Steps.Count().ShouldBe(4);
             }
         }
 

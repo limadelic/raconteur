@@ -9,15 +9,25 @@ namespace Features
         [TestMethod]
         public void GenerateArguments()
         {         
-            When_a_step_contains_arguments();        
-            The_runner_should_pass_them_in_the_call();
+            Given_the_Feature_contains(
+@"Scenario: Scenario Name
+If ""X"" happens
+");        
+            The_Runner_should_contain(
+@"If__happens(""X"");
+");
         }
         
         [TestMethod]
         public void TypeInference()
         {         
-            When_an_argument_is_an_integer();        
-            It_should_be_passed_as_a_number();
+            Given_the_Feature_contains(
+@"Scenario: Scenario Name
+If the balance is ""42""
+");        
+            The_Runner_should_contain(
+@"If_the_balance_is(42);
+");
         }
         
         [TestMethod]

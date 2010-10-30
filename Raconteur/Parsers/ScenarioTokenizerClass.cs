@@ -10,6 +10,7 @@ namespace Raconteur.Parsers
         public ScenarioParser ScenarioParser { get; set; }
 
         public string Content;
+
         public List<Scenario> ScenariosFrom(string Content)
         {
             this.Content = Content;
@@ -53,6 +54,7 @@ namespace Raconteur.Parsers
         }
 
         bool InsideArg;
+
         bool IsNotEmpty(string Line)
         {
             if (Line.StartsWith("\"")) InsideArg = !InsideArg;

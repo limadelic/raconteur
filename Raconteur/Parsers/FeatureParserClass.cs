@@ -33,7 +33,8 @@ namespace Raconteur.Parsers
             
                 var Match = Regex.Match(Content);
 
-                return Match.Groups[1].Value.CamelCase();
+                return Match.Groups[1].Value
+                    .CamelCase().ToValidIdentifier();
             }
         }
     }

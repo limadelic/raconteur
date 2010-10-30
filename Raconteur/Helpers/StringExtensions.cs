@@ -84,5 +84,14 @@ namespace Raconteur
         {
             return new string(c, Count);
         }
+
+        public static string TrimLines(this string It)
+        {
+            var TrimmedLines = Regex.Split(It, Environment.NewLine)
+                .Where(Line => !string.IsNullOrWhiteSpace(Line))
+                .Select(Line => Line.Trim());
+
+            return string.Join(Environment.NewLine, TrimmedLines);
+        }
     }
 }

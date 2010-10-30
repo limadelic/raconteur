@@ -126,24 +126,30 @@ namespace
 
             public const string StepsDefinition =
             @"
-                public partial class FeatureName
+                namespace Features 
                 {
+                    public partial class FeatureName
+                    {
 
-                    public void This_is_one_step() {
+                        public void This_is_one_step() {
 
-                        var thing = FeatureName;
+                            var thing = FeatureName;
+                        }
                     }
                 }
             ";
 
             public const string StepsDefinitionWithBase =
             @"
-                public partial class FeatureName : BaseClass
+                namespace Features 
                 {
+                    public partial class FeatureName : BaseClass
+                    {
 
-                    public void This_is_one_step() {
+                        public void This_is_one_step() {
 
-                        var thing = FeatureName;
+                            var thing = FeatureName;
+                        }
                     }
                 }
             ";
@@ -152,17 +158,20 @@ namespace
             @"
                 Feature: Renamed Feature
                 Scenario: has one step
-                This is a step
+                    This is a step
             ";
 
             public const string RenamedStepsDefinition =
             @"
-                public partial class RenamedFeature
+                namespace Features 
                 {
+                    public partial class RenamedFeature
+                    {
 
-                    public void This_is_one_step() {
+                        public void This_is_one_step() {
 
-                        var thing = FeatureName;
+                            var thing = FeatureName;
+                        }
                     }
                 }
             ";

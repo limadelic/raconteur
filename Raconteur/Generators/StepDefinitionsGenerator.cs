@@ -14,30 +14,51 @@ namespace {0}
     }}
 }}
 ";
+        Feature Feature;
+        string ExistingStepDefinitions;
+
         public string StepDefinitionsFor(Feature Feature, string ExistingStepDefinitions)
         {
-            return string.IsNullOrEmpty(ExistingStepDefinitions) ?
-                CreateNewStepDefinitions(Feature) :
-                RefactorStepDefinitions(Feature, ExistingStepDefinitions);
+            this.Feature = Feature;
+            this.ExistingStepDefinitions = ExistingStepDefinitions;
+
+            return ExistingStepDefinitions.IsEmpty() ?
+                NewStepDefinitions :
+                RefactoredStepDefinitions;
         }
 
-        string RefactorStepDefinitions(Feature Feature, string ExistingStepDefinitions)
+        string NewStepDefinitions
         {
-            const string ClassDeclaration = "public partial class ";
-
-            var Regex = new Regex(ClassDeclaration + @"(\w+)");
-            var ClassName = Regex.Match(ExistingStepDefinitions).Groups[1].Value.Trim();
-
-            return ExistingStepDefinitions.Replace(
-                ClassDeclaration + ClassName, 
-                ClassDeclaration + Feature.Name);
+            get
+            {
+                return string.Format
+                (
+                    StepDefinitionsClass, 
+                    Feature.Namespace, 
+                    Feature.Name
+                );
+            }
         }
 
-        string CreateNewStepDefinitions(Feature Feature)
+        string RefactoredStepDefinitions
         {
-            return string.Format(StepDefinitionsClass, 
-                Feature.Namespace, 
-                Feature.Name);
+            get
+            {
+                var Result = ExistingStepDefinitions;
+
+                Result = Rename("namespace ", Feature.Namespace, Result);
+                Result = Rename("public partial class ", Feature.Name, Result);
+
+                return Result;
+            }
+        }
+
+        string Rename(string Preffix, string NewName, string Text) 
+        {
+            var Regex = new Regex(Preffix + @"(\w+)");
+            var OldName = Regex.Match(Text).Groups[1].Value.Trim();
+
+            return Text.Replace(Preffix + OldName, Preffix + NewName);
         }
     }
 }

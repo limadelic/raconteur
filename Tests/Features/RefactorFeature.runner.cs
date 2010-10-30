@@ -9,9 +9,36 @@ namespace Features
         [TestMethod]
         public void RenameFeature()
         {         
-            Given_I_have_already_defined_a_feature();        
-            If_I_rename_it();        
-            Then_the_steps_and_the_runner_should_reflect_the_change();
+            Given_the_Step_Definition(
+@"public partial class FeatureName {}
+");        
+            When_the_Feature_is_renamed(
+@"Feature: Renamed Feature
+");        
+            Then_the_Step_Definitions_should_be(
+@"public partial class RenamedFeature {}
+");
+        }
+        
+        [TestMethod]
+        public void ChangeDefaultNamespace()
+        {         
+            Given_the_Step_Definition(
+@"namespace Features
+{
+public partial class FeatureName {}
+}
+");        
+            for_the_Feature(
+@"Feature: Feature Name
+");        
+            When_the_default_namespace_changes_to("NewFeatures");        
+            Then_the_Step_Definitions_should_be(
+@"namespace NewFeatures
+{
+public partial class FeatureName {}
+}
+");
         }
 
     }

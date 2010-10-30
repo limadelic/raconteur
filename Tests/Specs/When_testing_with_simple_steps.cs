@@ -208,7 +208,16 @@ namespace Specs
             [FixtureSetUp]
             public void SetUp()
             {
-                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, Actors.DefinedFeature.StepsDefinitionWithBase);
+                var Feature = Actors.Feature;
+                Feature.Namespace = "NewFeatures";
+
+                StepDefinitions = The.StepDefinitionsFor(Feature, Actors.DefinedFeature.StepsDefinitionWithBase);
+            }
+
+            [Test]
+            public void should_change_the_namespace()
+            {
+                StepDefinitions.ShouldContain("namespace NewFeatures");
             }
 
             [Test]

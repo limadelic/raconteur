@@ -2,34 +2,50 @@ using NSubstitute;
 using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
-using Specs;
 
 namespace Features 
 {
     public partial class RefactorFeature
     {
-        readonly FeatureItem Item = Substitute.For<FeatureItem>();
+        FeatureItem Item;
         RaconteurGenerator Generator;
 
-        void Given_I_have_already_defined_a_feature()
+        // Setup
+
+        void Given_the_Step_Definition(string ExistingStepDefinitions)
         {
+            Item = Substitute.For<FeatureItem>();
             Item.ContainsStepDefinitions.Returns(true);
-            Item.ExistingStepDefinitions
-                .Returns(Actors.DefinedFeature.StepsDefinition);
+            Item.ExistingStepDefinitions.Returns(ExistingStepDefinitions);
+        }
 
+        string Feature;
+        void for_the_Feature(string Feature)
+        {
+            this.Feature = Feature;
+        }
+
+        // Excercise
+
+        void When_the_Feature_is_renamed(string RenamedFeatureDefinition)
+        {
             Generator = ObjectFactory.NewRaconteurGenerator(Item);
+            Generator.Generate("RenamedFeature.cs", RenamedFeatureDefinition);
         }
 
-        void If_I_rename_it()
+        void When_the_default_namespace_changes_to(string NewNamespace)
         {
-            Generator.Generate("RenamedFeature.cs", 
-                Actors.DefinedFeature.RenamedFeatureDefinition);
+            Item.DefaultNamespace.Returns(NewNamespace);
+            Generator = ObjectFactory.NewRaconteurGenerator(Item);
+
+            Generator.Generate("Feature.cs", Feature);
         }
 
-        void Then_the_steps_and_the_runner_should_reflect_the_change()
+        // Verify
+
+        void Then_the_Step_Definitions_should_be(string RenamedStepsDefinition)
         {
-            Item.Received().AddStepDefinitions(
-                Actors.DefinedFeature.RenamedStepsDefinition);
+            Item.Received().AddStepDefinitions(RenamedStepsDefinition);
         }
     }
 }

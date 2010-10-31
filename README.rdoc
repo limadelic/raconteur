@@ -1,0 +1,8 @@
+= Raconteur
+
+The main website is at http://raconteur.github.com
+The documentation is at http://wiki.github.com/limadelic/raconteur/
+
+== Copyright
+
+Copyright (c) 2010 limadelic. See LICENSE for details.

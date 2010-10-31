@@ -49,14 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\FeatureRunner.cs" />
+    <Compile Include="GenerateRunner.steps.cs">
+      <DependentUpon>GenerateRunner.feature</DependentUpon>
+    </Compile>
     <Compile Include="GenerateRunner.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GenerateRunner.feature</DependentUpon>
-    </Compile>
-    <Compile Include="GenerateRunner.steps.cs">
-      <DependentUpon>GenerateRunner.feature</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="GenerateScenario.runner.cs">
       <AutoGen>True</AutoGen>

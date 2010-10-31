@@ -1,4 +1,4 @@
-﻿Feature: Generate Feature Runner
+﻿Feature: Generate Feature Runner It
 	In order to run a Feature
 	Raconteur should generate its Runner
 

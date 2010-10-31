@@ -47,7 +47,7 @@ namespace Specs
             string Runner;
 
             [SetUp]
-            public new void SetUp()
+            public void SetUp()
             {
                 var Feature = Actors.Feature;
                 var Scenario = Feature.Scenarios[0];

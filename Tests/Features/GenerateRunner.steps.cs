@@ -1,4 +1,4 @@
 namespace Features 
 {
-    public partial class GenerateFeatureRunner : FeatureRunner {}
+    public partial class GenerateFeatureRunnerIt : FeatureRunner {}
 }

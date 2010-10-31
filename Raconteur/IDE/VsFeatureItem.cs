@@ -44,15 +44,20 @@ namespace Raconteur.IDE
         {
             if (HasSteps) RenameSteps();
             
-            Write(StepsFile, Content);
+            if (Content != ExistingStepDefinitions) Write(StepsFile, Content);
                 
-            FeatureItem.ProjectItems.AddFromFile(StepsFile);
+            if (!HasSteps || NameChanged) FeatureItem.ProjectItems.AddFromFile(StepsFile);
         }
+
+        bool NameChanged { get { return ExistingStepsFile != StepsFile; } }
 
         void RenameSteps() 
         { 
-            File.Move(ExistingStepsFile, StepsFile);
+            if (!NameChanged) return;
+
             StepsItem.Remove();
+
+            File.Move(ExistingStepsFile, StepsFile);
         }
 
         protected string ExistingStepsFile
@@ -70,8 +75,7 @@ namespace Raconteur.IDE
 
         void Write(string Name, string Content) 
         {
-            using (var FileWriter = new StreamWriter(Name))
-                FileWriter.Write(Content);
+            File.WriteAllText(Name, Content);
         }
 
         string StepsFile
@@ -84,17 +88,19 @@ namespace Raconteur.IDE
 
         public bool ContainsStepDefinitions 
         {
-            get { return File.Exists(StepsFile); } 
+            get 
+            { 
+                return !ExistingStepsFile.IsEmpty() 
+                    && File.Exists(ExistingStepsFile); 
+            } 
         }
 
         public string ExistingStepDefinitions
         {
-            get 
-            { 
-                if (!ContainsStepDefinitions) return null;
-
-                using (var FileReader = new StreamReader(StepsFile))
-                    return FileReader.ReadToEnd();
+            get
+            {
+                return !ContainsStepDefinitions ? null 
+                    : File.ReadAllText(ExistingStepsFile);
             }
         }
     }

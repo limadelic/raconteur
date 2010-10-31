@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Features 
 {
     [TestClass]
-    public partial class GenerateFeatureRunner 
+    public partial class GenerateFeatureRunnerIt 
     {
         
         [TestMethod]

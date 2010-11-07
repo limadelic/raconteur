@@ -112,6 +112,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TicTacToe\TicTacToe.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TicTacToe.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TicTacToe\TicTacToe.steps.cs">
+      <DependentUpon>TicTacToe.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TicTacToe\TicTacToeGame.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -142,6 +151,10 @@
     <None Include="GameOfLife\StaticStructures.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StaticStructures.runner.cs</LastGenOutput>
+    </None>
+    <None Include="TicTacToe\TicTacToe.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>TicTacToe.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

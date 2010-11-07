@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E0053ED4-EEC1-4339-9148-E54665BEFC8A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Examples</RootNamespace>
+    <AssemblyName>Examples</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FluentSpec">
+      <HintPath>..\Specs\bin\Debug\FluentSpec.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bowling\BowlingGame.cs" />
+    <Compile Include="Bowling\Context.steps.cs" />
+    <Compile Include="Bowling\ScoreCalculation.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScoreCalculation.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Bowling\ScoreCalculation.steps.cs">
+      <DependentUpon>ScoreCalculation.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bowling\ScoreCalculationAlternatives.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScoreCalculationAlternatives.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Bowling\ScoreCalculationAlternatives.steps.cs">
+      <DependentUpon>ScoreCalculationAlternatives.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Screencast02.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Screencast02.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\Context.cs" />
+    <Compile Include="GameOfLife\DeadCell.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DeadCell.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\DeadCell.steps.cs">
+      <DependentUpon>DeadCell.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameOfLife\GameOfLife.cs" />
+    <Compile Include="GameOfLife\LiveCell.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LiveCell.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\LiveCell.steps.cs">
+      <DependentUpon>LiveCell.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleCells.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultipleCells.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleCells.steps.cs">
+      <DependentUpon>MultipleCells.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleGenerations.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultipleGenerations.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\MultipleGenerations.steps.cs">
+      <DependentUpon>MultipleGenerations.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameOfLife\StaticStructures.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticStructures.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GameOfLife\StaticStructures.steps.cs">
+      <DependentUpon>StaticStructures.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+<<<<<<< HEAD
+    <Compile Include="TicTacToe\TicTacToe.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TicTacToe.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TicTacToe\TicTacToe.steps.cs">
+      <DependentUpon>TicTacToe.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TicTacToe\TicTacToeGame.cs" />
+=======
+    <Compile Include="Screencast02.steps.cs">
+      <DependentUpon>Screencast02.feature</DependentUpon>
+    </Compile>
+>>>>>>> d630df21381eeb3965d535a789dc6232fa61902d
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Bowling\ScoreCalculation.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ScoreCalculation.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Bowling\ScoreCalculationAlternatives.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ScoreCalculationAlternatives.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Screencast02.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Screencast02.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\DeadCell.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>DeadCell.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\LiveCell.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>LiveCell.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\MultipleCells.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultipleCells.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\MultipleGenerations.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultipleGenerations.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GameOfLife\StaticStructures.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>StaticStructures.runner.cs</LastGenOutput>
+    </None>
+    <None Include="TicTacToe\TicTacToe.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>TicTacToe.runner.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

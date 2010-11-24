@@ -75,6 +75,14 @@
       <DependentUpon>GenerateSteps.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MultipleRunners.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultipleRunners.feature</DependentUpon>
+    </Compile>
+    <Compile Include="MultipleRunners.steps.cs">
+      <DependentUpon>MultipleRunners.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RefactorFeature.runner.cs">
       <AutoGen>True</AutoGen>
@@ -125,6 +133,10 @@
     <None Include="GenerateSteps.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateSteps.runner.cs</LastGenOutput>
+    </None>
+    <None Include="MultipleRunners.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultipleRunners.runner.cs</LastGenOutput>
     </None>
     <None Include="RefactorFeature.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

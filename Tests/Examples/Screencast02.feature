@@ -24,7 +24,7 @@ Scenario: Response Header Parser
   "
   
   The Header should have
-  [ Code | Lenght | Date       ]
+  [ Code | Length | Date       ]
   |  200 |    267 | 11/19/2008 |
 
 Scenario: Scalar Multiplication of Matrices

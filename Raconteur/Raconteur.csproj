@@ -53,6 +53,7 @@
     <Compile Include="Helpers\ArgFormatter.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
+    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="IDE\FeatureItem.cs" />

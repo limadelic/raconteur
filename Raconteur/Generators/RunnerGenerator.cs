@@ -6,14 +6,14 @@ namespace Raconteur.Generators
     {
         const string RunnerClass =
 
-@"using Microsoft.VisualStudio.TestTools.UnitTesting;
+@"using {0};
 
-namespace {0} 
+namespace {1} 
 {{
-    [TestClass]
-    public partial class {1} 
+    [{2}]
+    public partial class {3} 
     {{
-{2}
+{4}
     }}
 }}
 ";
@@ -30,8 +30,10 @@ namespace {0}
             {
                 return string.Format
                 (
-                    RunnerClass, 
-                    Feature.Namespace, 
+                    RunnerClass,
+                    Settings.Namespace, 
+                    Feature.Namespace,
+                    Settings.ClassAttr, 
                     Feature.Name, 
                     ScenariosCode
                 );

@@ -6,9 +6,9 @@ namespace Raconteur.Generators
     {
         private const string ScenarioDeclaration = 
 @"        
-        [TestMethod]
-        public void {0}()
-        {{ {1}
+        [{0}]
+        public void {1}()
+        {{ {2}
         }}
 ";
 
@@ -36,7 +36,10 @@ namespace Raconteur.Generators
                 var StepCode = Scenario.Steps.Aggregate(string.Empty, 
                     (Steps, Step) => Steps + CodeFor(Step));
 
-                return string.Format(ScenarioDeclaration, Scenario.Name, StepCode);
+                return string.Format
+                (
+                    ScenarioDeclaration, Settings.MethodAttr, Scenario.Name, StepCode
+                );
             }
         }
 

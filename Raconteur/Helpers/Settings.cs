@@ -29,5 +29,12 @@ namespace Raconteur
             { XUnits.MSTEST, "TestClass"},
             { XUnits.MBUNIT, "TestFixture"},
         };
+
+        public static string MethodAttr { get { return MethodAttrs[xUnit]; } }
+        static readonly Dictionary<XUnits, string> MethodAttrs = new Dictionary<XUnits, string>
+        {
+            { XUnits.MSTEST, "TestMethod"},
+            { XUnits.MBUNIT, "Test"},
+        };
     }
 }

@@ -8,7 +8,9 @@ Scenario: MbUnit Runner
 
 	Given the Feature is
 	"
-		Feature: Feature Name
+		Feature: Feature
+
+		Scenario: Scenario
 	"
 
 	The Runner should be
@@ -18,8 +20,12 @@ Scenario: MbUnit Runner
 		namespace Features
 		{
 			[TestFixture]
-			public partial class FeatureName 
+			public partial class Feature
 			{
+				[Test]
+				public void Scenario()
+				{
+				}
 			}
 		}
 	"

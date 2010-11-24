@@ -3,15 +3,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Examples 
 {
     [TestClass]
-    public partial class V0_2Screencast 
+    public partial class DemoForVersion0_2 
     {
         
         [TestMethod]
         public void Retweet()
         {         
-            Given_a_tweet_by__with_content("limadelic", "check out Raconteur!");        
+            Given_the_tweet__by("check out Raconteur!", "limadelic");        
             When_I_retweet_it();        
-            Then_the_update_text_should_be("RT @limadelic check out Raconteur!");
+            Then_the_tweet_should_be("RT @limadelic check out Raconteur!");
         }
         
         [TestMethod]
@@ -32,7 +32,7 @@ Content-Length: 267
 Content-Type: application/xml
 Date: Wed, 19 Nov 2008 21:48:10 GMT
 ");        
-            The_Header_should_have(200, 267);
+            The_Header_should_have(200, 267, System.DateTime.Parse("11/19/2008"));
         }
         
         [TestMethod]
@@ -54,24 +54,24 @@ Date: Wed, 19 Nov 2008 21:48:10 GMT
         public void SupportingMultipleServicesToShortenUrls1()
         {         
             Select_url_shortener("is.gd");        
-            Post_a_status_update("http://raconteur.github.com/");        
-            Verify_the_urls_was("http://is.gd/gLEoH");
+            Tweet("visit http://raconteur.github.com/");        
+            Verify_the_url_was("http://is.gd/gLEoH");
         }
         
         [TestMethod]
         public void SupportingMultipleServicesToShortenUrls2()
         {         
             Select_url_shortener("bit.ly");        
-            Post_a_status_update("http://raconteur.github.com/");        
-            Verify_the_urls_was("http://bit.ly/cTLoh7");
+            Tweet("visit http://raconteur.github.com/");        
+            Verify_the_url_was("http://bit.ly/cTLoh7");
         }
         
         [TestMethod]
         public void SupportingMultipleServicesToShortenUrls3()
         {         
             Select_url_shortener("tinyurl");        
-            Post_a_status_update("http://raconteur.github.com/");        
-            Verify_the_urls_was("http://tinyurl.com/3xj9z7t");
+            Tweet("visit http://raconteur.github.com/");        
+            Verify_the_url_was("http://tinyurl.com/3xj9z7t");
         }
 
     }

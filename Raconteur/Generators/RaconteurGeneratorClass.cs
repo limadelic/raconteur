@@ -12,6 +12,8 @@ namespace Raconteur.Generators
 
         public string Generate(string FeatureFilePath, string Content)
         {
+            Project.LoadFrom(FeatureItem);
+
             var Feature = FeatureFrom(FeatureFilePath, Content);
 
             var StepDefinitions = StepDefinitionsGenerator

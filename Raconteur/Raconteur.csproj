@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generators\CodeGenerator.cs" />
@@ -56,7 +57,9 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Helpers\XmlDocument.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
+    <Compile Include="IDE\Project.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Parsers\ScenarioParser.cs" />
     <Compile Include="Parsers\ScenarioParserClass.cs" />

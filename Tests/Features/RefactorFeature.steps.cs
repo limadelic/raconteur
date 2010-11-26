@@ -1,4 +1,4 @@
-using NSubstitute;
+using FluentSpec;
 using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
@@ -14,9 +14,9 @@ namespace Features
 
         void Given_the_Step_Definition(string ExistingStepDefinitions)
         {
-            Item = Substitute.For<FeatureItem>();
-            Item.ContainsStepDefinitions.Returns(true);
-            Item.ExistingStepDefinitions.Returns(ExistingStepDefinitions);
+            Item = Create.TestObjectFor<FeatureItem>();
+            Given.That(Item).ContainsStepDefinitions.Is(true);
+            Given.That(Item).ExistingStepDefinitions.Are(ExistingStepDefinitions);
         }
 
         string Feature;
@@ -25,7 +25,7 @@ namespace Features
             this.Feature = Feature;
         }
 
-        // Excercise
+        // Exercise
 
         void When_the_Feature_is_renamed(string RenamedFeatureDefinition)
         {
@@ -35,7 +35,7 @@ namespace Features
 
         void When_the_default_namespace_changes_to(string NewNamespace)
         {
-            Item.DefaultNamespace.Returns(NewNamespace);
+            Given.That(Item).DefaultNamespace.Is(NewNamespace);
             Generator = ObjectFactory.NewRaconteurGenerator(Item);
 
             Generator.Generate("Feature.cs", Feature);
@@ -45,7 +45,7 @@ namespace Features
 
         void Then_the_Step_Definitions_should_be(string RenamedStepsDefinition)
         {
-            Item.Received().AddStepDefinitions(RenamedStepsDefinition);
+            Item.Should().AddStepDefinitions(RenamedStepsDefinition);
         }
     }
 }

@@ -15,12 +15,13 @@ namespace Raconteur.IDEIntegration
             get { return featureItem ?? LoadFeatureItem; } 
             set { featureItem = value; } 
         }
+
         FeatureItem LoadFeatureItem
         {
             get
             {
                 var NewFeatureItem = ObjectFactory.FeatureItemFrom(FeatureFile);
-                NewFeatureItem.DefaultNamespace = NewFeatureItem.DefaultNamespace ?? CodeFileNameSpace;
+                NewFeatureItem.DefaultNamespace = CodeFileNameSpace ?? NewFeatureItem.DefaultNamespace;
                 return NewFeatureItem;
             }
         }

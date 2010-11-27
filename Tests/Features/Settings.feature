@@ -9,7 +9,7 @@ Scenario: Setting the xUnit runner
 	"
 		<configuration>
 			<raconteur>
-				<xUnit>MbUnit</xUnit>
+				<xUnit name=""MbUnit"" />
 			</raconteur>
 		</configuration>	
 	"

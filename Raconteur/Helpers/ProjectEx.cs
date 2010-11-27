@@ -8,23 +8,24 @@ namespace Raconteur
     {
         public static IEnumerable<ProjectItem> Items(this Project Project) 
         {
-            return Project.ProjectItems
-                .Cast<ProjectItem>()
-                .SelectMany(Items);
+            return Items(Project.ProjectItems);
         }
 
-        static IEnumerable<ProjectItem> Items(ProjectItem Item)
+        static IEnumerable<ProjectItem> Items(ProjectItems ProjectItems)
+        {
+            return ProjectItems.Cast<ProjectItem>().SelectMany(Items);
+        }
+
+        public static IEnumerable<ProjectItem> Items(this ProjectItem Item)
         {
             yield return Item;
 
             if (Item.ProjectItems == null) yield break;
-            
-            foreach 
-            (
-                var ItemsItem 
-                in Item.ProjectItems.Cast<ProjectItem>().SelectMany(Items)
-            ) 
-            yield return ItemsItem;
+
+            foreach (var ChildItem in Items(Item.ProjectItems)) 
+                yield return ChildItem;
+
+
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Features
         void Given_the_settings(string AppConfig)
         {
             Given.That(Project).HasAppConfig.Is(true);
+
             Given.That(Project).AppConfig
                 .Is(XmlDocument.Load(AppConfig.ToLower()));
         }

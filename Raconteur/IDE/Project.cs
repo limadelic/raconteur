@@ -6,7 +6,7 @@ namespace Raconteur.IDE
 {
     public class Project
     {
-        EnvDTE.Project DTEProject;
+        public EnvDTE.Project DTEProject;
 
         public static void LoadFrom(FeatureItem FeatureItem)
         {
@@ -25,9 +25,9 @@ namespace Raconteur.IDE
         
         public virtual bool HasAppConfig { get { return DTEProject.Items().Any(IsAppConfig); } }
 
-        string AppConfigFile { get { return DTEProject.Items().First(IsAppConfig).Name; } }
+        string AppConfigFile { get { return DTEProject.Items().First(IsAppConfig).FileNames[1]; } }
 
-        bool IsAppConfig(ProjectItem Item) { return Item.Name.EqualsInv("app.config"); }
+        bool IsAppConfig(ProjectItem Item) { return Item.Name.EqualsEx("app.config"); }
 
         public virtual System.Xml.XmlDocument AppConfig
         {
@@ -38,7 +38,8 @@ namespace Raconteur.IDE
         {
             if (!HasAppConfig) return;
 
-            Settings.XUnit = AppConfig.SelectSingleNode("/configuration/raconteur/xunit").InnerText;
+            Settings.XUnit = AppConfig.SelectSingleNode("/configuration/raconteur/xunit")
+                .Attributes["name"].Value;
         }
 
         #endregion

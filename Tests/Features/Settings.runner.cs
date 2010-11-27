@@ -12,7 +12,7 @@ namespace Features
             Given_the_settings(
 @"<configuration>
 <raconteur>
-<xUnit>MbUnit</xUnit>
+<xUnit name=""MbUnit"" />
 </raconteur>
 </configuration>
 ");        

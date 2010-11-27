@@ -94,7 +94,7 @@ namespace Raconteur
             return string.Join(Environment.NewLine, TrimmedLines);
         }
 
-        public static bool EqualsInv(this string One, string Another)
+        public static bool EqualsEx(this string One, string Another)
         {
             return One.Equals(Another, StringComparison.InvariantCultureIgnoreCase);
         }

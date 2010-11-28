@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.Utilities;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
 {
-    internal static class ClassificationType
+    internal static class OrdinaryClassificationDefinition
     {
         [Export(typeof(ClassificationTypeDefinition))]
         [Name("Feature")]

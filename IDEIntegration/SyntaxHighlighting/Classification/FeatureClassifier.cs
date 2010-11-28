@@ -31,6 +31,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
                                                           new ClassificationTag(featureTypes[tag.Tag.Type])));
         }
 
-        public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged
+        {
+            add { }
+            remove { }
+        }
     }
 }

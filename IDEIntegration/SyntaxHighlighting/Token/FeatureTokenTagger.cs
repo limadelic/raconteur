@@ -10,7 +10,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
     {
         private readonly IDictionary<string, FeatureTokenTypes> tokenTypes;
 
-        public FeatureTokenTagger()
+        public FeatureTokenTagger(ITextBuffer buffer)
         {
             tokenTypes = new Dictionary<string, FeatureTokenTypes>
             {
@@ -42,6 +42,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
             }
         }
 
-        public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged
+        {
+            add { }
+            remove { }
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.Composition;
+using System.Windows;
 using System.Windows.Media;
 using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Utilities;
@@ -16,6 +17,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
         {
             DisplayName = "Feature";
             IsBold = true;
+            ForegroundColor = Colors.Orange;
         }
     }
 
@@ -28,8 +30,9 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
     {
         public ScenarioDefinition()
         {
-            DisplayName = "Scenario"; 
-            IsItalic = true;
+            DisplayName = "Scenario";
+            IsBold = true;
+            ForegroundColor = Colors.Orange;
         }
     }
 }

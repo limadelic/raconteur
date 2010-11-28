@@ -38,8 +38,10 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Generators\CodeGenerator.cs" />
@@ -53,9 +55,14 @@
     <Compile Include="Helpers\ArgFormatter.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
-    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\ProjectEx.cs" />
+    <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\StringEx.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Helpers\XmlDocument.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
+    <Compile Include="IDE\Project.cs" />
+    <Compile Include="IDE\RaconteurConfigurationSection.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Parsers\ScenarioParser.cs" />
     <Compile Include="Parsers\ScenarioParserClass.cs" />

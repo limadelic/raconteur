@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Raconteur
 {
-    public static class StringExtensions
+    public static class StringEx
     {
         public static string Capitalize(this string Word)
         {
@@ -92,6 +92,11 @@ namespace Raconteur
                 .Select(Line => Line.Trim());
 
             return string.Join(Environment.NewLine, TrimmedLines);
+        }
+
+        public static bool EqualsEx(this string One, string Another)
+        {
+            return One.Equals(Another, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

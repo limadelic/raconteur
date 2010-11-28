@@ -6,24 +6,24 @@ namespace Raconteur.IDE
 {
     public class VsFeatureItem : FeatureItem
     {
-        public Project Project { get { return FeatureItem.ContainingProject; } }
+        public EnvDTE.Project Project { get { return FeatureItem.ContainingProject; } }
 
         public string DefaultNamespace { get; set; }
         
-        public string ProjectName
-        {
-            get { return Path.GetFileNameWithoutExtension(Project.FullName); }
-        }
+//        public string ProjectName
+//        {
+//            get { return Path.GetFileNameWithoutExtension(Project.FullName); }
+//        }
 
-        public string AssemblyName
-        {
-            get { return Project.Properties.Item("AssemblyName").Value as string; }
-        }
+//        public string AssemblyName
+//        {
+//            get { return Project.Properties.Item("AssemblyName").Value as string; }
+//        }
 
-        public string ProjectFolder
-        {
-            get { return Path.GetFileNameWithoutExtension(Project.FullName); }
-        }
+//        public string ProjectFolder
+//        {
+//            get { return Path.GetFileNameWithoutExtension(Project.FullName); }
+//        }
 
         public VsFeatureItem() {}
 
@@ -34,7 +34,7 @@ namespace Raconteur.IDE
             StepsItem = FeatureItem.ProjectItems.Cast<ProjectItem>()
                 .FirstOrDefault(Item => Item.Name.EndsWith(".steps.cs"));
 
-            DefaultNamespace = Project.Properties.Item("DefaultNamespace").Value as string;
+//            DefaultNamespace = Project.Properties.Item("DefaultNamespace").Value as string;
         }
 
         ProjectItem FeatureItem { get; set;  }    

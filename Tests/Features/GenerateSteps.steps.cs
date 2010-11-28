@@ -1,5 +1,5 @@
+using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NSubstitute;
 using Raconteur.IDE;
 using Raconteur.IDEIntegration;
 using Specs;
@@ -18,7 +18,7 @@ namespace Features
         [TestInitialize]
         public void SetUp()
         {
-            FeatureItem = Substitute.For<FeatureItem>();
+            FeatureItem = Create.TestObjectFor<FeatureItem>();
 
             Generator = new RaconteurSingleFileGenerator
             {
@@ -34,7 +34,7 @@ namespace Features
 
         public void The_StepDefinitions_file_should_be_created()
         {
-            FeatureItem.Received().AddStepDefinitions(StepDefinitions);
+            FeatureItem.Should().AddStepDefinitions(StepDefinitions);
         }
     }
 }

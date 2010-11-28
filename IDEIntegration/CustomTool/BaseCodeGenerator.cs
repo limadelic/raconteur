@@ -18,7 +18,13 @@ namespace Raconteur.IDEIntegration
         string codeFileNameSpace = String.Empty;
         string codeFilePath = String.Empty;
 
-        public string CodeFileNameSpace { get { return codeFileNameSpace; } }
+        public string CodeFileNameSpace 
+        { 
+            get
+            {
+                return codeFileNameSpace.IsEmpty() ? null : codeFileNameSpace;
+            } 
+        }
 
         public string CodeFilePath
         {

@@ -1,10 +1,17 @@
-﻿namespace Raconteur.Generators
+﻿using System;
+
+namespace Raconteur.Generators
 {
     public class FeatureFile
     {
         public string Name { get; set; }
         public string ProjectRelativePath { get; private set; }
         public string Content { get; set; }
+
+        public bool IsEmpty
+        {
+            get { return string.IsNullOrEmpty(Content); }
+        }
 
         public FeatureFile(){}
 

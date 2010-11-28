@@ -38,7 +38,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="FluentSpec">
-      <HintPath>..\lib\fluentspec\FluentSpec.dll</HintPath>
+      <HintPath>..\..\lib\fluentspec\FluentSpec.dll</HintPath>
     </Reference>
     <Reference Include="Gallio, Version=3.2.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

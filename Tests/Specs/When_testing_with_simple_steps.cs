@@ -18,6 +18,15 @@ namespace Specs
             readonly FeatureFile FeatureFile = new FeatureFile();
             readonly VsFeatureItem VsFeatureItem = new VsFeatureItem();
 
+
+            [Test]
+            public void should_handle_an_empty_feature()
+            {
+                FeatureFile.Content = string.Empty;
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Name.ShouldBe("Feature");
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Scenarios.ShouldBeEmpty();
+            }
+
             [Test]
             public void should_read_the_name()
             {

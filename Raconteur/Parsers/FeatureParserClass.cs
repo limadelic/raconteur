@@ -12,7 +12,13 @@ namespace Raconteur.Parsers
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            if (FeatureFile == null) return new Feature();
+            if (FeatureFile == null || FeatureFile.IsEmpty) 
+                return new Feature
+                {
+                    Namespace =  FeatureItem.DefaultNamespace,
+                    Name = "Feature"
+                };
+
             Content = FeatureFile.Content;
 
             return new Feature

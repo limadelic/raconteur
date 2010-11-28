@@ -10,7 +10,7 @@ namespace Raconteur.Generators
 
 namespace {1} 
 {{
-    [{2}]
+    {2}
     public partial class {3} 
     {{
 {4}

@@ -11,6 +11,6 @@ TestResults/
 .idea/
 RecentChanges/
 live/
-Live/*
+Live/
 video/
 *.ReSharper

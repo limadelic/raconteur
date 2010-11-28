@@ -127,7 +127,7 @@ namespace Examples
             (        
                 new[] {"X", "O", "X"},        
                 new[] {"O", "O", "X"},        
-                new[] {"O", "X", "X", ""}
+                new[] {"O", "X", "X"}
             );        
             The_winner_should_be("X");
         }

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace Raconteur
 {
-    enum XUnits
-    {
-        MSTEST, MBUNIT
-    }
+    enum XUnits { MSTEST, MBUNIT, NUNIT, XUNIT }
+
     public class Settings
     {
         static XUnits xUnit;
@@ -21,20 +19,26 @@ namespace Raconteur
         {
             { XUnits.MSTEST, "Microsoft.VisualStudio.TestTools.UnitTesting"},
             { XUnits.MBUNIT, "MbUnit.Framework"},
+            { XUnits.NUNIT,  "NUnit.Framework"},
+            { XUnits.XUNIT,  "Xunit"},
         };
 
         public static string ClassAttr { get { return ClassAttrs[xUnit]; } }
         static readonly Dictionary<XUnits, string> ClassAttrs = new Dictionary<XUnits, string>
         {
-            { XUnits.MSTEST, "TestClass"},
-            { XUnits.MBUNIT, "TestFixture"},
+            { XUnits.MSTEST, "[TestClass]"},
+            { XUnits.MBUNIT, "[TestFixture]"},
+            { XUnits.NUNIT, "[TestFixture]"},
+            { XUnits.XUNIT, string.Empty},
         };
 
         public static string MethodAttr { get { return MethodAttrs[xUnit]; } }
         static readonly Dictionary<XUnits, string> MethodAttrs = new Dictionary<XUnits, string>
         {
-            { XUnits.MSTEST, "TestMethod"},
-            { XUnits.MBUNIT, "Test"},
+            { XUnits.MSTEST, "[TestMethod]"},
+            { XUnits.MBUNIT, "[Test]"},
+            { XUnits.NUNIT, "[Test]"},
+            { XUnits.XUNIT, "[Fact]"},
         };
     }
 }

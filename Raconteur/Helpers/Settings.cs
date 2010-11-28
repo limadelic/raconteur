@@ -5,7 +5,7 @@ namespace Raconteur
 {
     enum XUnits
     {
-        MSTEST, MBUNIT
+        MSTEST, MBUNIT, NUNIT
     }
     public class Settings
     {
@@ -21,6 +21,7 @@ namespace Raconteur
         {
             { XUnits.MSTEST, "Microsoft.VisualStudio.TestTools.UnitTesting"},
             { XUnits.MBUNIT, "MbUnit.Framework"},
+            { XUnits.NUNIT,  "NUnit.Framework"},
         };
 
         public static string ClassAttr { get { return ClassAttrs[xUnit]; } }
@@ -28,6 +29,7 @@ namespace Raconteur
         {
             { XUnits.MSTEST, "TestClass"},
             { XUnits.MBUNIT, "TestFixture"},
+            { XUnits.NUNIT, "TestFixture"},
         };
 
         public static string MethodAttr { get { return MethodAttrs[xUnit]; } }
@@ -35,6 +37,7 @@ namespace Raconteur
         {
             { XUnits.MSTEST, "TestMethod"},
             { XUnits.MBUNIT, "Test"},
+            { XUnits.NUNIT, "Test"},
         };
     }
 }

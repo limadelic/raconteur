@@ -29,3 +29,31 @@ Scenario: MbUnit Runner
 			}
 		}
 	"
+
+Scenario: NUnit Runner
+
+	Using "NUnit"
+
+	Given the Feature is
+	"
+		Feature: Feature
+
+		Scenario: Scenario
+	"
+
+	The Runner should be
+	"
+		using NUnit.Framework;
+
+		namespace Features
+		{
+			[TestFixture]
+			public partial class Feature
+			{
+				[Test]
+				public void Scenario()
+				{
+				}
+			}
+		}
+	"

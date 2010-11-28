@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F90D901A-DFEC-47E3-946E-37414C9456BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Features</RootNamespace>
+    <AssemblyName>Features</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+<<<<<<< HEAD
+    <Reference Include="FluentSpec">
+      <HintPath>..\..\lib\fluentspec\FluentSpec.dll</HintPath>
+=======
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="FluentSpec, Version=1.2.0.0, Culture=neutral, PublicKeyToken=6d41ef230874beed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\fluentspec\FluentSpec.dll</HintPath>
+    </Reference>
+    <Reference Include="Gallio, Version=3.2.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\mbunit\Gallio.dll</HintPath>
+    </Reference>
+    <Reference Include="MbUnit, Version=3.2.0.0, Culture=neutral, PublicKeyToken=eb9cfa67ee6ab36e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\mbunit\MbUnit.dll</HintPath>
+>>>>>>> ad8660fcd5adb4d47e8ff3316de7259c6b683945
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+<<<<<<< HEAD
+    <Reference Include="NSubstitute">
+=======
+    <Reference Include="NSubstitute, Version=0.1.3.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+>>>>>>> ad8660fcd5adb4d47e8ff3316de7259c6b683945
+      <HintPath>..\..\lib\nsubstitute\NSubstitute.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Context\FeatureRunner.cs" />
+    <Compile Include="GenerateRunner.steps.cs">
+      <DependentUpon>GenerateRunner.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GenerateRunner.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateRunner.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GenerateScenario.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateScenario.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GenerateScenario.steps.cs">
+      <DependentUpon>GenerateScenario.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GenerateSteps.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateSteps.feature</DependentUpon>
+    </Compile>
+    <Compile Include="GenerateSteps.steps.cs">
+      <DependentUpon>GenerateSteps.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Misc\When_loading_a_project.cs" />
+    <Compile Include="MultipleRunners.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultipleRunners.feature</DependentUpon>
+    </Compile>
+    <Compile Include="MultipleRunners.steps.cs">
+      <DependentUpon>MultipleRunners.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RefactorFeature.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RefactorFeature.feature</DependentUpon>
+    </Compile>
+    <Compile Include="RefactorFeature.steps.cs">
+      <DependentUpon>RefactorFeature.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ScenarioOutlines.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScenarioOutlines.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ScenarioOutlines.steps.cs">
+      <DependentUpon>ScenarioOutlines.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Settings.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Settings.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.steps.cs">
+      <DependentUpon>Settings.feature</DependentUpon>
+    </Compile>
+    <Compile Include="StepArguments.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StepArguments.feature</DependentUpon>
+    </Compile>
+    <Compile Include="StepArguments.steps.cs">
+      <DependentUpon>StepArguments.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="StepTable.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StepTable.feature</DependentUpon>
+    </Compile>
+    <Compile Include="StepTable.steps.cs">
+      <DependentUpon>StepTable.feature</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="GenerateRunner.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>GenerateRunner.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GenerateScenario.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>GenerateScenario.runner.cs</LastGenOutput>
+    </None>
+    <None Include="GenerateSteps.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>GenerateSteps.runner.cs</LastGenOutput>
+    </None>
+    <None Include="MultipleRunners.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultipleRunners.runner.cs</LastGenOutput>
+    </None>
+    <None Include="RefactorFeature.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>RefactorFeature.runner.cs</LastGenOutput>
+    </None>
+    <None Include="ScenarioOutlines.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ScenarioOutlines.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Settings.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.runner.cs</LastGenOutput>
+    </None>
+    <None Include="StepArguments.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>StepArguments.runner.cs</LastGenOutput>
+    </None>
+    <None Include="StepTable.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>StepTable.runner.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\IDEIntegration\IDEIntegration.csproj">
+      <Project>{96294E6F-8875-4D12-8577-4EC83E60BD6C}</Project>
+      <Name>IDEIntegration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Raconteur\Raconteur.csproj">
+      <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
+      <Name>Raconteur</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Specs\Specs.csproj">
+      <Project>{D22327EF-5584-4936-9857-4046E4498CE6}</Project>
+      <Name>Specs</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

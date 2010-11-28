@@ -57,3 +57,30 @@ Scenario: NUnit Runner
 			}
 		}
 	"
+
+Scenario: xUnit Runner
+
+	Using "xUnit"
+
+	Given the Feature is
+	"
+		Feature: Feature
+
+		Scenario: Scenario
+	"
+
+	The Runner should be
+	"
+		using Xunit;
+
+		namespace Features
+		{
+			public partial class Feature
+			{
+				[Fact]
+				public void Scenario()
+				{
+				}
+			}
+		}
+	"

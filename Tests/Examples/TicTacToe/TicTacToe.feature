@@ -73,7 +73,7 @@ Scenario: vertical win in right
 	With the following board
 	|X|O|X|
 	|O|O|X| 
-	|O|X|X||
+	|O|X|X|
 	The winner should be "X"
 
 Scenario: vertical win in left

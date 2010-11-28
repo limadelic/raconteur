@@ -57,6 +57,31 @@ public void Scenario()
 }
 ");
         }
+        
+        [TestMethod]
+        public void XUnitRunner()
+        {         
+            Using("xUnit");        
+            Given_the_Feature_is(
+@"Feature: Feature
+
+Scenario: Scenario
+");        
+            The_Runner_should_be(
+@"using Xunit;
+
+namespace Features
+{
+public partial class Feature
+{
+[Fact]
+public void Scenario()
+{
+}
+}
+}
+");
+        }
 
     }
 }

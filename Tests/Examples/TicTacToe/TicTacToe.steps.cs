@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using FluentSpec;
 
-namespace Examples 
+namespace Examples
 {
     public partial class TicTacToeRules 
     {

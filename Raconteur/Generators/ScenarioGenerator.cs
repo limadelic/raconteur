@@ -6,7 +6,7 @@ namespace Raconteur.Generators
     {
         private const string ScenarioDeclaration = 
 @"        
-        [{0}]
+        {0}
         public void {1}()
         {{ {2}
         }}

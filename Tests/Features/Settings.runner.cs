@@ -13,11 +13,12 @@ namespace Features
 @"<configuration>
 <raconteur>
 <xUnit name=""MbUnit"" />
+<language code=""es"" />
 </raconteur>
 </configuration>
 ");        
             When_the_project_is_loaded();        
-            The_xUnit_runner_should_be("MbUnit");
+            The_Settings_should_be_("MbUnit", "Spanish");
         }
 
     }

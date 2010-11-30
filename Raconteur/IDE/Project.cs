@@ -38,8 +38,14 @@ namespace Raconteur.IDE
         {
             if (!HasAppConfig) return;
 
-            Settings.XUnit = AppConfig.SelectSingleNode("/configuration/raconteur/xunit")
-                .Attributes["name"].Value;
+            var ConfigSection = AppConfig.SelectSingleNode("/configuration/raconteur");
+            
+            if (ConfigSection == null) return;
+
+            Settings.XUnit = ConfigSection.SelectSingleNode("xunit").Attributes["name"].Value;
+
+            var Language = ConfigSection.SelectSingleNode("language").Attributes["code"].Value;
+            Languages.Current = Languages.All[Language];
         }
 
         #endregion

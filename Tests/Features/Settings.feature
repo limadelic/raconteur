@@ -10,8 +10,13 @@ Scenario: Setting the xUnit runner
 		<configuration>
 			<raconteur>
 				<xUnit name=""MbUnit"" />
+				<language code=""es"" />
 			</raconteur>
 		</configuration>	
 	"
+
 	When the project is loaded
-	The xUnit runner should be "MbUnit"
+
+	The Settings should be:
+	[ xUnit  | language ]
+	| MbUnit | Spanish  |

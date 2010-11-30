@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur;
@@ -9,12 +11,13 @@ namespace Features
     {
         readonly Project Project = Create.TestObjectFor<Project>();
 
-        dynamic backup;
+        readonly List<dynamic> backup = new List<dynamic>();
 
         [TestInitialize]
         public void SetUp()
         {
-            backup = Settings.XUnit;    
+            backup.Add(Settings.XUnit);    
+            backup.Add(Languages.Current);    
         }
 
         void Given_the_settings(string AppConfig)
@@ -30,15 +33,17 @@ namespace Features
             Project.Load();
         }
 
-        void The_xUnit_runner_should_be(string xUnit)
+        void The_Settings_should_be_(string xUnit, string Language)
         {
             Settings.XUnit.ShouldBe(xUnit.ToUpper());
+            Languages.Current.Name.ShouldBe(Language);
         }
 
         [TestCleanup]
         public void TearDown()
         {
-            Settings.XUnit = backup;    
+            Settings.XUnit = backup[0];
+            Languages.Current = backup[1];
         }
     }
 }

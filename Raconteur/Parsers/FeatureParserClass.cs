@@ -12,12 +12,11 @@ namespace Raconteur.Parsers
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            if (FeatureFile == null || FeatureFile.IsEmpty) 
-                return new Feature
-                {
-                    Namespace =  FeatureItem.DefaultNamespace,
-                    Name = "Feature"
-                };
+            if (FeatureFile == null || FeatureFile.IsEmpty) return new Feature
+            {
+                Namespace =  FeatureItem.DefaultNamespace,
+                Name = "Empty Feature"
+            };
 
             Content = FeatureFile.Content;
 
@@ -34,8 +33,8 @@ namespace Raconteur.Parsers
         { 
             get 
             {
-                var Regex = new Regex(@"Feature: (\w.+)(" + 
-                    Environment.NewLine + "|$)");
+                var Regex = new Regex(Languages.Current.Feature + 
+                    @": (\w.+)(" + Environment.NewLine + "|$)");
             
                 var Match = Regex.Match(Content);
 

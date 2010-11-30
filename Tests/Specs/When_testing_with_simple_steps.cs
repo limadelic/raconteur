@@ -23,7 +23,7 @@ namespace Specs
             public void should_handle_an_empty_feature()
             {
                 FeatureFile.Content = string.Empty;
-                The.FeatureFrom(FeatureFile, VsFeatureItem).Name.ShouldBe("Feature");
+                The.FeatureFrom(FeatureFile, VsFeatureItem).Name.ShouldBe("Empty Feature");
                 The.FeatureFrom(FeatureFile, VsFeatureItem).Scenarios.ShouldBeEmpty();
             }
 

@@ -96,6 +96,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Misc\When_loading_a_project.cs" />
+    <Compile Include="MultiLanguage.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MultiLanguage.feature</DependentUpon>
+    </Compile>
+    <Compile Include="MultiLanguage.steps.cs">
+      <DependentUpon>MultiLanguage.feature</DependentUpon>
+    </Compile>
     <Compile Include="MultipleRunners.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -165,6 +173,10 @@
     <None Include="GenerateSteps.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateSteps.runner.cs</LastGenOutput>
+    </None>
+    <None Include="MultiLanguage.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>MultiLanguage.runner.cs</LastGenOutput>
     </None>
     <None Include="MultipleRunners.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

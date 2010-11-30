@@ -53,6 +53,7 @@
     <Compile Include="Generators\StepGenerator.cs" />
     <Compile Include="Helpers\A.cs" />
     <Compile Include="Helpers\ArgFormatter.cs" />
+    <Compile Include="Helpers\Languages.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />
     <Compile Include="Helpers\ProjectEx.cs" />

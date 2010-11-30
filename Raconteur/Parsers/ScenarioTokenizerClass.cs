@@ -40,8 +40,6 @@ namespace Raconteur.Parsers
             }
         }
 
-        const string ScenarioDeclaration = "Scenario";
-
         IEnumerable<string> Lines
         {
             get
@@ -64,7 +62,8 @@ namespace Raconteur.Parsers
 
         bool IsScenarioDeclaration(string Line)
         {
-            return !InsideArg && Line.TrimStart().StartsWith(ScenarioDeclaration);
+            return !InsideArg &&  
+                Line.TrimStart().StartsWith(Languages.Current.Scenario);
         }
 
         bool IsNotScenarioDeclaration(string Line)

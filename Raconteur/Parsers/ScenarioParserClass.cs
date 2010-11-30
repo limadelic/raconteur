@@ -5,8 +5,6 @@ namespace Raconteur.Parsers
 {
     public class ScenarioParserClass : ScenarioParser
     {
-        readonly char[] Colon = {':'};
-
         public StepParser StepParser { get; set; }
 
         public List<string> Definition;
@@ -43,7 +41,7 @@ namespace Raconteur.Parsers
         {
             if (Line.StartsWith("\"")) InsideArg = !InsideArg;
 
-            return InsideArg || !Line.StartsWith("Examples:");
+            return InsideArg || !Line.StartsWith(Languages.Current.Examples);
         }
 
         List<string> ParseTableRow(string Row)
@@ -61,7 +59,7 @@ namespace Raconteur.Parsers
             {
                 return Definition
                     .First()
-                    .Split(Colon)[1]
+                    .Split(A.Colon)[1]
                     .Trim()
                     .CamelCase()
                     .ToValidIdentifier();    

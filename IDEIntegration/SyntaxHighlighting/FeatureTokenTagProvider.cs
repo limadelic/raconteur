@@ -9,7 +9,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
     [Export(typeof(ITaggerProvider))]
     [ContentType("Raconteur")]
     [TagType(typeof(FeatureTokenTag))]
-    internal sealed class FeatureTokenTagProvider : ITaggerProvider
+    public class FeatureTokenTagProvider : ITaggerProvider
     {
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {

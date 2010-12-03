@@ -3,6 +3,7 @@
     public enum FeatureTokenTypes
     {
         FeatureDefinition,
-        ScenarioDefinition
+        ScenarioDefinition,
+        Arg
     }
 }

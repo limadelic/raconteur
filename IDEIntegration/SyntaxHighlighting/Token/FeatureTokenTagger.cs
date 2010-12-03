@@ -37,6 +37,14 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
                             yield return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(tokenTypes[token]));
                     }
 
+                    if (token.StartsWith("\"") && token.EndsWith("\""))
+                    {
+                        var tokenSpan = new SnapshotSpan(span.Snapshot, new Span(location, token.Length));
+
+                        if (tokenSpan.IntersectsWith(span))
+                            yield return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(FeatureTokenTypes.Arg));
+                    }
+
                     location += token.Length + 1;
                 }
             }

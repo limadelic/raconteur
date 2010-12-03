@@ -9,7 +9,7 @@ using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 namespace Raconteur.IDEIntegration.SyntaxHighlighting
 {
     internal class FeatureClassifier : ITagger<ClassificationTag>
-    {
+    { 
         private readonly ITagAggregator<FeatureTokenTag> aggregator;
         private readonly Dictionary<FeatureTokenTypes, IClassificationType> featureTypes;
 
@@ -18,8 +18,9 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
             aggregator = tagAggregator;
             featureTypes = new Dictionary<FeatureTokenTypes, IClassificationType>
             {
-                 {FeatureTokenTypes.FeatureDefinition, registry.GetClassificationType("Feature")},
-                 {FeatureTokenTypes.ScenarioDefinition, registry.GetClassificationType("Scenario")},                 
+                 {FeatureTokenTypes.FeatureDefinition, registry.GetClassificationType("Keyword")},
+                 {FeatureTokenTypes.ScenarioDefinition, registry.GetClassificationType("Keyword")},
+                 {FeatureTokenTypes.Arg, registry.GetClassificationType("String")}
             };
         }
 

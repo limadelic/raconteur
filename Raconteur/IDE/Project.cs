@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using EnvDTE;
 
 namespace Raconteur.IDE
@@ -18,34 +20,46 @@ namespace Raconteur.IDE
 
         public void Load()
         {
-            LoadAppConfig();
+            LoadSettings();
         }
 
-        #region AppConfig
+        // breaking SRP shall eventually refactor
+        #region Settings
+
+        string[] Settings;
+
+        void LoadSettings()
+        {
+            if (!HasSettingsFile) return;
+
+            Settings = Regex.Split(SettingsFileContent, Environment.NewLine);
+
+            var setting = Setting("xunit:");
+            if (!setting.IsEmpty()) 
+                Raconteur.Settings.XUnit = setting;
+                    
+            setting = Setting("language:");
+            if (!setting.IsEmpty() && Languages.All.ContainsKey(setting))
+                Languages.Current = Languages.All[setting];
+        }
         
-        public virtual bool HasAppConfig { get { return DTEProject.Items().Any(IsAppConfig); } }
-
-        string AppConfigFile { get { return DTEProject.Items().First(IsAppConfig).FileNames[1]; } }
-
-        bool IsAppConfig(ProjectItem Item) { return Item.Name.EqualsEx("app.config"); }
-
-        public virtual System.Xml.XmlDocument AppConfig
+        string Setting(string SettingName)
         {
-            get { return XmlDocument.Load(File.ReadAllText(AppConfigFile).ToLower()); }
+            if (!Settings.Any(x => x.StartsWith(SettingName))) return null;
+
+            return Settings.First(x => x.StartsWith(SettingName))
+                .Split(A.Colon, 2)[1].Trim();
         }
 
-        void LoadAppConfig() 
+        public virtual bool HasSettingsFile { get { return DTEProject.Items().Any(IsSettingsFile); } }
+
+        string SettingsFileName { get { return DTEProject.Items().First(IsSettingsFile).FileNames[1]; } }
+
+        bool IsSettingsFile(ProjectItem Item) { return Item.Name.EqualsEx("raconteur.settings.txt"); }
+
+        public virtual string SettingsFileContent
         {
-            if (!HasAppConfig) return;
-
-            var ConfigSection = AppConfig.SelectSingleNode("/configuration/raconteur");
-            
-            if (ConfigSection == null) return;
-
-            Settings.XUnit = ConfigSection.SelectSingleNode("xunit").Attributes["name"].Value;
-
-            var Language = ConfigSection.SelectSingleNode("language").Attributes["code"].Value;
-            Languages.Current = Languages.All[Language];
+            get { return File.ReadAllText(SettingsFileName).ToLower(); }
         }
 
         #endregion

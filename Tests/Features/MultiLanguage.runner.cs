@@ -11,7 +11,7 @@ namespace Features
         {         
             Select_language("es");        
             Given_the_Feature_is(
-@"Característica: Multilingue
+@"Funcionalidad: Multilingue
 
 Escenario: En Español
 ");        

@@ -4,5 +4,6 @@ namespace Raconteur
     {
         public static readonly char[] Quote = new[] {'"'};
         public static readonly char[] Colon = new[] {':'};
+        public static readonly char[] Bar = new[] {'|'};
     }
 }

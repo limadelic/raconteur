@@ -7,7 +7,7 @@ Scenario: Que viva España, y Olé!
 
 	Given the Feature is
 	"
-		Característica: Multilingue
+		Funcionalidad: Multilingue
 
 		Escenario: En Español
 	"

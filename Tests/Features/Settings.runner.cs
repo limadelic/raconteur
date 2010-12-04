@@ -10,12 +10,8 @@ namespace Features
         public void SettingTheXUnitRunner()
         {         
             Given_the_settings(
-@"<configuration>
-<raconteur>
-<xUnit name=""MbUnit"" />
-<language code=""es"" />
-</raconteur>
-</configuration>
+@"xUnit: MbUnit
+language: es
 ");        
             When_the_project_is_loaded();        
             The_Settings_should_be_("MbUnit", "Spanish");

@@ -19,12 +19,10 @@ namespace Features
             backup.Add(Languages.Current);    
         }
 
-        void Given_the_settings(string AppConfig)
+        void Given_the_settings(string Settings)
         {
-            Given.That(Project).HasAppConfig.Is(true);
-
-            Given.That(Project).AppConfig
-                .Is(XmlDocument.Load(AppConfig.ToLower()));
+            Given.That(Project).HasSettingsFile.Is(true);
+            Given.That(Project).SettingsFileContent.Is(Settings.ToLower());
         }
 
         void When_the_project_is_loaded()

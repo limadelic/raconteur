@@ -20,7 +20,7 @@ namespace Features.Misc
 
             Project.Load();
 
-            Settings.XUnit.ShouldBe("MSTEST");
+            Settings.XUnit.ShouldBe("MBUNIT");
         }
     }
 }

@@ -7,12 +7,8 @@ Scenario: Setting the xUnit runner
 
 	Given the settings
 	"
-		<configuration>
-			<raconteur>
-				<xUnit name=""MbUnit"" />
-				<language code=""es"" />
-			</raconteur>
-		</configuration>	
+		xUnit: MbUnit
+		language: es	
 	"
 
 	When the project is loaded

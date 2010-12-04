@@ -63,7 +63,6 @@
     <Compile Include="Helpers\XmlDocument.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
     <Compile Include="IDE\Project.cs" />
-    <Compile Include="IDE\RaconteurConfigurationSection.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Parsers\ScenarioParser.cs" />
     <Compile Include="Parsers\ScenarioParserClass.cs" />

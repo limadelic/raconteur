@@ -24,8 +24,6 @@ namespace Raconteur
 
             foreach (var ChildItem in Items(Item.ProjectItems)) 
                 yield return ChildItem;
-
-
         }
     }
 }

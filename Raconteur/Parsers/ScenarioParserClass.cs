@@ -47,7 +47,7 @@ namespace Raconteur.Parsers
         List<string> ParseTableRow(string Row)
         {
             return Row
-                .Split(new[] {'|'})
+                .Split(A.Bar)
                 .Chop(1)
                 .Select(x => x.Trim())
                 .ToList();

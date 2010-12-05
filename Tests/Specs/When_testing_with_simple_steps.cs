@@ -19,13 +19,6 @@ namespace Specs
             readonly VsFeatureItem VsFeatureItem = new VsFeatureItem();
 
             [Test]
-            public void should_handle_an_empty_feature()
-            {
-                FeatureFile.Content = string.Empty;
-                The.FeatureFrom(FeatureFile, VsFeatureItem).ShouldBeA<InvalidFeature>();
-            }
-
-            [Test]
             public void should_read_the_name()
             {
                 FeatureFile.Content = Actors.FeatureWithNoScenarios + Environment.NewLine + "whatever";

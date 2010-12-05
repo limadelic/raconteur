@@ -62,6 +62,7 @@
     <Compile Include="When_testing_with_arguments.cs" />
     <Compile Include="When_testing_with_outlines.cs" />
     <Compile Include="When_testing_Steps_with_Tables.cs" />
+    <Compile Include="When_the_Feature_is_invalid.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\IDEIntegration\IDEIntegration.csproj">

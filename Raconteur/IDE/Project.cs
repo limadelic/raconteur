@@ -30,7 +30,13 @@ namespace Raconteur.IDE
 
         void LoadSettings()
         {
-            if (!HasSettingsFile) return;
+            if (!HasSettingsFile)
+            {
+                Raconteur.Settings.RestoreDefaults();
+                return;
+            }
+
+            Raconteur.Settings.Project = DTEProject;
 
             Settings = Regex.Split(SettingsFileContent, Environment.NewLine);
 

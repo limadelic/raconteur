@@ -37,6 +37,7 @@
     <Reference Include="envdte80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.Text.Data, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -61,6 +62,7 @@
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\StringEx.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
+    <Compile Include="Helpers\SyntaxExtensions.cs" />
     <Compile Include="Helpers\XmlDocument.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
     <Compile Include="IDE\Project.cs" />

@@ -4,6 +4,9 @@
     {
         FeatureDefinition,
         ScenarioDefinition,
-        Arg
+        Arg,
+        ExampleDefinition,
+        TableValue,
+        Comment
     }
 }

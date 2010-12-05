@@ -35,8 +35,8 @@ namespace Raconteur.IDE
             Settings = Regex.Split(SettingsFileContent, Environment.NewLine);
 
             var setting = Setting("xunit:");
-            if (!setting.IsEmpty()) 
-                Raconteur.Settings.XUnit = setting;
+            if (!setting.IsEmpty() && XUnits.Framework.ContainsKey(setting)) 
+                Raconteur.Settings.XUnit = XUnits.Framework[setting];
                     
             setting = Setting("language:");
             if (!setting.IsEmpty() && Languages.In.ContainsKey(setting))

@@ -31,9 +31,9 @@ namespace {1}
                 return string.Format
                 (
                     RunnerClass,
-                    XUnitSettings.Namespace, 
+                    Settings.XUnit.Namespace, 
                     Feature.Namespace,
-                    XUnitSettings.ClassAttr, 
+                    Settings.XUnit.ClassAttr, 
                     Feature.Name, 
                     ScenariosCode
                 );

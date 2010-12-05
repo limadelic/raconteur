@@ -32,7 +32,7 @@ namespace Features
 
         void The_Settings_should_be_(string xUnit, string Language)
         {
-            Settings.XUnit.ShouldBe(xUnit.ToUpper());
+            Settings.XUnit.Name.ShouldBe(xUnit);
             Settings.Language.Name.ShouldBe(Language);
         }
 

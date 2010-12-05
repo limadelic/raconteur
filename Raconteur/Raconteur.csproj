@@ -62,7 +62,7 @@
     <Compile Include="Helpers\StringEx.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Helpers\XmlDocument.cs" />
-    <Compile Include="Helpers\XUnitSettings.cs" />
+    <Compile Include="Helpers\XUnits.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
     <Compile Include="IDE\Project.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />

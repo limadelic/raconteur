@@ -15,7 +15,7 @@ namespace Features
 
         void Using(string xUnit)
         {
-            Settings.XUnit = xUnit;
+            Settings.XUnit = XUnits.Framework[xUnit.ToLower()];
         }
 
         [TestCleanup]

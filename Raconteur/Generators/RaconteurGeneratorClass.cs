@@ -21,7 +21,7 @@ namespace Raconteur.Generators
 
             FeatureItem.AddStepDefinitions(StepDefinitions);
 
-            return new RunnerGenerator(Feature).Code;
+            return ObjectFactory.NewRunnerGenerator(Feature).Code;
         }
 
         Feature FeatureFrom(string FeatureFilePath, string Content)

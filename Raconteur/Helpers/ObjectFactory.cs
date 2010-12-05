@@ -38,5 +38,12 @@ namespace Raconteur
         {
             return new VsFeatureItem(FeatureFile);
         }
+
+        public static CodeGenerator NewRunnerGenerator(Feature Feature)
+        {
+            if (Feature is InvalidFeature) return new InvalidRunnerGenerator(Feature as InvalidFeature);
+
+            return new RunnerGenerator(Feature);
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace Features
 
                 var NewFeature = Parser.FeatureFrom(FeatureFile, Project);
 
-                var Code = new RunnerGenerator(NewFeature).Code;
+                var Code = ObjectFactory.NewRunnerGenerator(NewFeature).Code;
 
                 return Code.TrimLines();
             } 

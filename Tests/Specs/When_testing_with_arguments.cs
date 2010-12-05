@@ -4,7 +4,6 @@ using System.Linq;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
-using Raconteur.Generators;
 using Raconteur.Parsers;
 
 namespace Specs 
@@ -121,7 +120,7 @@ namespace Specs
         [Test]
         public void should_pass_the_parameters_into_the_step_call()
         {
-            var Runner = new RunnerGenerator(Actors.FeatureWithArgs).Code;
+            var Runner = ObjectFactory.NewRunnerGenerator(Actors.FeatureWithArgs).Code;
             
             Runner.ShouldContain(@"If__happens(""X"");");
 

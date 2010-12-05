@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
-using Raconteur.Generators;
 using Raconteur.Parsers;
 
 namespace Specs
@@ -59,7 +58,7 @@ namespace Specs
                     },
                 };
 
-                Runner = new RunnerGenerator(Feature).Code;            
+                Runner = ObjectFactory.NewRunnerGenerator(Feature).Code;            
             }
 
             [Test]
@@ -95,7 +94,7 @@ namespace Specs
                     },
                 };
 
-                Runner = new RunnerGenerator(Feature).Code;            
+                Runner = ObjectFactory.NewRunnerGenerator(Feature).Code;            
             }
 
             [Test]
@@ -141,7 +140,7 @@ namespace Specs
             {
                 Step.Args.Add("arg");
 
-                var Runner = new RunnerGenerator(Feature).Code;            
+                var Runner = ObjectFactory.NewRunnerGenerator(Feature).Code;            
 
                 Runner.ShouldContain(Step.Name + @"(""arg"", 1, 2);");
             }

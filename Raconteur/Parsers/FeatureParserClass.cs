@@ -12,13 +12,9 @@ namespace Raconteur.Parsers
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            if (FeatureFile == null || FeatureFile.IsEmpty) return new Feature
-            {
-                Namespace =  FeatureItem.DefaultNamespace,
-                Name = "Empty Feature"
-            };
-
             Content = FeatureFile.Content;
+
+            if (!IsValid) return InvalidFeature;
 
             return new Feature
             {
@@ -27,6 +23,16 @@ namespace Raconteur.Parsers
                 Name = Name,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content)
             };
+        }
+
+        bool IsValid
+        {
+            get { return !Content.IsEmpty(); }
+        }
+
+        Feature InvalidFeature
+        {
+            get { return new InvalidFeature {Reason = "Feature file is Empty"}; }
         }
 
         string Name 

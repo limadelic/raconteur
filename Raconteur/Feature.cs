@@ -14,4 +14,9 @@ namespace Raconteur
             Scenarios = new List<Scenario>();
         }
     }
+
+    public class InvalidFeature : Feature
+    {
+        public string Reason { get; set; }
+    }
 }

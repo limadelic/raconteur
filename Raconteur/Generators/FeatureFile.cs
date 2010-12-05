@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Raconteur.Generators
+﻿namespace Raconteur.Generators
 {
     public class FeatureFile
     {

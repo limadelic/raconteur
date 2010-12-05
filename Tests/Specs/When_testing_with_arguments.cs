@@ -142,6 +142,18 @@ namespace Specs
             {
                 ArgFormatter.ValueOf(Arg).ShouldBe(Value);
             }
+
+            [Test]
+            public void should_calculate_the_arg_boundaries()
+            {
+                @"I ""was"" eating ""some"" pizza".ArgBoundaries().Count.ShouldBe(2);
+                @"I ""was"" eating ""some"" pizza".ArgBoundaries()[0].Start.ShouldBe(2);
+                @"I ""was"" eating ""some"" pizza".ArgBoundaries()[0].End.ShouldBe(6);
+
+                @"""Somebody"" said ""I was".ArgBoundaries().Count.ShouldBe(2);
+                @"""Somebody"" said ""I was".ArgBoundaries()[1].Start.ShouldBe(16);
+                @"""Somebody"" said ""I was".ArgBoundaries()[1].IsOpen.ShouldBeTrue();
+            }
         }
     }
 }

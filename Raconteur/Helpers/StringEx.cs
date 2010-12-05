@@ -1,5 +1,6 @@
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -97,6 +98,32 @@ namespace Raconteur
         public static bool EqualsEx(this string One, string Another)
         {
             return One.Equals(Another, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public static List<ArgBoundary> ArgBoundaries(this string Whole)
+        {
+            var results = new List<ArgBoundary>();
+            var positions = new List<int>();
+            var currentLocation = 0;
+
+            while (Whole.Contains('"'))
+            {
+                positions.Add(currentLocation + Whole.IndexOf('"'));
+
+                currentLocation += Whole.IndexOf('"') + 1;
+                Whole = Whole.Substring(Whole.IndexOf('"') + 1);
+            }
+
+            for (var i = 1; i < positions.Count; i += 2)
+                results.Add(new ArgBoundary {
+                    Start = positions[i-1], 
+                    End = positions[i]
+                });
+
+            if (positions.Count % 2 != 0) 
+                results.Add(new ArgBoundary { Start = positions[positions.Count-1] });
+            
+            return results;
         }
     }
 }

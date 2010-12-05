@@ -5,3 +5,4 @@
 Scenario: Create Step Definitions file
 	When a Feature is declared for the first time
 	The StepDefinitions file should be created
+	

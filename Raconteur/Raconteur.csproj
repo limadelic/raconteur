@@ -52,6 +52,7 @@
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />
     <Compile Include="Generators\StepGenerator.cs" />
     <Compile Include="Helpers\A.cs" />
+    <Compile Include="ArgBoundary.cs" />
     <Compile Include="Helpers\ArgFormatter.cs" />
     <Compile Include="Helpers\Languages.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />

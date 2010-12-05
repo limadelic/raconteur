@@ -39,8 +39,8 @@ namespace Raconteur.IDE
                 Raconteur.Settings.XUnit = setting;
                     
             setting = Setting("language:");
-            if (!setting.IsEmpty() && Languages.All.ContainsKey(setting))
-                Languages.Current = Languages.All[setting];
+            if (!setting.IsEmpty() && Languages.In.ContainsKey(setting))
+                Raconteur.Settings.Language = Languages.In[setting];
         }
         
         string Setting(string SettingName)

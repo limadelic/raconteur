@@ -63,7 +63,7 @@ namespace Raconteur.Parsers
         bool IsScenarioDeclaration(string Line)
         {
             return !InsideArg &&  
-                Line.TrimStart().StartsWith(Languages.Current.Scenario);
+                Line.TrimStart().StartsWith(Settings.Language.Scenario);
         }
 
         bool IsNotScenarioDeclaration(string Line)

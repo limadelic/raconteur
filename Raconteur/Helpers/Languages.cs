@@ -9,7 +9,7 @@ namespace Raconteur
 
     public static class Languages
     {
-        public static readonly Dictionary<string, Language> All = new Dictionary<string, Language>
+        public static readonly Dictionary<string, Language> In = new Dictionary<string, Language>
         {
             { "en", new Language
             {
@@ -440,7 +440,5 @@ namespace Raconteur
                 Examples = "例子"
             }},
         };
-
-        public static Language Current = All["en"];
     }
 }

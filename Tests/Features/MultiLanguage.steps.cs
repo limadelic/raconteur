@@ -10,18 +10,18 @@ namespace Features
         [TestInitialize]
         public void SetUp()
         {
-            backup = Languages.Current;    
+            backup = Settings.Language;    
         }
 
         void Select_language(string Language)
         {
-            Languages.Current = Languages.All[Language];  
+            Settings.Language = Languages.In[Language];  
         }
 
         [TestCleanup]
         public void TearDown()
         {
-            Languages.Current = backup;    
+            Settings.Language = backup;    
         }
     }
 }

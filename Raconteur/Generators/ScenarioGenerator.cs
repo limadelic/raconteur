@@ -38,7 +38,7 @@ namespace Raconteur.Generators
 
                 return string.Format
                 (
-                    ScenarioDeclaration, Settings.MethodAttr, Scenario.Name, StepCode
+                    ScenarioDeclaration, XUnitSettings.MethodAttr, Scenario.Name, StepCode
                 );
             }
         }

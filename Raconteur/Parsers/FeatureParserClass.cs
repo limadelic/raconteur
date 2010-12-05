@@ -33,7 +33,7 @@ namespace Raconteur.Parsers
         { 
             get 
             {
-                var Regex = new Regex(Languages.Current.Feature + 
+                var Regex = new Regex(Settings.Language.Feature + 
                     @": (\w.+)(" + Environment.NewLine + "|$)");
             
                 var Match = Regex.Match(Content);

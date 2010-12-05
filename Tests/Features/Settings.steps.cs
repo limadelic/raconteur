@@ -16,7 +16,7 @@ namespace Features
         public void SetUp()
         {
             backup.Add(Settings.XUnit);    
-            backup.Add(Languages.Current);    
+            backup.Add(Settings.Language);    
         }
 
         void Given_the_settings(string Settings)
@@ -33,14 +33,14 @@ namespace Features
         void The_Settings_should_be_(string xUnit, string Language)
         {
             Settings.XUnit.ShouldBe(xUnit.ToUpper());
-            Languages.Current.Name.ShouldBe(Language);
+            Settings.Language.Name.ShouldBe(Language);
         }
 
         [TestCleanup]
         public void TearDown()
         {
             Settings.XUnit = backup[0];
-            Languages.Current = backup[1];
+            Settings.Language = backup[1];
         }
     }
 }

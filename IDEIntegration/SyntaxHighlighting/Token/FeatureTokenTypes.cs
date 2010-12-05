@@ -7,6 +7,7 @@
         Arg,
         ExampleDefinition,
         TableValue,
-        Comment
+        Comment,
+        ScenarioBody
     }
 }

@@ -22,6 +22,25 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateScenarioSpans()
         {
             return new Queue<TagSpan<FeatureTokenTag>>();
+//            int? scenarioLine = null;
+//            var currentLine = 1;
+//
+//            foreach (var line in buffer.CurrentSnapshot.Lines)
+//            {
+//                if (line.GetText().Trim().StartsWith(Settings.Language.Scenario + ":"))
+//                {
+//                    if (scenarioLine != null)
+//                        yield return CreateTag(buffer.CurrentSnapshot.GetLineFromLineNumber(scenarioLine.Value).Start.Position,
+//                                  line.PreviousLine().End.Position, FeatureTokenTypes.ScenarioBody);
+//                    
+//                    scenarioLine = currentLine;
+//                }
+//                currentLine++;
+//            }
+//
+//            if (scenarioLine != null)
+//                yield return CreateTag(buffer.CurrentSnapshot.GetLineFromLineNumber(scenarioLine.Value).Start.Position,
+//                                  buffer.CurrentSnapshot.Length, FeatureTokenTypes.ScenarioBody);
         }
 
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateCommentSpans()
@@ -46,19 +65,8 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
 
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateArgSpans()
         {
-            var boundaries = buffer.CurrentSnapshot.GetText().ArgBoundaries();
-
-            foreach (var boundary in boundaries)
-            {
-                if (boundary.IsOpen)
-                    yield return CreateTag(boundary.Start,
-                        buffer.CurrentSnapshot.Length - boundary.Start + 1,
-                        FeatureTokenTypes.Arg);
-                else
-                    yield return CreateTag(boundary.Start,
-                        boundary.End - boundary.Start + 1,
-                        FeatureTokenTypes.Arg);
-            }
+            return buffer.CurrentSnapshot.GetText().ArgBoundaries().Select(boundary => 
+                CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
         }
 
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateKeywordSpans()

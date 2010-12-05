@@ -148,10 +148,12 @@ namespace Specs
                 @"I ""was"" eating ""some"" pizza".ArgBoundaries().Count.ShouldBe(2);
                 @"I ""was"" eating ""some"" pizza".ArgBoundaries()[0].Start.ShouldBe(2);
                 @"I ""was"" eating ""some"" pizza".ArgBoundaries()[0].End.ShouldBe(6);
+                @"I ""was"" eating ""some"" pizza".ArgBoundaries()[0].Length.ShouldBe(5);
 
                 @"""Somebody"" said ""I was".ArgBoundaries().Count.ShouldBe(2);
                 @"""Somebody"" said ""I was".ArgBoundaries()[1].Start.ShouldBe(16);
-                @"""Somebody"" said ""I was".ArgBoundaries()[1].IsOpen.ShouldBeTrue();
+
+                @"Open quote is end of String """.ArgBoundaries()[0].Length.ShouldBe(1);
             }
         }
     }

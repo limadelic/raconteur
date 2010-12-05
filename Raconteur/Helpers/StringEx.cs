@@ -103,27 +103,38 @@ namespace Raconteur
         public static List<ArgBoundary> ArgBoundaries(this string Whole)
         {
             var results = new List<ArgBoundary>();
-            var positions = new List<int>();
-            var currentLocation = 0;
-
-            while (Whole.Contains('"'))
-            {
-                positions.Add(currentLocation + Whole.IndexOf('"'));
-
-                currentLocation += Whole.IndexOf('"') + 1;
-                Whole = Whole.Substring(Whole.IndexOf('"') + 1);
-            }
+            var positions = Whole.FindQuotePositions();
 
             for (var i = 1; i < positions.Count; i += 2)
                 results.Add(new ArgBoundary {
                     Start = positions[i-1], 
-                    End = positions[i]
+                    End = positions[i],
                 });
 
             if (positions.Count % 2 != 0) 
-                results.Add(new ArgBoundary { Start = positions[positions.Count-1] });
+                results.Add(new ArgBoundary
+                {
+                    Start = positions[positions.Count-1], 
+                    End = Whole.Length - 1, 
+                });
             
             return results;
+        }
+
+        private static List<int> FindQuotePositions(this string Whole)
+        {
+            var positions = new List<int>();
+            var currentPosition = 0;
+
+            while (Whole.Contains('"'))
+            {
+                positions.Add(currentPosition + Whole.IndexOf('"'));
+
+                currentPosition += Whole.IndexOf('"') + 1;
+                Whole = Whole.Substring(Whole.IndexOf('"') + 1);
+            }
+
+            return positions;
         }
     }
 }

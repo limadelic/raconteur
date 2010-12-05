@@ -12,7 +12,7 @@ namespace Raconteur
         public static bool IsTableHeader(this ITextSnapshotLine line)
         {
             return line.PreviousLine().GetText().Trim().Equals(
-                Languages.Current.Examples + ":");
+                Settings.Language.Examples + ":");
         }
 
         public static ITextSnapshotLine PreviousLine(this ITextSnapshotLine line)

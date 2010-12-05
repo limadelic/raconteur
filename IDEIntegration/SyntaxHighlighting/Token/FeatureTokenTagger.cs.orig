@@ -38,9 +38,14 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
 
             tokenTypes = new Dictionary<string, FeatureTokenTypes>
             {
+<<<<<<< HEAD
+                {Languages.Current.Feature + ":", FeatureTokenTypes.FeatureDefinition},
+                {Languages.Current.Scenario + ":", FeatureTokenTypes.ScenarioDefinition},
+                {Languages.Current.Examples + ":", FeatureTokenTypes.ExampleDefinition},
+=======
                 {Settings.Language.Feature + ":", FeatureTokenTypes.FeatureDefinition},
                 {Settings.Language.Scenario + ":", FeatureTokenTypes.ScenarioDefinition},
-                {Settings.Language.Examples + ":", FeatureTokenTypes.ExampleDefinition},
+>>>>>>> a9f698bd8726f1a7f93b0ba9d6ab5fe2f55b7f66
             };
         }
 

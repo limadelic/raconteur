@@ -41,7 +41,7 @@ namespace Raconteur.Parsers
         {
             if (Line.StartsWith("\"")) InsideArg = !InsideArg;
 
-            return InsideArg || !Line.StartsWith(Languages.Current.Examples);
+            return InsideArg || !Line.StartsWith(Settings.Language.Examples);
         }
 
         List<string> ParseTableRow(string Row)

@@ -126,7 +126,6 @@
     </Compile>
     <Compile Include="TicTacToe\TicTacToeGame.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="Bowling\ScoreCalculation.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

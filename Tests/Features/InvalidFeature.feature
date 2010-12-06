@@ -7,6 +7,8 @@ Scenario: Empty Feature
 	The Runner should be "Feature file is Empty"
 
 Scenario: Unparseable Feature
+	Given the Feature is "unparseable feature"
+	The Runner should be "Cannot parse feature file"
 
 Scenario: Unnamed Feature
 

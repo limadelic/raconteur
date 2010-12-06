@@ -12,9 +12,9 @@ namespace Raconteur.Parsers
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            Content = FeatureFile.Content;
+            Content = FeatureFile.Content.TrimLines();
 
-            if (!IsValid) return InvalidFeature;
+            if (IsNotAValidFeature) return InvalidFeature;
 
             return new Feature
             {
@@ -25,14 +25,25 @@ namespace Raconteur.Parsers
             };
         }
 
-        bool IsValid
+        bool IsNotAValidFeature
         {
-            get { return !Content.IsEmpty(); }
+            get
+            {
+                return Content.IsEmpty()
+                    || !Content.StartsWith(Settings.Language.Feature);
+            }
         }
 
         Feature InvalidFeature
         {
-            get { return new InvalidFeature {Reason = "Feature file is Empty"}; }
+            get
+            {
+                var Reason = 
+                    Content.IsEmpty() ? "Feature file is Empty"
+                    : "Cannot parse feature file";
+
+                return new InvalidFeature {Reason = Reason};
+            }
         }
 
         string Name 

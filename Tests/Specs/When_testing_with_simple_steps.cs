@@ -57,7 +57,8 @@ namespace Specs
 
                 When.FeatureFrom(FeatureFile, VsFeatureItem);
 
-                Then.ScenarioTokenizer.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
+                Then.ScenarioTokenizer.Should()
+                    .ScenariosFrom(Actors.FeatureWithThreeScenarios.TrimLines());
             }
 
             [Test]

@@ -8,8 +8,10 @@ Scenario: Empty Feature
 
 Scenario: Unparseable Feature
 	Given the Feature is "unparseable feature"
-	The Runner should be "Cannot parse feature file"
+	The Runner should be "Missing Feature declaration"
 
 Scenario: Unnamed Feature
+	Given the Feature is "Feature:"
+	The Runner should be "Missing Feature Name"
 
 

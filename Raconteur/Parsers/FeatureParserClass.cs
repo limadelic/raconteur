@@ -30,7 +30,8 @@ namespace Raconteur.Parsers
             get
             {
                 return Content.IsEmpty()
-                    || !Content.StartsWith(Settings.Language.Feature);
+                    || !Content.StartsWith(Settings.Language.Feature)
+                    || Name.IsEmpty();
             }
         }
 
@@ -40,7 +41,8 @@ namespace Raconteur.Parsers
             {
                 var Reason = 
                     Content.IsEmpty() ? "Feature file is Empty"
-                    : "Cannot parse feature file";
+                    : !Content.StartsWith(Settings.Language.Feature) ? "Missing Feature declaration"
+                    : "Missing Feature Name";
 
                 return new InvalidFeature {Reason = Reason};
             }
@@ -50,13 +52,17 @@ namespace Raconteur.Parsers
         { 
             get 
             {
-                var Regex = new Regex(Settings.Language.Feature + 
-                    @": (\w.+)(" + Environment.NewLine + "|$)");
+                try
+                {
+                    var Regex = new Regex(Settings.Language.Feature + 
+                        @": (\w.+)(" + Environment.NewLine + "|$)");
             
-                var Match = Regex.Match(Content);
+                    var Match = Regex.Match(Content);
 
-                return Match.Groups[1].Value
-                    .CamelCase().ToValidIdentifier();
+                    return Match.Groups[1].Value
+                        .CamelCase().ToValidIdentifier();
+                } 
+                catch { return null; }
             }
         }
     }

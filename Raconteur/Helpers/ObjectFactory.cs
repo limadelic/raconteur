@@ -13,7 +13,6 @@ namespace Raconteur
             {
                 FeatureItem = FeatureItem,
                 FeatureParser = NewFeatureParser,
-                StepDefinitionsGenerator = new StepDefinitionsGenerator(),
             };
         }
 
@@ -44,6 +43,13 @@ namespace Raconteur
             if (Feature is InvalidFeature) return new InvalidRunnerGenerator(Feature as InvalidFeature);
 
             return new RunnerGenerator(Feature);
+        }
+
+        public static CodeGenerator NewStepDefinitionsGenerator(Feature Feature, string ExistingStepDefinitions)
+        {
+            if (Feature is InvalidFeature) return new InvalidStepDefinitionsGenerator(ExistingStepDefinitions);
+
+            return new StepDefinitionsGenerator(Feature, ExistingStepDefinitions);
         }
     }
 }

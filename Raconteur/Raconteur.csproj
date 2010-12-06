@@ -49,6 +49,7 @@
     <Compile Include="Generators\FeatureFile.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="Generators\InvalidRunnerGenerator.cs" />
+    <Compile Include="Generators\InvalidStepDefinitionsGenerator.cs" />
     <Compile Include="Generators\RaconteurGenerator.cs" />
     <Compile Include="Generators\ScenarioGenerator.cs" />
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />

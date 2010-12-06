@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Raconteur.Generators
 {
-    public class StepDefinitionsGenerator
+    public class StepDefinitionsGenerator : CodeGenerator
     {
         const string StepDefinitionsClass = 
 
@@ -14,17 +14,24 @@ namespace {0}
     }}
 }}
 ";
-        Feature Feature;
-        string ExistingStepDefinitions;
 
-        public string StepDefinitionsFor(Feature Feature, string ExistingStepDefinitions)
+        readonly Feature Feature;
+        readonly string ExistingStepDefinitions;
+
+        public string Code
+        {
+            get
+            {
+                return ExistingStepDefinitions.IsEmpty() ?
+                    NewStepDefinitions :
+                    RefactoredStepDefinitions;
+            }
+        }
+
+        internal StepDefinitionsGenerator(Feature Feature, string ExistingStepDefinitions)
         {
             this.Feature = Feature;
             this.ExistingStepDefinitions = ExistingStepDefinitions;
-
-            return ExistingStepDefinitions.IsEmpty() ?
-                NewStepDefinitions :
-                RefactoredStepDefinitions;
         }
 
         string NewStepDefinitions

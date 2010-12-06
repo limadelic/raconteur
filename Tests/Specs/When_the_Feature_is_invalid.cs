@@ -23,5 +23,23 @@ namespace Specs
                 The.FeatureFrom(FeatureFile, VsFeatureItem).ShouldBeA<InvalidFeature>();
             }
         }
+
+        [TestFixture]
+        public class the_Steps
+        {
+            [Test]
+            public void should_be_empty_on_create()
+            {
+                ObjectFactory.NewStepDefinitionsGenerator(new InvalidFeature(), null)
+                    .Code.ShouldBeEmpty();
+            }
+
+            [Test]
+            public void should_not_change_on_update()
+            {
+                ObjectFactory.NewStepDefinitionsGenerator(new InvalidFeature(), "Steps")
+                    .Code.ShouldBe("Steps");
+            }
+        }
     }
 }

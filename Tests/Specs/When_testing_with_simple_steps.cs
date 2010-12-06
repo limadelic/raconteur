@@ -181,12 +181,12 @@ namespace Specs
         static string StepDefinitions;
 
         [TestFixture]
-        public class for_the_first_time : BehaviorOf<StepDefinitionsGenerator>
+        public class for_the_first_time 
         {
             [FixtureSetUp]
             public void SetUp()
             {
-                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, null);
+                StepDefinitions = ObjectFactory.NewStepDefinitionsGenerator(Actors.Feature, null).Code;
             }
 
             [Test]
@@ -211,7 +211,10 @@ namespace Specs
                 var Feature = Actors.Feature;
                 Feature.Namespace = "NewFeatures";
 
-                StepDefinitions = The.StepDefinitionsFor(Feature, Actors.DefinedFeature.StepsDefinitionWithBase);
+                StepDefinitions = ObjectFactory.NewStepDefinitionsGenerator
+                (
+                    Feature, Actors.DefinedFeature.StepsDefinitionWithBase
+                ).Code;
             }
 
             [Test]

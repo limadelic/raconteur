@@ -22,7 +22,7 @@ Scenario: Response Header Parser
   	Content-Type: application/xml
   	Date: Wed, 19 Nov 2008 21:48:10 GMT    
   "
-  
+
   The Header should have
   [ Code | Length | Date       ]
   |  200 |    267 | 11/19/2008 |

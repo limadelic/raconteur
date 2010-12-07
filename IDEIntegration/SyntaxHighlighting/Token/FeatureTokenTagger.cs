@@ -11,44 +11,15 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
     {
         private readonly IDictionary<string, FeatureTokenTypes> tokenTypes;
         private readonly ITextBuffer buffer;
+        ITextSnapshot Snapshot { get { return buffer.CurrentSnapshot;  } }
 
         IEnumerable<ITagSpan<FeatureTokenTag>> AllTags
         {
-            get { return CreateArgSpans().Union(CreateKeywordSpans())
-                .Union(CreateTableSpans()).Union(CreateCommentSpans())
-                .Union(CreateScenarioSpans()); }
-        }
-
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateScenarioSpans()
-        {
-            return new Queue<TagSpan<FeatureTokenTag>>();
-//            int? scenarioLine = null;
-//            var currentLine = 1;
-//
-//            foreach (var line in buffer.CurrentSnapshot.Lines)
-//            {
-//                if (line.GetText().Trim().StartsWith(Settings.Language.Scenario + ":"))
-//                {
-//                    if (scenarioLine != null)
-//                        yield return CreateTag(buffer.CurrentSnapshot.GetLineFromLineNumber(scenarioLine.Value).Start.Position,
-//                                  line.PreviousLine().End.Position, FeatureTokenTypes.ScenarioBody);
-//                    
-//                    scenarioLine = currentLine;
-//                }
-//                currentLine++;
-//            }
-//
-//            if (scenarioLine != null)
-//                yield return CreateTag(buffer.CurrentSnapshot.GetLineFromLineNumber(scenarioLine.Value).Start.Position,
-//                                  buffer.CurrentSnapshot.Length, FeatureTokenTypes.ScenarioBody);
-        }
-
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateCommentSpans()
-        {
-            return from line in buffer.CurrentSnapshot.Lines 
-                   let startOfComment = line.Start.Position + line.GetText().IndexOf("//") 
-                   where line.GetText().Contains("//") 
-                   select CreateTag(startOfComment, line.End.Position - startOfComment, FeatureTokenTypes.Comment);
+            get
+            {
+                return CreateArgSpans().Union(CreateKeywordSpans())
+                    .Union(CreateTableSpans()).Union(CreateCommentSpans())
+                    .Union(CreateScenarioSpans()); }
         }
 
         public FeatureTokenTagger(ITextBuffer buffer)
@@ -65,13 +36,13 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
 
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateArgSpans()
         {
-            return buffer.CurrentSnapshot.GetText().ArgBoundaries().Select(boundary => 
+            return Snapshot.GetText().ArgBoundaries().Select(boundary => 
                 CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
         }
 
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateKeywordSpans()
         {
-            foreach (var line in buffer.CurrentSnapshot.Lines)
+            foreach (var line in Snapshot.Lines)
             {
                 var location = line.Start.Position;
                 var tokens = line.GetText().Split(' ');
@@ -88,7 +59,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
 
         private IEnumerable<TagSpan<FeatureTokenTag>> CreateTableSpans()
         {
-            foreach (var line in buffer.CurrentSnapshot.Lines.Where(line => line.IsTableRow()))
+            foreach (var line in Snapshot.Lines.Where(line => line.IsTableRow()))
             {
                 var location = line.Start.Position;
                 var tokens = line.GetText().Split('|');
@@ -103,16 +74,59 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
             }
         }
 
+        private IEnumerable<TagSpan<FeatureTokenTag>> CreateScenarioSpans()
+        {
+            ITextSnapshotLine lastDeclaration = null;
+
+            foreach (var line in Snapshot.Lines.Where(line => line.GetText().Trim().StartsWith(Settings.Language.Scenario + ":")))
+            {
+                if (lastDeclaration != null)
+                    yield return CreateTag(lastDeclaration.Start,
+                                           line.PreviousLine().End,
+                                           FeatureTokenTypes.ScenarioBody);
+
+                lastDeclaration = line;
+            }
+
+            yield return CreateTag(lastDeclaration.Start,
+                Snapshot.GetLineFromLineNumber(Snapshot.LineCount - 1).End,
+                FeatureTokenTypes.ScenarioBody);
+        }
+
+        private IEnumerable<TagSpan<FeatureTokenTag>> CreateCommentSpans()
+        {
+            return from line in Snapshot.Lines
+                   let startOfComment = line.Start.Position + line.GetText().IndexOf("//")
+                   let commentLength = line.End.Position - startOfComment
+                   where line.GetText().Contains("//") && !InArgOrTable(startOfComment)
+                   select CreateTag(startOfComment, commentLength, FeatureTokenTypes.Comment);
+        }
+
+        private bool InArgOrTable(int startOfComment)
+        {
+            return CreateArgSpans().Any(arg =>
+                                        arg.Span.Start.Position <= startOfComment &&
+                                        arg.Span.End.Position >= startOfComment)
+                || CreateTableSpans().Any(tableValue =>
+                                            tableValue.Span.Start.Position <= startOfComment &&
+                                            tableValue.Span.End.Position >= startOfComment);
+
+        }
+
         TagSpan<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)
         {
-            var tokenSpan = new SnapshotSpan(buffer.CurrentSnapshot, new Span(startLocation, length));
+            var tokenSpan = new SnapshotSpan(Snapshot, new Span(startLocation, length));
+            return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type));
+        }
+
+        TagSpan<FeatureTokenTag> CreateTag(SnapshotPoint startPoint, SnapshotPoint endPoint, FeatureTokenTypes type)
+        {
+            var tokenSpan = new SnapshotSpan(Snapshot, new Span(startPoint.Position, startPoint.Difference(endPoint)));
             return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type));
         }
 
         public IEnumerable<ITagSpan<FeatureTokenTag>> GetTags(NormalizedSnapshotSpanCollection spans)
         {
-//            System.Diagnostics.Debugger.Launch();
-
             return spans.SelectMany(span => AllTags
                 .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
         }

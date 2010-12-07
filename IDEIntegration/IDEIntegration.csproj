@@ -96,6 +96,8 @@
   <ItemGroup>
     <Compile Include="CustomTool\BaseCodeGenerator.cs" />
     <Compile Include="CustomTool\BaseCodeGeneratorWithSite.cs" />
+    <Compile Include="SyntaxHighlighting\Outlining\FeatureOutliner.cs" />
+    <Compile Include="SyntaxHighlighting\FeatureOutlinerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomTool\RaconteurSingleFileGenerator.cs" />
     <Compile Include="SyntaxHighlighting\Classification\ClassificationFormat.cs" />

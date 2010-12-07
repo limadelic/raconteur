@@ -100,19 +100,19 @@ namespace Raconteur
             return One.Equals(Another, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public static List<ArgBoundary> ArgBoundaries(this string Whole)
+        public static List<Boundary> ArgBoundaries(this string Whole)
         {
-            var results = new List<ArgBoundary>();
+            var results = new List<Boundary>();
             var positions = Whole.FindQuotePositions();
 
             for (var i = 1; i < positions.Count; i += 2)
-                results.Add(new ArgBoundary {
+                results.Add(new Boundary {
                     Start = positions[i-1], 
                     End = positions[i],
                 });
 
             if (positions.Count % 2 != 0) 
-                results.Add(new ArgBoundary
+                results.Add(new Boundary
                 {
                     Start = positions[positions.Count-1], 
                     End = Whole.Length - 1, 

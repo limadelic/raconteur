@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.Text.Classification;
 using Microsoft.VisualStudio.Text.Tagging;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
 {
     internal class FeatureClassifier : ITagger<ClassificationTag>
     { 
@@ -29,10 +29,11 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
 
         public IEnumerable<ITagSpan<ClassificationTag>> GetTags(NormalizedSnapshotSpanCollection spans)
         {
-            return (from tag in aggregator.GetTags(spans) 
-                    let tagSpans = tag.Span.GetSpans(spans[0].Snapshot) 
-                    select new TagSpan<ClassificationTag>(tagSpans[0], 
-                                                          new ClassificationTag(featureTypes[tag.Tag.Type])));
+            return from tag in aggregator.GetTags(spans) 
+                   let tagSpans = tag.Span.GetSpans(spans[0].Snapshot)
+                   where featureTypes.ContainsKey(tag.Tag.Type)
+                   select new TagSpan<ClassificationTag>(tagSpans[0], 
+                        new ClassificationTag(featureTypes[tag.Tag.Type]));
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged

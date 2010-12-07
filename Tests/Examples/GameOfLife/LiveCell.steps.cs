@@ -1,6 +1,4 @@
-using Examples.GameOfLife;
-
-namespace Examples
+namespace Examples.GameOfLife
 {
     public partial class EvolvingALivingCell : Context {}
 }

@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Examples 
+namespace Examples.GameOfLife 
 {
     [TestClass]
     public partial class CellConfigurationsThatAreStatic 
@@ -49,7 +49,7 @@ namespace Examples
                 new[] {".", ".", ".", ".", ".", "."}
             );
         }
-
+        
         [TestMethod]
         public void Loaf()
         {         

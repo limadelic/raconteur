@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
-using Raconteur.Generators;
 using Raconteur.Parsers;
 
 namespace Specs
@@ -65,7 +64,7 @@ namespace Specs
                 Scenario.Steps[0].Args = new List<string> {"X"};
                 Scenario.Steps[1].Args = new List<string> {"Y"};
 
-                Runner = new RunnerGenerator(Feature).Code;            
+                Runner = ObjectFactory.NewRunnerGenerator(Feature).Code;            
             }
 
             [Test]

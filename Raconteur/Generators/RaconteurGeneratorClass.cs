@@ -16,12 +16,14 @@ namespace Raconteur.Generators
 
             var Feature = FeatureFrom(FeatureFilePath, Content);
 
-            var StepDefinitions = StepDefinitionsGenerator
-                .StepDefinitionsFor(Feature, FeatureItem.ExistingStepDefinitions);
+            var StepDefinitions = ObjectFactory.NewStepDefinitionsGenerator
+            (
+                Feature, FeatureItem.ExistingStepDefinitions
+            ).Code;
 
             FeatureItem.AddStepDefinitions(StepDefinitions);
 
-            return new RunnerGenerator(Feature).Code;
+            return ObjectFactory.NewRunnerGenerator(Feature).Code;
         }
 
         Feature FeatureFrom(string FeatureFilePath, string Content)

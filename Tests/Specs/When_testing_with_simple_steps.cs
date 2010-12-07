@@ -18,15 +18,6 @@ namespace Specs
             readonly FeatureFile FeatureFile = new FeatureFile();
             readonly VsFeatureItem VsFeatureItem = new VsFeatureItem();
 
-
-            [Test]
-            public void should_handle_an_empty_feature()
-            {
-                FeatureFile.Content = string.Empty;
-                The.FeatureFrom(FeatureFile, VsFeatureItem).Name.ShouldBe("Empty Feature");
-                The.FeatureFrom(FeatureFile, VsFeatureItem).Scenarios.ShouldBeEmpty();
-            }
-
             [Test]
             public void should_read_the_name()
             {
@@ -66,7 +57,8 @@ namespace Specs
 
                 When.FeatureFrom(FeatureFile, VsFeatureItem);
 
-                Then.ScenarioTokenizer.Should().ScenariosFrom(Actors.FeatureWithThreeScenarios);
+                Then.ScenarioTokenizer.Should()
+                    .ScenariosFrom(Actors.FeatureWithThreeScenarios.TrimLines());
             }
 
             [Test]
@@ -190,12 +182,12 @@ namespace Specs
         static string StepDefinitions;
 
         [TestFixture]
-        public class for_the_first_time : BehaviorOf<StepDefinitionsGenerator>
+        public class for_the_first_time 
         {
             [FixtureSetUp]
             public void SetUp()
             {
-                StepDefinitions = The.StepDefinitionsFor(Actors.Feature, null);
+                StepDefinitions = ObjectFactory.NewStepDefinitionsGenerator(Actors.Feature, null).Code;
             }
 
             [Test]
@@ -220,7 +212,10 @@ namespace Specs
                 var Feature = Actors.Feature;
                 Feature.Namespace = "NewFeatures";
 
-                StepDefinitions = The.StepDefinitionsFor(Feature, Actors.DefinedFeature.StepsDefinitionWithBase);
+                StepDefinitions = ObjectFactory.NewStepDefinitionsGenerator
+                (
+                    Feature, Actors.DefinedFeature.StepsDefinitionWithBase
+                ).Code;
             }
 
             [Test]

@@ -1,6 +1,4 @@
-using Examples.Bowling;
-
-namespace Examples 
+namespace Examples.Bowling 
 {
     public partial class ScoreCalculationAlternativeForms : Context
     {

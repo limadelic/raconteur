@@ -12,13 +12,9 @@ namespace Raconteur.Parsers
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            if (FeatureFile == null || FeatureFile.IsEmpty) return new Feature
-            {
-                Namespace =  FeatureItem.DefaultNamespace,
-                Name = "Empty Feature"
-            };
+            Content = FeatureFile.Content.TrimLines();
 
-            Content = FeatureFile.Content;
+            if (IsNotAValidFeature) return InvalidFeature;
 
             return new Feature
             {
@@ -29,17 +25,44 @@ namespace Raconteur.Parsers
             };
         }
 
+        bool IsNotAValidFeature
+        {
+            get
+            {
+                return Content.IsEmpty()
+                    || !Content.StartsWith(Settings.Language.Feature)
+                    || Name.IsEmpty();
+            }
+        }
+
+        Feature InvalidFeature
+        {
+            get
+            {
+                var Reason = 
+                    Content.IsEmpty() ? "Feature file is Empty"
+                    : !Content.StartsWith(Settings.Language.Feature) ? "Missing Feature declaration"
+                    : "Missing Feature Name";
+
+                return new InvalidFeature {Reason = Reason};
+            }
+        }
+
         string Name 
         { 
             get 
             {
-                var Regex = new Regex(Settings.Language.Feature + 
-                    @": (\w.+)(" + Environment.NewLine + "|$)");
+                try
+                {
+                    var Regex = new Regex(Settings.Language.Feature + 
+                        @": (\w.+)(" + Environment.NewLine + "|$)");
             
-                var Match = Regex.Match(Content);
+                    var Match = Regex.Match(Content);
 
-                return Match.Groups[1].Value
-                    .CamelCase().ToValidIdentifier();
+                    return Match.Groups[1].Value
+                        .CamelCase().ToValidIdentifier();
+                } 
+                catch { return null; }
             }
         }
     }

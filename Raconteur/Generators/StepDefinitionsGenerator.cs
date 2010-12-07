@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace Raconteur.Generators
 {
-    public class StepDefinitionsGenerator
+    public class StepDefinitionsGenerator : CodeGenerator
     {
         const string StepDefinitionsClass = 
 
@@ -14,17 +14,24 @@ namespace {0}
     }}
 }}
 ";
-        Feature Feature;
-        string ExistingStepDefinitions;
 
-        public string StepDefinitionsFor(Feature Feature, string ExistingStepDefinitions)
+        readonly Feature Feature;
+        readonly string ExistingStepDefinitions;
+
+        public string Code
+        {
+            get
+            {
+                return ExistingStepDefinitions.IsEmpty() ?
+                    NewStepDefinitions :
+                    RefactoredStepDefinitions;
+            }
+        }
+
+        internal StepDefinitionsGenerator(Feature Feature, string ExistingStepDefinitions)
         {
             this.Feature = Feature;
             this.ExistingStepDefinitions = ExistingStepDefinitions;
-
-            return ExistingStepDefinitions.IsEmpty() ?
-                NewStepDefinitions :
-                RefactoredStepDefinitions;
         }
 
         string NewStepDefinitions
@@ -46,19 +53,40 @@ namespace {0}
             {
                 var Result = ExistingStepDefinitions;
 
-                Result = Rename("namespace ", Feature.Namespace, Result);
-                Result = Rename("public partial class ", Feature.Name, Result);
+                Result = Result.Replace
+                (
+                    "namespace " + Namespace,
+                    "namespace " + Feature.Namespace
+                );
+
+                Result = Result.Replace
+                (
+                    "public partial class " + ClassName,
+                    "public partial class " + Feature.Name
+                );
 
                 return Result;
             }
         }
 
-        string Rename(string Preffix, string NewName, string Text) 
+        string Namespace
         {
-            var Regex = new Regex(Preffix + @"(\w+)");
-            var OldName = Regex.Match(Text).Groups[1].Value.Trim();
+            get
+            {
+                return new Regex(@"namespace (.+)")
+                    .Match(ExistingStepDefinitions)
+                    .Groups[1].Value.Trim();
+            }
+        }
 
-            return Text.Replace(Preffix + OldName, Preffix + NewName);
+        string ClassName
+        {
+            get
+            {
+                return new Regex(@"public partial class (\w+)")
+                    .Match(ExistingStepDefinitions)
+                    .Groups[1].Value.Trim();
+            }
         }
     }
 }

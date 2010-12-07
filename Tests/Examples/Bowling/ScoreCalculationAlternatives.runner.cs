@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Examples 
+namespace Examples.Bowling 
 {
     [TestClass]
     public partial class ScoreCalculationAlternativeForms 

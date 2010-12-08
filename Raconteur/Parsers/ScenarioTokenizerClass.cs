@@ -57,7 +57,20 @@ namespace Raconteur.Parsers
         {
             if (Line.StartsWith("\"")) InsideArg = !InsideArg;
 
-            return InsideArg || !(Line.IsEmpty() || Line.StartsWith("//"));
+            return InsideArg || !(Line.IsEmpty() || IsComment(Line));
+        }
+
+        bool InsideComment;
+
+        bool IsComment(string Line)
+        {
+            if (Line.StartsWith("/*")) InsideComment = !InsideComment;
+
+            var isComment = InsideComment || Line.StartsWith("//");
+            
+            if (Line.StartsWith("*/")) InsideComment = !InsideComment;
+
+            return isComment;
         }
 
         bool IsScenarioDeclaration(string Line)

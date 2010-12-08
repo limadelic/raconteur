@@ -4,14 +4,14 @@
 
 Scenario: Single line Comments
 	
-	Given the Feature is
+	Given the Feature contains
 	"
-		Feature: Comments
-
 		Scenario: The Doors
+		
 		// When the doors of perception are cleansed, 
 		// man will see things as they truly are 
-		Infinite
+			
+			Infinite
 	"
 
 	The Runner should contain
@@ -23,3 +23,21 @@ Scenario: Single line Comments
 	"
 
 Scenario: Multiline Comments
+
+	Given the Feature contains
+	"
+		Scenario: The Doors
+		/*
+			When the doors of perception are cleansed, 
+			man will see things as they truly are 
+		*/
+			Infinite
+	"
+
+	The Runner should contain
+	"
+		public void TheDoors()
+		{
+			Infinite();
+		}
+	"

@@ -71,6 +71,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comments.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comments.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Comments.steps.cs">
+      <DependentUpon>Comments.feature</DependentUpon>
+    </Compile>
     <Compile Include="Context\FeatureRunner.cs" />
     <Compile Include="GenerateRunner.steps.cs">
       <DependentUpon>GenerateRunner.feature</DependentUpon>
@@ -168,16 +176,12 @@
       <DependentUpon>StepTable.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SyntaxHighlighting.runner.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SyntaxHighlighting.feature</DependentUpon>
-    </Compile>
-    <Compile Include="SyntaxHighlighting.steps.cs">
-      <DependentUpon>SyntaxHighlighting.feature</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Comments.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Comments.runner.cs</LastGenOutput>
+    </None>
     <None Include="GenerateRunner.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>GenerateRunner.runner.cs</LastGenOutput>
@@ -221,10 +225,6 @@
     <None Include="StepTable.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StepTable.runner.cs</LastGenOutput>
-    </None>
-    <None Include="SyntaxHighlighting.feature">
-      <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>SyntaxHighlighting.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

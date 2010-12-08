@@ -14,7 +14,6 @@ namespace Features
 ");        
             The_Runner_should_be(
 @"using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 namespace Features
 {
 [TestClass]

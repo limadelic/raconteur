@@ -47,17 +47,17 @@ namespace Raconteur.Parsers
                 return Regex.Split(Content, Environment.NewLine)
                     .SkipWhile(IsNotScenarioDeclaration)
                     .Select(Line => Line.Trim())
-                    .Where(IsNotEmpty);
+                    .Where(HasCode);
             }
         }
 
         bool InsideArg;
 
-        bool IsNotEmpty(string Line)
+        bool HasCode(string Line)
         {
             if (Line.StartsWith("\"")) InsideArg = !InsideArg;
 
-            return InsideArg || !string.IsNullOrWhiteSpace(Line);
+            return InsideArg || !(Line.IsEmpty() || Line.StartsWith("//"));
         }
 
         bool IsScenarioDeclaration(string Line)

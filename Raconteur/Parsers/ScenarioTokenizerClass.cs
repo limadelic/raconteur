@@ -55,7 +55,7 @@ namespace Raconteur.Parsers
 
         bool HasCode(string Line)
         {
-            if (Line.StartsWith("\"")) InsideArg = !InsideArg;
+            if (!InsideComment && Line == "\"") InsideArg = !InsideArg;
 
             return InsideArg || !(Line.IsEmpty() || IsComment(Line));
         }

@@ -26,6 +26,8 @@ Scenario: Type Inference
 		If_the_balance_is(42);
 	"
 
+// this Scenario is implemented differently
+// 'cos cannot nest Multiline Args
 Scenario: Multiline Arg
 	When an Arg is not finish in a Sentence
 	It should expand until it's closed in another line

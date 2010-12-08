@@ -42,8 +42,10 @@ Scenario: Multiline Comments
 		}
 	"
 
-// this Scenario is implemented differently
+// this Scenarios are implemented differently
 // 'cos cannot nest Multiline Args
+
 Scenario: Comments inside Multiline Args
 	When lines a line in a Multiline Args starts with a comment
 	It will still be passed in as part of the Arg
+	

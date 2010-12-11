@@ -3,39 +3,91 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
+using ITags=System.Collections.Generic.IEnumerable<Microsoft.VisualStudio.Text.Tagging.ITagSpan<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
+using ITagsWrap=System.Collections.Generic.IEnumerable<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
+using Tags=System.Collections.Generic.List<Microsoft.VisualStudio.Text.Tagging.ITagSpan<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
+using TagsWrap=System.Collections.Generic.List<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 {
-    internal sealed class FeatureTokenTagger : ITagger<FeatureTokenTag>
+    public interface ITagSpanWrap<T> where T : ITag
     {
-        readonly IDictionary<string, FeatureTokenTypes> tokenTypes;
+        TagSpan<T> Core { get; }
+
+        string Text { get; }
+
+        FeatureTokenTypes Type { get; }
+    }
+
+    public class TagSpanWrap<T> : ITagSpanWrap<T> where T : ITag
+    {
+        public TagSpan<T> Core { get; set; }
+
+        public string Text { get { return Core.Span.GetText(); } }
+
+        public FeatureTokenTypes Type { get { return (Core.Tag as FeatureTokenTag).Type; } }
+    }
+
+    public class FeatureTokenTagger : ITagger<FeatureTokenTag>
+    {
         readonly ITextBuffer buffer;
-        readonly string Content;
+        protected readonly string Feature;
 
         ITextSnapshot Snapshot { get { return buffer.CurrentSnapshot;  } }
 
         public FeatureTokenTagger(ITextBuffer buffer)
         {
             this.buffer = buffer;
-            Content = Snapshot.GetText();
+            Feature = Snapshot.GetText();
+        }
 
-            tokenTypes = new Dictionary<string, FeatureTokenTypes>
-            {
-                {Settings.Language.Feature + ":", FeatureTokenTypes.FeatureDefinition},
-                {Settings.Language.Scenario + ":", FeatureTokenTypes.ScenarioDefinition},
-                {Settings.Language.Examples + ":", FeatureTokenTypes.ExampleDefinition},
-            };
+        public FeatureTokenTagger(string Feature)
+        {
+            this.Feature = Feature;
         }
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
 
-        public IEnumerable<ITagSpan<FeatureTokenTag>> GetTags(NormalizedSnapshotSpanCollection spans)
+        public ITags GetTags(NormalizedSnapshotSpanCollection spans)
         {
             return spans.SelectMany(span => AllTags
                 .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
         }
 
-        IEnumerable<ITagSpan<FeatureTokenTag>> AllTags
+
+        public ITagsWrap Tags
+        {
+            get
+            {
+                var Position = 0;
+                Action<int> NextPosition = LineLength => Position += LineLength + 2;
+
+                return Feature
+                    .Lines()
+                    .ApplyLengthTo(NextPosition)
+                    .SelectMany(Line => (TagsIn(Line, Position)));
+            }
+        }
+
+        ITagsWrap TagsIn(string Line, int Position)
+        {
+            var FirstWord = Line.FirstWord();
+
+            var Tags = new TagsWrap();
+
+            if (Keywords.Contains(FirstWord)) 
+                Tags.Add(CreateTagWrap
+                (
+                    Position + Line.IndexOf(FirstWord),
+                    FirstWord.Length, 
+                    FeatureTokenTypes.Keyword
+                ));
+            
+            return Tags;
+        }
+
+
+        ITags AllTags
         {
             get
             {
@@ -47,36 +99,44 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        IEnumerable<TagSpan<FeatureTokenTag>> ArgSpans
+        ITags ArgSpans
         {
             get
             {
-                return Content.ArgBoundaries().Select(
+                return Feature.ArgBoundaries().Select(
                     boundary => CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
             }
         }
 
-        IEnumerable<TagSpan<FeatureTokenTag>> KeywordSpans
+        readonly List<string> Keywords = new List<string>
+        {
+            Settings.Language.Feature + ":",
+            Settings.Language.Scenario + ":",
+            Settings.Language.Examples + ":",
+        };
+
+
+        ITags KeywordSpans
         {
             get
             {
-                var location = 0;
-                foreach (var line in Content.Lines())
-                {
-                    var token = line.TrimStart().Split(' ')[0];
+                var Position = 0;
+                Action<int> NextPosition = LineLength => Position += LineLength + 2;
 
-                    if (tokenTypes.ContainsKey(token)) 
-                        yield return CreateTag(
-                            location + line.IndexOf(token),
-                            token.Length, 
-                            tokenTypes[token]);
-
-                    location += line.Length + 2;
-                }
+                return 
+                    from Line in Feature.Lines().ApplyLengthTo(NextPosition) 
+                    let FirstWord = Line.FirstWord() 
+                    where Keywords.Contains(FirstWord) 
+                    select CreateTag
+                    (
+                        Position + Line.IndexOf(FirstWord),
+                        FirstWord.Length, 
+                        FeatureTokenTypes.Keyword
+                    );
             }
         }
 
-        IEnumerable<TagSpan<FeatureTokenTag>> TableSpans
+        ITags TableSpans
         {
             get
             {
@@ -95,7 +155,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        IEnumerable<TagSpan<FeatureTokenTag>> ScenarioSpans
+        ITags ScenarioSpans
         {
             get
             {
@@ -116,7 +176,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        IEnumerable<TagSpan<FeatureTokenTag>> CommentSpans
+        ITags CommentSpans
         {
             get
             {
@@ -137,6 +197,16 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                     tableValue.Span.Start.Position <= startOfComment &&
                     tableValue.Span.End.Position >= startOfComment);
 
+        }
+
+        protected virtual ITagSpanWrap<FeatureTokenTag> CreateTagWrap(int startLocation, int length, FeatureTokenTypes type)
+        {
+            var tokenSpan = new SnapshotSpan(Snapshot, new Span(startLocation, length));
+
+            return new TagSpanWrap<FeatureTokenTag>
+            {
+                Core = new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type))
+            };
         }
 
         TagSpan<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)

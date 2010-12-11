@@ -8,23 +8,30 @@ using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
 {
-    internal class FeatureClassifier : ITagger<ClassificationTag>
+    public class FeatureClassifier : ITagger<ClassificationTag>
     { 
         private readonly ITagAggregator<FeatureTokenTag> aggregator;
-        private readonly Dictionary<FeatureTokenTypes, IClassificationType> featureTypes;
+        private readonly Dictionary<FeatureTokenTypes, IClassificationType> featureTypes
+            = new Dictionary<FeatureTokenTypes, IClassificationType>();
+
+        public static readonly Dictionary<FeatureTokenTypes, string> Styles = new Dictionary<FeatureTokenTypes, string>
+        {
+            {FeatureTokenTypes.Keyword, "Keyword"},
+            {FeatureTokenTypes.Arg, "String"},
+            {FeatureTokenTypes.TableValue, "String"},
+            {FeatureTokenTypes.Comment, "Comment"},
+        };
 
         public FeatureClassifier(ITextBuffer buffer, ITagAggregator<FeatureTokenTag> tagAggregator, IClassificationTypeRegistryService registry)
         {
             aggregator = tagAggregator;
-            featureTypes = new Dictionary<FeatureTokenTypes, IClassificationType>
-            {
-                 {FeatureTokenTypes.FeatureDefinition, registry.GetClassificationType("Keyword")},
-                 {FeatureTokenTypes.ScenarioDefinition, registry.GetClassificationType("Keyword")},
-                 {FeatureTokenTypes.ExampleDefinition, registry.GetClassificationType("Keyword")},
-                 {FeatureTokenTypes.Arg, registry.GetClassificationType("String")},
-                 {FeatureTokenTypes.TableValue, registry.GetClassificationType("String")},
-                 {FeatureTokenTypes.Comment, registry.GetClassificationType("Comment")},
-            };
+
+            foreach (var Type in Styles.Keys)
+                featureTypes.Add
+                (
+                    Type, 
+                    registry.GetClassificationType(Styles[Type])
+                );
         }
 
         public IEnumerable<ITagSpan<ClassificationTag>> GetTags(NormalizedSnapshotSpanCollection spans)

@@ -141,5 +141,19 @@ namespace Raconteur
 
             return positions;
         }
+
+        public static IEnumerable<string> ApplyLengthTo(this IEnumerable<string> Lines, Action<int> ApplyFunc)
+        {
+            foreach (var Line in Lines)
+            {
+                yield return Line;
+                ApplyFunc(Line.Length);
+            }
+        }
+
+        public static string FirstWord(this string Sentence)
+        {
+            return Sentence.Split(' ')[0];
+        }
     }
 }

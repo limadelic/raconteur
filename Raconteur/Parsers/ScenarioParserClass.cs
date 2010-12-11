@@ -47,7 +47,7 @@ namespace Raconteur.Parsers
         List<string> ParseTableRow(string Row)
         {
             return Row
-                .Split(A.Bar)
+                .Split('|')
                 .Chop(1)
                 .Select(x => x.Trim())
                 .ToList();
@@ -59,7 +59,7 @@ namespace Raconteur.Parsers
             {
                 return Definition
                     .First()
-                    .Split(A.Colon)[1]
+                    .Split(A.Colon, 2)[1]
                     .Trim()
                     .CamelCase()
                     .ToValidIdentifier();    

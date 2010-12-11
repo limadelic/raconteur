@@ -9,6 +9,11 @@ namespace Raconteur
             return line.GetText().Trim().StartsWith("|") && line.GetText().Trim().EndsWith("|");
         }
 
+        public static bool IsTableRow(this string line)
+        {
+            return line.Trim().StartsWith("|") && line.Trim().EndsWith("|");
+        }
+
         public static bool IsTableHeader(this ITextSnapshotLine line)
         {
             return line.PreviousLine().GetText().Trim().Equals(

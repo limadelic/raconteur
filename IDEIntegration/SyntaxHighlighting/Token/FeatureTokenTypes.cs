@@ -2,10 +2,8 @@
 {
     public enum FeatureTokenTypes
     {
-        FeatureDefinition,
-        ScenarioDefinition,
+        Keyword,
         Arg,
-        ExampleDefinition,
         TableValue,
         Comment,
         ScenarioBody

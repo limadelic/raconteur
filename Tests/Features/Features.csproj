@@ -176,6 +176,14 @@
       <DependentUpon>StepTable.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SyntaxHighlight\Keywords.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Keywords.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SyntaxHighlight\Keywords.steps.cs">
+      <DependentUpon>Keywords.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Comments.feature">
@@ -225,6 +233,10 @@
     <None Include="StepTable.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StepTable.runner.cs</LastGenOutput>
+    </None>
+    <None Include="SyntaxHighlight\Keywords.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Keywords.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

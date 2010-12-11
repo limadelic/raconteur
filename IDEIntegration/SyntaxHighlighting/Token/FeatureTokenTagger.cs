@@ -10,8 +10,30 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
     {
         readonly IDictionary<string, FeatureTokenTypes> tokenTypes;
         readonly ITextBuffer buffer;
+        readonly string Content;
 
         ITextSnapshot Snapshot { get { return buffer.CurrentSnapshot;  } }
+
+        public FeatureTokenTagger(ITextBuffer buffer)
+        {
+            this.buffer = buffer;
+            Content = Snapshot.GetText();
+
+            tokenTypes = new Dictionary<string, FeatureTokenTypes>
+            {
+                {Settings.Language.Feature + ":", FeatureTokenTypes.FeatureDefinition},
+                {Settings.Language.Scenario + ":", FeatureTokenTypes.ScenarioDefinition},
+                {Settings.Language.Examples + ":", FeatureTokenTypes.ExampleDefinition},
+            };
+        }
+
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
+
+        public IEnumerable<ITagSpan<FeatureTokenTag>> GetTags(NormalizedSnapshotSpanCollection spans)
+        {
+            return spans.SelectMany(span => AllTags
+                .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
+        }
 
         IEnumerable<ITagSpan<FeatureTokenTag>> AllTags
         {
@@ -25,24 +47,12 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        public FeatureTokenTagger(ITextBuffer buffer)
-        {
-            this.buffer = buffer;
-
-            tokenTypes = new Dictionary<string, FeatureTokenTypes>
-            {
-                {Settings.Language.Feature + ":", FeatureTokenTypes.FeatureDefinition},
-                {Settings.Language.Scenario + ":", FeatureTokenTypes.ScenarioDefinition},
-                {Settings.Language.Examples + ":", FeatureTokenTypes.ExampleDefinition},
-            };
-        }
-
         IEnumerable<TagSpan<FeatureTokenTag>> ArgSpans
         {
             get
             {
-                return Snapshot.GetText().ArgBoundaries().Select(
-                        boundary => CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
+                return Content.ArgBoundaries().Select(
+                    boundary => CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
             }
         }
 
@@ -50,17 +60,18 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         {
             get
             {
-                foreach (var line in Snapshot.Lines)
+                var location = 0;
+                foreach (var line in Content.Lines())
                 {
-                    var location = line.Start.Position;
-                    var tokens = line.GetText().Split(' ');
+                    var token = line.TrimStart().Split(' ')[0];
 
-                    foreach (var token in tokens)
-                    {
-                        if (tokenTypes.ContainsKey(token.Trim())) yield return CreateTag(location, token.Length, tokenTypes[token.Trim()]);
+                    if (tokenTypes.ContainsKey(token)) 
+                        yield return CreateTag(
+                            location + line.IndexOf(token),
+                            token.Length, 
+                            tokenTypes[token]);
 
-                        location += token.Length + 1;
-                    }
+                    location += line.Length + 2;
                 }
             }
         }
@@ -139,13 +150,5 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             var tokenSpan = new SnapshotSpan(Snapshot, new Span(startPoint.Position, startPoint.Difference(endPoint)));
             return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type));
         }
-
-        public IEnumerable<ITagSpan<FeatureTokenTag>> GetTags(NormalizedSnapshotSpanCollection spans)
-        {
-            return spans.SelectMany(span => AllTags
-                .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
-        }
-
-        public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
     }
 }

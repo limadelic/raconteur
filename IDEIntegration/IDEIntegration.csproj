@@ -100,8 +100,6 @@
     <Compile Include="SyntaxHighlighting\FeatureOutlinerProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CustomTool\RaconteurSingleFileGenerator.cs" />
-    <Compile Include="SyntaxHighlighting\Classification\ClassificationFormat.cs" />
-    <Compile Include="SyntaxHighlighting\Classification\ClassificationType.cs" />
     <Compile Include="SyntaxHighlighting\Classification\FeatureClassifier.cs" />
     <Compile Include="SyntaxHighlighting\FeatureClassifierProvider.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTag.cs" />

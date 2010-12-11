@@ -22,7 +22,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
                  {FeatureTokenTypes.ScenarioDefinition, registry.GetClassificationType("Keyword")},
                  {FeatureTokenTypes.ExampleDefinition, registry.GetClassificationType("Keyword")},
                  {FeatureTokenTypes.Arg, registry.GetClassificationType("String")},
-                 {FeatureTokenTypes.TableValue, registry.GetClassificationType("Number")},
+                 {FeatureTokenTypes.TableValue, registry.GetClassificationType("String")},
                  {FeatureTokenTypes.Comment, registry.GetClassificationType("Comment")},
             };
         }

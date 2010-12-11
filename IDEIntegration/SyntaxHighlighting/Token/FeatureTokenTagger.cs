@@ -3,23 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
-using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 {
     internal sealed class FeatureTokenTagger : ITagger<FeatureTokenTag>
     {
-        private readonly IDictionary<string, FeatureTokenTypes> tokenTypes;
-        private readonly ITextBuffer buffer;
+        readonly IDictionary<string, FeatureTokenTypes> tokenTypes;
+        readonly ITextBuffer buffer;
+
         ITextSnapshot Snapshot { get { return buffer.CurrentSnapshot;  } }
 
         IEnumerable<ITagSpan<FeatureTokenTag>> AllTags
         {
             get
             {
-                return CreateArgSpans().Union(CreateKeywordSpans())
-                    .Union(CreateTableSpans()).Union(CreateCommentSpans())
-                    .Union(CreateScenarioSpans()); }
+                return ArgSpans
+                    .Union(KeywordSpans)
+                    .Union(TableSpans)
+                    .Union(CommentSpans)
+                    .Union(ScenarioSpans); 
+            }
         }
 
         public FeatureTokenTagger(ITextBuffer buffer)
@@ -34,82 +37,94 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
             };
         }
 
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateArgSpans()
+        IEnumerable<TagSpan<FeatureTokenTag>> ArgSpans
         {
-            return Snapshot.GetText().ArgBoundaries().Select(boundary => 
-                CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
+            get
+            {
+                return Snapshot.GetText().ArgBoundaries().Select(
+                        boundary => CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
+            }
         }
 
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateKeywordSpans()
+        IEnumerable<TagSpan<FeatureTokenTag>> KeywordSpans
         {
-            foreach (var line in Snapshot.Lines)
+            get
             {
-                var location = line.Start.Position;
-                var tokens = line.GetText().Split(' ');
-
-                foreach (var token in tokens)
+                foreach (var line in Snapshot.Lines)
                 {
-                    if (tokenTypes.ContainsKey(token.Trim()))
-                        yield return CreateTag(location, token.Length, tokenTypes[token.Trim()]); 
+                    var location = line.Start.Position;
+                    var tokens = line.GetText().Split(' ');
 
-                    location += token.Length + 1;
+                    foreach (var token in tokens)
+                    {
+                        if (tokenTypes.ContainsKey(token.Trim())) yield return CreateTag(location, token.Length, tokenTypes[token.Trim()]);
+
+                        location += token.Length + 1;
+                    }
                 }
             }
         }
 
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateTableSpans()
+        IEnumerable<TagSpan<FeatureTokenTag>> TableSpans
         {
-            foreach (var line in Snapshot.Lines.Where(line => line.IsTableRow()))
+            get
             {
-                var location = line.Start.Position;
-                var tokens = line.GetText().Split('|');
-
-                foreach (var token in tokens)
+                foreach (var line in Snapshot.Lines.Where(line => line.IsTableRow()))
                 {
-                    if (!string.IsNullOrWhiteSpace(token) && !line.IsTableHeader())
-                        yield return CreateTag(location, token.Length, FeatureTokenTypes.TableValue);
+                    var location = line.Start.Position;
+                    var tokens = line.GetText().Split('|');
 
-                    location += token.Length + 1;
+                    foreach (var token in tokens)
+                    {
+                        if (!string.IsNullOrWhiteSpace(token) && !line.IsTableHeader()) yield return CreateTag(location, token.Length, FeatureTokenTypes.TableValue);
+
+                        location += token.Length + 1;
+                    }
                 }
             }
         }
 
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateScenarioSpans()
+        IEnumerable<TagSpan<FeatureTokenTag>> ScenarioSpans
         {
-            ITextSnapshotLine lastDeclaration = null;
-
-            foreach (var line in Snapshot.Lines.Where(line => line.GetText().Trim().StartsWith(Settings.Language.Scenario + ":")))
+            get
             {
-                if (lastDeclaration != null)
-                    yield return CreateTag(lastDeclaration.Start,
-                                           line.PreviousLine().End,
-                                           FeatureTokenTypes.ScenarioBody);
+                ITextSnapshotLine lastDeclaration = null;
 
-                lastDeclaration = line;
+                foreach (
+                    var line in Snapshot.Lines.Where(line => line.GetText().Trim().StartsWith(Settings.Language.Scenario + ":"))
+                    )
+                {
+                    if (lastDeclaration != null) yield return CreateTag(lastDeclaration.Start, line.PreviousLine().End, FeatureTokenTypes.ScenarioBody);
+
+                    lastDeclaration = line;
+                }
+
+                yield return
+                    CreateTag(lastDeclaration.Start, Snapshot.GetLineFromLineNumber(Snapshot.LineCount - 1).End,
+                        FeatureTokenTypes.ScenarioBody);
             }
-
-            yield return CreateTag(lastDeclaration.Start,
-                Snapshot.GetLineFromLineNumber(Snapshot.LineCount - 1).End,
-                FeatureTokenTypes.ScenarioBody);
         }
 
-        private IEnumerable<TagSpan<FeatureTokenTag>> CreateCommentSpans()
+        IEnumerable<TagSpan<FeatureTokenTag>> CommentSpans
         {
-            return from line in Snapshot.Lines
-                   let startOfComment = line.Start.Position + line.GetText().IndexOf("//")
-                   let commentLength = line.End.Position - startOfComment
-                   where line.GetText().Contains("//") && !InArgOrTable(startOfComment)
-                   select CreateTag(startOfComment, commentLength, FeatureTokenTypes.Comment);
+            get
+            {
+                return from line in Snapshot.Lines
+                       let startOfComment = line.Start.Position + line.GetText().IndexOf("//")
+                       let commentLength = line.End.Position - startOfComment
+                       where line.GetText().Contains("//") && !InArgOrTable(startOfComment)
+                       select CreateTag(startOfComment, commentLength, FeatureTokenTypes.Comment);
+            }
         }
 
         private bool InArgOrTable(int startOfComment)
         {
-            return CreateArgSpans().Any(arg =>
-                                        arg.Span.Start.Position <= startOfComment &&
-                                        arg.Span.End.Position >= startOfComment)
-                || CreateTableSpans().Any(tableValue =>
-                                            tableValue.Span.Start.Position <= startOfComment &&
-                                            tableValue.Span.End.Position >= startOfComment);
+            return ArgSpans.Any(arg =>
+                arg.Span.Start.Position <= startOfComment &&
+                arg.Span.End.Position >= startOfComment)
+                || TableSpans.Any(tableValue =>
+                    tableValue.Span.Start.Position <= startOfComment &&
+                    tableValue.Span.End.Position >= startOfComment);
 
         }
 
@@ -131,10 +146,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
                 .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
         }
 
-        public event EventHandler<SnapshotSpanEventArgs> TagsChanged
-        {
-            add { }
-            remove { }
-        }
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
     }
 }

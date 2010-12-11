@@ -95,6 +95,11 @@ namespace Raconteur
             return string.Join(Environment.NewLine, TrimmedLines);
         }
 
+        public static IEnumerable<string> Lines(this string It)
+        {
+            return Regex.Split(It, Environment.NewLine);
+        }
+
         public static bool EqualsEx(this string One, string Another)
         {
             return One.Equals(Another, StringComparison.InvariantCultureIgnoreCase);

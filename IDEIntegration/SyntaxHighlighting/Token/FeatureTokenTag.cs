@@ -6,9 +6,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
     {
         public FeatureTokenTypes Type { get; private set; }
 
-        public FeatureTokenTag(FeatureTokenTypes type)
-        {
-            Type = type;
-        }
+        public FeatureTokenTag(FeatureTokenTypes type) { Type = type; }
     }
 }

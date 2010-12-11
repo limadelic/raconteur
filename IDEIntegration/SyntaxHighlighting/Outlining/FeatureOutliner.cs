@@ -23,13 +23,9 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Outlining
                    where tag.Tag.Type == FeatureTokenTypes.ScenarioBody
                    select new TagSpan<IOutliningRegionTag>(tagSpans[0], 
                        new OutliningRegionTag(false, false, 
-                           Settings.Language.Scenario + "...", tagSpans[0].GetText()));
+                           tagSpans[0].GetText().Lines().First(), tagSpans[0].GetText()));
         }
 
-        public event EventHandler<SnapshotSpanEventArgs> TagsChanged
-        {
-            add {}
-            remove {}
-        }
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
     }
 }

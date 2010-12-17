@@ -12,12 +12,13 @@ namespace Features.SyntaxHighlight
             Given_the_Feature_is(
 @"Feature: Name
 Scenario: First
-// One Comment
-One Step
-// Another Comment
+// Comment
+Step
+// Scenario:
 ");        
-            Raconteur_should_highlight(1, "// One Comment", "Comment");        
-            Raconteur_should_highlight(1, "// Another Comment", "Comment");
+            Raconteur_should_highlight(1, "// Comment", "Comment");        
+            Raconteur_should_highlight(1, "// Scenario:", "Comment");        
+            Raconteur_should_highlight(1, "Scenario:", "Keyword");
         }
 
     }

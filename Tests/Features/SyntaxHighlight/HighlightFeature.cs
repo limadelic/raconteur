@@ -14,7 +14,7 @@ namespace Features.SyntaxHighlight
             Sut.Tags.Where(Tag => 
                 Tag.Text == Text && 
                 FeatureClassifier.Styles[Tag.Type] == Color)
-                .Count().ShouldBe(Count);
+                .Count().ShouldBe(Count, "Did not find " + Count + " " + Text + " " + Color);
         }
 
         class SUT : FeatureTokenTagger
@@ -26,6 +26,7 @@ namespace Features.SyntaxHighlight
                 var Tag = Create.TestObjectFor<ITagSpanWrap<FeatureTokenTag>>();
 
                 Given.That(Tag).Text.Is(Feature.Substring(startLocation, length));
+                Given.That(Tag).Type.Is(type);
 
                 return Tag;
             }

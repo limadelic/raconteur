@@ -71,14 +71,29 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
         ITagsWrap TagsIn(string Line, int Position)
         {
-            var FirstWord = Line.FirstWord();
-
             var Tags = new TagsWrap();
+
+            var OriginalLine = Line;
+            Line = Line.Trim();
+
+            if (Line.StartsWith("//"))
+            {
+                Tags.Add(CreateTagWrap
+                (
+                    Position + OriginalLine.IndexOf("//"),
+                    Line.Length, 
+                    FeatureTokenTypes.Comment
+                ));
+
+                return Tags;
+            }
+
+            var FirstWord = Line.FirstWord();
 
             if (Keywords.Contains(FirstWord)) 
                 Tags.Add(CreateTagWrap
                 (
-                    Position + Line.IndexOf(FirstWord),
+                    Position + OriginalLine.IndexOf(FirstWord),
                     FirstWord.Length, 
                     FeatureTokenTypes.Keyword
                 ));

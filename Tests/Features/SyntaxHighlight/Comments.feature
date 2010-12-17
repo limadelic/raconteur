@@ -9,14 +9,15 @@ Scenario: Single line Comments
 		Feature: Name
 
 		Scenario: First
-		// One Comment
-		One Step
-		// Another Comment
+		// Comment
+		Step
+		// Scenario:
 	"
 
 	Raconteur should highlight
-	[ Count | Text					| Color   ]
-	|     1 | // One Comment		| Comment |
-	|     1 | // Another Comment	| Comment |
+	[ Count | Text			| Color   ]
+	|     1 | // Comment	| Comment |
+	|     1 | // Scenario:	| Comment |
+	|     1 | Scenario:		| Keyword |
 
 

@@ -69,12 +69,38 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
+        int MultilineCommentStart = -1;
+        
+        bool InsideMultilineComment { get { return MultilineCommentStart >= 0; } }
+
         ITagsWrap TagsIn(string Line, int Position)
         {
             var Tags = new TagsWrap();
 
             var OriginalLine = Line;
             Line = Line.Trim();
+
+            if (Line.StartsWith("*/"))
+            {
+                Tags.Add(CreateTagWrap
+                (
+                    MultilineCommentStart,
+                    Position + OriginalLine.Length - MultilineCommentStart, 
+                    FeatureTokenTypes.Comment
+                ));
+
+                MultilineCommentStart = -1;
+
+                return Tags;
+            }
+
+            if (InsideMultilineComment) return Tags;
+
+            if (Line.StartsWith("/*"))
+            {
+                MultilineCommentStart = Position + OriginalLine.IndexOf("//");
+                return Tags;
+            }
 
             if (Line.StartsWith("//"))
             {

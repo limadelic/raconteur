@@ -1,5 +1,6 @@
 using System.Linq;
 using FluentSpec;
+using Raconteur;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Classification;
 
 namespace Features.SyntaxHighlight 
@@ -10,13 +11,13 @@ namespace Features.SyntaxHighlight
 
         void Raconteur_should_highlight(string Text)
         {
-            HighlightedText = Text;
+            HighlightedText = Text.TrimLines();
         }
 
         void with__style(string Style)
         {
             Sut.Tags.Any(Tag => 
-                Tag.Text == HighlightedText && 
+                Tag.Text.TrimLines() == HighlightedText && 
                 FeatureClassifier.Styles[Tag.Type] == Style)
                 .ShouldBeTrue();
         }

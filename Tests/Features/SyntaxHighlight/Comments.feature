@@ -41,6 +41,6 @@ Scenario: Multi-line Comments
 	with "Comment" style
 
 	Raconteur should highlight
-	[ Count | Text			| Color   ]
+	[ Count | Text			| Style   ]
 	|     1 | Scenario:		| Keyword |
 

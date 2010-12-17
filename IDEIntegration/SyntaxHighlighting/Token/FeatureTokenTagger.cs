@@ -73,60 +73,89 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         
         bool InsideMultilineComment { get { return MultilineCommentStart >= 0; } }
 
+        string FullLine;
+        string Line;
+        int Position;
+
         ITagsWrap TagsIn(string Line, int Position)
         {
-            var Tags = new TagsWrap();
+            FullLine = Line;
+            this.Line = Line.Trim();
+            this.Position = Position;
 
-            var OriginalLine = Line;
-            Line = Line.Trim();
-
-            if (Line.StartsWith("*/"))
-            {
-                Tags.Add(CreateTagWrap
-                (
-                    MultilineCommentStart,
-                    Position + OriginalLine.Length - MultilineCommentStart, 
-                    FeatureTokenTypes.Comment
-                ));
-
-                MultilineCommentStart = -1;
-
-                return Tags;
-            }
-
-            if (InsideMultilineComment) return Tags;
-
-            if (Line.StartsWith("/*"))
-            {
-                MultilineCommentStart = Position + OriginalLine.IndexOf("//");
-                return Tags;
-            }
-
-            if (Line.StartsWith("//"))
-            {
-                Tags.Add(CreateTagWrap
-                (
-                    Position + OriginalLine.IndexOf("//"),
-                    Line.Length, 
-                    FeatureTokenTypes.Comment
-                ));
-
-                return Tags;
-            }
-
-            var FirstWord = Line.FirstWord();
-
-            if (Keywords.Contains(FirstWord)) 
-                Tags.Add(CreateTagWrap
-                (
-                    Position + OriginalLine.IndexOf(FirstWord),
-                    FirstWord.Length, 
-                    FeatureTokenTypes.Keyword
-                ));
-            
-            return Tags;
+            return 
+                MultiLineTags ?? 
+                CommentTags ?? 
+                KeywordTags ?? 
+                new TagsWrap();
         }
 
+        TagsWrap KeywordTags
+        {
+            get
+            {
+                var FirstWord = Line.FirstWord();
+
+                return !Keywords.Contains(FirstWord) ? null : new TagsWrap
+                {
+                    CreateTagWrap
+                    (
+                        Position + FullLine.IndexOf(FirstWord), 
+                        FirstWord.Length, 
+                        FeatureTokenTypes.Keyword
+                    )
+                };
+            }
+        }
+
+        TagsWrap CommentTags
+        {
+            get
+            {
+                return !Line.StartsWith("//") ? null : new TagsWrap
+                {
+                    CreateTagWrap
+                    (
+                        Position + FullLine.IndexOf("//"), 
+                        Line.Length, 
+                        FeatureTokenTypes.Comment
+                    )
+                };
+            }
+        }
+
+        TagsWrap MultiLineTags
+        {
+            get
+            {
+                if (Line.StartsWith("*/"))
+                {
+                    var Tags = new TagsWrap
+                    {
+                        CreateTagWrap
+                        (
+                            MultilineCommentStart, 
+                            Position + FullLine.Length - MultilineCommentStart,
+                            FeatureTokenTypes.Comment
+                        )
+                    };
+
+                    MultilineCommentStart = -1;
+
+                    return Tags;
+                }
+
+                if (InsideMultilineComment) return new TagsWrap();
+
+                if (Line.StartsWith("/*"))
+                {
+                    MultilineCommentStart = Position + FullLine.IndexOf("//");
+                    return new TagsWrap();
+                }
+
+                return null;
+            }
+        }
 
         ITags AllTags
         {

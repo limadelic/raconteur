@@ -7,7 +7,7 @@ namespace Features.SyntaxHighlight
 {
     public class HighlightFeature : FeatureRunner
     {
-         FeatureTokenTagger Sut { get { return new SUT(Feature); } }
+        protected FeatureTokenTagger Sut { get { return new SUT(Feature); } }
 
         protected void Raconteur_should_highlight(int Count, string Text, string Color)
         {

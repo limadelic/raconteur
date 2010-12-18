@@ -10,14 +10,16 @@ namespace Features
         public void GenerateTestMethods()
         {         
             Given_the_Feature_contains(
-@"Scenario: Scenario Name
+@"
+Scenario: Scenario Name
 If something happens
 Then something else should happen
 If something happens
 And another thing too
 ");        
             The_Runner_should_contain(
-@"[TestMethod]
+@"
+[TestMethod]
 public void ScenarioName()
 {
 If_something_happens();

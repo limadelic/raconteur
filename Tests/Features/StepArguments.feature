@@ -41,7 +41,8 @@ Scenario: Multiline Arg
 	The Runner should contain
 	"
 		Step_Arg_with_multiple_lines(
-			@""could start on one line
-			and finish on another
-			"");
+		@""
+		could start on one line
+		and finish on another
+		"");
 	"

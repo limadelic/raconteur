@@ -10,7 +10,8 @@ namespace Features
         public void SettingTheXUnitRunner()
         {         
             Given_the_settings(
-@"xUnit: MbUnit
+@"
+xUnit: MbUnit
 language: es
 ");        
             When_the_project_is_loaded();        

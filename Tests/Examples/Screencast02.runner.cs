@@ -27,7 +27,8 @@ namespace Examples
         public void ResponseHeaderParser()
         {         
             Given_the_Response(
-@"HTTP/1.1 200 OK
+@"
+HTTP/1.1 200 OK
 Content-Length: 267
 Content-Type: application/xml
 Date: Wed, 19 Nov 2008 21:48:10 GMT

@@ -59,7 +59,8 @@ Scenario: Comments inside Multiline Args
 	The Runner should contain
 	"
 		When(
-		@""// the doors of perception are cleansed,
+		@""
+		// the doors of perception are cleansed,
 		// man will see things as they truly are
 		"");
 		Infinite();

@@ -75,7 +75,7 @@ namespace Raconteur.Parsers
         }
         bool IsArgSeparator { get { return Sentence.Equals("\""); } }
 
-        string Arg = string.Empty;
+        string Arg = Environment.NewLine;
         Step ParseArg
         {
             get
@@ -91,7 +91,7 @@ namespace Raconteur.Parsers
         void CloseArg() 
         {
             LastStep.Args.Add(Arg);
-            Arg = string.Empty;
+            Arg = Environment.NewLine;
             ParsingArg = false;
         }
     }

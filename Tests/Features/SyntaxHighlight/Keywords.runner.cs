@@ -10,7 +10,8 @@ namespace Features.SyntaxHighlight
         public void FeatureAndScenarios()
         {         
             Given_the_Feature_is(
-@"Feature: Name
+@"
+Feature: Name
 Scenario: First
 Scenario: Second
 ");        

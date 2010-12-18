@@ -11,13 +11,13 @@ namespace Features
         {         
             Using("MbUnit");        
             Given_the_Feature_is(
-@"Feature: Feature
-
+@"
+Feature: Feature
 Scenario: Scenario
 ");        
             The_Runner_should_be(
-@"using MbUnit.Framework;
-
+@"
+using MbUnit.Framework;
 namespace Features
 {
 [TestFixture]
@@ -37,13 +37,13 @@ public void Scenario()
         {         
             Using("NUnit");        
             Given_the_Feature_is(
-@"Feature: Feature
-
+@"
+Feature: Feature
 Scenario: Scenario
 ");        
             The_Runner_should_be(
-@"using NUnit.Framework;
-
+@"
+using NUnit.Framework;
 namespace Features
 {
 [TestFixture]
@@ -63,13 +63,13 @@ public void Scenario()
         {         
             Using("xUnit");        
             Given_the_Feature_is(
-@"Feature: Feature
-
+@"
+Feature: Feature
 Scenario: Scenario
 ");        
             The_Runner_should_be(
-@"using Xunit;
-
+@"
+using Xunit;
 namespace Features
 {
 public partial class Feature

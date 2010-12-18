@@ -10,13 +10,15 @@ namespace Features
         public void UsingTables()
         {         
             Given_the_Feature_contains(
-@"Scenario: Scenario Name
+@"
+Scenario: Scenario Name
 Given some values:
 |0|0|
 |0|1|
 ");        
             The_Runner_should_contain(
-@"[TestMethod]
+@"
+[TestMethod]
 public void ScenarioName()
 {
 Given_some_values_
@@ -32,14 +34,16 @@ new[] {0, 1}
         public void TablesWithHeader()
         {         
             Given_the_Feature_contains(
-@"Scenario: Scenario Name
+@"
+Scenario: Scenario Name
 Verify some values:
 [X|Y]
 |0|0|
 |0|1|
 ");        
             The_Runner_should_contain(
-@"[TestMethod]
+@"
+[TestMethod]
 public void ScenarioName()
 {
 Verify_some_values_(0, 0);
@@ -52,14 +56,16 @@ Verify_some_values_(0, 1);
         public void TablesWithArgs()
         {         
             Given_the_Feature_contains(
-@"Scenario: Scenario Name
+@"
+Scenario: Scenario Name
 Given stuff in ""X"" place
 [ stuff ]
 |one    |
 |another|
 ");        
             The_Runner_should_contain(
-@"[TestMethod]
+@"
+[TestMethod]
 public void ScenarioName()
 {
 Given_stuff_in__place(""X"", ""one"");

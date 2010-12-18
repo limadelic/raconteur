@@ -53,10 +53,9 @@ namespace Specs
                 When.StepFrom("\"");
 
                 The.LastStep.Name.ShouldBe("A_multiline_step_arg");
-                The.LastStep.Args[0].ShouldBe
+                And.LastStep.Args[0].ShouldBe
                 (
-                    "line 1" + Environment.NewLine + 
-                    "line 2" + Environment.NewLine
+                    String.Format("{0}line 1{0}line 2{0}", Environment.NewLine)
                 );
             }
         }

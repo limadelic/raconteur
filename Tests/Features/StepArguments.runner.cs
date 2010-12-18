@@ -10,11 +10,13 @@ namespace Features
         public void GenerateArguments()
         {         
             Given_the_Feature_contains(
-@"Scenario: Scenario Name
+@"
+Scenario: Scenario Name
 If ""X"" happens
 ");        
             The_Runner_should_contain(
-@"If__happens(""X"");
+@"
+If__happens(""X"");
 ");
         }
         
@@ -22,11 +24,13 @@ If ""X"" happens
         public void TypeInference()
         {         
             Given_the_Feature_contains(
-@"Scenario: Scenario Name
+@"
+Scenario: Scenario Name
 If the balance is ""42""
 ");        
             The_Runner_should_contain(
-@"If_the_balance_is(42);
+@"
+If_the_balance_is(42);
 ");
         }
         
@@ -34,7 +38,8 @@ If the balance is ""42""
         public void MultilineArg()
         {         
             Given_the_Feature_contains(
-@"Scenario: Multiline Arg
+@"
+Scenario: Multiline Arg
 Step Arg with multiple lines
 ""
 could start on one line
@@ -42,8 +47,10 @@ and finish on another
 ""
 ");        
             The_Runner_should_contain(
-@"Step_Arg_with_multiple_lines(
-@""could start on one line
+@"
+Step_Arg_with_multiple_lines(
+@""
+could start on one line
 and finish on another
 "");
 ");

@@ -10,7 +10,8 @@ namespace Features.SyntaxHighlight
         public void SingleLineComments()
         {         
             Given_the_Feature_is(
-@"Feature: Name
+@"
+Feature: Name
 Scenario: First
 // Comment
 Step
@@ -25,14 +26,16 @@ Step
         public void Multi_lineComments()
         {         
             Given_the_Feature_is(
-@"Feature: Name
+@"
+Feature: Name
 Scenario: First
 /*
 Scenario: Commented
 */
 ");        
             Raconteur_should_highlight_like_a("Comment", 
-@"/*
+@"
+/*
 Scenario: Commented
 */
 ");        

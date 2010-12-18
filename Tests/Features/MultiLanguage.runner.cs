@@ -11,12 +11,13 @@ namespace Features
         {         
             Select_language("es");        
             Given_the_Feature_is(
-@"Funcionalidad: Multilingue
-
+@"
+Funcionalidad: Multilingue
 Escenario: En Español
 ");        
             The_Runner_should_contain(
-@"[TestClass]
+@"
+[TestClass]
 public partial class Multilingue
 {
 [TestMethod]

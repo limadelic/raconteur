@@ -27,11 +27,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
             aggregator = tagAggregator;
 
             foreach (var Type in Styles.Keys)
-                featureTypes.Add
-                (
-                    Type, 
-                    registry.GetClassificationType(Styles[Type])
-                );
+                featureTypes.Add(Type, registry.GetClassificationType(Styles[Type]));
         }
 
         public IEnumerable<ITagSpan<ClassificationTag>> GetTags(NormalizedSnapshotSpanCollection spans)

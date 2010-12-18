@@ -10,13 +10,15 @@ namespace Features
         public void SingleLineComments()
         {         
             Given_the_Feature_contains(
-@"Scenario: The Doors
+@"
+Scenario: The Doors
 // When the doors of perception are cleansed,
 // man will see things as they truly are
 Infinite
 ");        
             The_Runner_should_contain(
-@"public void TheDoors()
+@"
+public void TheDoors()
 {
 Infinite();
 }
@@ -27,7 +29,8 @@ Infinite();
         public void MultilineComments()
         {         
             Given_the_Feature_contains(
-@"Scenario: The Doors
+@"
+Scenario: The Doors
 /*
 When the doors of perception are cleansed,
 man will see things as they truly are
@@ -35,7 +38,8 @@ man will see things as they truly are
 Infinite
 ");        
             The_Runner_should_contain(
-@"public void TheDoors()
+@"
+public void TheDoors()
 {
 Infinite();
 }
@@ -46,7 +50,8 @@ Infinite();
         public void CommentsInsideMultilineArgs()
         {         
             Given_the_Feature_contains(
-@"Scenario: The Doors
+@"
+Scenario: The Doors
 When
 ""
 // the doors of perception are cleansed,
@@ -55,8 +60,10 @@ When
 Infinite
 ");        
             The_Runner_should_contain(
-@"When(
-@""// the doors of perception are cleansed,
+@"
+When(
+@""
+// the doors of perception are cleansed,
 // man will see things as they truly are
 "");
 Infinite();

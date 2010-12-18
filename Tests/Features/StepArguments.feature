@@ -26,8 +26,22 @@ Scenario: Type Inference
 		If_the_balance_is(42);
 	"
 
-// this Scenario is implemented differently
-// 'cos cannot nest Multiline Args
 Scenario: Multiline Arg
-	When an Arg is not finish in a Sentence
-	It should expand until it's closed in another line
+
+	Given the Feature contains
+	"
+		Scenario: Multiline Arg
+			Step Arg with multiple lines 
+			""
+			could start on one line
+			and finish on another
+			""
+	"
+
+	The Runner should contain
+	"
+		Step_Arg_with_multiple_lines(
+			@""could start on one line
+			and finish on another
+			"");
+	"

@@ -19,6 +19,22 @@ Step with ""Arg1"" and ""Arg2""
             Raconteur_should_highlight_like_a("String", 1, "\"Arg2\"");        
             Raconteur_should_highlight_like_a("String", 0, "\"Arg\"");
         }
+        
+        [TestMethod]
+        public void MultilineArg()
+        {         
+            Given_the_Feature_is(
+@"Feature: Name
+Scenario: First
+Step with
+""
+Multiline Arg
+""
+");        
+            Raconteur_should_highlight_like_a("String", 
+@"Multiline Arg
+");
+        }
 
     }
 }

@@ -32,13 +32,12 @@ Scenario: Multi-line Comments
 		*/
 	"
 
-	Raconteur should highlight
+	Raconteur should highlight like a "Comment"
 	"
 		/* 
 		Scenario: Commented
 		*/
 	"
-	with "Comment" style
 
 	Raconteur should highlight
 	[ Count | Text			| Style   ]

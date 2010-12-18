@@ -31,12 +31,11 @@ Scenario: First
 Scenario: Commented
 */
 ");        
-            Raconteur_should_highlight(
+            Raconteur_should_highlight_like_a("Comment", 
 @"/*
 Scenario: Commented
 */
 ");        
-            with__style("Comment");        
             Raconteur_should_highlight(1, "Scenario:", "Keyword");
         }
 

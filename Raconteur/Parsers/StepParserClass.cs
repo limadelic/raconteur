@@ -73,7 +73,7 @@ namespace Raconteur.Parsers
                 return ParsingArg || IsArgSeparator;
             } 
         }
-        bool IsArgSeparator { get { return Sentence.StartsWith("\""); } }
+        bool IsArgSeparator { get { return Sentence.Equals("\""); } }
 
         string Arg = string.Empty;
         Step ParseArg

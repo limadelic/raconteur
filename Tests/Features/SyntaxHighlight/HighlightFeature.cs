@@ -1,5 +1,6 @@
 using System.Linq;
 using FluentSpec;
+using Raconteur;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Classification;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
@@ -20,6 +21,14 @@ namespace Features.SyntaxHighlight
         protected void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
         {
             Raconteur_should_highlight(Count, Text, Style);
+        }
+
+        protected void Raconteur_should_highlight_like_a(string Style, string Text)
+        {
+            Sut.Tags.Any(Tag => 
+                Tag.Text.TrimLines() == Text.TrimLines() && 
+                FeatureClassifier.Styles[Tag.Type] == Style)
+                .ShouldBeTrue();
         }
 
         class SUT : FeatureTokenTagger

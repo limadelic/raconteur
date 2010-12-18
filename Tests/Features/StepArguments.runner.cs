@@ -33,8 +33,20 @@ If the balance is ""42""
         [TestMethod]
         public void MultilineArg()
         {         
-            When_an_Arg_is_not_finish_in_a_Sentence();        
-            It_should_expand_until_it_s_closed_in_another_line();
+            Given_the_Feature_contains(
+@"Scenario: Multiline Arg
+Step Arg with multiple lines
+""
+could start on one line
+and finish on another
+""
+");        
+            The_Runner_should_contain(
+@"Step_Arg_with_multiple_lines(
+@""could start on one line
+and finish on another
+"");
+");
         }
 
     }

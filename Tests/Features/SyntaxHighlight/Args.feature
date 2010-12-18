@@ -19,3 +19,22 @@ Scenario: Single line Arg
 	|     1 | \"Arg1\" |
 	|     1 | \"Arg2\" |
 	|     0 | \"Arg\"  |
+
+Scenario: Multiline Arg
+
+	Given the Feature is
+	"
+		Feature: Name
+
+		Scenario: First
+			
+			Step with
+			""
+				Multiline Arg
+			""
+	"
+
+	Raconteur should highlight like a "String"
+	"
+		Multiline Arg
+	"

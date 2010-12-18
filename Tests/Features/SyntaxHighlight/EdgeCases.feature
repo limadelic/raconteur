@@ -2,7 +2,7 @@
 	In order to enhance the UX
 	Raconteur should highlight the feature
 
-Scenario: Keywords and Comments in Multiline Arg display like Arg
+Scenario: Keywords, Comments & Tables in Multiline Arg display like Arg
 
 	Given the Feature contains
 	"
@@ -12,6 +12,8 @@ Scenario: Keywords and Comments in Multiline Arg display like Arg
 			/*
 				MultiLine Comment
 			*/
+			[ Table			  ]
+			|  value in table |
 		""
 	"
 
@@ -23,6 +25,8 @@ Scenario: Keywords and Comments in Multiline Arg display like Arg
 			/*
 				MultiLine Comment
 			*/
+			[ Table			  ]
+			|  value in table |
 		""
 	"
 
@@ -30,6 +34,7 @@ Scenario: Keywords and Comments in Multiline Arg display like Arg
 	[ Text					 ]
 	| Scenario:				 |
 	| // Single Line Comment |
+	| value in table		 |
 
 	Raconteur should not highlight
 	"
@@ -37,7 +42,7 @@ Scenario: Keywords and Comments in Multiline Arg display like Arg
 			MultiLine Comment
 		*/
 	"
-Scenario: Keywords and Args inside Multiline Comments display like a Comment
+Scenario: Keywords, Args & Tables inside Multiline Comments display like a Comment
 
 	Given the Feature contains
 	"
@@ -48,6 +53,9 @@ Scenario: Keywords and Args inside Multiline Comments display like a Comment
 				""
 					MultiLine Arg
 				""
+
+			[ Table			  ]
+			|  value in table |
 		*/
 	"
 
@@ -60,13 +68,17 @@ Scenario: Keywords and Args inside Multiline Comments display like a Comment
 				""
 					MultiLine Arg
 				""
+
+			[ Table			  ]
+			|  value in table |
 		*/
 	"
 
 	Raconteur should not highlight
-	[ Text		]
-	| Scenario:	|
-	| \"Args\"	|
+	[ Text			 ]
+	| Scenario:		 |
+	| \"Args\"		 |
+	| value in table |
 
 	Raconteur should not highlight
 	"

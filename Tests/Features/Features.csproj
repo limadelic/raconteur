@@ -184,6 +184,14 @@
     <Compile Include="SyntaxHighlight\Args.steps.cs">
       <DependentUpon>Args.feature</DependentUpon>
     </Compile>
+    <Compile Include="SyntaxHighlight\CollapsibleScenarios.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CollapsibleScenarios.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SyntaxHighlight\CollapsibleScenarios.steps.cs">
+      <DependentUpon>CollapsibleScenarios.feature</DependentUpon>
+    </Compile>
     <Compile Include="SyntaxHighlight\Comments.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -270,6 +278,10 @@
     <None Include="SyntaxHighlight\Args.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Args.runner.cs</LastGenOutput>
+    </None>
+    <None Include="SyntaxHighlight\CollapsibleScenarios.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>CollapsibleScenarios.runner.cs</LastGenOutput>
     </None>
     <None Include="SyntaxHighlight\Comments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

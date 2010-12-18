@@ -87,11 +87,12 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
             return 
                 MultiLineTags ?? 
-                CommentTags ?? 
-                KeywordTags ??
-                TableTags ??
-                ArgsTags ??
-                new TagsWrap();
+                CommentTags ??
+                (KeywordTags ??
+                 TableTags ??
+                 ArgsTags ??
+                 new TagsWrap())
+                 .Union(ScenarioTag);
         }
 
         ITagsWrap TableTags
@@ -132,21 +133,69 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
+        readonly List<string> Keywords = new List<string>
+        {
+            Settings.Language.Feature,
+            Settings.Language.Scenario,
+            Settings.Language.ScenarioOutline,
+            Settings.Language.Examples,
+        };
+
+
         TagsWrap KeywordTags
         {
             get
             {
-                var FirstWord = Line.FirstWord();
+                var Keyword = Line.Split(':')[0];
 
-                return !Keywords.Contains(FirstWord) ? null : new TagsWrap
+                return !Keywords.Contains(Keyword) ? null : new TagsWrap
                 {
                     CreateTagWrap
                     (
-                        Position + FullLine.IndexOf(FirstWord), 
-                        FirstWord.Length, 
+                        Position + FullLine.IndexOf(Keyword), 
+                        Keyword.Length + 1, 
                         FeatureTokenTypes.Keyword
                     )
                 };
+            }
+        }
+
+        int ScenarioStart = -1;
+
+        bool IsLastLine { get { return Position + FullLine.Length == Feature.Length; } }
+
+        bool IsEndOfScenario
+        {
+            get
+            {
+                if (!IsLastLine && !Line.StartsWith(Settings.Language.Scenario)) return false;
+
+                if (ScenarioStart > 0) return true;
+                
+                ScenarioStart = Position;
+                return false;
+            }
+        }
+
+        TagsWrap ScenarioTag
+        {
+            get
+            {
+                var Tags = new TagsWrap();
+
+                if (IsEndOfScenario) 
+                {
+                    Tags.Add(CreateTagWrap
+                    (
+                        ScenarioStart,
+                        Position - ScenarioStart,
+                        FeatureTokenTypes.ScenarioBody
+                    ));
+
+                    ScenarioStart = Position;
+                }
+
+                return Tags;
             }
         }
 
@@ -274,14 +323,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        readonly List<string> Keywords = new List<string>
-        {
-            Settings.Language.Feature + ":",
-            Settings.Language.Scenario + ":",
-            Settings.Language.Examples + ":",
-        };
-
-
         ITags KeywordSpans
         {
             get
@@ -327,18 +368,24 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             {
                 ITextSnapshotLine lastDeclaration = null;
 
-                foreach (
-                    var line in Snapshot.Lines.Where(line => line.GetText().Trim().StartsWith(Settings.Language.Scenario + ":"))
-                    )
+                foreach 
+                (
+                    var line in Snapshot.Lines.Where(line => 
+                        line.GetText().Trim()
+                            .StartsWith(Settings.Language.Scenario + ":"))
+                )
                 {
                     if (lastDeclaration != null) yield return CreateTag(lastDeclaration.Start, line.PreviousLine().End, FeatureTokenTypes.ScenarioBody);
 
                     lastDeclaration = line;
                 }
 
-                yield return
-                    CreateTag(lastDeclaration.Start, Snapshot.GetLineFromLineNumber(Snapshot.LineCount - 1).End,
-                        FeatureTokenTypes.ScenarioBody);
+                yield return CreateTag
+                (
+                    lastDeclaration.Start, 
+                    Snapshot.GetLineFromLineNumber(Snapshot.LineCount - 1).End,
+                    FeatureTokenTypes.ScenarioBody
+                );
             }
         }
 

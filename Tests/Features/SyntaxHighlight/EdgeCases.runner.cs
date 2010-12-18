@@ -38,6 +38,39 @@ MultiLine Comment
 */
 ");
         }
+        
+        [TestMethod]
+        public void KeywordsAndArgsInsideMultilineCommentsDisplayLikeAComment()
+        {         
+            Given_the_Feature_contains(
+@"
+/*
+Scenario: Name
+Step ""Arg""
+""
+MultiLine Arg
+""
+*/
+");        
+            Raconteur_should_highlight_like_a("Comment", 
+@"
+/*
+Scenario: Name
+Step ""Arg""
+""
+MultiLine Arg
+""
+*/
+");        
+            Raconteur_should_not_highlight("Scenario:");        
+            Raconteur_should_not_highlight("\"Args\"");        
+            Raconteur_should_not_highlight(
+@"
+""
+MultiLine Arg
+""
+");
+        }
 
     }
 }

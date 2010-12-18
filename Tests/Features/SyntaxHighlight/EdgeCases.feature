@@ -37,5 +37,40 @@ Scenario: Keywords and Comments in Multiline Arg display like Arg
 			MultiLine Comment
 		*/
 	"
+Scenario: Keywords and Args inside Multiline Comments display like a Comment
 
+	Given the Feature contains
+	"
+		/*
+			Scenario: Name
 
+				Step ""Arg""
+				""
+					MultiLine Arg
+				""
+		*/
+	"
+
+	Raconteur should highlight like a "Comment"
+	"
+		/*
+			Scenario: Name
+
+				Step ""Arg""
+				""
+					MultiLine Arg
+				""
+		*/
+	"
+
+	Raconteur should not highlight
+	[ Text		]
+	| Scenario:	|
+	| \"Args\"	|
+
+	Raconteur should not highlight
+	"
+		""
+			MultiLine Arg
+		""
+	"

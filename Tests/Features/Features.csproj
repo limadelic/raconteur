@@ -176,6 +176,14 @@
       <DependentUpon>StepTable.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SyntaxHighlight\Args.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Args.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SyntaxHighlight\Args.steps.cs">
+      <DependentUpon>Args.feature</DependentUpon>
+    </Compile>
     <Compile Include="SyntaxHighlight\Comments.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +250,10 @@
     <None Include="StepTable.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StepTable.runner.cs</LastGenOutput>
+    </None>
+    <None Include="SyntaxHighlight\Args.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Args.runner.cs</LastGenOutput>
     </None>
     <None Include="SyntaxHighlight\Comments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

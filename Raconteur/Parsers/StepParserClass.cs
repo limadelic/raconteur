@@ -30,7 +30,7 @@ namespace Raconteur.Parsers
         {
             get
             {
-                var Tokens = Sentence.Split(new[] {'"'});
+                var Tokens = Sentence.Split('"');
 
                 return new Step
                 {

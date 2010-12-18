@@ -9,12 +9,17 @@ namespace Features.SyntaxHighlight
     {
         protected FeatureTokenTagger Sut { get { return new SUT(Feature); } }
 
-        protected void Raconteur_should_highlight(int Count, string Text, string Color)
+        protected void Raconteur_should_highlight(int Count, string Text, string Style)
         {
             Sut.Tags.Where(Tag => 
                 Tag.Text == Text && 
-                FeatureClassifier.Styles[Tag.Type] == Color)
-                .Count().ShouldBe(Count, "Did not find " + Count + " " + Text + " " + Color);
+                FeatureClassifier.Styles[Tag.Type] == Style)
+                .Count().ShouldBe(Count, "Did not find " + Count + " " + Text + " " + Style);
+        }
+
+        protected void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
+        {
+            Raconteur_should_highlight(Count, Text, Style);
         }
 
         class SUT : FeatureTokenTagger

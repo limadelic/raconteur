@@ -155,5 +155,13 @@ namespace Raconteur
         {
             return Sentence.Split(' ')[0];
         }
+
+        public static IEnumerable<int> IndexesOf(this string Whole, string Part)
+        {
+            return 
+                from Match Match 
+                in Regex.Matches(Whole, Regex.Escape(Part)) 
+                select Match.Index;
+        }
     }
 }

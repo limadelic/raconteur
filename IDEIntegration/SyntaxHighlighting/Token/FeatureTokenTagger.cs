@@ -62,7 +62,8 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 var Position = 0;
                 Action<int> NextPosition = LineLength => Position += LineLength + 2;
 
-                return Feature
+                return 
+                    Feature
                     .Lines()
                     .ApplyLengthTo(NextPosition)
                     .SelectMany(Line => (TagsIn(Line, Position)));
@@ -86,8 +87,27 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             return 
                 MultiLineTags ?? 
                 CommentTags ?? 
-                KeywordTags ?? 
+                KeywordTags ??
+                ArgsTags ??
                 new TagsWrap();
+        }
+
+        ITagsWrap ArgsTags
+        {
+            get
+            {
+                if (!Line.Contains('"')) return null;
+
+                return 
+                    from Arg in Line.Split('"').Odds().Distinct()
+                    from Index in FullLine.IndexesOf(Arg)
+                    select CreateTagWrap
+                    (
+                        Position + Index - 1, 
+                        Arg.Length + 2, 
+                        FeatureTokenTypes.Arg
+                    );
+            }
         }
 
         TagsWrap KeywordTags

@@ -70,9 +70,9 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        int MultilineCommentStart = -1;
+        int MultilineTagStart = -1;
         
-        bool InsideMultilineComment { get { return MultilineCommentStart >= 0; } }
+        bool IsInsideMultilineTag { get { return MultilineTagStart >= 0; } }
 
         string FullLine;
         string Line;
@@ -148,32 +148,71 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         {
             get
             {
-                if (Line.StartsWith("*/"))
+                return 
+                    CloseMultilineTag ??
+                    InsideMultilineTag ??
+                    StartMultilineTag;
+            }
+        }
+
+        bool IsMultilineTagStart
+        {
+            get
+            {
+                return 
+                    !IsInsideMultilineTag && 
+                    (Line == "/*" || Line == "\"");
+            } 
+        }
+
+        TagsWrap StartMultilineTag
+        {
+            get
+            {
+                if (!IsMultilineTagStart) return null;
+
+                MultilineTagStart = Position + FullLine.IndexOf(Line);
+
+                return new TagsWrap();
+            }
+        }
+
+        TagsWrap InsideMultilineTag
+        {
+            get { return IsInsideMultilineTag ? new TagsWrap() : null; } 
+        }
+
+        bool IsMultilineTagClose
+        {
+            get
+            {
+                return 
+                    IsInsideMultilineTag && 
+                    (Line == "*/" || Line == "\"");
+            }
+        }
+
+        TagsWrap CloseMultilineTag
+        {
+            get
+            {
+                if (!IsMultilineTagClose) return null;
+
+                var Tags = new TagsWrap
                 {
-                    var Tags = new TagsWrap
-                    {
-                        CreateTagWrap
-                        (
-                            MultilineCommentStart, 
-                            Position + FullLine.Length - MultilineCommentStart,
-                            FeatureTokenTypes.Comment
-                        )
-                    };
+                    CreateTagWrap
+                    (
+                        MultilineTagStart, 
+                        Position + FullLine.Length - MultilineTagStart, 
+                        Line == "*/" ? 
+                            FeatureTokenTypes.Comment : 
+                            FeatureTokenTypes.Arg
+                    )
+                };
 
-                    MultilineCommentStart = -1;
+                MultilineTagStart = -1;
 
-                    return Tags;
-                }
-
-                if (InsideMultilineComment) return new TagsWrap();
-
-                if (Line.StartsWith("/*"))
-                {
-                    MultilineCommentStart = Position + FullLine.IndexOf("//");
-                    return new TagsWrap();
-                }
-
-                return null;
+                return Tags;
             }
         }
 

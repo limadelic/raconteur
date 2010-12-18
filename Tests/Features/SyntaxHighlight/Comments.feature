@@ -4,11 +4,9 @@
 
 Scenario: Single line Comments
 
-	Given the Feature is
+	Given the Feature contains
 	"
-		Feature: Name
-
-		Scenario: First
+		Scenario: Name
 		// Comment
 		Step
 		// Scenario:
@@ -22,11 +20,9 @@ Scenario: Single line Comments
 
 Scenario: Multi-line Comments
 
-	Given the Feature is
+	Given the Feature contains
 	"
-		Feature: Name
-
-		Scenario: First
+		Scenario: Name
 		/* 
 		Scenario: Commented
 		*/

@@ -9,10 +9,9 @@ namespace Features.SyntaxHighlight
         [TestMethod]
         public void SingleLineComments()
         {         
-            Given_the_Feature_is(
+            Given_the_Feature_contains(
 @"
-Feature: Name
-Scenario: First
+Scenario: Name
 // Comment
 Step
 // Scenario:
@@ -25,10 +24,9 @@ Step
         [TestMethod]
         public void Multi_lineComments()
         {         
-            Given_the_Feature_is(
+            Given_the_Feature_contains(
 @"
-Feature: Name
-Scenario: First
+Scenario: Name
 /*
 Scenario: Commented
 */

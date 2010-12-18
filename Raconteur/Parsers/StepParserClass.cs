@@ -59,7 +59,7 @@ namespace Raconteur.Parsers
         List<string> ParseTableRow()
         {
             return Sentence
-                .Split(new[] {'|'})
+                .Split('|')
                 .Chop(1)
                 .Select(x => x.Trim())
                 .ToList();

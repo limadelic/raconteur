@@ -4,29 +4,25 @@
 
 Scenario: Single line Arg
 
-	Given the Feature is
+	Given the Feature contains
 	"
-		Feature: Name
-
-		Scenario: First
+		Scenario: Name
 			
 			Step with ""Arg1"" and ""Arg2""
-			// Commented ""Arg""
+			// ""Commented Arg""
 	"
 
 	Raconteur should highlight like a "String"
-	[ Count | Text	   ]
-	|     1 | \"Arg1\" |
-	|     1 | \"Arg2\" |
-	|     0 | \"Arg\"  |
+	[ Count | Text				]
+	|     1 | \"Arg1\"			|
+	|     1 | \"Arg2\"			|
+	|     0 | \"Commented Arg\" |
 
 Scenario: Multiline Arg
 
-	Given the Feature is
+	Given the Feature contains
 	"
-		Feature: Name
-
-		Scenario: First
+		Scenario: Name
 			
 			Step with
 			""
@@ -36,5 +32,7 @@ Scenario: Multiline Arg
 
 	Raconteur should highlight like a "String"
 	"
-		Multiline Arg
+		""
+			Multiline Arg
+		""
 	"

@@ -9,25 +9,23 @@ namespace Features.SyntaxHighlight
         [TestMethod]
         public void SingleLineArg()
         {         
-            Given_the_Feature_is(
+            Given_the_Feature_contains(
 @"
-Feature: Name
-Scenario: First
+Scenario: Name
 Step with ""Arg1"" and ""Arg2""
-// Commented ""Arg""
+// ""Commented Arg""
 ");        
             Raconteur_should_highlight_like_a("String", 1, "\"Arg1\"");        
             Raconteur_should_highlight_like_a("String", 1, "\"Arg2\"");        
-            Raconteur_should_highlight_like_a("String", 0, "\"Arg\"");
+            Raconteur_should_highlight_like_a("String", 0, "\"Commented Arg\"");
         }
         
         [TestMethod]
         public void MultilineArg()
         {         
-            Given_the_Feature_is(
+            Given_the_Feature_contains(
 @"
-Feature: Name
-Scenario: First
+Scenario: Name
 Step with
 ""
 Multiline Arg
@@ -35,7 +33,9 @@ Multiline Arg
 ");        
             Raconteur_should_highlight_like_a("String", 
 @"
+""
 Multiline Arg
+""
 ");
         }
 

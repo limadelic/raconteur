@@ -89,8 +89,29 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 MultiLineTags ?? 
                 CommentTags ?? 
                 KeywordTags ??
+                TableTags ??
                 ArgsTags ??
                 new TagsWrap();
+        }
+
+        ITagsWrap TableTags
+        {
+            get
+            {
+                if (!Line.StartsWith("|")) return null;
+                
+                var Index = FullLine.IndexOf('|') + 1;
+                var StartPoint = Position;
+
+                return 
+                    from Arg in Line.Split('|').Chop(1)
+                    select CreateTagWrap
+                    (
+                        (StartPoint += Arg.Length) - Arg.Length + Index++, 
+                        Arg.Length, 
+                        FeatureTokenTypes.Arg
+                    );
+            }
         }
 
         ITagsWrap ArgsTags

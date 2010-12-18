@@ -209,6 +209,14 @@
     <Compile Include="SyntaxHighlight\Keywords.steps.cs">
       <DependentUpon>Keywords.feature</DependentUpon>
     </Compile>
+    <Compile Include="SyntaxHighlight\Tables.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tables.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SyntaxHighlight\Tables.steps.cs">
+      <DependentUpon>Tables.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Comments.feature">
@@ -274,6 +282,10 @@
     <None Include="SyntaxHighlight\Keywords.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Keywords.runner.cs</LastGenOutput>
+    </None>
+    <None Include="SyntaxHighlight\Tables.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Tables.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -10,12 +10,25 @@ namespace Features.SyntaxHighlight
     {
         protected FeatureTokenTagger Sut { get { return new SUT(Feature); } }
 
+        protected override void Given_the_Feature_contains(string Feature) 
+        {
+            Given_the_Feature_is(Feature);
+        }
+
         protected void Raconteur_should_highlight(int Count, string Text, string Style)
         {
             Sut.Tags.Where(Tag => 
                 Tag.Text == Text && 
                 FeatureClassifier.Styles[Tag.Type] == Style)
                 .Count().ShouldBe(Count, "Did not find " + Count + " " + Text + " " + Style);
+        }
+
+        protected void Raconteur_should_not_highlight(string Text)
+        {
+            Sut.Tags.Any
+            (
+                Tag => Tag.Text.TrimLines() == Text.TrimLines()
+            ).ShouldBeFalse();
         }
 
         protected void Raconteur_should_highlight_like_a(string Style, int Count, string Text)

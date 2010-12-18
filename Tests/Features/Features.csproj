@@ -192,6 +192,14 @@
     <Compile Include="SyntaxHighlight\Comments.steps.cs">
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
+    <Compile Include="SyntaxHighlight\EdgeCases.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EdgeCases.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SyntaxHighlight\EdgeCases.steps.cs">
+      <DependentUpon>EdgeCases.feature</DependentUpon>
+    </Compile>
     <Compile Include="SyntaxHighlight\HighlightFeature.cs" />
     <Compile Include="SyntaxHighlight\Keywords.runner.cs">
       <AutoGen>True</AutoGen>
@@ -258,6 +266,10 @@
     <None Include="SyntaxHighlight\Comments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Comments.runner.cs</LastGenOutput>
+    </None>
+    <None Include="SyntaxHighlight\EdgeCases.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>EdgeCases.runner.cs</LastGenOutput>
     </None>
     <None Include="SyntaxHighlight\Keywords.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

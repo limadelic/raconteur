@@ -32,7 +32,7 @@ namespace Features
             this.Feature = Feature;
         }
 
-        protected void Given_the_Feature_contains(string Feature)
+        protected virtual void Given_the_Feature_contains(string Feature)
         {
             this.Feature = 
             @"

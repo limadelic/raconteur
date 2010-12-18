@@ -71,6 +71,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         }
 
         int MultilineTagStart = -1;
+        string MultilineSymbol;
         
         bool IsInsideMultilineTag { get { return MultilineTagStart >= 0; } }
 
@@ -172,6 +173,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 if (!IsMultilineTagStart) return null;
 
                 MultilineTagStart = Position + FullLine.IndexOf(Line);
+                MultilineSymbol = Line;
 
                 return new TagsWrap();
             }
@@ -182,21 +184,35 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             get { return IsInsideMultilineTag ? new TagsWrap() : null; } 
         }
 
-        bool IsMultilineTagClose
+        bool IsClosingMultilineTag
         {
             get
             {
                 return 
                     IsInsideMultilineTag && 
-                    (Line == "*/" || Line == "\"");
+                    (IsClosingMultilineComment || IsClosingMultilineArg);
             }
+        }
+
+        bool IsInsideMultilineComment { get { return MultilineSymbol == "/*"; } }
+
+        bool IsInsideMultilineArg { get { return MultilineSymbol == "\""; } }
+
+        bool IsClosingMultilineComment
+        {
+            get { return IsInsideMultilineComment && Line == "*/"; }
+        }
+
+        bool IsClosingMultilineArg
+        {
+            get { return IsInsideMultilineArg && Line == "\""; }
         }
 
         TagsWrap CloseMultilineTag
         {
             get
             {
-                if (!IsMultilineTagClose) return null;
+                if (!IsClosingMultilineTag) return null;
 
                 var Tags = new TagsWrap
                 {

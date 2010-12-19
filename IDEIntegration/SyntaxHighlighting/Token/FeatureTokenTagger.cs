@@ -50,11 +50,12 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
         public ITags GetTags(NormalizedSnapshotSpanCollection Spans)
         {
-            return
-//                from Span in Spans
-                from TagWrap in Tags
-                let Tag = TagWrap.Core
-//                where Tag.Span.IntersectsWith(Span)
+            var AllTags = from Tag in Tags select Tag.Core;
+
+            return 
+                from Span in Spans
+                from Tag in AllTags
+                where Tag.Span.IntersectsWith(Span)
                 select Tag;
         }
 

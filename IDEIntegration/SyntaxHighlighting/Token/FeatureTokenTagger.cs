@@ -164,7 +164,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        int ScenarioStart = -1;
+        int ScenarioStart;
 
         bool IsLastLine
         {
@@ -178,11 +178,14 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         {
             get
             {
-                if (!IsLastLine && !Line.StartsWith(Settings.Language.Scenario)) return false;
+                if (IsLastLine) return true;
+
+                if (!Line.StartsWith(Settings.Language.Scenario)) return false;
 
                 if (ScenarioStart > 0) return true;
                 
                 ScenarioStart = Position;
+
                 return false;
             }
         }
@@ -198,11 +201,11 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                     Tags.Add(CreateTag
                     (
                         ScenarioStart,
-                        Position - ScenarioStart - 2,
+                        Position - ScenarioStart + (IsLastLine ? FullLine.Length : -2),
                         FeatureTokenTypes.ScenarioBody
                     ));
 
-                    ScenarioStart = IsLastLine ? -1 : Position;
+                    ScenarioStart = IsLastLine ? 0 : Position;
                 }
 
                 return Tags;

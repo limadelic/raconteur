@@ -26,3 +26,7 @@ Scenario: Scenarios are collapsible
 		Scenario: Second
 			Steps
 	"
+Scenario: Single line Scenario
+
+	Given the Feature contains "Scenario: First"
+	Raconteur should allow to collapse "Scenario: First"

@@ -28,6 +28,13 @@ Scenario: Second
 Steps
 ");
         }
+        
+        [TestMethod]
+        public void SingleLineScenario()
+        {         
+            Given_the_Feature_contains("Scenario: First");        
+            Raconteur_should_allow_to_collapse("Scenario: First");
+        }
 
     }
 }

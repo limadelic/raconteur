@@ -48,10 +48,14 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
 
-        public ITags GetTags(NormalizedSnapshotSpanCollection spans)
+        public ITags GetTags(NormalizedSnapshotSpanCollection Spans)
         {
-            return spans.SelectMany(span => AllTags
-                .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
+            return
+//                from Span in Spans
+                from TagWrap in Tags
+                let Tag = TagWrap.Core
+//                where Tag.Span.IntersectsWith(Span)
+                select Tag;
         }
 
 
@@ -106,7 +110,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
                 return 
                     from Arg in Line.Split('|').Chop(1)
-                    select CreateTagWrap
+                    select CreateTag
                     (
                         (StartPoint += Arg.Length) - Arg.Length + Index++, 
                         Arg.Length, 
@@ -124,7 +128,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 return 
                     from Arg in Line.Split('"').Odds().Distinct()
                     from Index in FullLine.IndexesOf(Arg)
-                    select CreateTagWrap
+                    select CreateTag
                     (
                         Position + Index - 1, 
                         Arg.Length + 2, 
@@ -141,7 +145,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             Settings.Language.Examples,
         };
 
-
         TagsWrap KeywordTags
         {
             get
@@ -150,7 +153,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
                 return !Keywords.Contains(Keyword) ? null : new TagsWrap
                 {
-                    CreateTagWrap
+                    CreateTag
                     (
                         Position + FullLine.IndexOf(Keyword), 
                         Keyword.Length + 1, 
@@ -162,7 +165,13 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
         int ScenarioStart = -1;
 
-        bool IsLastLine { get { return Position + FullLine.Length == Feature.Length; } }
+        bool IsLastLine
+        {
+            get
+            {
+                return Position + FullLine.Length == Feature.Length;
+            }
+        }
 
         bool IsEndOfScenario
         {
@@ -183,16 +192,16 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             {
                 var Tags = new TagsWrap();
 
-                if (IsEndOfScenario) 
+                if (IsEndOfScenario)
                 {
-                    Tags.Add(CreateTagWrap
+                    Tags.Add(CreateTag
                     (
                         ScenarioStart,
-                        Position - ScenarioStart,
+                        Position - ScenarioStart - 2,
                         FeatureTokenTypes.ScenarioBody
                     ));
 
-                    ScenarioStart = Position;
+                    ScenarioStart = IsLastLine ? -1 : Position;
                 }
 
                 return Tags;
@@ -205,7 +214,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             {
                 return !Line.StartsWith("//") ? null : new TagsWrap
                 {
-                    CreateTagWrap
+                    CreateTag
                     (
                         Position + FullLine.IndexOf("//"), 
                         Line.Length, 
@@ -286,7 +295,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
                 var Tags = new TagsWrap
                 {
-                    CreateTagWrap
+                    CreateTag
                     (
                         MultilineTagStart, 
                         Position + FullLine.Length - MultilineTagStart, 
@@ -302,136 +311,14 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        ITags AllTags
+        protected virtual ITagSpanWrap<FeatureTokenTag> CreateTag(int StartLocation, int Length, FeatureTokenTypes Type)
         {
-            get
-            {
-                return ArgSpans
-                    .Union(KeywordSpans)
-                    .Union(TableSpans)
-                    .Union(CommentSpans)
-                    .Union(ScenarioSpans); 
-            }
-        }
-
-        ITags ArgSpans
-        {
-            get
-            {
-                return Feature.ArgBoundaries().Select(
-                    boundary => CreateTag(boundary.Start, boundary.Length, FeatureTokenTypes.Arg));
-            }
-        }
-
-        ITags KeywordSpans
-        {
-            get
-            {
-                var Position = 0;
-                Action<int> NextPosition = LineLength => Position += LineLength + 2;
-
-                return 
-                    from Line in Feature.Lines().ApplyLengthTo(NextPosition) 
-                    let FirstWord = Line.FirstWord() 
-                    where Keywords.Contains(FirstWord) 
-                    select CreateTag
-                    (
-                        Position + Line.IndexOf(FirstWord),
-                        FirstWord.Length, 
-                        FeatureTokenTypes.Keyword
-                    );
-            }
-        }
-
-        ITags TableSpans
-        {
-            get
-            {
-                foreach (var line in Snapshot.Lines.Where(line => line.IsTableRow()))
-                {
-                    var location = line.Start.Position;
-                    var tokens = line.GetText().Split('|');
-
-                    foreach (var token in tokens)
-                    {
-                        if (!string.IsNullOrWhiteSpace(token) && !line.IsTableHeader()) yield return CreateTag(location, token.Length, FeatureTokenTypes.TableValue);
-
-                        location += token.Length + 1;
-                    }
-                }
-            }
-        }
-
-        ITags ScenarioSpans
-        {
-            get
-            {
-                ITextSnapshotLine lastDeclaration = null;
-
-                foreach 
-                (
-                    var line in Snapshot.Lines.Where(line => 
-                        line.GetText().Trim()
-                            .StartsWith(Settings.Language.Scenario + ":"))
-                )
-                {
-                    if (lastDeclaration != null) yield return CreateTag(lastDeclaration.Start, line.PreviousLine().End, FeatureTokenTypes.ScenarioBody);
-
-                    lastDeclaration = line;
-                }
-
-                yield return CreateTag
-                (
-                    lastDeclaration.Start, 
-                    Snapshot.GetLineFromLineNumber(Snapshot.LineCount - 1).End,
-                    FeatureTokenTypes.ScenarioBody
-                );
-            }
-        }
-
-        ITags CommentSpans
-        {
-            get
-            {
-                return from line in Snapshot.Lines
-                       let startOfComment = line.Start.Position + line.GetText().IndexOf("//")
-                       let commentLength = line.End.Position - startOfComment
-                       where line.GetText().Contains("//") && !InArgOrTable(startOfComment)
-                       select CreateTag(startOfComment, commentLength, FeatureTokenTypes.Comment);
-            }
-        }
-
-        private bool InArgOrTable(int startOfComment)
-        {
-            return ArgSpans.Any(arg =>
-                arg.Span.Start.Position <= startOfComment &&
-                arg.Span.End.Position >= startOfComment)
-                || TableSpans.Any(tableValue =>
-                    tableValue.Span.Start.Position <= startOfComment &&
-                    tableValue.Span.End.Position >= startOfComment);
-
-        }
-
-        protected virtual ITagSpanWrap<FeatureTokenTag> CreateTagWrap(int startLocation, int length, FeatureTokenTypes type)
-        {
-            var tokenSpan = new SnapshotSpan(Snapshot, new Span(startLocation, length));
+            var tokenSpan = new SnapshotSpan(Snapshot, new Span(StartLocation, Length));
 
             return new TagSpanWrap<FeatureTokenTag>
             {
-                Core = new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type))
+                Core = new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(Type))
             };
-        }
-
-        TagSpan<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)
-        {
-            var tokenSpan = new SnapshotSpan(Snapshot, new Span(startLocation, length));
-            return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type));
-        }
-
-        TagSpan<FeatureTokenTag> CreateTag(SnapshotPoint startPoint, SnapshotPoint endPoint, FeatureTokenTypes type)
-        {
-            var tokenSpan = new SnapshotSpan(Snapshot, new Span(startPoint.Position, startPoint.Difference(endPoint)));
-            return new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(type));
         }
     }
 }

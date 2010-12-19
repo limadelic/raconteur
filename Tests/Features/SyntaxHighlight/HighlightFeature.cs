@@ -48,7 +48,7 @@ namespace Features.SyntaxHighlight
         {
             public SUT(string Feature) : base(Feature) {}
 
-            protected override ITagSpanWrap<FeatureTokenTag> CreateTagWrap(int startLocation, int length, FeatureTokenTypes type)
+            protected override ITagSpanWrap<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)
             {
                 var Tag = Create.TestObjectFor<ITagSpanWrap<FeatureTokenTag>>();
 

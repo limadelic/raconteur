@@ -35,6 +35,18 @@ Steps
             Given_the_Feature_contains("Scenario: First");        
             Raconteur_should_allow_to_collapse("Scenario: First");
         }
+        
+        [TestMethod]
+        public void MultipleSingleLineScenarios()
+        {         
+            Given_the_Feature_contains(
+@"
+Scenario: First
+Scenario: Second
+");        
+            Raconteur_should_allow_to_collapse("Scenario: First");        
+            Raconteur_should_allow_to_collapse("Scenario: Second");
+        }
 
     }
 }

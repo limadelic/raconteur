@@ -31,7 +31,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
     public class FeatureTokenTagger : ITagger<FeatureTokenTag>
     {
         readonly ITextBuffer buffer;
-        protected readonly string Feature;
+        protected string Feature;
 
         ITextSnapshot Snapshot { get { return buffer.CurrentSnapshot;  } }
 
@@ -50,13 +50,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
         public ITags GetTags(NormalizedSnapshotSpanCollection Spans)
         {
-            var AllTags = from Tag in Tags select Tag.Core;
-
-            return 
-                from Span in Spans
-                from Tag in AllTags
-                where Tag.Span.IntersectsWith(Span)
-                select Tag;
+//            System.Diagnostics.Debugger.Launch();
+            Feature = Spans[0].Snapshot.GetText();
+            
+            return from Tag in Tags select Tag.Core;
         }
 
 
@@ -64,31 +61,25 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         {
             get
             {
-                var Position = 0;
+                Position = 0;
                 Action<int> NextPosition = LineLength => Position += LineLength + 2;
 
                 return 
                     Feature
                     .Lines()
                     .ApplyLengthTo(NextPosition)
-                    .SelectMany(Line => (TagsIn(Line, Position)));
+                    .SelectMany(TagsIn);
             }
         }
-
-        int MultilineTagStart = -1;
-        string MultilineSymbol;
-        
-        bool IsInsideMultilineTag { get { return MultilineTagStart >= 0; } }
 
         string FullLine;
         string Line;
         int Position;
 
-        ITagsWrap TagsIn(string Line, int Position)
+        ITagsWrap TagsIn(string Line)
         {
             FullLine = Line;
             this.Line = Line.Trim();
-            this.Position = Position;
 
             return 
                 MultiLineTags ?? 
@@ -228,7 +219,11 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        TagsWrap MultiLineTags
+        int MultilineTagStart = -1;
+        string MultilineSymbol;
+        bool IsInsideMultilineTag { get { return MultilineTagStart >= 0; } }
+
+        ITagsWrap MultiLineTags
         {
             get
             {
@@ -315,14 +310,23 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
+        ITagSpanWrap<FeatureTokenTag> EmptyTag
+        {
+            get { return CreateTag(0, 0, FeatureTokenTypes.Keyword); }
+        }
+
         protected virtual ITagSpanWrap<FeatureTokenTag> CreateTag(int StartLocation, int Length, FeatureTokenTypes Type)
         {
-            var tokenSpan = new SnapshotSpan(Snapshot, new Span(StartLocation, Length));
-
-            return new TagSpanWrap<FeatureTokenTag>
+            try 
             {
-                Core = new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(Type))
-            };
+                var tokenSpan = new SnapshotSpan(Snapshot, new Span(StartLocation, Length));
+
+                return new TagSpanWrap<FeatureTokenTag> 
+                {
+                    Core = new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(Type))
+                };
+
+            } catch { return EmptyTag; }
         }
     }
 }

@@ -6,17 +6,100 @@ using TagsWrap=System.Collections.Generic.List<Raconteur.IDEIntegration.SyntaxHi
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 {
-    public class FeatureTagParser
+    public class ParsingState
     {
-        readonly string Feature;
-        int Position;
+        public TagFactory TagFactory;
+        public string Feature;
 
-        readonly TagFactory TagFactory;
+        public int Position;
+        public string FullLine;
+        public string Line;
+    }
+
+    interface TagsParser { ITagsWrap Tags { get; } }
+
+    public class TagsParserBase
+    {
+        protected ParsingState ParsingState;
+
+        protected TagFactory TagFactory
+        {
+            get { return ParsingState.TagFactory;  }
+            set { ParsingState.TagFactory = value; }
+        }
+        protected string Feature
+        {
+            get { return ParsingState.Feature;  }
+            set { ParsingState.Feature = value; }
+        }
+        protected int Position
+        {
+            get { return ParsingState.Position;  }
+            set { ParsingState.Position = value; }
+        }
+        protected string FullLine
+        {
+            get { return ParsingState.FullLine;  }
+            set { ParsingState.FullLine = value; }
+        }
+        protected string Line
+        {
+            get { return ParsingState.Line;  }
+            set { ParsingState.Line = value; }
+        }
+
+        protected ITagSpanWrap<FeatureTokenTag> CreateTag(int StartLocation, int Length, FeatureTokenTypes Type)
+        {
+            return TagFactory.CreateTag(StartLocation, Length, Type);
+        }
+    }
+
+    public class KeywordParser : TagsParserBase, TagsParser
+    {
+        public KeywordParser(ParsingState ParsingState)
+        {
+            this.ParsingState = ParsingState;
+        }
+
+        readonly List<string> Keywords = new List<string>
+        {
+            Settings.Language.Feature,
+            Settings.Language.Scenario,
+            Settings.Language.ScenarioOutline,
+            Settings.Language.Examples,
+        };
+
+        public ITagsWrap Tags
+        {
+            get
+            {
+                var Keyword = Line.Split(':')[0];
+
+                return !Keywords.Contains(Keyword) ? null : new TagsWrap
+                {
+                    CreateTag
+                    (
+                        Position + FullLine.IndexOf(Keyword), 
+                        Keyword.Length + 1, 
+                        FeatureTokenTypes.Keyword
+                    )
+                };
+            }
+        }
+    }
+
+    public class FeatureTagParser : TagsParserBase
+    {
+        readonly TagsParser Keywords;
 
         public FeatureTagParser(TagFactory TagFactory, string Feature)
         {
+            ParsingState = new ParsingState();
+
             this.TagFactory = TagFactory;
             this.Feature = Feature;
+
+            Keywords = new KeywordParser(ParsingState);
         }
 
         public ITagsWrap Tags
@@ -34,9 +117,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        string FullLine;
-        string Line;
-
         ITagsWrap TagsFromLine(string Line)
         {
             FullLine = Line;
@@ -45,7 +125,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             return 
                 MultiLineTags ?? 
                 CommentTags ??
-                (KeywordTags ??
+                (Keywords.Tags ??
                  TableTags ??
                  ArgsTags ??
                  new TagsWrap())
@@ -87,32 +167,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                         Arg.Length + 2, 
                         FeatureTokenTypes.Arg
                     );
-            }
-        }
-
-        readonly List<string> Keywords = new List<string>
-        {
-            Settings.Language.Feature,
-            Settings.Language.Scenario,
-            Settings.Language.ScenarioOutline,
-            Settings.Language.Examples,
-        };
-
-        TagsWrap KeywordTags
-        {
-            get
-            {
-                var Keyword = Line.Split(':')[0];
-
-                return !Keywords.Contains(Keyword) ? null : new TagsWrap
-                {
-                    CreateTag
-                    (
-                        Position + FullLine.IndexOf(Keyword), 
-                        Keyword.Length + 1, 
-                        FeatureTokenTypes.Keyword
-                    )
-                };
             }
         }
 
@@ -273,11 +327,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
                 return Tags;
             }
-        }
-
-        ITagSpanWrap<FeatureTokenTag> CreateTag(int StartLocation, int Length, FeatureTokenTypes Type)
-        {
-            return TagFactory.CreateTag(StartLocation, Length, Type);
         }
     }
 }

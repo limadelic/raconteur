@@ -30,32 +30,19 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
     public class FeatureTokenTagger : ITagger<FeatureTokenTag>
     {
-        readonly ITextBuffer buffer;
         protected string Feature;
-
-        ITextSnapshot Snapshot { get { return buffer.CurrentSnapshot;  } }
-
-        public FeatureTokenTagger(ITextBuffer buffer)
-        {
-            this.buffer = buffer;
-            Feature = Snapshot.GetText();
-        }
-
-        public FeatureTokenTagger(string Feature)
-        {
-            this.Feature = Feature;
-        }
+        ITextSnapshot Snapshot;
 
         public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
 
         public ITags GetTags(NormalizedSnapshotSpanCollection Spans)
         {
 //            System.Diagnostics.Debugger.Launch();
-            Feature = Spans[0].Snapshot.GetText();
+            Snapshot = Spans[0].Snapshot;
+            Feature = Snapshot.GetText();
             
             return from Tag in Tags select Tag.Core;
         }
-
 
         public ITagsWrap Tags
         {
@@ -68,7 +55,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                     Feature
                     .Lines()
                     .ApplyLengthTo(NextPosition)
-                    .SelectMany(TagsIn);
+                    .SelectMany(TagsFromLine);
             }
         }
 
@@ -76,7 +63,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         string Line;
         int Position;
 
-        ITagsWrap TagsIn(string Line)
+        ITagsWrap TagsFromLine(string Line)
         {
             FullLine = Line;
             this.Line = Line.Trim();
@@ -268,7 +255,11 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             {
                 return 
                     IsInsideMultilineTag && 
-                    (IsClosingMultilineComment || IsClosingMultilineArg);
+                    (
+                        IsLastLine ||
+                        IsClosingMultilineComment || 
+                        IsClosingMultilineArg
+                    );
             }
         }
 
@@ -298,7 +289,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                     (
                         MultilineTagStart, 
                         Position + FullLine.Length - MultilineTagStart, 
-                        Line == "*/" ? 
+                        MultilineSymbol == "/*" ? 
                             FeatureTokenTypes.Comment : 
                             FeatureTokenTypes.Arg
                     )

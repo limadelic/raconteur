@@ -46,7 +46,7 @@ namespace Features.SyntaxHighlight
 
         class SUT : FeatureTokenTagger
         {
-            public SUT(string Feature) : base(Feature) {}
+            public SUT(string Feature) { this.Feature = Feature; }
 
             protected override ITagSpanWrap<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)
             {

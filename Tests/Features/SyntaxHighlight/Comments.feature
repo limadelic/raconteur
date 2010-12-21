@@ -39,3 +39,21 @@ Scenario: Multi-line Comments
 	[ Count | Text			| Style   ]
 	|     1 | Scenario:		| Keyword |
 
+Scenario: Unclosed multiline Comments
+
+	Given the Feature contains
+	"
+		Scenario: Name
+		/* 
+		Scenario: Commented
+		/*
+		""
+	"
+
+	Raconteur should highlight like a "Comment"
+	"
+		/* 
+		Scenario: Commented
+		/*
+		""
+	"

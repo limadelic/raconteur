@@ -13,7 +13,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
     {
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
-            return new FeatureTokenTagger(buffer) as ITagger<T>;
+            return new FeatureTokenTagger() as ITagger<T>;
         }
     }
 }

@@ -39,6 +39,26 @@ Scenario: Commented
 ");        
             Raconteur_should_highlight(1, "Scenario:", "Keyword");
         }
+        
+        [TestMethod]
+        public void UnclosedMultilineComments()
+        {         
+            Given_the_Feature_contains(
+@"
+Scenario: Name
+/*
+Scenario: Commented
+/*
+""
+");        
+            Raconteur_should_highlight_like_a("Comment", 
+@"
+/*
+Scenario: Commented
+/*
+""
+");
+        }
 
     }
 }

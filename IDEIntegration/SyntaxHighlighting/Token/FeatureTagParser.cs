@@ -9,6 +9,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
     {
         readonly TagsParser Keywords;
         readonly TagsParser Args;
+        readonly TagsParser Table;
 
         public FeatureTagParser(TagFactory TagFactory, string Feature) 
             : base(new ParsingState())
@@ -18,6 +19,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
             Keywords = new KeywordParser(ParsingState);
             Args = new ArgsParser(ParsingState);
+            Table = new TableParser(ParsingState);
         }
 
         public override ITagsWrap Tags
@@ -44,30 +46,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 MultiLineTags ?? 
                 CommentTags ??
                 (Keywords.Tags ??
-                 TableTags ??
+                 Table.Tags ??
                  Args.Tags ??
                  new TagsWrap())
                  .Union(ScenarioTag);
-        }
-
-        ITagsWrap TableTags
-        {
-            get
-            {
-                if (!Line.StartsWith("|")) return null;
-                
-                var Index = FullLine.IndexOf('|') + 1;
-                var StartPoint = Position;
-
-                return 
-                    from Arg in Line.Split('|').Chop(1)
-                    select CreateTag
-                    (
-                        (StartPoint += Arg.Length) - Arg.Length + Index++, 
-                        Arg.Length, 
-                        FeatureTokenTypes.Arg
-                    );
-            }
         }
 
         int ScenarioStart;

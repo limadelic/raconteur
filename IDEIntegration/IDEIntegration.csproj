@@ -110,6 +110,7 @@
     <Compile Include="SyntaxHighlighting\Token\FeatureTagParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\KeywordParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\ParsingState.cs" />
+    <Compile Include="SyntaxHighlighting\Token\TableParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\TagsParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\TagsParserBase.cs" />
   </ItemGroup>

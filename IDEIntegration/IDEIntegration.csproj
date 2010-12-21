@@ -106,6 +106,7 @@
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTagger.cs" />
     <Compile Include="SyntaxHighlighting\FeatureTokenTagProvider.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTypes.cs" />
+    <Compile Include="SyntaxHighlighting\Token\FeatureTagParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Install\release.bat" />

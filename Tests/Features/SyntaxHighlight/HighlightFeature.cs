@@ -8,7 +8,10 @@ namespace Features.SyntaxHighlight
 {
     public class HighlightFeature : FeatureRunner
     {
-        protected FeatureTokenTagger Sut { get { return new SUT(Feature); } }
+        protected FeatureTagParser Sut
+        {
+            get { return new FeatureTagParser(new SUT(Feature), Feature); }
+        }
 
         protected override void Given_the_Feature_contains(string Feature) 
         {
@@ -48,7 +51,7 @@ namespace Features.SyntaxHighlight
         {
             public SUT(string Feature) { this.Feature = Feature; }
 
-            protected override ITagSpanWrap<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)
+            public override ITagSpanWrap<FeatureTokenTag> CreateTag(int startLocation, int length, FeatureTokenTypes type)
             {
                 var Tag = Create.TestObjectFor<ITagSpanWrap<FeatureTokenTag>>();
 

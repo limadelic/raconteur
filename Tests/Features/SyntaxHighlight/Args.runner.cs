@@ -13,11 +13,9 @@ namespace Features.SyntaxHighlight
 @"
 Scenario: Name
 Step with ""Arg1"" and ""Arg2""
-// ""Commented Arg""
 ");        
             Raconteur_should_highlight_like_a("String", 1, "\"Arg1\"");        
-            Raconteur_should_highlight_like_a("String", 1, "\"Arg2\"");        
-            Raconteur_should_highlight_like_a("String", 0, "\"Commented Arg\"");
+            Raconteur_should_highlight_like_a("String", 1, "\"Arg2\"");
         }
         
         [TestMethod]

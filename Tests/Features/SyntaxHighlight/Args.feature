@@ -9,14 +9,12 @@ Scenario: Single line Arg
 		Scenario: Name
 			
 			Step with ""Arg1"" and ""Arg2""
-			// ""Commented Arg""
 	"
 
 	Raconteur should highlight like a "String"
-	[ Count | Text				]
-	|     1 | \"Arg1\"			|
-	|     1 | \"Arg2\"			|
-	|     0 | \"Commented Arg\" |
+	[ Count | Text		]
+	|     1 | \"Arg1\"	|
+	|     1 | \"Arg2\"	|
 
 Scenario: Multiline Arg
 

@@ -12,6 +12,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         readonly TagsParser Table;
         readonly TagsParser Comments;
         readonly TagsParser Scenarios;
+        readonly TagsParser Multiline;
 
         public FeatureTagParser(TagFactory TagFactory, string Feature) 
             : base(new ParsingState())
@@ -24,6 +25,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             Table = new TableParser(ParsingState);
             Comments = new CommentsParser(ParsingState);
             Scenarios = new ScenariosParser(ParsingState);
+            Multiline = new MultilineParser(ParsingState);
         }
 
         public override ITagsWrap Tags
@@ -47,108 +49,13 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             this.Line = Line.Trim();
 
             return 
-                MultiLineTags ?? 
+                Multiline.Tags ?? 
                 Comments.Tags ??
                 (Keywords.Tags ??
                  Table.Tags ??
                  Args.Tags ??
                  new TagsWrap())
                  .Union(Scenarios.Tags);
-        }
-
-        int MultilineTagStart = -1;
-        string MultilineSymbol;
-        bool IsInsideMultilineTag { get { return MultilineTagStart >= 0; } }
-
-        ITagsWrap MultiLineTags
-        {
-            get
-            {
-                return 
-                    CloseMultilineTag ??
-                    InsideMultilineTag ??
-                    StartMultilineTag;
-            }
-        }
-
-        bool IsMultilineTagStart
-        {
-            get
-            {
-                return 
-                    !IsInsideMultilineTag && 
-                    (Line == "/*" || Line == "\"");
-            } 
-        }
-
-        TagsWrap StartMultilineTag
-        {
-            get
-            {
-                if (!IsMultilineTagStart) return null;
-
-                MultilineTagStart = Position + FullLine.IndexOf(Line);
-                MultilineSymbol = Line;
-
-                return new TagsWrap();
-            }
-        }
-
-        TagsWrap InsideMultilineTag
-        {
-            get { return IsInsideMultilineTag ? new TagsWrap() : null; } 
-        }
-
-        bool IsClosingMultilineTag
-        {
-            get
-            {
-                return 
-                    IsInsideMultilineTag && 
-                    (
-                        IsLastLine ||
-                        IsClosingMultilineComment || 
-                        IsClosingMultilineArg
-                    );
-            }
-        }
-
-        bool IsInsideMultilineComment { get { return MultilineSymbol == "/*"; } }
-
-        bool IsInsideMultilineArg { get { return MultilineSymbol == "\""; } }
-
-        bool IsClosingMultilineComment
-        {
-            get { return IsInsideMultilineComment && Line == "*/"; }
-        }
-
-        bool IsClosingMultilineArg
-        {
-            get { return IsInsideMultilineArg && Line == "\""; }
-        }
-
-        TagsWrap CloseMultilineTag
-        {
-            get
-            {
-                if (!IsClosingMultilineTag) return null;
-
-                var Tags = new TagsWrap
-                {
-                    CreateTag
-                    (
-                        MultilineTagStart, 
-                        Position + FullLine.Length - MultilineTagStart, 
-                        MultilineSymbol == "/*" ? 
-                            FeatureTokenTypes.Comment : 
-                            FeatureTokenTypes.Arg
-                    )
-                };
-
-                MultilineTagStart = -1;
-
-                return Tags;
-            }
         }
     }
 }

@@ -103,6 +103,7 @@
     <Compile Include="SyntaxHighlighting\Classification\FeatureClassifier.cs" />
     <Compile Include="SyntaxHighlighting\FeatureClassifierProvider.cs" />
     <Compile Include="SyntaxHighlighting\Token\ArgsParser.cs" />
+    <Compile Include="SyntaxHighlighting\Token\CommentsParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTag.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTagger.cs" />
     <Compile Include="SyntaxHighlighting\FeatureTokenTagProvider.cs" />
@@ -110,6 +111,7 @@
     <Compile Include="SyntaxHighlighting\Token\FeatureTagParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\KeywordParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\ParsingState.cs" />
+    <Compile Include="SyntaxHighlighting\Token\ScenariosParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\TableParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\TagsParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\TagsParserBase.cs" />

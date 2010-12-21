@@ -11,6 +11,14 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             this.ParsingState = ParsingState;
         }
 
+        protected bool IsLastLine
+        {
+            get
+            {
+                return Position + FullLine.Length == Feature.Length;
+            }
+        }
+
         protected ParsingState ParsingState;
 
         protected TagFactory TagFactory

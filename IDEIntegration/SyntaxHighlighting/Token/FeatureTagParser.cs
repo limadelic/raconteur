@@ -10,6 +10,8 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         readonly TagsParser Keywords;
         readonly TagsParser Args;
         readonly TagsParser Table;
+        readonly TagsParser Comments;
+        readonly TagsParser Scenarios;
 
         public FeatureTagParser(TagFactory TagFactory, string Feature) 
             : base(new ParsingState())
@@ -20,6 +22,8 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             Keywords = new KeywordParser(ParsingState);
             Args = new ArgsParser(ParsingState);
             Table = new TableParser(ParsingState);
+            Comments = new CommentsParser(ParsingState);
+            Scenarios = new ScenariosParser(ParsingState);
         }
 
         public override ITagsWrap Tags
@@ -44,76 +48,12 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
             return 
                 MultiLineTags ?? 
-                CommentTags ??
+                Comments.Tags ??
                 (Keywords.Tags ??
                  Table.Tags ??
                  Args.Tags ??
                  new TagsWrap())
-                 .Union(ScenarioTag);
-        }
-
-        int ScenarioStart;
-
-        bool IsLastLine
-        {
-            get
-            {
-                return Position + FullLine.Length == Feature.Length;
-            }
-        }
-
-        bool IsEndOfScenario
-        {
-            get
-            {
-                if (IsLastLine) return true;
-
-                if (!Line.StartsWith(Settings.Language.Scenario)) return false;
-
-                if (ScenarioStart > 0) return true;
-                
-                ScenarioStart = Position;
-
-                return false;
-            }
-        }
-
-        TagsWrap ScenarioTag
-        {
-            get
-            {
-                var Tags = new TagsWrap();
-
-                if (IsEndOfScenario)
-                {
-                    Tags.Add(CreateTag
-                    (
-                        ScenarioStart,
-                        Position - ScenarioStart + (IsLastLine ? FullLine.Length : -2),
-                        FeatureTokenTypes.ScenarioBody
-                    ));
-
-                    ScenarioStart = IsLastLine ? 0 : Position;
-                }
-
-                return Tags;
-            }
-        }
-
-        TagsWrap CommentTags
-        {
-            get
-            {
-                return !Line.StartsWith("//") ? null : new TagsWrap
-                {
-                    CreateTag
-                    (
-                        Position + FullLine.IndexOf("//"), 
-                        Line.Length, 
-                        FeatureTokenTypes.Comment
-                    )
-                };
-            }
+                 .Union(Scenarios.Tags);
         }
 
         int MultilineTagStart = -1;

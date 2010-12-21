@@ -1,108 +1,26 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using ITagsWrap=System.Collections.Generic.IEnumerable<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
 using TagsWrap=System.Collections.Generic.List<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 {
-    public class ParsingState
-    {
-        public TagFactory TagFactory;
-        public string Feature;
-
-        public int Position;
-        public string FullLine;
-        public string Line;
-    }
-
-    interface TagsParser { ITagsWrap Tags { get; } }
-
-    public class TagsParserBase
-    {
-        protected ParsingState ParsingState;
-
-        protected TagFactory TagFactory
-        {
-            get { return ParsingState.TagFactory;  }
-            set { ParsingState.TagFactory = value; }
-        }
-        protected string Feature
-        {
-            get { return ParsingState.Feature;  }
-            set { ParsingState.Feature = value; }
-        }
-        protected int Position
-        {
-            get { return ParsingState.Position;  }
-            set { ParsingState.Position = value; }
-        }
-        protected string FullLine
-        {
-            get { return ParsingState.FullLine;  }
-            set { ParsingState.FullLine = value; }
-        }
-        protected string Line
-        {
-            get { return ParsingState.Line;  }
-            set { ParsingState.Line = value; }
-        }
-
-        protected ITagSpanWrap<FeatureTokenTag> CreateTag(int StartLocation, int Length, FeatureTokenTypes Type)
-        {
-            return TagFactory.CreateTag(StartLocation, Length, Type);
-        }
-    }
-
-    public class KeywordParser : TagsParserBase, TagsParser
-    {
-        public KeywordParser(ParsingState ParsingState)
-        {
-            this.ParsingState = ParsingState;
-        }
-
-        readonly List<string> Keywords = new List<string>
-        {
-            Settings.Language.Feature,
-            Settings.Language.Scenario,
-            Settings.Language.ScenarioOutline,
-            Settings.Language.Examples,
-        };
-
-        public ITagsWrap Tags
-        {
-            get
-            {
-                var Keyword = Line.Split(':')[0];
-
-                return !Keywords.Contains(Keyword) ? null : new TagsWrap
-                {
-                    CreateTag
-                    (
-                        Position + FullLine.IndexOf(Keyword), 
-                        Keyword.Length + 1, 
-                        FeatureTokenTypes.Keyword
-                    )
-                };
-            }
-        }
-    }
-
     public class FeatureTagParser : TagsParserBase
     {
         readonly TagsParser Keywords;
+        readonly TagsParser Args;
 
-        public FeatureTagParser(TagFactory TagFactory, string Feature)
+        public FeatureTagParser(TagFactory TagFactory, string Feature) 
+            : base(new ParsingState())
         {
-            ParsingState = new ParsingState();
-
             this.TagFactory = TagFactory;
             this.Feature = Feature;
 
             Keywords = new KeywordParser(ParsingState);
+            Args = new ArgsParser(ParsingState);
         }
 
-        public ITagsWrap Tags
+        public override ITagsWrap Tags
         {
             get
             {
@@ -127,7 +45,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 CommentTags ??
                 (Keywords.Tags ??
                  TableTags ??
-                 ArgsTags ??
+                 Args.Tags ??
                  new TagsWrap())
                  .Union(ScenarioTag);
         }
@@ -147,24 +65,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                     (
                         (StartPoint += Arg.Length) - Arg.Length + Index++, 
                         Arg.Length, 
-                        FeatureTokenTypes.Arg
-                    );
-            }
-        }
-
-        ITagsWrap ArgsTags
-        {
-            get
-            {
-                if (!Line.Contains('"')) return null;
-
-                return 
-                    from Arg in Line.Split('"').Odds().Distinct()
-                    from Index in FullLine.IndexesOf(Arg)
-                    select CreateTag
-                    (
-                        Position + Index - 1, 
-                        Arg.Length + 2, 
                         FeatureTokenTypes.Arg
                     );
             }

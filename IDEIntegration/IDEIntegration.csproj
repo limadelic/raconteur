@@ -102,11 +102,16 @@
     <Compile Include="CustomTool\RaconteurSingleFileGenerator.cs" />
     <Compile Include="SyntaxHighlighting\Classification\FeatureClassifier.cs" />
     <Compile Include="SyntaxHighlighting\FeatureClassifierProvider.cs" />
+    <Compile Include="SyntaxHighlighting\Token\ArgsParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTag.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTagger.cs" />
     <Compile Include="SyntaxHighlighting\FeatureTokenTagProvider.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTypes.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTagParser.cs" />
+    <Compile Include="SyntaxHighlighting\Token\KeywordParser.cs" />
+    <Compile Include="SyntaxHighlighting\Token\ParsingState.cs" />
+    <Compile Include="SyntaxHighlighting\Token\TagsParser.cs" />
+    <Compile Include="SyntaxHighlighting\Token\TagsParserBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Install\release.bat" />
@@ -133,6 +138,9 @@
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SyntaxHighlighting\TagsParsing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

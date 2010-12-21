@@ -1,9 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using ITagsWrap=System.Collections.Generic.IEnumerable<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
-using TagsWrap=System.Collections.Generic.List<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
 {
     public class FeatureTagParser : TagsParserBase
     {
@@ -28,7 +28,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             Multiline = new MultilineParser(ParsingState);
         }
 
-        public override ITagsWrap Tags
+        public override IEnumerable<ITagSpanWrap<FeatureTokenTag>> Tags
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             }
         }
 
-        ITagsWrap TagsFromLine(string Line)
+        IEnumerable<ITagSpanWrap<FeatureTokenTag>> TagsFromLine(string Line)
         {
             FullLine = Line;
             this.Line = Line.Trim();
@@ -54,7 +54,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                 (Keywords.Tags ??
                  Table.Tags ??
                  Args.Tags ??
-                 new TagsWrap())
+                 new List<ITagSpanWrap<FeatureTokenTag>>())
                  .Union(Scenarios.Tags);
         }
     }

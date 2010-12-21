@@ -2,6 +2,7 @@ using System.Linq;
 using FluentSpec;
 using Raconteur;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Classification;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Parsing;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Features.SyntaxHighlight

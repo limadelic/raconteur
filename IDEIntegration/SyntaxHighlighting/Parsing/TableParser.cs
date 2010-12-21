@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
 {
     public class TableParser : TagsParserBase 
     {

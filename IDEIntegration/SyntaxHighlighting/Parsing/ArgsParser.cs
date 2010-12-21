@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
 {
     public class ArgsParser : TagsParserBase
     {
@@ -15,10 +16,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 
                 return 
                     from Arg in Line.Split('"').Odds().Distinct()
-                    from Index in FullLine.IndexesOf(Arg)
+                    from Index in FullLine.IndexesOf('"' + Arg + '"')
                     select CreateTag
                     (
-                        Position + Index - 1, 
+                        Position + Index, 
                         Arg.Length + 2, 
                         FeatureTokenTypes.Arg
                     );

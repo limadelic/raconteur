@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
 {
     public class MultilineParser : TagsParserBase 
     {
@@ -20,6 +21,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
                     StartMultilineTag;
             }
         }
+
         bool IsMultilineTagStart
         {
             get

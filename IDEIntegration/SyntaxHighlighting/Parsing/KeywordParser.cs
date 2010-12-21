@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ITagsWrap=System.Collections.Generic.IEnumerable<Raconteur.IDEIntegration.SyntaxHighlighting.Token.ITagSpanWrap<Raconteur.IDEIntegration.SyntaxHighlighting.Token.FeatureTokenTag>>;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
+namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
 {
     public class KeywordParser : TagsParserBase
     {
@@ -15,7 +15,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             Settings.Language.Examples,
         };
 
-        public override ITagsWrap Tags
+        public override IEnumerable<ITagSpanWrap<FeatureTokenTag>> Tags
         {
             get
             {

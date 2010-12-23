@@ -16,30 +16,19 @@ namespace Specs
             [Test]
             public void should_create_a_Step_with_Args()
             {
-                const string Sentence = @"If ""X"" happens";
-
-                The.StepFrom(Sentence)
+                The.StepFrom(@"If ""X"" happens")
                     .Name.ShouldBe("If__happens");
-
-                The.StepFrom(Sentence)
-                    .Args.Count.ShouldBe(1);
-                
-                The.StepFrom(Sentence)
-                    .Args[0].ShouldBe("X");
+                And.LastStep.Args.Count.ShouldBe(1);
+                And.LastStep.Args[0].ShouldBe("X");
             }
 
             [Test]
             public void should_create_a_Step_with_multiple_Args()
             {
-                const string Sentence = @"If ""X"" and ""Y"" happens";
-
-                The.StepFrom(Sentence)
+                The.StepFrom(@"If ""X"" and ""Y"" happens")
                     .Name.ShouldBe("If__and__happens");
-
-                The.StepFrom(Sentence).Args.Count.ShouldBe(2);
-                
-                The.StepFrom(Sentence)
-                    .Args[1].ShouldBe("Y");
+                And.LastStep.Args.Count.ShouldBe(2);
+                And.LastStep.Args[1].ShouldBe("Y");
             }
 
             [Test]
@@ -56,6 +45,30 @@ namespace Specs
                 And.LastStep.Args[0].ShouldBe
                 (
                     String.Format("{0}line 1{0}line 2{0}", Environment.NewLine)
+                );
+            }
+
+            [Test]
+            public void should_allow_to_start_a_Step_with_an_Arg()
+            {
+                The.StepFrom(@"""Arg"" starting a Step")
+                    .Name.ShouldBe("starting_a_Step");
+                And.LastStep.Args.Count.ShouldBe(1);
+                And.LastStep.Args[0].ShouldBe("Arg");
+            }
+
+            [Test]
+            public void should_allow_to_start_a_Step_with_a_multiline_Arg()
+            {
+                Given.StepFrom("\"");
+                And.StepFrom("multiline Arg");
+                And.StepFrom("\"");
+                And.StepFrom("starting a Step");
+
+                The.LastStep.Name.ShouldBe("starting_a_Step");
+                And.LastStep.Args[0].ShouldBe
+                (
+                    String.Format("{0}multiline Arg{0}", Environment.NewLine)
                 );
             }
         }

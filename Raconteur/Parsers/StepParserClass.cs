@@ -29,13 +29,17 @@ namespace Raconteur.Parsers
         Step ParseStep
         {
             get
-            {
-                var Tokens = Sentence.Split('"');
+            {   
+                var Tokens = BeforeArg.IsEmpty() ? 
+                    Sentence.Split('"') :
+                    (BeforeArg.Quote() + Sentence).Split('"');
+
+                BeforeArg = null;
 
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().ToList(),
+                    Args = Tokens.Odds().ToList()
                 };
             }
         }
@@ -76,6 +80,8 @@ namespace Raconteur.Parsers
         bool IsArgSeparator { get { return Sentence.Equals("\""); } }
 
         string Arg = Environment.NewLine;
+        string BeforeArg;
+
         Step ParseArg
         {
             get
@@ -90,7 +96,9 @@ namespace Raconteur.Parsers
 
         void CloseArg() 
         {
-            LastStep.Args.Add(Arg);
+            if (LastStep == null) BeforeArg = Arg;
+            else LastStep.Args.Add(Arg);
+
             Arg = Environment.NewLine;
             ParsingArg = false;
         }

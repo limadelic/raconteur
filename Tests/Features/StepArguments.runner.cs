@@ -55,6 +55,26 @@ and finish on another
 "");
 ");
         }
+        
+        [TestMethod]
+        public void StepStartingWithArg()
+        {         
+            Given_the_Feature_contains(
+@"
+Scenario: Name
+""
+Multiline Arg
+""
+before a Step
+");        
+            The_Runner_should_contain(
+@"
+before_a_Step(
+@""
+Multiline Arg
+"");
+");
+        }
 
     }
 }

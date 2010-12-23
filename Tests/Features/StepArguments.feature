@@ -33,8 +33,8 @@ Scenario: Multiline Arg
 		Scenario: Multiline Arg
 			Step Arg with multiple lines 
 			""
-			could start on one line
-			and finish on another
+				could start on one line
+				and finish on another
 			""
 	"
 
@@ -42,7 +42,27 @@ Scenario: Multiline Arg
 	"
 		Step_Arg_with_multiple_lines(
 		@""
-		could start on one line
-		and finish on another
+			could start on one line
+			and finish on another
+		"");
+	"
+
+Scenario: Step starting with Arg
+
+	Given the Feature contains
+	"
+		Scenario: Name
+			
+			""
+				Multiline Arg
+			""
+			before a Step
+	"
+
+	The Runner should contain
+	"
+		before_a_Step(
+		@""
+			Multiline Arg
 		"");
 	"

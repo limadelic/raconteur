@@ -42,10 +42,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
 //            System.Diagnostics.Debugger.Launch();
             Snapshot = Spans[0].Snapshot;
             Feature = Snapshot.GetText();
-            
+
             return 
                 from Tag 
-                in new FeatureTagParser(this, Feature).Tags
+                in new FeatureTagParser(this, Feature).Tags 
                 select Tag.Core;
         }
 

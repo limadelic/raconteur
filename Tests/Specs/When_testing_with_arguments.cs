@@ -53,7 +53,6 @@ namespace Specs
             {
                 The.StepFrom(@"""Arg"" starting a Step")
                     .Name.ShouldBe("starting_a_Step");
-                And.LastStep.Args.Count.ShouldBe(1);
                 And.LastStep.Args[0].ShouldBe("Arg");
             }
 

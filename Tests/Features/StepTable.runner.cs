@@ -62,6 +62,9 @@ Given stuff in ""X"" place
 [ stuff ]
 |one    |
 |another|
+""Y"" stuff in
+|somewhere|
+|else	  |
 ");        
             The_Runner_should_contain(
 @"
@@ -70,6 +73,11 @@ public void ScenarioName()
 {
 Given_stuff_in__place(""X"", ""one"");
 Given_stuff_in__place(""X"", ""another"");
+stuff_in
+(
+new[] {""Y"", ""somewhere""},
+new[] {""Y"", ""else""}
+);
 }
 ");
         }

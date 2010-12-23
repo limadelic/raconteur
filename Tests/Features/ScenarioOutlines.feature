@@ -35,3 +35,65 @@ Scenario: Using Scenario Outlines
 			It_should_be(3);
 		}
 	"
+
+Scenario: Outlines values inside multiline Args
+	
+	Given the Feature contains
+	"
+		Scenario: Outline
+			Given 
+			""
+			using """"values"""" in """"arg""""
+			""
+
+			Examples:
+			|values|arg|
+			|42    |1  |
+			|23    |3  |    
+	"
+
+	The Runner should contain 
+	"
+		[TestMethod]
+		public void Outline1()
+		{
+			Given(
+			@""
+			using 42 in 1
+			"");
+		}
+
+		[TestMethod]
+		public void Outline2()
+		{
+			Given(
+			@""
+			using 23 in 3
+			"");
+		}
+	"
+
+/*
+Scenario: First
+
+	Given the Feature contains
+	"
+		Scenario: First
+			Step 
+			""
+			a """"X""""
+			""
+
+			Examples:
+			|X|
+			|1|
+	"
+
+	The Runner should contain 
+	"
+		[TestMethod]
+		public void First1()
+		{         
+			Step();
+		}
+	"

@@ -68,12 +68,21 @@ namespace Raconteur.Generators
 
         string ReplaceNameIn(string Outline, int Row)
         {
-            return Outline.Replace(Scenario.Name+"()", Scenario.Name+(Row + 1)+"()");
+            return Outline.Replace
+            (
+                Scenario.Name + "()", 
+                Scenario.Name + (Row + 1) + "()"
+            );
         }
 
         string ReplaceExampleIn(string Outline, int Row, int Col)
         {
             return Outline.Replace
+            (
+                Scenario.Examples.Header[Col].Quote().Quote(), 
+                ArgFormatter.ValueOf(Scenario.Examples[Row, Col])
+            )
+            .Replace
             (
                 Scenario.Examples.Header[Col].Quote(), 
                 ArgFormatter.ValueOf(Scenario.Examples[Row, Col])

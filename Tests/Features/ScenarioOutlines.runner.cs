@@ -38,6 +38,42 @@ It_should_be(3);
 }
 ");
         }
+        
+        [TestMethod]
+        public void OutlinesValuesInsideMultilineArgs()
+        {         
+            Given_the_Feature_contains(
+@"
+Scenario: Outline
+Given
+""
+using """"values"""" in """"arg""""
+""
+Examples:
+|values|arg|
+|42    |1  |
+|23    |3  |
+");        
+            The_Runner_should_contain(
+@"
+[TestMethod]
+public void Outline1()
+{
+Given(
+@""
+using 42 in 1
+"");
+}
+[TestMethod]
+public void Outline2()
+{
+Given(
+@""
+using 23 in 3
+"");
+}
+");
+        }
 
     }
 }

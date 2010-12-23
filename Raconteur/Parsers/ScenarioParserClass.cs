@@ -39,7 +39,7 @@ namespace Raconteur.Parsers
 
         protected bool IsNotExample(string Line)
         {
-            if (Line.StartsWith("\"")) InsideArg = !InsideArg;
+            if (Line == "\"") InsideArg = !InsideArg;
 
             return InsideArg || !Line.StartsWith(Settings.Language.Examples);
         }
@@ -77,6 +77,10 @@ namespace Raconteur.Parsers
             }
         }
 
-        Step Step(string Line) { return StepParser.StepFrom(Line); }
+        Step Step(string Line)
+        {
+            var StepFrom = StepParser.StepFrom(Line);
+            return StepFrom;
+        }
     }
 }

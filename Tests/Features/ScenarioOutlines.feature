@@ -43,7 +43,7 @@ Scenario: Outlines values inside multiline Args
 		Scenario: Outline
 			Given 
 			""
-			using """"values"""" in """"arg""""
+			""""values"""" in """"arg""""
 			""
 
 			Examples:
@@ -59,7 +59,7 @@ Scenario: Outlines values inside multiline Args
 		{
 			Given(
 			@""
-			using 42 in 1
+			42 in 1
 			"");
 		}
 
@@ -68,32 +68,7 @@ Scenario: Outlines values inside multiline Args
 		{
 			Given(
 			@""
-			using 23 in 3
+			23 in 3
 			"");
-		}
-	"
-
-/*
-Scenario: First
-
-	Given the Feature contains
-	"
-		Scenario: First
-			Step 
-			""
-			a """"X""""
-			""
-
-			Examples:
-			|X|
-			|1|
-	"
-
-	The Runner should contain 
-	"
-		[TestMethod]
-		public void First1()
-		{         
-			Step();
 		}
 	"

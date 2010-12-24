@@ -47,7 +47,7 @@ It_should_be(3);
 Scenario: Outline
 Given
 ""
-using """"values"""" in """"arg""""
+""""values"""" in """"arg""""
 ""
 Examples:
 |values|arg|
@@ -61,7 +61,7 @@ public void Outline1()
 {
 Given(
 @""
-using 42 in 1
+42 in 1
 "");
 }
 [TestMethod]
@@ -69,7 +69,7 @@ public void Outline2()
 {
 Given(
 @""
-using 23 in 3
+23 in 3
 "");
 }
 ");

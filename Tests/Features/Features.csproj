@@ -80,14 +80,6 @@
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
     <Compile Include="Context\FeatureRunner.cs" />
-    <Compile Include="Feature1.runner.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Feature1.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Feature1.steps.cs">
-      <DependentUpon>Feature1.feature</DependentUpon>
-    </Compile>
     <Compile Include="GenerateRunner.steps.cs">
       <DependentUpon>GenerateRunner.feature</DependentUpon>
     </Compile>
@@ -238,10 +230,6 @@
     <None Include="Comments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Comments.runner.cs</LastGenOutput>
-    </None>
-    <None Include="Feature1.feature">
-      <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>Feature1.runner.cs</LastGenOutput>
     </None>
     <None Include="GenerateRunner.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

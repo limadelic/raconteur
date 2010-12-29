@@ -35,7 +35,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         protected string Feature;
         ITextSnapshot Snapshot;
 
-        public event EventHandler<SnapshotSpanEventArgs> TagsChanged { add {} remove {} }
+        public event EventHandler<SnapshotSpanEventArgs> TagsChanged;
 
         public ITags GetTags(NormalizedSnapshotSpanCollection Spans)
         {
@@ -43,9 +43,13 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
             Snapshot = Spans[0].Snapshot;
             Feature = Snapshot.GetText();
 
-            return 
+/*
+            return spans.SelectMany(span => AllTags
+                .Where(tagSpan => tagSpan.Span.IntersectsWith(span)));
+*/
+            return
                 from Tag 
-                in new FeatureTagParser(this, Feature).Tags 
+                in new FeatureTagParser(this, Feature).Tags
                 select Tag.Core;
         }
 
@@ -58,12 +62,13 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Token
         {
             try 
             {
-                var tokenSpan = new SnapshotSpan(Snapshot, new Span(StartLocation, Length));
+                var Span = new SnapshotSpan(Snapshot, new Span(StartLocation, Length));
 
-                return new TagSpanWrap<FeatureTokenTag> 
-                {
-                    Core = new TagSpan<FeatureTokenTag>(tokenSpan, new FeatureTokenTag(Type))
-                };
+                if (TagsChanged != null) TagsChanged(this, new SnapshotSpanEventArgs(Span));
+
+                var NewTag = new TagSpan<FeatureTokenTag>(Span, new FeatureTokenTag(Type));
+
+                return new TagSpanWrap<FeatureTokenTag> { Core = NewTag };
 
             } catch { return EmptyTag; }
         }

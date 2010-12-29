@@ -30,8 +30,10 @@ namespace Raconteur.Parsers
 
                 foreach (var Line in Lines)
                 {
-                    if (IsScenarioDeclaration(Line))
+                    if (IsScenarioStart(Line))
                         Results.Add(new List<string>());
+
+                    if (Results.Count == 0) continue;
 
                     Results.Last().Add(Line);
                 }
@@ -40,12 +42,32 @@ namespace Raconteur.Parsers
             }
         }
 
+        bool HasTags;
+
+        bool IsScenarioStart(string Line)
+        {
+            if (InsideArg) return false;
+
+            Line = Line.TrimStart();
+
+            if (!HasTags && Line.StartsWith("@"))
+            {
+                HasTags = true;
+                return true;
+            }
+
+            if (!Line.StartsWith(Settings.Language.Scenario)) return false;
+
+            if (!HasTags) return true;
+            
+            return HasTags = false;
+        }
+
         IEnumerable<string> Lines
         {
             get
             {
                 return Regex.Split(Content, Environment.NewLine)
-                    .SkipWhile(IsNotScenarioDeclaration)
                     .Select(Line => Line.Trim())
                     .Where(HasCode);
             }
@@ -73,15 +95,10 @@ namespace Raconteur.Parsers
             return isComment;
         }
 
-        bool IsScenarioDeclaration(string Line)
-        {
-            return !InsideArg &&  
-                Line.TrimStart().StartsWith(Settings.Language.Scenario);
-        }
-
         bool IsNotScenarioDeclaration(string Line)
         {
-            return !IsScenarioDeclaration(Line);
+            return !(!InsideArg &&  
+                Line.TrimStart().StartsWith(Settings.Language.Scenario));
         }
     }
 }

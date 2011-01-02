@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Raconteur.Generators
 {
@@ -11,6 +10,11 @@ namespace Raconteur.Generators
         public void {2}()
         {{ {3}
         }}
+";
+
+        private const string TagDeclaration = 
+@"        
+        {0}
 ";
 
         readonly Scenario Scenario;
@@ -53,8 +57,8 @@ namespace Raconteur.Generators
             get
             {
                 return Scenario.Tags.Aggregate(string.Empty, (Tags, Tag) =>
-                    Tags + Environment.NewLine + 
-                    string.Format(Settings.XUnit.Category, Tag));
+                    Tags + string.Format(TagDeclaration, 
+                        string.Format(Settings.XUnit.Category, Tag)));
             }
         }
 

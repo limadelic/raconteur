@@ -21,4 +21,37 @@ Scenario: Single Tag
 
 Scenario: Multiple Tags
 
+	Given the Feature contains
+	"
+		@one_tag
+		@another_tag
+		Scenario: Tagged	
+	"
+
+	The Runner should contain
+	"
+		[TestMethod]
+		[TestCategory(""one_tag"")]
+		[TestCategory(""another_tag"")]
+		public void Tagged()
+		{
+		}
+	"
+
 Scenario: Multiple Tags in one line
+
+	Given the Feature contains
+	"
+		@one_tag @another_tag
+		Scenario: Tagged	
+	"
+
+	The Runner should contain
+	"
+		[TestMethod]
+		[TestCategory(""one_tag"")]
+		[TestCategory(""another_tag"")]
+		public void Tagged()
+		{
+		}
+	"

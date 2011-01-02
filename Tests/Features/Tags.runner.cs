@@ -26,12 +26,41 @@ public void Tagged()
         
         [TestMethod]
         public void MultipleTags()
-        { 
+        {         
+            Given_the_Feature_contains(
+@"
+@one_tag
+@another_tag
+Scenario: Tagged
+");        
+            The_Runner_should_contain(
+@"
+[TestMethod]
+[TestCategory(""one_tag"")]
+[TestCategory(""another_tag"")]
+public void Tagged()
+{
+}
+");
         }
         
         [TestMethod]
         public void MultipleTagsInOneLine()
-        { 
+        {         
+            Given_the_Feature_contains(
+@"
+@one_tag @another_tag
+Scenario: Tagged
+");        
+            The_Runner_should_contain(
+@"
+[TestMethod]
+[TestCategory(""one_tag"")]
+[TestCategory(""another_tag"")]
+public void Tagged()
+{
+}
+");
         }
 
     }

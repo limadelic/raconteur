@@ -73,7 +73,6 @@ namespace Specs
         }
 
         [Test]
-        [Category("yep")]
         public void should_use_propper_xUnit_attribute()
         {
             var backup = Settings.XUnit;

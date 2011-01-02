@@ -4,7 +4,7 @@ namespace Raconteur
 {
     public class XUnit
     {
-        public string Name, Namespace, ClassAttr, MethodAttr;
+        public string Name, Namespace, ClassAttr, MethodAttr, Category;
     }
 
     public class XUnits
@@ -16,7 +16,8 @@ namespace Raconteur
                 Name = "MsTest",
                 Namespace = "Microsoft.VisualStudio.TestTools.UnitTesting",
                 ClassAttr = "[TestClass]",
-                MethodAttr = "[TestMethod]"
+                MethodAttr = "[TestMethod]",
+                Category = @"[TestCategory(""{0}"")]",
             }},
 
             { "nunit", new XUnit
@@ -24,7 +25,8 @@ namespace Raconteur
                 Name = "NUnit",
                 Namespace = "NUnit.Framework",
                 ClassAttr = "[TestFixture]",
-                MethodAttr = "[Test]"
+                MethodAttr = "[Test]",
+                Category = @"[Category(""{0}"")]",
             }},
 
             { "mbunit", new XUnit
@@ -32,7 +34,8 @@ namespace Raconteur
                 Name = "MbUnit",
                 Namespace = "MbUnit.Framework",
                 ClassAttr = "[TestFixture]",
-                MethodAttr = "[Test]"
+                MethodAttr = "[Test]",
+                Category = @"[Category(""{0}"")]",
             }},
 
             { "xunit", new XUnit
@@ -40,7 +43,8 @@ namespace Raconteur
                 Name = "xUnit",
                 Namespace = "Xunit",
                 ClassAttr = string.Empty,
-                MethodAttr = "[Fact]"
+                MethodAttr = "[Fact]",
+                Category = @"[Trait(""Category"", ""{0}""]",
             }},
         };
     }

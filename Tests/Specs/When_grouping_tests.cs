@@ -62,14 +62,28 @@ namespace Specs
             .Tags.ShouldBe("a_tag", "another_tag");
         }
 
+        readonly Scenario Scenario = new Scenario { Tags = { "tag" } };
+
         [Test]
         public void should_add_Scenario_Tags_to_tests()
         {
-            var Scenario = new Scenario { Tags = { "tag" } };
-
             var Sut = new ScenarioGenerator(Scenario);
 
             Sut.Code.ShouldContain(@"[TestCategory(""tag"")]");
+        }
+
+        [Test]
+        [Category("yep")]
+        public void should_use_propper_xUnit_attribute()
+        {
+            var backup = Settings.XUnit;
+            Settings.XUnit = XUnits.Framework["mbunit"];
+
+            var Sut = new ScenarioGenerator(Scenario);
+
+            Sut.Code.ShouldContain(@"[Category(""tag"")]");
+
+            Settings.XUnit = backup;
         }
     }
 }

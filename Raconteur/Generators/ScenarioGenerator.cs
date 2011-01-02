@@ -52,8 +52,9 @@ namespace Raconteur.Generators
         {
             get
             {
-                return Scenario.Tags.Aggregate(Environment.NewLine, (Tags, Tag) =>
-                    Tags + string.Format(@"[TestCategory(""{0}"")]{1}", Tag, Environment.NewLine));
+                return Scenario.Tags.Aggregate(string.Empty, (Tags, Tag) =>
+                    Tags + Environment.NewLine + 
+                    string.Format(Settings.XUnit.Category, Tag));
             }
         }
 

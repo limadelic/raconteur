@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Raconteur.Parsers
 {
@@ -15,10 +16,66 @@ namespace Raconteur.Parsers
 
             return new Scenario
             {
+                Tags = Tags,
                 Name = Name,
                 Steps = Steps,
                 Examples = Examples
             };
+        }
+
+        public List<string> Tags
+        {
+            get
+            {
+                return Definition
+                    .TakeWhile(IsNotDeclaration)
+                    .SelectMany(TagsInLine)
+                    .Distinct()
+                    .ToList();
+            }
+        }
+
+        protected IEnumerable<string> TagsInLine(string Line) 
+        {
+            return 
+                from Match Match 
+                in Regex.Matches(Line, @"@(\w+)") 
+                select Match.Groups[1].Value;
+        }
+
+
+        string Name
+        {
+            get
+            {
+                return Definition
+                    .SkipWhile(IsNotDeclaration)
+                    .First()
+                    .Split(A.Colon, 2)[1]
+                    .Trim()
+                    .CamelCase()
+                    .ToValidIdentifier();    
+            } 
+        }
+
+        public List<Step> Steps
+        {
+            get
+            {
+                return Definition
+                    .SkipWhile(IsNotDeclaration)
+                    .Skip(1)
+                    .TakeWhile(IsNotExample)
+                    .Select(Step)
+                    .WhereIsNotNull()
+                    .ToList();
+            }
+        }
+
+        Step Step(string Line)
+        {
+            var StepFrom = StepParser.StepFrom(Line);
+            return StepFrom;
         }
 
         protected Table Examples
@@ -44,6 +101,11 @@ namespace Raconteur.Parsers
             return InsideArg || !Line.StartsWith(Settings.Language.Examples);
         }
 
+        protected bool IsNotDeclaration(string Line)
+        {
+            return !Line.StartsWith(Settings.Language.Scenario);
+        }
+
         List<string> ParseTableRow(string Row)
         {
             return Row
@@ -51,36 +113,6 @@ namespace Raconteur.Parsers
                 .Chop(1)
                 .Select(x => x.Trim())
                 .ToList();
-        }
-
-        string Name
-        {
-            get
-            {
-                return Definition
-                    .First()
-                    .Split(A.Colon, 2)[1]
-                    .Trim()
-                    .CamelCase()
-                    .ToValidIdentifier();    
-            } 
-        }
-
-        public List<Step> Steps
-        {
-            get
-            {
-                return Definition.Skip(1)
-                    .TakeWhile(IsNotExample)
-                    .Select(Step)
-                    .Where(Current => Current != null).ToList();
-            }
-        }
-
-        Step Step(string Line)
-        {
-            var StepFrom = StepParser.StepFrom(Line);
-            return StepFrom;
         }
     }
 }

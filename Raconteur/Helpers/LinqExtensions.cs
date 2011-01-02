@@ -5,6 +5,11 @@ namespace Raconteur
 {
     public static class LinqExtensions
     {
+        public static IEnumerable<T> WhereIsNotNull<T>(this IEnumerable<T> Items) where T : class 
+        {
+            return Items.Where(Item => Item != null);
+        }
+
         public static IEnumerable<T> Evens<T>(this IEnumerable<T> Items)
         {
             return Items.Where((Item, Index) => Index % 2 == 0);

@@ -73,8 +73,7 @@ namespace {0}
         {
             get
             {
-                return new Regex(@"namespace (.+)")
-                    .Match(ExistingStepDefinitions)
+                return Regex.Match(ExistingStepDefinitions, @"namespace (.+)")
                     .Groups[1].Value.Trim();
             }
         }
@@ -83,8 +82,7 @@ namespace {0}
         {
             get
             {
-                return new Regex(@"public partial class (\w+)")
-                    .Match(ExistingStepDefinitions)
+                return Regex.Match(ExistingStepDefinitions, @"public partial class (\w+)")
                     .Groups[1].Value.Trim();
             }
         }

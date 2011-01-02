@@ -94,11 +94,5 @@ namespace Raconteur.Parsers
 
             return isComment;
         }
-
-        bool IsNotScenarioDeclaration(string Line)
-        {
-            return !(!InsideArg &&  
-                Line.TrimStart().StartsWith(Settings.Language.Scenario));
-        }
     }
 }

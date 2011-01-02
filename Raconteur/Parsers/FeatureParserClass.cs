@@ -54,13 +54,13 @@ namespace Raconteur.Parsers
             {
                 try
                 {
-                    var Regex = new Regex(Settings.Language.Feature + 
-                        @": (\w.+)(" + Environment.NewLine + "|$)");
-            
-                    var Match = Regex.Match(Content);
-
-                    return Match.Groups[1].Value
-                        .CamelCase().ToValidIdentifier();
+                    return Regex.Match
+                    (
+                        Content, 
+                        Settings.Language.Feature + @": (\w.+)(" + 
+                            Environment.NewLine + "|$)"
+                    )
+                    .Groups[1].Value.CamelCase().ToValidIdentifier();
                 } 
                 catch { return null; }
             }

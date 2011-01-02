@@ -6,9 +6,9 @@ namespace Raconteur.Generators
     {
         private const string ScenarioDeclaration = 
 @"        
-        {0}
-        public void {1}()
-        {{ {2}
+        {0}{1}
+        public void {2}()
+        {{ {3}
         }}
 ";
 
@@ -38,10 +38,16 @@ namespace Raconteur.Generators
 
                 return string.Format
                 (
-                    ScenarioDeclaration, Settings.XUnit.MethodAttr, Scenario.Name, StepCode
+                    ScenarioDeclaration, 
+                    Settings.XUnit.MethodAttr,
+                    Tags, 
+                    Scenario.Name, 
+                    StepCode
                 );
             }
         }
+
+        string Tags { get { return ""; } }
 
         string CodeFor(Step Step) { return new StepGenerator(Step).Code; }
 

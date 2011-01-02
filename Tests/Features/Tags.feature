@@ -21,4 +21,4 @@ Scenario: Single Tag
 
 Scenario: Multiple Tags
 
-Scenario: Multiple Tags in on line
+Scenario: Multiple Tags in one line

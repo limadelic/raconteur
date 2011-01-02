@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Raconteur.Generators
 {
@@ -47,7 +48,14 @@ namespace Raconteur.Generators
             }
         }
 
-        string Tags { get { return ""; } }
+        string Tags
+        {
+            get
+            {
+                return Scenario.Tags.Aggregate(Environment.NewLine, (Tags, Tag) =>
+                    Tags + string.Format(@"[TestCategory(""{0}"")]{1}", Tag, Environment.NewLine));
+            }
+        }
 
         string CodeFor(Step Step) { return new StepGenerator(Step).Code; }
 

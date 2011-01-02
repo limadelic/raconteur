@@ -30,7 +30,7 @@ public void Tagged()
         }
         
         [TestMethod]
-        public void MultipleTagsInOnLine()
+        public void MultipleTagsInOneLine()
         { 
         }
 

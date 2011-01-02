@@ -1,35 +1,39 @@
 using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
+using Raconteur;
 using Raconteur.Generators;
 using Raconteur.Parsers;
 
 namespace Specs
 {
+    [TestFixture]
     public class When_grouping_tests
     {
-        [TestFixture]
-        public class the_scenarios_tokenizer : BehaviourOf<ScenarioTokenizerClass>
+        [Test]
+        public void should_include_tags_in_definitions()
         {
-            [Test]
-            public void should_include_tags_in_definitions()
+            var Sut = new ScenarioTokenizerClass
             {
-                Given.Content =
+                Content =
                 @"
                     Feature: Tags
 
                     @tag
                     Scenario: With Tag
-                ";
+                "
+            };
 
-                The.ScenarioDefinitions[0]
-                    .Count.ShouldBe(2);
-            }
+            Sut.ScenarioDefinitions[0]
+                .Count.ShouldBe(2);
+        }
 
-            [Test]
-            public void should_include_every_line_after_the_first_tag()
+        [Test]
+        public void should_include_every_line_after_the_first_tag()
+        {
+            var Sut = new ScenarioTokenizerClass
             {
-                Given.Content =
+                Content =
                 @"
                     Feature: Tags
 
@@ -37,35 +41,35 @@ namespace Specs
                     line
                     line
                     Scenario: With Tag
-                ";
+                "
+            };
 
-                The.ScenarioDefinitions[0]
-                    .Count.ShouldBe(4);
-            }
+            Sut.ScenarioDefinitions[0]
+                .Count.ShouldBe(4);
         }
 
-        [TestFixture]
-        public class the_scenarios_parser : BehaviourOf<ScenarioParserClass>
+        [Test]
+        public void should_read_tags_of_Scenarios()
         {
-            [Test]
-            public void should_read_tags_of_Scenarios()
+            var Sut = new ScenarioParserClass();
+
+            Sut.ScenarioFrom(new List<string>
             {
-                The.ScenarioFrom(new List<string>
-                {
-                    "@a_tag dud @another_tag",
-                    "@a_tag dud",
-                    "Scenario: With Tag"
-                })
-                .Tags.ShouldBe("a_tag", "another_tag");
-            }
+                "@a_tag dud @another_tag",
+                "@a_tag dud",
+                "Scenario: With Tag"
+            })
+            .Tags.ShouldBe("a_tag", "another_tag");
         }
 
-/*
-        [TestFixture]
-        public class the_Scenario_generator : BehaviourOf<ScenarioGenerator>
+        [Test]
+        public void should_add_Scenario_Tags_to_tests()
         {
-            [Test]
+            var Scenario = new Scenario { Tags = { "tag" } };
+
+            var Sut = new ScenarioGenerator(Scenario);
+
+            Sut.Code.ShouldContain(@"[TestCategory(""tag"")]");
         }
-*/
     }
 }

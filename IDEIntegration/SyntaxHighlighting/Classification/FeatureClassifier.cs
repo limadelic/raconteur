@@ -20,6 +20,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
             {FeatureTokenTypes.Arg, "String"},
             {FeatureTokenTypes.TableValue, "String"},
             {FeatureTokenTypes.Comment, "Comment"},
+            {FeatureTokenTypes.Tag, "Comment"},
         };
 
         public FeatureClassifier(ITextBuffer buffer, ITagAggregator<FeatureTokenTag> tagAggregator, IClassificationTypeRegistryService registry)

@@ -38,6 +38,12 @@ namespace Features.SyntaxHighlight
         protected void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
         {
             Raconteur_should_highlight(Count, Text, Style);
+
+        }
+
+        protected void Raconteur_should_highlight___like_a(int Count, string Text, string Style)
+        {
+            Raconteur_should_highlight(Count, Text, Style);
         }
 
         protected void Raconteur_should_highlight_like_a(string Style, string Text)

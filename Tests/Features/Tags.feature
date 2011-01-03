@@ -30,12 +30,8 @@ Scenario: Multiple Tags
 
 	The Runner should contain
 	"
-		[TestMethod]
 		[TestCategory(""one_tag"")]
 		[TestCategory(""another_tag"")]
-		public void Tagged()
-		{
-		}
 	"
 
 Scenario: Multiple Tags in one line
@@ -48,10 +44,6 @@ Scenario: Multiple Tags in one line
 
 	The Runner should contain
 	"
-		[TestMethod]
 		[TestCategory(""one_tag"")]
 		[TestCategory(""another_tag"")]
-		public void Tagged()
-		{
-		}
 	"

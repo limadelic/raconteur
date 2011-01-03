@@ -35,12 +35,8 @@ Scenario: Tagged
 ");        
             The_Runner_should_contain(
 @"
-[TestMethod]
 [TestCategory(""one_tag"")]
 [TestCategory(""another_tag"")]
-public void Tagged()
-{
-}
 ");
         }
         
@@ -54,12 +50,8 @@ Scenario: Tagged
 ");        
             The_Runner_should_contain(
 @"
-[TestMethod]
 [TestCategory(""one_tag"")]
 [TestCategory(""another_tag"")]
-public void Tagged()
-{
-}
 ");
         }
 

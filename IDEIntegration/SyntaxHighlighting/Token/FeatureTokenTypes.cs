@@ -6,6 +6,7 @@
         Arg,
         TableValue,
         Comment,
-        ScenarioBody
+        ScenarioBody,
+        Tag
     }
 }

@@ -9,22 +9,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
         
         int ScenarioStart;
 
-        bool IsEndOfScenario
-        {
-            get
-            {
-                if (IsLastLine) return true;
-
-                if (!Line.StartsWith(Settings.Language.Scenario)) return false;
-
-                if (ScenarioStart > 0) return true;
-                
-                ScenarioStart = Position;
-
-                return false;
-            }
-        }
-
         public override IEnumerable<ITagSpanWrap<FeatureTokenTag>> Tags
         {
             get
@@ -40,10 +24,28 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
                         FeatureTokenTypes.ScenarioBody
                     ));
 
-                    ScenarioStart = IsLastLine ? 0 : Position;
+                    ScenarioStart = 0;
                 }
 
+                if (IsStartOfScenario) ScenarioStart = Position;
+
                 return Results;
+            }
+        }
+
+        bool IsFirstScenarioTag { get { return Line.StartsWith("@"); } }
+
+        bool IsStartOfScenario { get { return Line.StartsWith(Settings.Language.Scenario); } }
+
+        bool IsEndOfScenario
+        {
+            get
+            {
+                if (ScenarioStart == 0) return IsLastLine && IsStartOfScenario;
+
+                return IsLastLine 
+                    || IsStartOfScenario 
+                    || IsFirstScenarioTag;
             }
         }
     }

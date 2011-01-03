@@ -14,8 +14,7 @@ namespace Raconteur.Generators
 
         private const string TagDeclaration = 
 @"        
-        {0}
-";
+        {0}";
 
         readonly Scenario Scenario;
 

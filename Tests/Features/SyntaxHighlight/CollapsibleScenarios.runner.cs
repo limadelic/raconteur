@@ -30,30 +30,6 @@ Steps
         }
         
         [TestMethod]
-        public void ScenariosWithTags()
-        {         
-            Given_the_Feature_is(
-@"
-Feature: Name
-Scenario: First
-Steps
-@tag
-Scenario: Second
-Steps
-");        
-            Raconteur_should_allow_to_collapse(
-@"
-Scenario: First
-Steps
-");        
-            Raconteur_should_allow_to_collapse(
-@"
-Scenario: Second
-Steps
-");
-        }
-        
-        [TestMethod]
         public void SingleLineScenario()
         {         
             Given_the_Feature_contains("Scenario: First");        
@@ -83,6 +59,49 @@ Scenario: Third
             Raconteur_should_allow_to_collapse("Scenario: First");        
             Raconteur_should_allow_to_collapse("Scenario: Second");        
             Raconteur_should_allow_to_collapse("Scenario: Third");
+        }
+        
+        [TestMethod]
+        public void ScenariosWithTags()
+        {         
+            Given_the_Feature_is(
+@"
+Feature: Name
+Scenario: First
+Steps
+@tag
+Scenario: Second
+Steps
+");        
+            Raconteur_should_allow_to_collapse(
+@"
+Scenario: First
+Steps
+");        
+            Raconteur_should_allow_to_collapse(
+@"
+Scenario: Second
+Steps
+");
+        }
+        
+        [TestMethod]
+        public void ScenariosWithMultipleTags()
+        {         
+            Given_the_Feature_contains(
+@"
+@tag
+Scenario: First
+@tag
+@another_tag
+Scenario: Second
+");        
+            Raconteur_should_allow_to_collapse("Scenario: First");        
+            Raconteur_should_not_allow_to_collapse(
+@"
+Scenario: First
+@tag
+");
         }
 
     }

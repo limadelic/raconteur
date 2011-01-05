@@ -113,7 +113,7 @@
     <Compile Include="SyntaxHighlighting\Parsing\KeywordParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\MultilineParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\ParsingState.cs" />
-    <Compile Include="SyntaxHighlighting\Parsing\ScenariosParser.cs" />
+    <Compile Include="SyntaxHighlighting\Parsing\CollapsibleScenariosParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\TableParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\TagsParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\TagsParserBase.cs" />

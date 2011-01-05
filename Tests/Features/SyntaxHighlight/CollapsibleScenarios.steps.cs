@@ -20,5 +20,18 @@ namespace Features.SyntaxHighlight
                     Sut.Tags.Aggregate("", (Tags, Tag) => Tags + "," + Tag.Text)) 
             );
         }
+
+        void Raconteur_should_not_allow_to_collapse(string Region)
+        {
+            Sut.Tags.Any
+            (
+                Tag => Tag.Text.TrimLines() == Region.TrimLines()
+                    && Tag.Type == FeatureTokenTypes.ScenarioBody
+            )
+            .ShouldBeFalse
+            (
+                string.Format("should not have collapsed [{0}]", Region) 
+            );
+        }
     }
 }

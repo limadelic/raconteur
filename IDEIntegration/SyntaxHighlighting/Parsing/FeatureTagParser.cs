@@ -25,7 +25,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
             Args = new ArgsParser(ParsingState);
             Table = new TableParser(ParsingState);
             Comments = new CommentsParser(ParsingState);
-            Scenarios = new ScenariosParser(ParsingState);
+            Scenarios = new CollapsibleScenariosParser(ParsingState);
             Multiline = new MultilineParser(ParsingState);
             ScenarioTags = new ScenarioTagsParser(ParsingState);
         }

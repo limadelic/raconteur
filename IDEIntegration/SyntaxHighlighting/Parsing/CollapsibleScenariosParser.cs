@@ -3,9 +3,9 @@ using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
 {
-    public class ScenariosParser : TagsParserBase 
+    public class CollapsibleScenariosParser : TagsParserBase 
     {
-        public ScenariosParser(ParsingState ParsingState) : base(ParsingState) {}
+        public CollapsibleScenariosParser(ParsingState ParsingState) : base(ParsingState) {}
         
         public override IEnumerable<ITagSpanWrap<FeatureTokenTag>> Tags
         {

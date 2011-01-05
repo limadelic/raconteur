@@ -16,7 +16,7 @@ namespace Features.SyntaxHighlight
 
         protected override void Given_the_Feature_contains(string Feature) 
         {
-            Given_the_Feature_is(Feature);
+            Given_the_Feature_is(Feature.TrimLines());
         }
 
         protected void Raconteur_should_highlight(int Count, string Text, string Style)

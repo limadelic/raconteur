@@ -27,22 +27,6 @@ Scenario: Scenarios are collapsible
 			Steps
 	"
 
-Scenario: Single line Scenario
-
-	Given the Feature contains "Scenario: First"
-	Raconteur should allow to collapse "Scenario: First"
-
-Scenario: Multiple single line Scenarios
-
-	Given the Feature contains
-	"
-		Scenario: First
-		Scenario: Second
-	"
-
-	Raconteur should allow to collapse "Scenario: First"
-	Raconteur should allow to collapse "Scenario: Second"
-
 Scenario: Scenarios with Tags
 
 	Given the Feature is
@@ -68,3 +52,32 @@ Scenario: Scenarios with Tags
 		Scenario: Second
 			Steps
 	"
+
+Scenario: Single line Scenario
+
+	Given the Feature contains "Scenario: First"
+	Raconteur should allow to collapse "Scenario: First"
+
+Scenario: Feature with single line Scenario
+
+	Given the Feature contains 	
+	"
+		Feature: Name 
+
+		Scenario: Single
+	"
+	Raconteur should allow to collapse "Scenario: Single"
+
+Scenario: Multiple single line Scenarios
+
+	Given the Feature contains
+	"
+		Scenario: First
+		Scenario: Second
+		Scenario: Third
+	"
+
+	Raconteur should allow to collapse "Scenario: First"
+	Raconteur should allow to collapse "Scenario: Second"
+	Raconteur should allow to collapse "Scenario: Third"
+	

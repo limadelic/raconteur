@@ -1,4 +1,3 @@
-
 using System.Linq;
 using FluentSpec;
 using Raconteur;
@@ -14,7 +13,12 @@ namespace Features.SyntaxHighlight
             (
                 Tag => Tag.Text.TrimLines() == Region.TrimLines()
                     && Tag.Type == FeatureTokenTypes.ScenarioBody
-            ).ShouldBeTrue();
+            )
+            .ShouldBeTrue
+            (
+                string.Format("did not collapse [{0}] in [{1}]", Region, 
+                    Sut.Tags.Aggregate("", (Tags, Tag) => Tags + "," + Tag.Text)) 
+            );
         }
     }
 }

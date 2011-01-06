@@ -35,7 +35,11 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
             {
                 var Length = Position - ScenarioStart;
 
-                return Length == 0 ? FullLine.Length : Length - 2;
+                if (!IsLastLine) return Length - 2;
+
+                if (Length > 0) return Length + (IsStartOfScenario ? -2 : FullLine.Length);
+                 
+                return FullLine.Length;
             } 
         }
 

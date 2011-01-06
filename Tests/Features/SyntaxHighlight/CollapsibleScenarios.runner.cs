@@ -9,13 +9,13 @@ namespace Features.SyntaxHighlight
         [TestMethod]
         public void ScenariosAreCollapsible()
         {         
-            Given_the_Feature_is(
+            Given_the_Feature_contains(
 @"
-Feature: Name
 Scenario: First
 Steps
 Scenario: Second
-Steps
+Step1
+Step2
 ");        
             Raconteur_should_allow_to_collapse(
 @"
@@ -25,7 +25,8 @@ Steps
             Raconteur_should_allow_to_collapse(
 @"
 Scenario: Second
-Steps
+Step1
+Step2
 ");
         }
         

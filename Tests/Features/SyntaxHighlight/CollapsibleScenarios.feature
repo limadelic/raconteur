@@ -4,15 +4,14 @@
 
 Scenario: Scenarios are collapsible
 
-	Given the Feature is
+	Given the Feature contains
 	"
-		Feature: Name
-
 		Scenario: First
 			Steps
 
 		Scenario: Second
-			Steps
+			Step1
+			Step2
 	"
 
 	Raconteur should allow to collapse
@@ -24,7 +23,8 @@ Scenario: Scenarios are collapsible
 	Raconteur should allow to collapse
 	"
 		Scenario: Second
-			Steps
+			Step1
+			Step2
 	"
 
 Scenario: Single line Scenario
@@ -54,6 +54,7 @@ Scenario: Multiple single line Scenarios
 	Raconteur should allow to collapse "Scenario: First"
 	Raconteur should allow to collapse "Scenario: Second"
 	Raconteur should allow to collapse "Scenario: Third"
+
 Scenario: Scenarios with Tags
 
 	Given the Feature is
@@ -98,5 +99,4 @@ Scenario: Scenarios with multiple Tags
 		Scenario: First
 		@tag
 	"
-
-	
+		

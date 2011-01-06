@@ -16,7 +16,7 @@ namespace Features.SyntaxHighlight
             )
             .ShouldBeTrue
             (
-                string.Format("did not collapse [{0}] in [{1}]", Region, 
+                string.Format("did not collapse [{0}] in [{1}]", Region.TrimLines(), 
                     Sut.Tags.Aggregate("", (Tags, Tag) => Tags + "," + Tag.Text)) 
             );
         }
@@ -30,7 +30,7 @@ namespace Features.SyntaxHighlight
             )
             .ShouldBeFalse
             (
-                string.Format("should not have collapsed [{0}]", Region) 
+                string.Format("should not have collapsed [{0}]", Region.TrimLines()) 
             );
         }
     }

@@ -99,4 +99,17 @@ Scenario: Scenarios with multiple Tags
 		Scenario: First
 		@tag
 	"
-		
+
+Scenario: Last Scenario ends in multiline line
+
+	Given the Feature contains
+	"
+		Scenario: First
+		/*
+	"
+
+	Raconteur should allow to collapse
+	"
+		Scenario: First
+		/*
+	"

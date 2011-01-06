@@ -45,22 +45,33 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
             }
         }
 
+        IEnumerable<ITagSpanWrap<FeatureTokenTag>> DataTags
+        {
+            get { return Multiline.Tags ?? Comments.Tags; }
+        }
+
+        IEnumerable<ITagSpanWrap<FeatureTokenTag>> CodeTags
+        {
+            get 
+            { 
+                return  
+                    ScenarioTags.Tags ??
+                    Keywords.Tags ??
+                    Table.Tags ??
+                    Args.Tags ??
+                    new List<ITagSpanWrap<FeatureTokenTag>>(); 
+            }
+        }
+
+
         IEnumerable<ITagSpanWrap<FeatureTokenTag>> TagsFromLine(string Line)
         {
             FullLine = Line;
             this.Line = Line.Trim();
 
-            return 
-                Multiline.Tags ?? 
-                Comments.Tags ??
-                (
-                    ScenarioTags.Tags ??
-                    Keywords.Tags ??
-                    Table.Tags ??
-                    Args.Tags ??
-                    new List<ITagSpanWrap<FeatureTokenTag>>()
-                )
-                .Union(Scenarios.Tags);
+            return IsLastLine ? 
+                (DataTags ?? CodeTags).Union(Scenarios.Tags): 
+                 DataTags ?? CodeTags .Union(Scenarios.Tags);
         }
     }
 }

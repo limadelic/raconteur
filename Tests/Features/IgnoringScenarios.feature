@@ -19,7 +19,6 @@ Scenario: Ignore a Scenario
 		}
 	"
 
-@ignore
 Scenario: Ignore with a reason
 
 	Given the Feature contains

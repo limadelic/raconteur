@@ -66,12 +66,19 @@ namespace Raconteur.Generators
         {
             get
             {
-                return Scenario.Tags.Any(IsIgnored) ? 
-                    string.Format(TagDeclaration,"[Ignore]") : string.Empty;
+                var IgnoreTag = Scenario.Tags.FirstOrDefault(IsIgnored);
+
+                if (IgnoreTag == null) return string.Empty;
+
+                var Reason = IgnoreTag.Remove(0, 6);
+
+                if (!Reason.IsEmpty()) Reason = " //" + Reason;
+
+                return string.Format(TagDeclaration,"[Ignore]" + Reason);
             }
         }
 
-        bool IsIgnored(string Tag) { return Tag.ToLower().Equals("ignore"); }
+        bool IsIgnored(string Tag) { return Tag.ToLower().StartsWith("ignore"); }
         
         bool IsNotIgnored(string Tag) { return !IsIgnored(Tag); }
 

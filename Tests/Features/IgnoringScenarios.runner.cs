@@ -24,8 +24,7 @@ public void Ignored()
 ");
         }
         
-        [TestMethod]        
-        [Ignore]
+        [TestMethod]
         public void IgnoreWithAReason()
         {         
             Given_the_Feature_contains(

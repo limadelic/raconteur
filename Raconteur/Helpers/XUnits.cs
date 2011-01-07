@@ -4,7 +4,14 @@ namespace Raconteur
 {
     public class XUnit
     {
-        public string Name, Namespace, ClassAttr, MethodAttr, Category, Ignore, IgnoreWithReason;
+        public string 
+            Name, 
+            Namespace, 
+            ClassAttr = "[TestFixture]", 
+            MethodAttr = "[Test]", 
+            Category = @"[Category(""{0}"")]", 
+            Ignore = "[Ignore]", 
+            IgnoreWithReason = @"[Ignore(""{0}"")]";
     }
 
     public class XUnits
@@ -18,7 +25,6 @@ namespace Raconteur
                 ClassAttr = "[TestClass]",
                 MethodAttr = "[TestMethod]",
                 Category = @"[TestCategory(""{0}"")]",
-                Ignore = @"[Ignore]",
                 IgnoreWithReason = @"[Ignore] // {0}",
             }},
 
@@ -26,22 +32,12 @@ namespace Raconteur
             {
                 Name = "NUnit",
                 Namespace = "NUnit.Framework",
-                ClassAttr = "[TestFixture]",
-                MethodAttr = "[Test]",
-                Category = @"[Category(""{0}"")]",
-                Ignore = @"[Ignore]",
-                IgnoreWithReason = @"[Ignore(""{0}"")]",
             }},
 
             { "mbunit", new XUnit
             {
                 Name = "MbUnit",
                 Namespace = "MbUnit.Framework",
-                ClassAttr = "[TestFixture]",
-                MethodAttr = "[Test]",
-                Category = @"[Category(""{0}"")]",
-                Ignore = @"[Ignore]",
-                IgnoreWithReason = @"[Ignore(""{0}"")]",
             }},
 
             { "xunit", new XUnit
@@ -50,9 +46,14 @@ namespace Raconteur
                 Namespace = "Xunit",
                 ClassAttr = string.Empty,
                 MethodAttr = "[Fact]",
-                Category = @"[Trait(""Category"", ""{0}""]",
-                Ignore = @"[Fact(Skip)]",
+                Category = @"[Trait(""Category"", ""{0}"")]",
+                Ignore = string.Empty,
+                IgnoreWithReason = string.Empty
+/*
+                TODO [Fact] can be used only once                
+                Ignore = @"[Fact(Skip="""")]",
                 IgnoreWithReason = @"[Fact(Skip=""{0}"")]",
+*/
             }},
         };
     }

@@ -80,9 +80,8 @@ namespace Specs
 
             var Sut = new ScenarioGenerator(Scenario);
 
-            Sut.Code.ShouldContain(@"[Category(""tag"")]");
-
-            Settings.XUnit = backup;
+            try { Sut.Code.ShouldContain(@"[Category(""tag"")]"); }
+            finally { Settings.XUnit = backup; }
         }
     }
 }

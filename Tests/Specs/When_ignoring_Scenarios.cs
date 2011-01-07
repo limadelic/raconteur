@@ -38,9 +38,8 @@ namespace Specs
 
             var Sut = new ScenarioGenerator(Scenario);
 
-            Sut.Code.ShouldContain(@"[Ignore(""reason"")]");
-
-            Settings.XUnit = backup;
+            try { Sut.Code.ShouldContain(@"[Ignore(""reason"")]"); } 
+            finally { Settings.XUnit = backup; }
         }
     }
 }

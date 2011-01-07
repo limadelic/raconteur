@@ -6,9 +6,9 @@ namespace Raconteur.Generators
     {
         private const string ScenarioDeclaration = 
 @"        
-        {0}{1}
-        public void {2}()
-        {{ {3}
+        {0}{1}{2}
+        public void {3}()
+        {{ {4}
         }}
 ";
 
@@ -45,6 +45,7 @@ namespace Raconteur.Generators
                     ScenarioDeclaration, 
                     Settings.XUnit.MethodAttr,
                     Tags, 
+                    Ignore,
                     Scenario.Name, 
                     StepCode
                 );
@@ -55,11 +56,24 @@ namespace Raconteur.Generators
         {
             get
             {
-                return Scenario.Tags.Aggregate(string.Empty, (Tags, Tag) =>
+                return Scenario.Tags.Where(IsNotIgnored).Aggregate(string.Empty, (Tags, Tag) =>
                     Tags + string.Format(TagDeclaration, 
                         string.Format(Settings.XUnit.Category, Tag)));
             }
         }
+
+        string Ignore
+        {
+            get
+            {
+                return Scenario.Tags.Any(IsIgnored) ? 
+                    string.Format(TagDeclaration,"[Ignore]") : string.Empty;
+            }
+        }
+
+        bool IsIgnored(string Tag) { return Tag.ToLower().Equals("ignore"); }
+        
+        bool IsNotIgnored(string Tag) { return !IsIgnored(Tag); }
 
         string CodeFor(Step Step) { return new StepGenerator(Step).Code; }
 

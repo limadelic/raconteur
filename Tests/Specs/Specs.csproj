@@ -58,7 +58,8 @@
     <Compile Include="BehaviourOf.cs" />
     <Compile Include="Helpers\ShouldAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="When_grouping_tests.cs" />
+    <Compile Include="When_ignoring_Scenarios.cs" />
+    <Compile Include="When_tagging_scenarios.cs" />
     <Compile Include="When_testing_with_simple_steps.cs" />
     <Compile Include="When_testing_with_arguments.cs" />
     <Compile Include="When_testing_with_outlines.cs" />

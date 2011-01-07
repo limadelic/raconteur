@@ -8,7 +8,7 @@ using Raconteur.Parsers;
 namespace Specs
 {
     [TestFixture]
-    public class When_grouping_tests
+    public class When_tagging_scenarios
     {
         [Test]
         public void should_include_tags_in_definitions()
@@ -84,5 +84,6 @@ namespace Specs
 
             Settings.XUnit = backup;
         }
+
     }
 }

@@ -4,7 +4,7 @@ namespace Raconteur
 {
     public class XUnit
     {
-        public string Name, Namespace, ClassAttr, MethodAttr, Category;
+        public string Name, Namespace, ClassAttr, MethodAttr, Category, Ignore, IgnoreWithReason;
     }
 
     public class XUnits
@@ -18,6 +18,8 @@ namespace Raconteur
                 ClassAttr = "[TestClass]",
                 MethodAttr = "[TestMethod]",
                 Category = @"[TestCategory(""{0}"")]",
+                Ignore = @"[Ignore]",
+                IgnoreWithReason = @"[Ignore] // {0}",
             }},
 
             { "nunit", new XUnit
@@ -27,6 +29,8 @@ namespace Raconteur
                 ClassAttr = "[TestFixture]",
                 MethodAttr = "[Test]",
                 Category = @"[Category(""{0}"")]",
+                Ignore = @"[Ignore]",
+                IgnoreWithReason = @"[Ignore(""{0}"")]",
             }},
 
             { "mbunit", new XUnit
@@ -36,6 +40,8 @@ namespace Raconteur
                 ClassAttr = "[TestFixture]",
                 MethodAttr = "[Test]",
                 Category = @"[Category(""{0}"")]",
+                Ignore = @"[Ignore]",
+                IgnoreWithReason = @"[Ignore(""{0}"")]",
             }},
 
             { "xunit", new XUnit
@@ -45,6 +51,8 @@ namespace Raconteur
                 ClassAttr = string.Empty,
                 MethodAttr = "[Fact]",
                 Category = @"[Trait(""Category"", ""{0}""]",
+                Ignore = @"[Fact(Skip)]",
+                IgnoreWithReason = @"[Fact(Skip=""{0}"")]",
             }},
         };
     }

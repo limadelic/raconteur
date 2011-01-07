@@ -72,9 +72,13 @@ namespace Raconteur.Generators
 
                 var Reason = IgnoreTag.Remove(0, 6);
 
-                if (!Reason.IsEmpty()) Reason = " //" + Reason;
-
-                return string.Format(TagDeclaration,"[Ignore]" + Reason);
+                return string.Format
+                (
+                    TagDeclaration, 
+                    Reason.IsEmpty() ? 
+                        Settings.XUnit.Ignore :
+                        string.Format(Settings.XUnit.IgnoreWithReason, Reason.Trim())
+                );
             }
         }
 

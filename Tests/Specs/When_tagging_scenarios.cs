@@ -84,6 +84,5 @@ namespace Specs
 
             Settings.XUnit = backup;
         }
-
     }
 }

@@ -27,5 +27,20 @@ namespace Specs
 
             Sut.Code.ShouldContain(@"[Ignore] // just because");
         }
+
+        [Test]
+        public void should_use_propper_xUnit_attribute()
+        {
+            var Scenario = new Scenario { Tags = {"ignore reason"} };
+
+            var backup = Settings.XUnit;
+            Settings.XUnit = XUnits.Framework["mbunit"];
+
+            var Sut = new ScenarioGenerator(Scenario);
+
+            Sut.Code.ShouldContain(@"[Ignore(""reason"")]");
+
+            Settings.XUnit = backup;
+        }
     }
 }

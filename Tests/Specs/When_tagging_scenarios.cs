@@ -55,11 +55,11 @@ namespace Specs
 
             Sut.ScenarioFrom(new List<string>
             {
-                "@a_tag dud @another_tag",
-                "@a_tag dud",
+                "@a tag @another tag",
+                "@a tag",
                 "Scenario: With Tag"
             })
-            .Tags.ShouldBe("a_tag", "another_tag");
+            .Tags.ShouldBe("a tag", "another tag");
         }
 
         readonly Scenario Scenario = new Scenario { Tags = { "tag" } };

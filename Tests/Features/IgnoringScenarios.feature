@@ -19,4 +19,20 @@ Scenario: Ignore a Scenario
 		}
 	"
 
+@ignore
 Scenario: Ignore with a reason
+
+	Given the Feature contains
+	"
+		@ignore just because
+		Scenario: Ignored
+	"
+
+	The Runner should contain
+	"
+		[TestMethod]
+		[Ignore] // just because
+		public void Ignored()
+		{
+		}
+	"

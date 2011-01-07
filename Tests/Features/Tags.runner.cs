@@ -29,14 +29,14 @@ public void Tagged()
         {         
             Given_the_Feature_contains(
 @"
-@one_tag
-@another_tag
+@one tag
+@another tag
 Scenario: Tagged
 ");        
             The_Runner_should_contain(
 @"
-[TestCategory(""one_tag"")]
-[TestCategory(""another_tag"")]
+[TestCategory(""one tag"")]
+[TestCategory(""another tag"")]
 ");
         }
         

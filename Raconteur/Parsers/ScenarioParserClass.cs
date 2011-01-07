@@ -38,11 +38,10 @@ namespace Raconteur.Parsers
         protected IEnumerable<string> TagsInLine(string Line) 
         {
             return 
-                from Match Match 
-                in Regex.Matches(Line, @"@(\w+)") 
-                select Match.Groups[1].Value;
+                from Tag in Regex.Split(Line, "@")
+                where !Tag.IsEmpty()
+                select Tag.Trim();
         }
-
 
         string Name
         {

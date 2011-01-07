@@ -23,15 +23,15 @@ Scenario: Multiple Tags
 
 	Given the Feature contains
 	"
-		@one_tag
-		@another_tag
+		@one tag
+		@another tag
 		Scenario: Tagged	
 	"
 
 	The Runner should contain
 	"
-		[TestCategory(""one_tag"")]
-		[TestCategory(""another_tag"")]
+		[TestCategory(""one tag"")]
+		[TestCategory(""another tag"")]
 	"
 
 Scenario: Multiple Tags in one line

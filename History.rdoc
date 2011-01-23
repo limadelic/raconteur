@@ -1,0 +1,21 @@
+=== Version 0.3 
+
+* Features
+  * Syntax Highlight
+  * Multilanguage
+  * Multi xUnit
+  * Comments
+  * Tags
+  * Ignore
+
+=== Version 0.2
+
+* Features
+  * Args
+  * Tables
+  * Scenario Outlines
+
+=== Version 0.1
+
+* Features
+  * Steps

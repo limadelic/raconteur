@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?define ProductShortName = "Raconteur" ?>
-<?define ProductVersion = "0.0.2.0" ?>
-<?define ProductVersionText = "0.0.2.0" ?>
+<?define ProductVersion = "0.3.0.0" ?>
+<?define ProductVersionText = "0.3.0.0" ?>
 <?define ProductUrl = "http://raconteur.github.com" ?>
 <?define Manufacturer = "Limadelic" ?>
 <?define UpgradeCode = "92df6b9f-8f85-4af8-bf63-d7b72650c323" ?>

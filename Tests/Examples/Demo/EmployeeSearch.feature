@@ -11,5 +11,11 @@ Scenario: Find existing Employees
 Scenario: Find by First Name
 
 	Given an Employee named "Marco" "Polo"
-	When I search for Employees with first name "Marco"
-	I should find one with last name "Polo"
+	When I search for Employees whose "first name" "is" "Marco"
+	I should find one whose "last name" is "Polo"
+
+Scenario: Find by Last Name
+
+	Given an Employee named "Marco" "Polo"
+	When I search for Employees whose "last name" "is" "Polo"
+	I should find one whose "first name" is "Marco"

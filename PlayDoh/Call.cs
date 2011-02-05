@@ -1,3 +1,4 @@
+using System;
 using System.Dynamic;
 using System.Linq;
 
@@ -10,6 +11,7 @@ namespace PlayDohs
         public string Name;
         public object[] Args;
         public object Result;
+        public Action Action;
 
         public bool Matches(InvokeBinder binder, object[] args)
         {

@@ -17,8 +17,16 @@ namespace Examples.Demo
         public void FindByFirstName()
         {         
             Given_an_Employee_named("Marco", "Polo");        
-            When_I_search_for_Employees_with_first_name("Marco");        
-            I_should_find_one_with_last_name("Polo");
+            When_I_search_for_Employees_whose("first name", "is", "Marco");        
+            I_should_find_one_whose__is("last name", "Polo");
+        }
+        
+        [TestMethod]
+        public void FindByLastName()
+        {         
+            Given_an_Employee_named("Marco", "Polo");        
+            When_I_search_for_Employees_whose("last name", "is", "Polo");        
+            I_should_find_one_whose__is("first name", "Marco");
         }
 
     }

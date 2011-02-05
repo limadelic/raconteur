@@ -1,20 +1,34 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PlayDohs;
+// ReSharper disable UnusedMember.Local
 
 namespace Examples.Demo 
 {
     public partial class EmployeeSearch 
     {
+        static readonly List<Employee> ExpectedEmployees = new List<Employee> { new Employee() };
+
         List<Employee> Employees;
+
         readonly dynamic EmployeeRepo = new PlayDoh();
+
+        [TestInitialize]
+        public void Setup()
+        {
+            EmployeeRepo
+                .Returns(ExpectedEmployees)
+                .On.FindByLastName("smith");
+
+            Controller
+                .Does((Action) (() => View.Employees = ExpectedEmployees))
+                .On.Find();
+        }
 
         void When_I_search_for_existing_Employees() 
         {
-            EmployeeRepo
-                .Returns(new List<Employee> { new Employee() })
-                .When.FindByLastName("smith");
-
             Employees = EmployeeRepo.FindByLastName("smith");
         }
         
@@ -44,5 +58,25 @@ namespace Examples.Demo
         {
             Browser.AssertExist("last_name", lastName);
         }
+
+        readonly dynamic Controller = new PlayDoh();
+        readonly dynamic View = new PlayDoh();
+
+        void When_I_search_for_Employees_whose(string criteria, string oper, string value) 
+        {
+            View.Criteria = criteria;
+            View.Operator = oper;
+            View.Value = value;
+
+            Controller.Find();
+
+            Employees = View.Employees;
+        }
+
+        void I_should_find_one_whose__is(string property, string value)
+        {
+            Assert.IsTrue(Employees.Any(x => x.Has(property, value)));
+        }
     }
 }
+// ReSharper restore UnusedMember.Local

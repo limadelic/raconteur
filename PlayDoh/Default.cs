@@ -1,3 +1,4 @@
+using System;
 using System.Dynamic;
 
 namespace PlayDohs
@@ -11,12 +12,29 @@ namespace PlayDohs
         public bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             var expectedCall = Target.ExpectedCalls.FindLast
-                (
-                    call => call.Matches(binder.Name, args)
-                );
+            (
+                call => call.Matches(binder.Name, args)
+            );
 
-            result = expectedCall != null ? expectedCall.Result : Target;
+            if (expectedCall == null) result = Target;
+            else
+            {
+                if (expectedCall.Action != null) expectedCall.Action();
+                result = expectedCall.Result;
+            }
 
+            return true;
+        }
+
+        public bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            Target[binder.Name] = value;
+            return true;
+        }
+
+        public bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            result = Target[binder.Name] ?? Target;
             return true;
         }
     }

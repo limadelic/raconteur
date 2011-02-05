@@ -1,3 +1,4 @@
+using System;
 using System.Dynamic;
 
 namespace PlayDohs
@@ -15,11 +16,22 @@ namespace PlayDohs
             {
                 Name = binder.Name,
                 Args = args,
-                Result = Target.ReturnValue        
+                Result = Target.ReturnValue,
+                Action = Target.Action
             });
 
             result = Target;
             return true;
+        }
+
+        public bool TrySetMember(SetMemberBinder binder, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool TryGetMember(GetMemberBinder binder, out object result)
+        {
+            throw new NotImplementedException();
         }
     }
 }

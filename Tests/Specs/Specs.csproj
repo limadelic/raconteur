@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="Actors.cs" />
     <Compile Include="BehaviourOf.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\ShouldAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_ignoring_Scenarios.cs" />

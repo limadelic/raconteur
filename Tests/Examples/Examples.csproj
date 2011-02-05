@@ -60,10 +60,6 @@
       <DependentUpon>ScoreCalculationAlternatives.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Demo\Context\Employee.cs" />
-    <Compile Include="Demo\Context\EmployeeSearchView.cs" />
-    <Compile Include="Demo\Context\Extensions.cs" />
-    <Compile Include="Demo\Context\EmployeeRepo.cs" />
     <Compile Include="Demo\EmployeeSearch.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -184,6 +180,14 @@
     <ProjectReference Include="..\..\PlayDoh\PlayDoh.csproj">
       <Project>{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}</Project>
       <Name>PlayDoh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Raconteur\Raconteur.csproj">
+      <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
+      <Name>Raconteur</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Specs\Specs.csproj">
+      <Project>{D22327EF-5584-4936-9857-4046E4498CE6}</Project>
+      <Name>Specs</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

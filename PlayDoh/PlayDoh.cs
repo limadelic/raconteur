@@ -58,7 +58,11 @@ namespace PlayDohs
 
         internal object this[string property] 
         { 
-            get { return Properties[property];  }
+            get
+            {
+                return Properties.ContainsKey(property) ? Properties[property] : null;
+            }
+
             set { Properties[property] = value; } 
         }
     }

@@ -28,6 +28,54 @@ namespace Examples.Demo
             When_I_search_for_Employees_whose("last name", "is", "Polo");        
             I_should_find_one_whose__is("first name", "Marco");
         }
+        
+        [TestMethod]
+        public void FindWaldo()
+        {         
+            Given_the_Employees_("Robinson", "Crusoe");        
+            Given_the_Employees_("Long John", "Silver");        
+            Given_the_Employees_("Waldo", "");        
+            Given_the_Employees_("Ali", "Baba");        
+            When_I_search_for_Employees_whose("first name", "is", "Waldo");        
+            I_should_find_one_whose__is("first name", "Waldo");
+        }
+        
+        [TestMethod]
+        public void FindWaldo_Crusoe()
+        {         
+            Given_the_Employees_("Robinson", "Crusoe");        
+            Given_the_Employees_("Long John", "Silver");        
+            Given_the_Employees_("Waldo", "");        
+            Given_the_Employees_("Ali", "Baba");        
+            When_I_search_for_Employees_whose_
+            (        
+                new[] {"first name", "contains", "o"},        
+                new[] {"last name", "is not", "Silver"}
+            );        
+            I_should_find("Robinson", "Crusoe");        
+            I_should_find("Waldo", "");
+        }
+        
+        [TestMethod]
+        public void FindWaldo_Crusoe_AliBaba1()
+        {         
+            When_I_search_for_Employees_whose("first name", "is", "Waldo");        
+            I_should_find_one_whose__is("first name", "Waldo");
+        }
+        
+        [TestMethod]
+        public void FindWaldo_Crusoe_AliBaba2()
+        {         
+            When_I_search_for_Employees_whose("first name", "starts with", "Robin");        
+            I_should_find_one_whose__is("last name", "Crusoe");
+        }
+        
+        [TestMethod]
+        public void FindWaldo_Crusoe_AliBaba3()
+        {         
+            When_I_search_for_Employees_whose("last name", "contains", "Baba");        
+            I_should_find_one_whose__is("first name", "Ali");
+        }
 
     }
 }

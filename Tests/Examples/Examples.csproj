@@ -60,7 +60,19 @@
       <DependentUpon>ScoreCalculationAlternatives.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Screencast02.runner.cs">
+    <Compile Include="Demo\Context\Employee.cs" />
+    <Compile Include="Demo\Context\EmployeeSearchView.cs" />
+    <Compile Include="Demo\Context\Extensions.cs" />
+    <Compile Include="Demo\Context\EmployeeRepo.cs" />
+    <Compile Include="Demo\EmployeeSearch.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployeeSearch.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Demo\EmployeeSearch.steps.cs">
+      <DependentUpon>EmployeeSearch.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Demo\Screencast02.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Screencast02.feature</DependentUpon>
@@ -113,7 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screencast02.steps.cs">
+    <Compile Include="Demo\Screencast02.steps.cs">
       <DependentUpon>Screencast02.feature</DependentUpon>
     </Compile>
     <Compile Include="TicTacToe\TicTacToe.runner.cs">
@@ -135,7 +147,11 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>ScoreCalculationAlternatives.runner.cs</LastGenOutput>
     </None>
-    <None Include="Screencast02.feature">
+    <None Include="Demo\EmployeeSearch.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>EmployeeSearch.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Demo\Screencast02.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Screencast02.runner.cs</LastGenOutput>
     </None>
@@ -163,6 +179,12 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>TicTacToe.runner.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlayDoh\PlayDoh.csproj">
+      <Project>{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}</Project>
+      <Name>PlayDoh</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Examples
+namespace Examples.Demo
 {
     public partial class DemoForVersion0_2
     {

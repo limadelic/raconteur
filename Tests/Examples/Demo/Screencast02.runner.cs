@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Examples 
+namespace Examples.Demo 
 {
     [TestClass]
     public partial class DemoForVersion0_2 

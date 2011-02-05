@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{041FA850
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Tests\Examples\Examples.csproj", "{E0053ED4-EEC1-4339-9148-E54665BEFC8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayDoh", "PlayDoh\PlayDoh.csproj", "{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,16 @@ Global
 		{E0053ED4-EEC1-4339-9148-E54665BEFC8A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E0053ED4-EEC1-4339-9148-E54665BEFC8A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E0053ED4-EEC1-4339-9148-E54665BEFC8A}.Release|x86.ActiveCfg = Release|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

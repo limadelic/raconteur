@@ -249,6 +249,14 @@
     <Compile Include="Tags.steps.cs">
       <DependentUpon>Tags.feature</DependentUpon>
     </Compile>
+    <Compile Include="UsingSteps.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsingSteps.feature</DependentUpon>
+    </Compile>
+    <Compile Include="UsingSteps.steps.cs">
+      <DependentUpon>UsingSteps.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Comments.feature">
@@ -334,6 +342,10 @@
     <None Include="Tags.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Tags.runner.cs</LastGenOutput>
+    </None>
+    <None Include="UsingSteps.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>UsingSteps.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -54,7 +54,7 @@ namespace PlayDohs
             return this;
         }
 
-        Dictionary<string, object> Properties;
+        readonly Dictionary<string, object> Properties;
 
         internal object this[string property] 
         { 

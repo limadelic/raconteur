@@ -114,6 +114,14 @@
     <Compile Include="IgnoringScenarios.steps.cs">
       <DependentUpon>IgnoringScenarios.feature</DependentUpon>
     </Compile>
+    <Compile Include="Intellisense\Intellisense.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Intellisense.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Intellisense\Intellisense.steps.cs">
+      <DependentUpon>Intellisense.feature</DependentUpon>
+    </Compile>
     <Compile Include="InvalidFeature.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -270,6 +278,10 @@
     <None Include="IgnoringScenarios.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>IgnoringScenarios.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Intellisense\Intellisense.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Intellisense.runner.cs</LastGenOutput>
     </None>
     <None Include="InvalidFeature.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

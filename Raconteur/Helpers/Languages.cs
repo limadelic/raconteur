@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Raconteur
 {
     public class Language
     {
         public string Name, Native, Feature, Background, Scenario, ScenarioOutline, Examples;
+
+        public List<string> Keywords
+        {
+            get { return new List<string> {Feature, Scenario, ScenarioOutline, Examples}; }
+        }
     }
 
     public static class Languages

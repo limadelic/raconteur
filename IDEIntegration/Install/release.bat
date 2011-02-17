@@ -7,4 +7,4 @@ if "%programfiles(x86)%"=="" (
   copy ..\bin\Debug\IDEIntegration\*.* "%programfiles(x86)%\Raconteur" /y
 )
 
-rem pause
+pause

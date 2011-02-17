@@ -88,7 +88,7 @@ namespace Raconteur
 
         public static string TrimLines(this string It)
         {
-            var TrimmedLines = Regex.Split(It, Environment.NewLine)
+            var TrimmedLines = It.Lines()
                 .Where(Line => !string.IsNullOrWhiteSpace(Line))
                 .Select(Line => Line.Trim());
 

@@ -1,14 +1,17 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using FluentSpec;
+using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur.IDEIntegration.Intellisense;
+using Specs;
 
 namespace Features.Intellisense 
 {
     public partial class Intellisense
     {
         private CompletionCalculator completions;
-        private List<string> results;
+        private IEnumerable<Completion> results;
 
         private void Given_the_Feature_contains(string feature)
         {

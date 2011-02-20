@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.Language.Intellisense;
 
 namespace Raconteur.IDEIntegration.Intellisense
 {
@@ -7,13 +8,14 @@ namespace Raconteur.IDEIntegration.Intellisense
     {
         public string Feature { get; set; }
 
-        public List<string> For(string fragment)
+        public IEnumerable<Completion> For(string fragment)
         {
             var possibilities = Feature.TrimLines().Lines()
                 .Union(Settings.Language.Keywords);
             
-            return possibilities.Where(keyword => 
-                keyword.StartsWith(fragment, true, null)).ToList();
+            return possibilities
+                .Where(possibility => possibility.StartsWith(fragment, true, null))
+                .Select(possibility => new Completion(possibility));
         }
     }
 }

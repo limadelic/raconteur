@@ -16,7 +16,7 @@ namespace Raconteur.IDEIntegration.Intellisense
 
         public ICompletionSource TryCreateCompletionSource(ITextBuffer textBuffer)
         {
-            return new CompletionSource(this, textBuffer);
+            return new CompletionSource();
         }
     }
 }

@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using FluentSpec;
+using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur;
 
 namespace Specs
@@ -29,6 +32,16 @@ namespace Specs
             Step.Name.ShouldBe(Name);
             Step.Args.ShouldBe(Args);
             return Step;
+        }
+
+        public static void ShouldContain(this IEnumerable<Completion> completions, string text)
+        {
+            completions.Any(completion => completion.DisplayText == text).ShouldBeTrue();
+        }
+
+        public static void ShouldNotContain(this IEnumerable<Completion> completions, string text)
+        {
+            completions.Any(completion => completion.DisplayText == text).ShouldBeFalse();
         }
     }
 }

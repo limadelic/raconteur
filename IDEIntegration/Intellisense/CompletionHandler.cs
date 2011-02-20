@@ -58,12 +58,6 @@ namespace Raconteur.IDEIntegration.Intellisense
 
         private char TypedCharacter
         {
-            //            var typedChar = char.MinValue;
-            //            
-            //make sure the input is a char before getting it
-            //            if (pguidCmdGroup == VSConstants.VSStd2K && nCmdID == (uint)VSConstants.VSStd2KCmdID.TYPECHAR)
-            //                typedChar = (char)(ushort)Marshal.GetObjectForNativeVariant(pvaIn);
-            //            return typedChar;
             get
             {
                 return commandInfo.CommandGroup == VSConstants.VSStd2K &&
@@ -78,8 +72,7 @@ namespace Raconteur.IDEIntegration.Intellisense
             get
             {
                 return commandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.RETURN
-                       || commandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.TAB
-                       || (char.IsWhiteSpace(TypedCharacter) || char.IsPunctuation(TypedCharacter));
+                       || commandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.TAB;
             }
         }
 

@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using FluentSpec;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur.IDEIntegration.Intellisense;
 using Specs;

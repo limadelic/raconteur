@@ -14,7 +14,7 @@ namespace Raconteur.IDEIntegration.Intellisense
                 .Union(Settings.Language.Keywords);
             
             return possibilities
-                .Where(possibility => possibility.StartsWith(fragment, true, null))
+                .Where(possibility => possibility.StartsWith(fragment.Trim(), true, null))
                 .Select(possibility => new Completion(possibility));
         }
     }

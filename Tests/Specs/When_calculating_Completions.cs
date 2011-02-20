@@ -1,5 +1,3 @@
-using FluentSpec;
-using System.Linq;
 using MbUnit.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur;

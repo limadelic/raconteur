@@ -51,18 +51,22 @@
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Language.Intellisense, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="NSubstitute">
+      <HintPath>..\..\lib\nsubstitute\NSubstitute.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actors.cs" />
-    <Compile Include="BehaviourOf.cs" />
+    <Compile Include="Helpers\Actors.cs" />
+    <Compile Include="Helpers\BehaviourOf.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\ShouldAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_calculating_Completions.cs" />
     <Compile Include="When_ignoring_Scenarios.cs" />
+    <Compile Include="When_resuing_Steps.cs" />
     <Compile Include="When_tagging_scenarios.cs" />
     <Compile Include="When_testing_with_simple_steps.cs" />
     <Compile Include="When_testing_with_arguments.cs" />
@@ -78,6 +82,10 @@
     <ProjectReference Include="..\..\Raconteur\Raconteur.csproj">
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{AF160E6F-283E-4DBC-8284-9A98727CCA81}</Project>
+      <Name>Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

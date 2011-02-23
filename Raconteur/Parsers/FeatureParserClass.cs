@@ -7,7 +7,7 @@ namespace Raconteur.Parsers
 {
     public class FeatureParserClass : FeatureParser 
     {
-        string Content;
+        string Content, Assembly;
 
         public ScenarioTokenizer ScenarioTokenizer { get; set; }
         public TypeResolver TypeResolver { get; set; }
@@ -15,6 +15,7 @@ namespace Raconteur.Parsers
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
             Content = FeatureFile.Content.TrimLines();
+            Assembly = FeatureItem.Assembly;
 
             if (IsNotAValidFeature) return InvalidFeature;
 
@@ -82,7 +83,7 @@ namespace Raconteur.Parsers
                     )
                     .Groups[1].Value.CamelCase().ToValidIdentifier();
 
-                    return TypeResolver.TypeOf(ClassName);
+                    return TypeResolver.TypeOf(ClassName, Assembly);
                 } 
                 catch { return null; }
             }

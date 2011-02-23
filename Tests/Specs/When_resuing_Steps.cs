@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
@@ -18,13 +16,16 @@ namespace Specs
         [Test]
         public void should_find_the_StepLibrary()
         {
+            var FeatureItem = Substitute.For<FeatureItem>();
+
             var Parser = new FeatureParserClass
             {
                 ScenarioTokenizer = Substitute.For<ScenarioTokenizer>(),
                 TypeResolver = Substitute.For<TypeResolver>()
             };
 
-            Parser.TypeResolver.TypeOf("StepLibrary").Returns(typeof(StepLibrary));
+            FeatureItem.Assembly.Returns("Common");
+            Parser.TypeResolver.TypeOf("StepLibrary", "Common").Returns(typeof(StepLibrary));
 
             var Feature = Parser.FeatureFrom(new FeatureFile
             {
@@ -34,26 +35,16 @@ namespace Specs
 
                     using Step Library
                 "
-            }, new VsFeatureItem());
+            }, FeatureItem);
             
             Feature.StepLibrary.ShouldBe(typeof(StepLibrary));
-
-/*
-    Given.Sut.IsA<FeatureParserClass>();
-    And.TypeOf("StepLibrary").Is(typeof(StepLibrary))
-    When.Parse(...)
-    The.StepLibrary.ShouldBe(typeof(StepLibrary));
-*/
         }
 
         [Test]
         public void should_find_types_in_different_assemblies()
         {
-            new TypeResolverClass
-            {
-                Assembly = "Common"
-            }
-            .TypeOf("StepLibrary").ShouldBe(typeof(StepLibrary));
+            new TypeResolverClass()
+            .TypeOf("StepLibrary", "Common").ShouldBe(typeof(StepLibrary));
         }
 
         readonly Feature Feature = new Feature

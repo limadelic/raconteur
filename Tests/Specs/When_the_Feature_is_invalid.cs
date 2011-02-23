@@ -1,5 +1,6 @@
 using FluentSpec;
 using MbUnit.Framework;
+using NSubstitute;
 using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
@@ -14,13 +15,13 @@ namespace Specs
         public class A_feature_parser : BehaviorOf<FeatureParserClass>
         {
             readonly FeatureFile FeatureFile = new FeatureFile();
-            readonly VsFeatureItem VsFeatureItem = new VsFeatureItem();
+            readonly FeatureItem FeatureItem = Substitute.For<FeatureItem>();
 
             [Test]
             public void should_handle_an_empty_feature()
             {
                 FeatureFile.Content = string.Empty;
-                The.FeatureFrom(FeatureFile, VsFeatureItem).ShouldBeA<InvalidFeature>();
+                The.FeatureFrom(FeatureFile, FeatureItem).ShouldBeA<InvalidFeature>();
             }
         }
 

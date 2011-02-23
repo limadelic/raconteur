@@ -6,6 +6,11 @@ namespace Raconteur.IDE
 {
     public class VsFeatureItem : FeatureItem
     {
+        public string Assembly
+        {
+            get { return Project.Properties.Item("AssemblyName").Value as string; }
+        }
+
         public EnvDTE.Project Project { get { return FeatureItem.ContainingProject; } }
 
         public string DefaultNamespace { get; set; }

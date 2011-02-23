@@ -4,7 +4,7 @@ using FluentSpec;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur;
 
-namespace Specs
+namespace Common
 {
     public static class ShouldAssertions
     {

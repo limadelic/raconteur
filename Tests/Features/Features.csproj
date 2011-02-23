@@ -374,10 +374,6 @@
       <Project>{AF160E6F-283E-4DBC-8284-9A98727CCA81}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Specs\Specs.csproj">
-      <Project>{D22327EF-5584-4936-9857-4046E4498CE6}</Project>
-      <Name>Specs</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="raconteur.settings.txt" />

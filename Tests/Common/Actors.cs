@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Raconteur;
 
-namespace Specs
+namespace Common
 {
     public class Actors
     {

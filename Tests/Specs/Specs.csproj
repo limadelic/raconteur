@@ -59,10 +59,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\Actors.cs" />
     <Compile Include="Helpers\BehaviourOf.cs" />
     <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Helpers\ShouldAssertions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="When_calculating_Completions.cs" />
     <Compile Include="When_ignoring_Scenarios.cs" />

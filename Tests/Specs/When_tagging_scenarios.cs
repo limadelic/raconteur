@@ -4,6 +4,7 @@ using MbUnit.Framework;
 using Raconteur;
 using Raconteur.Generators;
 using Raconteur.Parsers;
+using ShouldAssertions = Common.ShouldAssertions;
 
 namespace Specs
 {
@@ -53,13 +54,13 @@ namespace Specs
         {
             var Sut = new ScenarioParserClass();
 
-            Sut.ScenarioFrom(new List<string>
-            {
-                "@a tag @another tag",
-                "@a tag",
-                "Scenario: With Tag"
-            })
-            .Tags.ShouldBe("a tag", "another tag");
+            ShouldAssertions.ShouldBe(Sut.ScenarioFrom(new List<string>
+                {
+                    "@a tag @another tag",
+                    "@a tag",
+                    "Scenario: With Tag"
+                })
+                .Tags, "a tag", "another tag");
         }
 
         readonly Scenario Scenario = new Scenario { Tags = { "tag" } };

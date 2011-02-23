@@ -1,8 +1,8 @@
+using Common;
 using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur.IDE;
 using Raconteur.IDEIntegration;
-using Specs;
 
 
 namespace Features 

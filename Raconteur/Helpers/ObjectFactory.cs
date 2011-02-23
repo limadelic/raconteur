@@ -22,6 +22,7 @@ namespace Raconteur
             {
                 return new FeatureParserClass
                 {
+                    TypeResolver = new TypeResolverClass { Assembly = "Common" },
                     ScenarioTokenizer = new ScenarioTokenizerClass
                     {
                         ScenarioParser = new ScenarioParserClass

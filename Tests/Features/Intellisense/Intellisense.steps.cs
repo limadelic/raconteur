@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur.IDEIntegration.Intellisense;
@@ -23,6 +24,11 @@ namespace Features.Intellisense
         private void Then__should_be_displayed(string suggestion)
         {
             results.ShouldContain(suggestion);
+        }
+
+        private void Then__should_not_be_displayed(string suggestion)
+        {
+            results.ShouldNotContain(suggestion);
         }
     }
 }

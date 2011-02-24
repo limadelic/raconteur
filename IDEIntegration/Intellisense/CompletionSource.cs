@@ -21,16 +21,11 @@ namespace Raconteur.IDEIntegration.Intellisense
         public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
         {
             var currentLine = GetCurrentLineFrom(session);
-            var feature = RemoveLineFromSession(currentLine, session);
+            var feature = session.TextView.TextSnapshot.GetText();
             var completions = new CompletionCalculator { Feature = feature };
 
             completionSets.Add(new CompletionSet("Steps", "Steps", GetSpanForLine(currentLine, session),
-                completions.For(currentLine.Extent.GetText()), null));
-        }
-
-        private string RemoveLineFromSession(ITextViewLine line, ICompletionSession session)
-        {
-            return session.TextView.TextSnapshot.GetText().Replace(line.Extent.GetText(), string.Empty);
+                completions.For(currentLine.Extent.GetText().Trim()), null));
         }
 
         private ITextViewLine GetCurrentLineFrom(ICompletionSession session)
@@ -41,7 +36,7 @@ namespace Raconteur.IDEIntegration.Intellisense
         private ITrackingSpan GetSpanForLine(ITextViewLine line, ICompletionSession session)
         {
             var currentPoint = (session.TextView.Caret.Position.BufferPosition) - 1;
-            return currentPoint.Snapshot.CreateTrackingSpan(line.Extent, SpanTrackingMode.EdgeInclusive);
+            return currentPoint.Snapshot.CreateTrackingSpan(line.ExtentIncludingLineBreak, SpanTrackingMode.EdgeInclusive);
         }
     }
 }

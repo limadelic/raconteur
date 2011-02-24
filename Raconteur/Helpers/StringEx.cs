@@ -95,6 +95,11 @@ namespace Raconteur
             return string.Join(Environment.NewLine, TrimmedLines);
         }
 
+        public static bool StartsWithKeyword(this string line)
+        {
+            return Settings.Language.Keywords.Any(line.StartsWith);
+        }
+
         public static IEnumerable<string> Lines(this string It)
         {
             return Regex.Split(It, Environment.NewLine);

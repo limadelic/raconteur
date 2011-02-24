@@ -7,16 +7,26 @@ namespace Raconteur.Generators
         const string RunnerClass =
 
 @"using {0};
+{1}
 
-namespace {1} 
+namespace {2} 
 {{
-    {2}
-    public partial class {3} 
+    {3}
+    public partial class {4} 
     {{
-{4}
+{5}
+{6}
     }}
 }}
 ";
+        const string Using =
+@"using {0};
+";
+
+        const string StepLibraryVar =
+@"        public {0} {0} = new {0}();
+";
+
         readonly Feature Feature;
 
         public RunnerGenerator(Feature Feature)
@@ -32,9 +42,11 @@ namespace {1}
                 (
                     RunnerClass,
                     Settings.XUnit.Namespace, 
+                    StepLibraryNamespace,
                     Feature.Namespace,
                     Settings.XUnit.ClassAttr, 
-                    Feature.Name, 
+                    Feature.Name,
+                    StepLibraryDeclaration, 
                     ScenariosCode
                 );
             }
@@ -51,7 +63,25 @@ namespace {1}
 
         string CodeFrom(Scenario Scenario)
         {
-            return new ScenarioGenerator(Scenario).Code;
+            return new ScenarioGenerator(Scenario, Feature.StepLibrary).Code;
+        }
+
+        string StepLibraryNamespace
+        {
+            get
+            {
+                return Feature.StepLibrary == null ? string.Empty :
+                    string.Format(Using, Feature.StepLibrary.Namespace);
+            }
+        }
+
+        string StepLibraryDeclaration
+        {
+            get
+            {
+                return Feature.StepLibrary == null ? string.Empty :
+                    string.Format(StepLibraryVar, Feature.StepLibrary.Name);
+            }
         }
     }
 }

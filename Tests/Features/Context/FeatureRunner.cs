@@ -1,11 +1,11 @@
 ﻿using FluentSpec;
+using NSubstitute;
 using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 
 namespace Features
 {
-
     public class FeatureRunner
     {
         protected string Feature;
@@ -18,9 +18,11 @@ namespace Features
 
                 var Parser = ObjectFactory.NewFeatureParser;
 
-                var Project = new VsFeatureItem { DefaultNamespace = "Features" };
+                var FeatureItem = Substitute.For<FeatureItem>();
+                FeatureItem.DefaultNamespace = "Features";
+                FeatureItem.Assembly.Returns("Features");
 
-                var NewFeature = Parser.FeatureFrom(FeatureFile, Project);
+                var NewFeature = Parser.FeatureFrom(FeatureFile, FeatureItem);
 
                 var Code = ObjectFactory.NewRunnerGenerator(NewFeature).Code;
 

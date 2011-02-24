@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Raconteur.Generators
 {
@@ -17,10 +18,12 @@ namespace Raconteur.Generators
         {0}";
 
         readonly Scenario Scenario;
+        readonly Type StepLibrary;
 
-        public ScenarioGenerator(Scenario Scenario) 
+        public ScenarioGenerator(Scenario Scenario, Type StepLibrary = null)
         {
             this.Scenario = Scenario;
+            this.StepLibrary = StepLibrary;
         }
 
         public string Code
@@ -86,7 +89,7 @@ namespace Raconteur.Generators
         
         bool IsNotIgnored(string Tag) { return !IsIgnored(Tag); }
 
-        string CodeFor(Step Step) { return new StepGenerator(Step).Code; }
+        string CodeFor(Step Step) { return new StepGenerator(Step, StepLibrary).Code; }
 
         string OutlineScenarioCode
         {

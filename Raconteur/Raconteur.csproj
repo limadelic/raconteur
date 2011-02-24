@@ -65,6 +65,7 @@
     <Compile Include="Helpers\StringEx.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Helpers\SyntaxExtensions.cs" />
+    <Compile Include="Helpers\TypeResolver.cs" />
     <Compile Include="Helpers\XmlDocument.cs" />
     <Compile Include="Helpers\XUnits.cs" />
     <Compile Include="IDE\FeatureItem.cs" />

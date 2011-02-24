@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Raconteur
 {
@@ -8,6 +9,7 @@ namespace Raconteur
         public string Name { get; set; }
         public string Namespace { get; set; }
         public string FileName { get; set; }
+        public Type StepLibrary { get; set; }
 
         public Feature()
         {

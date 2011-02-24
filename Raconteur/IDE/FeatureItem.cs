@@ -7,7 +7,8 @@ namespace Raconteur.IDE
         void AddStepDefinitions(string Content);
         bool ContainsStepDefinitions { get; }
         string ExistingStepDefinitions { get; }
-        
+        string Assembly { get; }
+
         EnvDTE.Project Project { get; }
     }
 }

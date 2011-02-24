@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Common;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur.IDEIntegration.Intellisense;
-using Specs;
 
 namespace Features.Intellisense 
 {

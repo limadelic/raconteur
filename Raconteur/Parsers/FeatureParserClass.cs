@@ -7,12 +7,15 @@ namespace Raconteur.Parsers
 {
     public class FeatureParserClass : FeatureParser 
     {
-        string Content;
+        string Content, Assembly;
+
         public ScenarioTokenizer ScenarioTokenizer { get; set; }
+        public TypeResolver TypeResolver { get; set; }
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
             Content = FeatureFile.Content.TrimLines();
+            Assembly = FeatureItem.Assembly;
 
             if (IsNotAValidFeature) return InvalidFeature;
 
@@ -21,7 +24,8 @@ namespace Raconteur.Parsers
                 FileName = FeatureFile.Name,
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
-                Scenarios = ScenarioTokenizer.ScenariosFrom(Content)
+                Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
+                StepLibrary = StepLibrary
             };
         }
 
@@ -61,6 +65,25 @@ namespace Raconteur.Parsers
                             Environment.NewLine + "|$)"
                     )
                     .Groups[1].Value.CamelCase().ToValidIdentifier();
+                } 
+                catch { return null; }
+            }
+        }
+
+        Type StepLibrary
+        {
+            get 
+            {
+                try
+                {
+                    var ClassName = Regex.Match
+                    (
+                        Content, 
+                        @"using (\w.+)(" + Environment.NewLine + "|$)"
+                    )
+                    .Groups[1].Value.CamelCase().ToValidIdentifier();
+
+                    return TypeResolver.TypeOf(ClassName, Assembly);
                 } 
                 catch { return null; }
             }

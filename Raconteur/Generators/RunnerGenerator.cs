@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace Raconteur.Generators
@@ -63,25 +64,24 @@ namespace {2}
 
         string CodeFrom(Scenario Scenario)
         {
-            return new ScenarioGenerator(Scenario, Feature.StepLibrary).Code;
+            return new ScenarioGenerator(Scenario, Feature.StepLibraries).Code;
+        }
+
+        string AgrregateLibraries(string Template, Func<Type, string> Field)
+        {
+            return !Feature.HasStepLibraries ? string.Empty :
+                Feature.StepLibraries.Aggregate("", (All, Lib) => All + 
+                    string.Format(Template, Field(Lib)));
         }
 
         string StepLibraryNamespace
         {
-            get
-            {
-                return Feature.StepLibrary == null ? string.Empty :
-                    string.Format(Using, Feature.StepLibrary.Namespace);
-            }
+            get { return AgrregateLibraries(Using, Lib => Lib.Namespace); }
         }
 
         string StepLibraryDeclaration
         {
-            get
-            {
-                return Feature.StepLibrary == null ? string.Empty :
-                    string.Format(StepLibraryVar, Feature.StepLibrary.Name);
-            }
+            get { return AgrregateLibraries(StepLibraryVar, Lib => Lib.Name); }
         }
     }
 }

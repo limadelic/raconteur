@@ -9,11 +9,17 @@ namespace Raconteur
         public string Name { get; set; }
         public string Namespace { get; set; }
         public string FileName { get; set; }
-        public Type StepLibrary { get; set; }
+
+        public bool HasStepLibraries
+        {
+            get { return StepLibraries != null && StepLibraries.Count > 0; }
+        }
+        public List<Type> StepLibraries { get; set; }
 
         public Feature()
         {
             Scenarios = new List<Scenario>();
+            StepLibraries = new List<Type>();
         }
     }
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Raconteur.Generators;
 using Raconteur.IDE;
@@ -25,7 +27,7 @@ namespace Raconteur.Parsers
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
-                StepLibrary = StepLibrary
+                StepLibraries = StepLibraries
             };
         }
 
@@ -70,22 +72,22 @@ namespace Raconteur.Parsers
             }
         }
 
-        Type StepLibrary
+        List<Type> StepLibraries
         {
             get 
             {
-                try
-                {
-                    var ClassName = Regex.Match
-                    (
-                        Content, 
-                        @"using (\w.+)(" + Environment.NewLine + "|$)"
-                    )
-                    .Groups[1].Value.CamelCase().ToValidIdentifier();
+                var Matches = Regex.Matches
+                (
+                    Content, 
+                    @"using (\w.+)(\r\n|$)"
+                );
 
-                    return TypeResolver.TypeOf(ClassName, Assembly);
-                } 
-                catch { return null; }
+                if (Matches.Count == 0) return null;
+
+                return 
+                    (from Match Match in Matches
+                    let ClassName = Match.Groups[1].Value.CamelCase().ToValidIdentifier()
+                    select TypeResolver.TypeOf(ClassName, Assembly)).ToList();
             }
         }
     }

@@ -24,5 +24,27 @@ Scenario: Using steps from a Step library
 		}
 	"
 
-@ignore
-Scenario: Using steps from another Feature
+Scenario: Using steps from multiple Step libraries
+
+	Given the Feature contains
+	"
+		using Step Library
+		using another Step Library
+
+		Scenario: Reuse Steps from libs
+			Step from Lib
+			Step from another Lib
+	"
+
+	The Runner should contain 
+	"
+		public StepLibrary StepLibrary = new StepLibrary();
+		public AnotherStepLibrary AnotherStepLibrary = new AnotherStepLibrary();
+		
+		[TestMethod]
+		public void ReuseStepsFromLibs()
+		{
+			StepLibrary.Step_from_Lib();
+			AnotherStepLibrary.Step_from_another_Lib();
+		}
+	"

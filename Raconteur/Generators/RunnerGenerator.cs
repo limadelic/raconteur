@@ -24,7 +24,7 @@ namespace {2}
 @"using {0};
 ";
 
-        const string StepLibraryVar =
+        const string StepLibraryDeclaration =
 @"        public {0} {0} = new {0}();
 ";
 
@@ -47,7 +47,7 @@ namespace {2}
                     Feature.Namespace,
                     Settings.XUnit.ClassAttr, 
                     Feature.Name,
-                    StepLibraryDeclaration, 
+                    StepLibraryDeclarations, 
                     ScenariosCode
                 );
             }
@@ -67,21 +67,21 @@ namespace {2}
             return new ScenarioGenerator(Scenario, Feature.StepLibraries).Code;
         }
 
-        string AgrregateLibraries(string Template, Func<Type, string> Field)
-        {
-            return !Feature.HasStepLibraries ? string.Empty :
-                Feature.StepLibraries.Aggregate("", (All, Lib) => All + 
-                    string.Format(Template, Field(Lib)));
-        }
-
         string StepLibraryNamespace
         {
-            get { return AgrregateLibraries(Using, Lib => Lib.Namespace); }
+            get { return AggregateLibraries(Using, Lib => Lib.Namespace); }
         }
 
-        string StepLibraryDeclaration
+        string StepLibraryDeclarations
         {
-            get { return AgrregateLibraries(StepLibraryVar, Lib => Lib.Name); }
+            get { return AggregateLibraries(StepLibraryDeclaration, Lib => Lib.Name); }
+        }
+
+        string AggregateLibraries(string Template, Func<Type, string> Field)
+        {
+            return !Feature.HasStepLibraries ? null :
+                Feature.StepLibraries.Aggregate(string.Empty, (Result, Lib) => Result + 
+                    string.Format(Template, Field(Lib)));
         }
     }
 }

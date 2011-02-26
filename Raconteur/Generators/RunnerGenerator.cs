@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 namespace Raconteur.Generators
@@ -23,7 +24,7 @@ namespace {2}
 @"using {0};
 ";
 
-        const string StepLibraryVar =
+        const string StepLibraryDeclaration =
 @"        public {0} {0} = new {0}();
 ";
 
@@ -46,7 +47,7 @@ namespace {2}
                     Feature.Namespace,
                     Settings.XUnit.ClassAttr, 
                     Feature.Name,
-                    StepLibraryDeclaration, 
+                    StepLibraryDeclarations, 
                     ScenariosCode
                 );
             }
@@ -63,25 +64,24 @@ namespace {2}
 
         string CodeFrom(Scenario Scenario)
         {
-            return new ScenarioGenerator(Scenario, Feature.StepLibrary).Code;
+            return new ScenarioGenerator(Scenario, Feature.StepLibraries).Code;
         }
 
         string StepLibraryNamespace
         {
-            get
-            {
-                return Feature.StepLibrary == null ? string.Empty :
-                    string.Format(Using, Feature.StepLibrary.Namespace);
-            }
+            get { return AggregateLibraries(Using, Lib => Lib.Namespace); }
         }
 
-        string StepLibraryDeclaration
+        string StepLibraryDeclarations
         {
-            get
-            {
-                return Feature.StepLibrary == null ? string.Empty :
-                    string.Format(StepLibraryVar, Feature.StepLibrary.Name);
-            }
+            get { return AggregateLibraries(StepLibraryDeclaration, Lib => Lib.Name); }
+        }
+
+        string AggregateLibraries(string Template, Func<Type, string> Field)
+        {
+            return !Feature.HasStepLibraries ? null :
+                Feature.StepLibraries.Aggregate(string.Empty, (Result, Lib) => Result + 
+                    string.Format(Template, Field(Lib)));
         }
     }
 }

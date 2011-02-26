@@ -9,6 +9,14 @@ namespace Raconteur.IDEIntegration.Intellisense
     internal class CompletionSource : ICompletionSource
     {
         private bool IsDisposed;
+        private readonly ITextBuffer buffer;
+        private readonly CompletionSourceProvider provider;
+
+        public CompletionSource(CompletionSourceProvider completionSourceProvider, ITextBuffer textBuffer)
+        {
+            provider = completionSourceProvider;
+            buffer = textBuffer;
+        }
 
         public void Dispose()
         {
@@ -24,7 +32,7 @@ namespace Raconteur.IDEIntegration.Intellisense
             var feature = session.TextView.TextSnapshot.GetText();
             var completions = new CompletionCalculator { Feature = feature };
 
-            completionSets.Add(new CompletionSet("Steps", "Steps", GetSpanForLine(currentLine, session),
+            completionSets.Add(new CompletionSet("Steps", "Steps", FindSpanAtCurrentPositionFrom(session),
                 completions.For(currentLine.Extent.GetText().Trim()), null));
         }
 
@@ -33,10 +41,12 @@ namespace Raconteur.IDEIntegration.Intellisense
             return session.TextView.Caret.ContainingTextViewLine;
         }
 
-        private ITrackingSpan GetSpanForLine(ITextViewLine line, ICompletionSession session)
+        private ITrackingSpan FindSpanAtCurrentPositionFrom(ICompletionSession session)
         {
             var currentPoint = (session.TextView.Caret.Position.BufferPosition) - 1;
-            return currentPoint.Snapshot.CreateTrackingSpan(line.ExtentIncludingLineBreak, SpanTrackingMode.EdgeInclusive);
+            var navigator = provider.NavigatorService.GetTextStructureNavigator(buffer);
+            var extent = navigator.GetExtentOfWord(currentPoint);
+            return currentPoint.Snapshot.CreateTrackingSpan(extent.Span, SpanTrackingMode.EdgeInclusive);
         }
     }
 }

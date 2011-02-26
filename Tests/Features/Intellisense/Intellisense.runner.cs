@@ -1,10 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
 namespace Features.Intellisense 
 {
     [TestClass]
     public partial class Intellisense 
     {
+
         
         [TestMethod]
         public void Completion1()

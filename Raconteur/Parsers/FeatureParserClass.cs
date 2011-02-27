@@ -82,12 +82,13 @@ namespace Raconteur.Parsers
                     Settings.Language.Using + @" (\w.+)(\r\n|$)"
                 );
 
-                if (Matches.Count == 0) return null;
+                if (Matches.Count == 0 && Settings.StepLibraries.IsEmpty()) return null;
 
-                return 
-                    (from Match Match in Matches
-                    let ClassName = Match.Groups[1].Value.CamelCase().ToValidIdentifier()
-                    select TypeResolver.TypeOf(ClassName, Assembly)).ToList();
+                return Matches.Cast<Match>()
+                    .Select(Match => Match.Groups[1].Value.CamelCase())
+                    .Union(Settings.StepLibraries)
+                    .Select(ClassName => TypeResolver.TypeOf(ClassName, Assembly))
+                    .ToList();
             }
         }
     }

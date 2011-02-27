@@ -4,9 +4,14 @@ namespace Raconteur
 {
     public static class CollectionsEx
     {
-        public static bool HasItems<T>(this List<T> List)
+        public static bool IsEmpty<T>(this ICollection<T> Items)
         {
-            return List != null && List.Count > 0;
+            return Items == null || Items.Count == 0;
+        }
+
+        public static bool HasItems<T>(this ICollection<T> Items)
+        {
+            return !IsEmpty(Items);
         }
     }
 }

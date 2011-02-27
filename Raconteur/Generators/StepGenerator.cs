@@ -108,7 +108,7 @@ namespace Raconteur.Generators
 
         string NameOf(Step Step)
         {
-            if (StepLibraries == null) return Step.Name;
+            if (StepLibraries.IsEmpty()) return Step.Name;
 
             var LibraryWithStep = StepLibraries
                 .Where(l => l.GetMethod(Step.Name) != null)

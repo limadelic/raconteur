@@ -12,7 +12,7 @@ namespace Raconteur
 
         public bool HasStepLibraries
         {
-            get { return StepLibraries != null && StepLibraries.Count > 0; }
+            get { return StepLibraries.HasItems(); }
         }
         public List<Type> StepLibraries { get; set; }
 

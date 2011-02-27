@@ -14,7 +14,7 @@ using Uncommon;
 namespace Specs
 {
     [TestFixture]
-    public class When_resuing_Steps
+    public class When_reusing_Steps
     {
         readonly Feature Feature = new Feature
         {
@@ -26,21 +26,48 @@ namespace Specs
             typeof(StepLibrary), typeof(AnotherStepLibrary)
         };
 
-        [Test]
-        public void should_find_the_StepLibraries()
-        {
-            var FeatureItem = Substitute.For<FeatureItem>();
+        FeatureItem FeatureItem;
 
-            var Parser = new FeatureParserClass
-            {
+        FeatureParserClass Parser;
+        
+        #region setup
+
+        dynamic backup;
+
+        [SetUp]
+        public void SetUp() {
+            SetUpFeatureItem();
+            SetUpParser();
+
+            backup = Settings.StepLibraries;
+        }
+
+        void SetUpFeatureItem() {
+            FeatureItem = Substitute.For<FeatureItem>();
+            FeatureItem.Assembly.Returns("Common");
+        }
+
+        void SetUpParser() {
+            Parser = new FeatureParserClass {
                 ScenarioTokenizer = Substitute.For<ScenarioTokenizer>(),
                 TypeResolver = Substitute.For<TypeResolver>()
             };
 
-            FeatureItem.Assembly.Returns("Common");
             Parser.TypeResolver.TypeOf("StepLibrary", "Common").Returns(typeof(StepLibrary));
             Parser.TypeResolver.TypeOf("AnotherStepLibrary", "Common").Returns(typeof(AnotherStepLibrary));
+        }
 
+        [TearDown]
+        public void TearDown()
+        {
+            Settings.StepLibraries = backup;
+        }
+
+        #endregion
+
+        [Test]
+        public void should_find_the_StepLibraries()
+        {
             var Feature = Parser.FeatureFrom(new FeatureFile
             {
                 Content = 
@@ -52,6 +79,22 @@ namespace Specs
                 "
             }, FeatureItem);
             
+            Feature.StepLibraries.ShouldBe(StepLibraries);
+        }
+
+        [Test]
+        public void should_include_the_StepsLibraries_from_Settings()
+        {
+            Settings.StepLibraries = new List<string> { "StepLibrary", "AnotherStepLibrary" };
+
+            var Feature = Parser.FeatureFrom(new FeatureFile
+            {
+                Content = 
+                @"
+                    Feature: Name
+                "
+            }, FeatureItem);
+
             Feature.StepLibraries.ShouldBe(StepLibraries);
         }
 

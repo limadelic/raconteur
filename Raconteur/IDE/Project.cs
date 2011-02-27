@@ -50,14 +50,17 @@ namespace Raconteur.IDE
                 Raconteur.Settings.Language = Languages.In[setting];
 
             var settings = Settings("using:");
-            if (settings.HasItems()) Raconteur.Settings.StepLibraries = settings;
+            if (settings.HasItems()) 
+                Raconteur.Settings.StepLibraries = 
+                    settings.Select(s => s.CamelCase()).ToList();
         }
         
         string Setting(string SettingName)
         {
             if (!settings.Any(x => x.StartsWith(SettingName))) return null;
 
-            return settings.First(x => x.StartsWith(SettingName))
+            return settings
+                .First(x => x.StartsWith(SettingName))
                 .Split(A.Colon, 2)[1].Trim();
         }
 
@@ -67,7 +70,7 @@ namespace Raconteur.IDE
 
             return settings
                 .Where(s => s.StartsWith(SettingName))
-                .Select(s => s.Split(A.Colon, 2)[1].Trim().CamelCase())
+                .Select(s => s.Split(A.Colon, 2)[1].Trim())
                 .ToList();
         }
 

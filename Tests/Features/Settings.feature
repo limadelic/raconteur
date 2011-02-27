@@ -8,7 +8,9 @@ Scenario: Setting the xUnit runner
 	Given the settings
 	"
 		xUnit: MbUnit
-		language: es	
+		language: es
+		using: Step Library	
+		using: Another Step Library	
 	"
 
 	When the project is loaded
@@ -16,3 +18,7 @@ Scenario: Setting the xUnit runner
 	The Settings should be:
 	[ xUnit  | language ]
 	| MbUnit | Spanish  |
+
+	The Step Libraries should be:
+	|StepLibrary|
+	|AnotherStepLibrary|

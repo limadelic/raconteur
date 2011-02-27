@@ -57,6 +57,7 @@
     <Compile Include="Helpers\A.cs" />
     <Compile Include="Boundary.cs" />
     <Compile Include="Helpers\ArgFormatter.cs" />
+    <Compile Include="Helpers\CollectionsEx.cs" />
     <Compile Include="Helpers\Languages.cs" />
     <Compile Include="Helpers\LinqExtensions.cs" />
     <Compile Include="Helpers\NumericExtensions.cs" />

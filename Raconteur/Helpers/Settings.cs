@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Raconteur
@@ -7,6 +8,8 @@ namespace Raconteur
         public XUnit XUnit = XUnits.Framework["mstest"];
 
         public Language Language = Languages.In["en"];
+
+        public List<string> StepLibraries = new List<string>();
     }
 
     public static class Settings
@@ -45,6 +48,12 @@ namespace Raconteur
         {
             get { return Setting.Language; } 
             set { Setting.Language = value; } 
+        }
+
+        public static List<string> StepLibraries
+        {
+            get { return Setting.StepLibraries; }
+            set { Setting.StepLibraries = value;}
         }
     }
 }

@@ -1,10 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
 namespace Features 
 {
     [TestClass]
     public partial class UserSettings 
     {
+
         
         [TestMethod]
         public void SettingTheXUnitRunner()
@@ -13,9 +15,16 @@ namespace Features
 @"
 xUnit: MbUnit
 language: es
+using: Step Library
+using: Another Step Library
 ");        
             When_the_project_is_loaded();        
-            The_Settings_should_be_("MbUnit", "Spanish");
+            The_Settings_should_be_("MbUnit", "Spanish");        
+            The_Step_Libraries_should_be_
+            (        
+                new[] {"StepLibrary"},        
+                new[] {"AnotherStepLibrary"}
+            );
         }
 
     }

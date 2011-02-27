@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -26,7 +27,7 @@ namespace Raconteur.IDE
         // breaking SRP shall eventually refactor
         #region Settings
 
-        string[] Settings;
+        string[] settings;
 
         void LoadSettings()
         {
@@ -38,7 +39,7 @@ namespace Raconteur.IDE
 
             Raconteur.Settings.Project = DTEProject;
 
-            Settings = Regex.Split(SettingsFileContent, Environment.NewLine);
+            this.settings = Regex.Split(SettingsFileContent, Environment.NewLine);
 
             var setting = Setting("xunit:");
             if (!setting.IsEmpty() && XUnits.Framework.ContainsKey(setting)) 
@@ -47,14 +48,27 @@ namespace Raconteur.IDE
             setting = Setting("language:");
             if (!setting.IsEmpty() && Languages.In.ContainsKey(setting))
                 Raconteur.Settings.Language = Languages.In[setting];
+
+            var settings = Settings("using:");
+            if (settings.HasItems()) Raconteur.Settings.StepLibraries = settings;
         }
         
         string Setting(string SettingName)
         {
-            if (!Settings.Any(x => x.StartsWith(SettingName))) return null;
+            if (!settings.Any(x => x.StartsWith(SettingName))) return null;
 
-            return Settings.First(x => x.StartsWith(SettingName))
+            return settings.First(x => x.StartsWith(SettingName))
                 .Split(A.Colon, 2)[1].Trim();
+        }
+
+        List<string> Settings(string SettingName)
+        {
+            if (!settings.Any(x => x.StartsWith(SettingName))) return new List<string>();
+
+            return settings
+                .Where(s => s.StartsWith(SettingName))
+                .Select(s => s.Split(A.Colon, 2)[1].Trim().CamelCase())
+                .ToList();
         }
 
         public virtual bool HasSettingsFile { get { return DTEProject.Items().Any(IsSettingsFile); } }

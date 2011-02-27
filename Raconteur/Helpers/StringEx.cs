@@ -81,6 +81,11 @@ namespace Raconteur
             return string.IsNullOrEmpty(It);
         }
 
+        public static bool HasValue(this string It)
+        {
+            return !IsEmpty(It);
+        }
+
         public static string Times(this int Count, char c)
         {
             return new string(c, Count);

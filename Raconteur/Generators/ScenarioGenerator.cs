@@ -126,12 +126,12 @@ namespace Raconteur.Generators
         {
             return Outline.Replace
             (
-                Scenario.Examples.Header[Col].Quote().Quote(), 
+                Scenario.Examples.Header[Col].Quoted().Quoted(), 
                 ArgFormatter.ValueOf(Scenario.Examples[Row, Col])
             )
             .Replace
             (
-                Scenario.Examples.Header[Col].Quote(), 
+                Scenario.Examples.Header[Col].Quoted(), 
                 ArgFormatter.ValueOf(Scenario.Examples[Row, Col])
             );
         }

@@ -32,7 +32,7 @@ namespace Features.SyntaxHighlight
             Sut.Tags.Any
             (
                 Tag => Tag.Text.TrimLines() == Text.TrimLines()
-            ).ShouldBeFalse();
+            ).ShouldBeFalse("Highlighted " + Text.Quoted());
         }
 
         protected void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
@@ -51,7 +51,7 @@ namespace Features.SyntaxHighlight
             Sut.Tags.Any(Tag => 
                 Tag.Text.TrimLines() == Text.TrimLines() && 
                 FeatureClassifier.Styles[Tag.Type] == Style)
-                .ShouldBeTrue("Did not highlight \"" + Text + "\" like a \"" + Style + '"');
+                .ShouldBeTrue("Did not highlight " + Text.Quoted() + " like a " + Style.Quoted());
         }
 
         class SUT : FeatureTokenTagger

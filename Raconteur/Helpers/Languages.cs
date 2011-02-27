@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Raconteur
 {
     public class Language
     {
-        public string Name, Native, Feature, Background, Scenario, ScenarioOutline, Examples;
+        public string Name, Native, Feature, Using = "using", Background, Scenario, ScenarioOutline, Examples;
 
         public List<string> Keywords
         {
@@ -121,6 +120,7 @@ namespace Raconteur
                 Name = "Spanish",
                 Native = "Español",
                 Feature = "Funcionalidad",
+                Using = "usando",
                 Background = "Antecedentes",
                 Scenario = "Escenario",
                 ScenarioOutline = "Esquema del escenario",

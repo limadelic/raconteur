@@ -22,7 +22,7 @@ namespace Raconteur
             return Word.Remove(Word.Length - Lenght);
         }
 
-        public static string Quote(this string Word)
+        public static string Quoted(this string Word)
         {
             return "\"" + Word + "\"";
         }

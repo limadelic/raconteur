@@ -79,7 +79,7 @@ namespace Raconteur.Parsers
                 var Matches = Regex.Matches
                 (
                     Content, 
-                    @"using (\w.+)(\r\n|$)"
+                    Settings.Language.Using + @" (\w.+)(\r\n|$)"
                 );
 
                 if (Matches.Count == 0) return null;

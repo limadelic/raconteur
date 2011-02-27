@@ -32,7 +32,7 @@ namespace Raconteur.Parsers
             {   
                 var Tokens = BeforeArg.IsEmpty() ? 
                     Sentence.Split('"') :
-                    (BeforeArg.Quote() + Sentence).Split('"');
+                    (BeforeArg.Quoted() + Sentence).Split('"');
 
                 BeforeArg = null;
 

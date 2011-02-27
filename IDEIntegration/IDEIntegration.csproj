@@ -111,6 +111,7 @@
     <Compile Include="SyntaxHighlighting\FeatureClassifierProvider.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\ArgsParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\CommentsParser.cs" />
+    <Compile Include="SyntaxHighlighting\Parsing\UsingParser.cs" />
     <Compile Include="SyntaxHighlighting\Parsing\ScenarioTagsParser.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTag.cs" />
     <Compile Include="SyntaxHighlighting\Token\FeatureTokenTagger.cs" />

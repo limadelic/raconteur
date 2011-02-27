@@ -251,6 +251,14 @@
     <Compile Include="SyntaxHighlight\Tags.steps.cs">
       <DependentUpon>Tags.feature</DependentUpon>
     </Compile>
+    <Compile Include="SyntaxHighlight\Using.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Using.feature</DependentUpon>
+    </Compile>
+    <Compile Include="SyntaxHighlight\Using.steps.cs">
+      <DependentUpon>Using.feature</DependentUpon>
+    </Compile>
     <Compile Include="Tags.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -352,6 +360,10 @@
     <None Include="SyntaxHighlight\Tags.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Tags.runner.cs</LastGenOutput>
+    </None>
+    <None Include="SyntaxHighlight\Using.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Using.runner.cs</LastGenOutput>
     </None>
     <None Include="Tags.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

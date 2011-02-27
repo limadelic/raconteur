@@ -51,7 +51,7 @@ namespace Features.SyntaxHighlight
             Sut.Tags.Any(Tag => 
                 Tag.Text.TrimLines() == Text.TrimLines() && 
                 FeatureClassifier.Styles[Tag.Type] == Style)
-                .ShouldBeTrue();
+                .ShouldBeTrue("Did not highlight \"" + Text + "\" like a \"" + Style + '"');
         }
 
         class SUT : FeatureTokenTagger

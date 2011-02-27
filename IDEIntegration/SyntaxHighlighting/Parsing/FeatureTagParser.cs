@@ -14,6 +14,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
         readonly TagsParser Scenarios;
         readonly TagsParser Multiline;
         readonly TagsParser ScenarioTags;
+        readonly TagsParser Using;
 
         public FeatureTagParser(TagFactory TagFactory, string Feature) 
             : base(new ParsingState())
@@ -28,6 +29,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
             Scenarios = new CollapsibleScenariosParser(ParsingState);
             Multiline = new MultilineParser(ParsingState);
             ScenarioTags = new ScenarioTagsParser(ParsingState);
+            Using = new UsingParser(ParsingState);
         }
 
         public override IEnumerable<ITagSpanWrap<FeatureTokenTag>> Tags
@@ -57,6 +59,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
                 return  
                     ScenarioTags.Tags ??
                     Keywords.Tags ??
+                    Using.Tags ??
                     Table.Tags ??
                     Args.Tags ??
                     new List<ITagSpanWrap<FeatureTokenTag>>(); 

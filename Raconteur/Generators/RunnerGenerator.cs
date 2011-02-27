@@ -5,10 +5,16 @@ namespace Raconteur.Generators
 {
     public class RunnerGenerator : CodeGenerator
     {
+        readonly Feature Feature;
+
+        public RunnerGenerator(Feature Feature)
+        {
+            this.Feature = Feature;
+        }
+
         const string RunnerClass =
 
-@"using {0};
-{1}
+@"using {0};{1}
 
 namespace {2} 
 {{
@@ -20,20 +26,6 @@ namespace {2}
     }}
 }}
 ";
-        const string Using =
-@"using {0};
-";
-
-        const string StepLibraryDeclaration =
-@"        public {0} {0} = new {0}();
-";
-
-        readonly Feature Feature;
-
-        public RunnerGenerator(Feature Feature)
-        {
-            this.Feature = Feature;
-        }
 
         public string Code
         {
@@ -67,21 +59,26 @@ namespace {2}
             return new ScenarioGenerator(Scenario, Feature.StepLibraries).Code;
         }
 
+        const string Using = "\r\n" + "using {0};";
+
         string StepLibraryNamespace
         {
             get { return AggregateLibraries(Using, Lib => Lib.Namespace); }
         }
 
+        const string StepLibraryDeclaration =
+@"        public {0} {0} = new {0}();
+";
         string StepLibraryDeclarations
         {
             get { return AggregateLibraries(StepLibraryDeclaration, Lib => Lib.Name); }
         }
 
-        string AggregateLibraries(string Template, Func<Type, string> Field)
+        string AggregateLibraries(string Template, Func<Type, string> FieldFrom)
         {
             return !Feature.HasStepLibraries ? null :
                 Feature.StepLibraries.Aggregate(string.Empty, (Result, Lib) => Result + 
-                    string.Format(Template, Field(Lib)));
+                    string.Format(Template, FieldFrom(Lib)));
         }
     }
 }

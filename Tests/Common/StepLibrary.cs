@@ -5,6 +5,12 @@ namespace Common
         public void Step(){}
         public void Step_from_Lib(){}
     }
+
+    public class StepLibraryInSameNamespace
+    {
+        public void Step(){}
+        public void Step_from_Lib(){}
+    }
 }
 
 namespace Uncommon

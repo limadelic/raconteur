@@ -77,8 +77,12 @@ namespace {2}
         string AggregateLibraries(string Template, Func<Type, string> FieldFrom)
         {
             return !Feature.HasStepLibraries ? null :
-                Feature.StepLibraries.Aggregate(string.Empty, (Result, Lib) => Result + 
-                    string.Format(Template, FieldFrom(Lib)));
+                Feature.StepLibraries.Aggregate(string.Empty, (Result, Lib) => 
+                {
+                    var CurrentLine = string.Format(Template, FieldFrom(Lib));
+
+                    return Result.Contains(CurrentLine) ? Result : Result + CurrentLine;
+                });
         }
     }
 }

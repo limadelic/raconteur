@@ -23,7 +23,7 @@ namespace Specs
 
         static readonly List<Type> StepLibraries = new List<Type>
         {
-            typeof(StepLibrary), typeof(AnotherStepLibrary)
+            typeof(StepLibrary), typeof(AnotherStepLibrary), typeof(StepLibraryInSameNamespace)
         };
 
         FeatureItem FeatureItem;
@@ -55,6 +55,7 @@ namespace Specs
 
             Parser.TypeResolver.TypeOf("StepLibrary", "Common").Returns(typeof(StepLibrary));
             Parser.TypeResolver.TypeOf("AnotherStepLibrary", "Common").Returns(typeof(AnotherStepLibrary));
+            Parser.TypeResolver.TypeOf("StepLibraryInSameNamespace", "Common").Returns(typeof(StepLibraryInSameNamespace));
         }
 
         [TearDown]
@@ -76,6 +77,7 @@ namespace Specs
 
                     using Step Library
                     using Another Step Library
+                    using StepLibraryInSameNamespace
                 "
             }, FeatureItem);
             
@@ -85,7 +87,10 @@ namespace Specs
         [Test]
         public void should_include_the_StepsLibraries_from_Settings()
         {
-            Settings.StepLibraries = new List<string> { "StepLibrary", "AnotherStepLibrary" };
+            Settings.StepLibraries = new List<string> 
+            {
+                "StepLibrary", "AnotherStepLibrary", "StepLibraryInSameNamespace"
+            };
 
             var Feature = Parser.FeatureFrom(new FeatureFile
             {
@@ -107,12 +112,24 @@ namespace Specs
         }
 
         [Test]
-        public void should_add_namespace_to_runner()
+        public void should_add_namespace_to_runner() 
         {
             new RunnerGenerator(Feature).Code.TrimLines().ShouldContain
             (@"
                 using Common;
                 using Uncommon;
+            "
+            .TrimLines());
+        }
+
+        [Test]
+        public void should_not_duplicate_namespaces() 
+        {
+            new RunnerGenerator(Feature).Code.TrimLines().ShouldNotContain
+            (@"
+                using Common;
+                using Uncommon;
+                using Common;
             "
             .TrimLines());
         }

@@ -1,3 +1,4 @@
+using System.IO;
 using System.Runtime.InteropServices;
 using EnvDTE;
 using FluentSpec;
@@ -39,7 +40,16 @@ namespace Features.Misc
 
             var DteProject = Dte.SelectedItems.Item(1).ProjectItem.ContainingProject;
 
+            string fullPath = DteProject.Properties.Item("FullPath").Value.ToString();
+            string outputPath = DteProject.ConfigurationManager.ActiveConfiguration.Properties.Item("OutputPath").Value.ToString();
+            string outputDir = Path.Combine(fullPath, outputPath);
+            string outputFileName = DteProject.Properties.Item("OutputFileName").Value.ToString();
+            string assemblyPath = Path.Combine(outputDir, outputFileName);
+
             DteProject.Name.ShouldBe("Features");
+
+
+            (assemblyPath).ShouldNotBeNull();
 
             var Project = new Project { DTEProject = DteProject };
 

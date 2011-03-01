@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -11,12 +12,35 @@ namespace Raconteur
 
     public class TypeResolverClass : TypeResolver
     {
+        public TypeResolverClass()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
+        }
+
         public Type TypeOf(string Name, string AssemblyName)
         {
             return
-                (from Type in Assembly.Load(AssemblyName).GetTypes()
+                (from Type in Load(AssemblyName).GetTypes()
                 where Type.Name == Name
-                select Type).SingleOrDefault();
+                select Type).FirstOrDefault();
+        }
+
+        string AssemblyPath;
+        
+        Assembly Load(string AssemblyName)
+        {
+            AssemblyPath = Path.GetDirectoryName(AssemblyName);
+            var Name = Path.GetFileNameWithoutExtension(AssemblyName);
+
+            return Assembly.Load(Name);
+        }
+
+        Assembly LoadFromFile(object Sender, ResolveEventArgs Args)
+        {
+            var Parts = Args.Name.Split(',');
+            var FileName = Path.Combine(AssemblyPath, Parts[0].Trim() + ".dll");
+
+            return Assembly.Load(File.ReadAllBytes(FileName));
         }
     }    
 }

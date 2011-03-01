@@ -88,6 +88,7 @@ namespace Raconteur.Parsers
                     .Select(Match => Match.Groups[1].Value.CamelCase())
                     .Union(Settings.StepLibraries)
                     .Select(ClassName => TypeResolver.TypeOf(ClassName, Assembly))
+                    .Where(Type => Type != null)
                     .ToList();
             }
         }

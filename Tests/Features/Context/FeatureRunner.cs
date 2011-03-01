@@ -20,7 +20,7 @@ namespace Features
 
                 var FeatureItem = Substitute.For<FeatureItem>();
                 FeatureItem.DefaultNamespace = "Features";
-                FeatureItem.Assembly.Returns("Features");
+                FeatureItem.Assembly.Returns("Features.dll");
 
                 var NewFeature = Parser.FeatureFrom(FeatureFile, FeatureItem);
 

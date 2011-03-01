@@ -102,7 +102,8 @@ namespace Specs
         public void should_find_types_in_different_assemblies()
         {
             new TypeResolverClass()
-            .TypeOf("StepLibrary", "Common").ShouldBe(typeof(StepLibrary));
+                .TypeOf("StepLibrary", "Common.dll")
+                .Name.ShouldBe("StepLibrary");
         }
 
         [Test]

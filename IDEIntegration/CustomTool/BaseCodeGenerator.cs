@@ -40,13 +40,6 @@ namespace Raconteur.IDEIntegration
             return VSConstants.S_OK;
         }
 
-        protected virtual string GetMessage(Exception ex)
-        {
-            if (ex.InnerException == null) return ex.Message;
-
-            return ex.Message + " -> " + GetMessage(ex.InnerException);
-        }
-
         int IVsSingleFileGenerator.Generate(string wszInputFilePath, string bstrInputFileContents,
             string wszDefaultNamespace, IntPtr[] rgbOutputFileContents, out uint pcbOutput,
             IVsGeneratorProgress pGenerateProgress)
@@ -77,7 +70,7 @@ namespace Raconteur.IDEIntegration
 
         protected virtual string GenerateError(IVsGeneratorProgress pGenerateProgress, Exception ex)
         {
-            var Message = GetMessage(ex);
+            var Message = ex.ToString();
 
             pGenerateProgress.GeneratorError(0, 4, Message, 0xFFFFFFFF, 0xFFFFFFFF);
 

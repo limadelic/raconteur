@@ -14,7 +14,7 @@ namespace Features.SyntaxHighlight
             get { return new FeatureTagParser(new SUT(Feature), Feature); }
         }
 
-        protected override void Given_the_Feature_contains(string Feature) 
+        public override void Given_the_Feature_contains(string Feature) 
         {
             Given_the_Feature_is(Feature.TrimLines());
         }

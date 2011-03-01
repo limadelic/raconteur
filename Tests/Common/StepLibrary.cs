@@ -17,7 +17,7 @@ namespace Uncommon
 {
     public class AnotherStepLibrary
     {
-        public void another_Step(){}
+        public void another_Step(string Arg){}
         public void Step_from_another_Lib(){}
     }
 }

@@ -10,7 +10,6 @@ using Raconteur.IDE;
 using Raconteur.Parsers;
 using Uncommon;
 
-
 namespace Specs
 {
     [TestFixture]
@@ -35,7 +34,8 @@ namespace Specs
         dynamic backup;
 
         [SetUp]
-        public void SetUp() {
+        public void SetUp() 
+        {
             SetUpFeatureItem();
             SetUpParser();
 
@@ -47,8 +47,10 @@ namespace Specs
             FeatureItem.Assembly.Returns("Common");
         }
 
-        void SetUpParser() {
-            Parser = new FeatureParserClass {
+        void SetUpParser() 
+        {
+            Parser = new FeatureParserClass 
+            {
                 ScenarioTokenizer = Substitute.For<ScenarioTokenizer>(),
                 TypeResolver = Substitute.For<TypeResolver>()
             };

@@ -12,11 +12,6 @@ namespace Raconteur
 
     public class TypeResolverClass : TypeResolver
     {
-        public TypeResolverClass()
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
-        }
-
         public Type TypeOf(string Name, string AssemblyName)
         {
             return
@@ -29,6 +24,8 @@ namespace Raconteur
         
         Assembly Load(string AssemblyName)
         {
+            AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
+
             AssemblyPath = Path.GetDirectoryName(AssemblyName);
             var Name = Path.GetFileNameWithoutExtension(AssemblyName);
 

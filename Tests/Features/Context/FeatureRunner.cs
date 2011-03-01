@@ -8,9 +8,9 @@ namespace Features
 {
     public class FeatureRunner
     {
-        protected string Feature;
+        public string Feature;
 
-        protected string Runner
+        public string Runner
         {
             get
             {
@@ -30,12 +30,12 @@ namespace Features
             } 
         }
 
-        protected void Given_the_Feature_is(string Feature)
+        public void Given_the_Feature_is(string Feature)
         {
             this.Feature = Feature;
         }
 
-        protected virtual void Given_the_Feature_contains(string Feature)
+        public virtual void Given_the_Feature_contains(string Feature)
         {
             this.Feature = 
             @"
@@ -44,12 +44,12 @@ namespace Features
             + Feature;
         }
 
-        protected void The_Runner_should_be(string Runner)
+        public void The_Runner_should_be(string Runner)
         {
             this.Runner.ShouldBe(Runner.TrimLines());
         }
 
-        protected void The_Runner_should_contain(string Runner)
+        public void The_Runner_should_contain(string Runner)
         {
             this.Runner.ShouldContain(Runner.TrimLines());
         }

@@ -1,6 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
 namespace Features 
 {
     [TestClass]
@@ -15,7 +14,7 @@ namespace Features
 @"
 xUnit: MbUnit
 language: es
-using: Step Library
+using: StepLibrary
 using: Another Step Library
 ");        
             When_the_project_is_loaded();        

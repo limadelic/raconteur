@@ -39,37 +39,37 @@ namespace Raconteur.IDE
 
             Raconteur.Settings.Project = DTEProject;
 
-            this.settings = Regex.Split(SettingsFileContent, Environment.NewLine);
+            settings = Regex.Split(SettingsFileContent, Environment.NewLine);
 
-            var setting = Setting("xunit:");
+            var setting = Setting("xunit:").ToLower();
             if (!setting.IsEmpty() && XUnits.Framework.ContainsKey(setting)) 
                 Raconteur.Settings.XUnit = XUnits.Framework[setting];
                     
-            setting = Setting("language:");
+            setting = Setting("language:").ToLower();
             if (!setting.IsEmpty() && Languages.In.ContainsKey(setting))
                 Raconteur.Settings.Language = Languages.In[setting];
 
-            var settings = Settings("using:");
-            if (settings.HasItems()) 
+            var usings = Settings("using:");
+            if (usings.HasItems()) 
                 Raconteur.Settings.StepLibraries = 
-                    settings.Select(s => s.CamelCase()).ToList();
+                    usings.Select(s => s.CamelCase()).ToList();
         }
         
         string Setting(string SettingName)
         {
-            if (!settings.Any(x => x.StartsWith(SettingName))) return null;
+            if (!settings.Any(x => x.StartsWithEx(SettingName))) return null;
 
             return settings
-                .First(x => x.StartsWith(SettingName))
+                .First(x => x.StartsWithEx(SettingName))
                 .Split(A.Colon, 2)[1].Trim();
         }
 
         List<string> Settings(string SettingName)
         {
-            if (!settings.Any(x => x.StartsWith(SettingName))) return new List<string>();
+            if (!settings.Any(x => x.StartsWithEx(SettingName))) return new List<string>();
 
             return settings
-                .Where(s => s.StartsWith(SettingName))
+                .Where(s => s.StartsWithEx(SettingName))
                 .Select(s => s.Split(A.Colon, 2)[1].Trim())
                 .ToList();
         }
@@ -82,7 +82,7 @@ namespace Raconteur.IDE
 
         public virtual string SettingsFileContent
         {
-            get { return File.ReadAllText(SettingsFileName).ToLower(); }
+            get { return File.ReadAllText(SettingsFileName); }
         }
 
         #endregion

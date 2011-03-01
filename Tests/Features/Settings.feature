@@ -9,7 +9,7 @@ Scenario: Setting the xUnit runner
 	"
 		xUnit: MbUnit
 		language: es
-		using: Step Library	
+		using: StepLibrary	
 		using: Another Step Library	
 	"
 

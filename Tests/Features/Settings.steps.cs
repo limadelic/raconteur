@@ -24,7 +24,7 @@ namespace Features
         void Given_the_settings(string Settings)
         {
             Given.That(Project).HasSettingsFile.Is(true);
-            Given.That(Project).SettingsFileContent.Is(Settings.ToLower());
+            Given.That(Project).SettingsFileContent.Is(Settings);
         }
 
         void When_the_project_is_loaded()

@@ -115,6 +115,11 @@ namespace Raconteur
             return One.Equals(Another, StringComparison.InvariantCultureIgnoreCase);
         }
 
+        public static bool StartsWithEx(this string Whole, string Part) 
+        {
+            return Whole.StartsWith(Part, StringComparison.InvariantCultureIgnoreCase);
+        }
+
         public static List<Boundary> ArgBoundaries(this string Whole)
         {
             var results = new List<Boundary>();

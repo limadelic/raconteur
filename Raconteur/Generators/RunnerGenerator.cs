@@ -35,11 +35,11 @@ namespace {2}
                 (
                     RunnerClass,
                     Settings.XUnit.Namespace, 
-                    StepLibraryNamespace,
+                    StepDefinitionsNamespaces,
                     Feature.Namespace,
                     Settings.XUnit.ClassAttr, 
                     Feature.Name,
-                    StepLibraryDeclarations, 
+                    StepDefinitionsDeclarations, 
                     ScenariosCode
                 );
             }
@@ -56,28 +56,28 @@ namespace {2}
 
         string CodeFrom(Scenario Scenario)
         {
-            return new ScenarioGenerator(Scenario, Feature.StepLibraries).Code;
+            return new ScenarioGenerator(Scenario, Feature.StepDefinitions).Code;
         }
 
         const string Using = "\r\n" + "using {0};";
 
-        string StepLibraryNamespace
+        string StepDefinitionsNamespaces
         {
-            get { return AggregateLibraries(Using, Lib => Lib.Namespace); }
+            get { return AggregateStepDefinitions(Using, Lib => Lib.Namespace); }
         }
 
-        const string StepLibraryDeclaration =
+        const string StepDefinitionsDeclaration =
 @"        public {0} {0} = new {0}();
 ";
-        string StepLibraryDeclarations
+        string StepDefinitionsDeclarations
         {
-            get { return AggregateLibraries(StepLibraryDeclaration, Lib => Lib.Name); }
+            get { return AggregateStepDefinitions(StepDefinitionsDeclaration, Lib => Lib.Name); }
         }
 
-        string AggregateLibraries(string Template, Func<Type, string> FieldFrom)
+        string AggregateStepDefinitions(string Template, Func<Type, string> FieldFrom)
         {
-            return !Feature.HasStepLibraries ? null :
-                Feature.StepLibraries.Aggregate(string.Empty, (Result, Lib) => 
+            return !Feature.HasStepDefinitions ? null :
+                Feature.StepDefinitions.Aggregate(string.Empty, (Result, Lib) => 
                 {
                     var CurrentLine = string.Format(Template, FieldFrom(Lib));
 

@@ -9,8 +9,8 @@ Scenario: Setting the xUnit runner
 	"
 		xUnit: MbUnit
 		language: es
-		using: StepLibrary	
-		using: Another Step Library	
+		using: StepDefinitions
+		using: Another Step Definitions
 	"
 
 	When the project is loaded
@@ -19,6 +19,6 @@ Scenario: Setting the xUnit runner
 	[ xUnit  | language ]
 	| MbUnit | Spanish  |
 
-	The Step Libraries should be:
-	|StepLibrary|
-	|AnotherStepLibrary|
+	The Step Definitions should be:
+	|StepDefinitions|
+	|AnotherStepDefinitions|

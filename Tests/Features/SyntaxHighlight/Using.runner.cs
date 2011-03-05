@@ -1,11 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Features;
 
 namespace Features.SyntaxHighlight 
 {
     [TestClass]
     public partial class HighlightUsing 
     {
+        public StepDefinitions StepDefinitions = new StepDefinitions();
 
         
         [TestMethod]
@@ -14,10 +15,10 @@ namespace Features.SyntaxHighlight
             Given_the_Feature_is(
 @"
 Feature: Name
-using Step Library
+using Step Definitions
 Scenario: First
 ");        
-            Raconteur_should_highlight_like_a("Comment", "using Step Library");
+            Raconteur_should_highlight_like_a("Comment", "using Step Definitions");
         }
 
     }

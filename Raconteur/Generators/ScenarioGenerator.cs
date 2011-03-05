@@ -19,12 +19,12 @@ namespace Raconteur.Generators
         {0}";
 
         readonly Scenario Scenario;
-        readonly List<Type> StepLibraries;
+        readonly List<Type> StepDefinitions;
 
-        public ScenarioGenerator(Scenario Scenario, List<Type> StepLibraries = null)
+        public ScenarioGenerator(Scenario Scenario, List<Type> StepDefinitions = null)
         {
             this.Scenario = Scenario;
-            this.StepLibraries = StepLibraries;
+            this.StepDefinitions = StepDefinitions;
         }
 
         public string Code
@@ -90,7 +90,7 @@ namespace Raconteur.Generators
         
         bool IsNotIgnored(string Tag) { return !IsIgnored(Tag); }
 
-        string CodeFor(Step Step) { return new StepGenerator(Step, StepLibraries).Code; }
+        string CodeFor(Step Step) { return new StepGenerator(Step, StepDefinitions).Code; }
 
         string OutlineScenarioCode
         {

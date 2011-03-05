@@ -27,7 +27,7 @@ namespace Raconteur.Parsers
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
-                StepLibraries = StepLibraries
+                StepDefinitions = StepDefinitions
             };
         }
 
@@ -72,7 +72,7 @@ namespace Raconteur.Parsers
             }
         }
 
-        List<Type> StepLibraries
+        List<Type> StepDefinitions
         {
             get 
             {
@@ -82,11 +82,11 @@ namespace Raconteur.Parsers
                     Settings.Language.Using + @" (\w.+)(\r\n|$)"
                 );
 
-                if (Matches.Count == 0 && Settings.StepLibraries.IsEmpty()) return null;
+                if (Matches.Count == 0 && Settings.StepDefinitions.IsEmpty()) return null;
 
                 return Matches.Cast<Match>()
                     .Select(Match => Match.Groups[1].Value.CamelCase())
-                    .Union(Settings.StepLibraries)
+                    .Union(Settings.StepDefinitions)
                     .Select(ClassName => TypeResolver.TypeOf(ClassName, Assembly))
                     .Where(Type => Type != null)
                     .ToList();

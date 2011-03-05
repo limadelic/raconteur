@@ -17,12 +17,12 @@ namespace Specs
     {
         readonly Feature Feature = new Feature
         {
-            StepLibraries = StepLibraries
+            StepDefinitions = StepDefinitions
         };
 
-        static readonly List<Type> StepLibraries = new List<Type>
+        static readonly List<Type> StepDefinitions = new List<Type>
         {
-            typeof(StepLibrary), typeof(AnotherStepLibrary), typeof(StepLibraryInSameNamespace)
+            typeof(StepDefinitions), typeof(AnotherStepDefinitions), typeof(StepDefinitionsInSameNamespace)
         };
 
         FeatureItem FeatureItem;
@@ -39,7 +39,7 @@ namespace Specs
             SetUpFeatureItem();
             SetUpParser();
 
-            backup = Settings.StepLibraries;
+            backup = Settings.StepDefinitions;
         }
 
         void SetUpFeatureItem() {
@@ -55,21 +55,21 @@ namespace Specs
                 TypeResolver = Substitute.For<TypeResolver>()
             };
 
-            Parser.TypeResolver.TypeOf("StepLibrary", "Common").Returns(typeof(StepLibrary));
-            Parser.TypeResolver.TypeOf("AnotherStepLibrary", "Common").Returns(typeof(AnotherStepLibrary));
-            Parser.TypeResolver.TypeOf("StepLibraryInSameNamespace", "Common").Returns(typeof(StepLibraryInSameNamespace));
+            Parser.TypeResolver.TypeOf("StepDefinitions", "Common").Returns(typeof(StepDefinitions));
+            Parser.TypeResolver.TypeOf("AnotherStepDefinitions", "Common").Returns(typeof(AnotherStepDefinitions));
+            Parser.TypeResolver.TypeOf("StepDefinitionsInSameNamespace", "Common").Returns(typeof(StepDefinitionsInSameNamespace));
         }
 
         [TearDown]
         public void TearDown()
         {
-            Settings.StepLibraries = backup;
+            Settings.StepDefinitions = backup;
         }
 
         #endregion
 
         [Test]
-        public void should_find_the_StepLibraries()
+        public void should_find_the_StepDefinitions()
         {
             var Feature = Parser.FeatureFrom(new FeatureFile
             {
@@ -77,21 +77,21 @@ namespace Specs
                 @"
                     Feature: Name
 
-                    using Step Library
-                    using Another Step Library
-                    using StepLibraryInSameNamespace
+                    using Step Definitions
+                    using Another Step Definitions
+                    using StepDefinitionsInSameNamespace
                 "
             }, FeatureItem);
             
-            Feature.StepLibraries.ShouldBe(StepLibraries);
+            Feature.StepDefinitions.ShouldBe(StepDefinitions);
         }
 
         [Test]
-        public void should_include_the_StepsLibraries_from_Settings()
+        public void should_include_the_StepsDefinitions_from_Settings()
         {
-            Settings.StepLibraries = new List<string> 
+            Settings.StepDefinitions = new List<string> 
             {
-                "StepLibrary", "AnotherStepLibrary", "StepLibraryInSameNamespace"
+                "StepDefinitions", "AnotherStepDefinitions", "StepDefinitionsInSameNamespace"
             };
 
             var Feature = Parser.FeatureFrom(new FeatureFile
@@ -102,15 +102,15 @@ namespace Specs
                 "
             }, FeatureItem);
 
-            Feature.StepLibraries.ShouldBe(StepLibraries);
+            Feature.StepDefinitions.ShouldBe(StepDefinitions);
         }
 
         [Test]
         public void should_find_types_in_different_assemblies()
         {
             new TypeResolverClass()
-                .TypeOf("StepLibrary", "Common.dll")
-                .Name.ShouldBe("StepLibrary");
+                .TypeOf("StepDefinitions", "Common.dll")
+                .Name.ShouldBe("StepDefinitions");
         }
 
         [Test]
@@ -137,32 +137,32 @@ namespace Specs
         }
 
         [Test]
-        public void should_declare_the_StepLibraries()
+        public void should_declare_the_StepDefinitions()
         {
             new RunnerGenerator(Feature).Code.TrimLines().ShouldContain
             (@"
-                public StepLibrary StepLibrary = new StepLibrary();
-                public AnotherStepLibrary AnotherStepLibrary = new AnotherStepLibrary();
+                public StepDefinitions StepDefinitions = new StepDefinitions();
+                public AnotherStepDefinitions AnotherStepDefinitions = new AnotherStepDefinitions();
             "
             .TrimLines());
         }
 
         [Test]
-        public void should_use_Steps_from_libraries()
+        public void should_use_Steps_from_StepDefinitions()
         {
             new StepGenerator
             (
                 new Step { Name = "Step" }, 
-                StepLibraries
+                StepDefinitions
             )
-            .Code.ShouldContain("StepLibrary.Step();");
+            .Code.ShouldContain("StepDefinitions.Step();");
 
             new StepGenerator
             (
                 new Step { Name = "another_Step" }, 
-                StepLibraries
+                StepDefinitions
             )
-            .Code.ShouldContain("AnotherStepLibrary.another_Step();");
+            .Code.ShouldContain("AnotherStepDefinitions.another_Step();");
         }
     }
 }

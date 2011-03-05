@@ -51,7 +51,7 @@ namespace Raconteur.IDE
 
             var usings = Settings("using:");
             if (usings.HasItems()) 
-                Raconteur.Settings.StepLibraries = 
+                Raconteur.Settings.StepDefinitions = 
                     usings.Select(s => s.CamelCase()).ToList();
         }
         

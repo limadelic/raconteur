@@ -8,7 +8,7 @@ namespace Raconteur
 
         public Language Language = Languages.In["en"];
 
-        public List<string> StepLibraries = new List<string>();
+        public List<string> StepDefinitions = new List<string>();
     }
 
     public static class Settings
@@ -49,10 +49,10 @@ namespace Raconteur
             set { Setting.Language = value; } 
         }
 
-        public static List<string> StepLibraries
+        public static List<string> StepDefinitions
         {
-            get { return Setting.StepLibraries; }
-            set { Setting.StepLibraries = value;}
+            get { return Setting.StepDefinitions; }
+            set { Setting.StepDefinitions = value;}
         }
     }
 }

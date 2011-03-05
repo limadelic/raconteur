@@ -1,53 +1,55 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Features;
 
 namespace Features 
 {
     [TestClass]
     public partial class ReusingSteps 
     {
+        public StepDefinitions StepDefinitions = new StepDefinitions();
+        public AnotherStepDefinitions AnotherStepDefinitions = new AnotherStepDefinitions();
 
         
         [TestMethod]
-        public void UsingStepsFromAStepLibrary()
+        public void ReusingStepDefinitions()
         {         
             Given_the_Feature_contains(
 @"
-using Step Library
-Scenario: Reuse a Step from the lib
-Step from Lib
+using Step Definitions
+Scenario: Reuse a Step
+Step from Step Definitions
 ");        
             The_Runner_should_contain(
 @"
-public StepLibrary StepLibrary = new StepLibrary();
+public StepDefinitions StepDefinitions = new StepDefinitions();
 [TestMethod]
-public void ReuseAStepFromTheLib()
+public void ReuseAStep()
 {
-StepLibrary.Step_from_Lib();
+StepDefinitions.Step_from_Step_Definitions();
 }
 ");
         }
         
         [TestMethod]
-        public void UsingStepsFromMultipleStepLibraries()
+        public void UsingStepsFromMultipleStepDefinitions()
         {         
             Given_the_Feature_contains(
 @"
-using Step Library
-using another Step Library
-Scenario: Reuse Steps from libs
-Step from Lib
-Step from another Lib
+using Step Definitions
+using another Step Definitions
+Scenario: Reuse Steps from multiple Definitions
+Step from Step Definitions
+Step from another Step Definitions
 ");        
             The_Runner_should_contain(
 @"
-public StepLibrary StepLibrary = new StepLibrary();
-public AnotherStepLibrary AnotherStepLibrary = new AnotherStepLibrary();
+public StepDefinitions StepDefinitions = new StepDefinitions();
+public AnotherStepDefinitions AnotherStepDefinitions = new AnotherStepDefinitions();
 [TestMethod]
-public void ReuseStepsFromLibs()
+public void ReuseStepsFromMultipleDefinitions()
 {
-StepLibrary.Step_from_Lib();
-AnotherStepLibrary.Step_from_another_Lib();
+StepDefinitions.Step_from_Step_Definitions();
+AnotherStepDefinitions.Step_from_another_Step_Definitions();
 }
 ");
         }

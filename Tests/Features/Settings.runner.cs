@@ -14,15 +14,15 @@ namespace Features
 @"
 xUnit: MbUnit
 language: es
-using: StepLibrary
-using: Another Step Library
+using: StepDefinitions
+using: Another Step Definitions
 ");        
             When_the_project_is_loaded();        
             The_Settings_should_be_("MbUnit", "Spanish");        
-            The_Step_Libraries_should_be_
+            The_Step_Definitions_should_be_
             (        
-                new[] {"StepLibrary"},        
-                new[] {"AnotherStepLibrary"}
+                new[] {"StepDefinitions"},        
+                new[] {"AnotherStepDefinitions"}
             );
         }
 

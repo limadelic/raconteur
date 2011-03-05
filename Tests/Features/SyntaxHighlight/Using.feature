@@ -8,9 +8,9 @@ Scenario: Feature and Scenarios
 	"
 		Feature: Name
 
-		using Step Library
+		using Step Definitions
 
 		Scenario: First
 	"
 
-	Raconteur should highlight like a "Comment" "using Step Library"
+	Raconteur should highlight like a "Comment" "using Step Definitions"

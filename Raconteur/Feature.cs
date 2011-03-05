@@ -10,16 +10,16 @@ namespace Raconteur
         public string Namespace { get; set; }
         public string FileName { get; set; }
 
-        public bool HasStepLibraries
+        public bool HasStepDefinitions
         {
-            get { return StepLibraries.HasItems(); }
+            get { return StepDefinitions.HasItems(); }
         }
-        public List<Type> StepLibraries { get; set; }
+        public List<Type> StepDefinitions { get; set; }
 
         public Feature()
         {
             Scenarios = new List<Scenario>();
-            StepLibraries = new List<Type>();
+            StepDefinitions = new List<Type>();
         }
     }
 

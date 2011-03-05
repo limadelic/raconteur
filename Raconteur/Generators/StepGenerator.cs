@@ -21,12 +21,12 @@ namespace Raconteur.Generators
                 new[] {{{0}}},";
 
         readonly Step Step;
-        readonly List<Type> StepLibraries;
+        readonly List<Type> StepDefinitions;
 
-        public StepGenerator(Step Step, List<Type> StepLibraries = null)
+        public StepGenerator(Step Step, List<Type> StepDefinitions = null)
         {
             this.Step = Step;
-            this.StepLibraries = StepLibraries;
+            this.StepDefinitions = StepDefinitions;
         }
 
         public string Code
@@ -108,14 +108,14 @@ namespace Raconteur.Generators
 
         string NameOf(Step Step)
         {
-            if (StepLibraries.IsEmpty()) return Step.Name;
+            if (StepDefinitions.IsEmpty()) return Step.Name;
 
-            var LibraryWithStep = StepLibraries
+            var StepDefinitionWithStep = StepDefinitions
                 .Where(l => l.GetMethod(Step.Name) != null)
                 .FirstOrDefault();
 
-            return LibraryWithStep == null ? Step.Name :
-                LibraryWithStep.Name + "." + Step.Name;
+            return StepDefinitionWithStep == null ? Step.Name :
+                StepDefinitionWithStep.Name + "." + Step.Name;
         }
     }
 }

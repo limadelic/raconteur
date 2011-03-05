@@ -1,12 +1,13 @@
 namespace Common
 {
-    public class StepLibrary
+    public class StepDefinitions
     {
         public void Step(){}
         public void Step_from_Lib(){}
+        public void Step_from_Step_Definitions(){}
     }
 
-    public class StepLibraryInSameNamespace
+    public class StepDefinitionsInSameNamespace
     {
         public void Step(){}
         public void Step_from_Lib(){}
@@ -15,9 +16,10 @@ namespace Common
 
 namespace Uncommon
 {
-    public class AnotherStepLibrary
+    public class AnotherStepDefinitions
     {
         public void another_Step(string Arg){}
         public void Step_from_another_Lib(){}
+        public void Step_from_another_Step_Definitions(){}
     }
 }

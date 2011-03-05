@@ -3,48 +3,48 @@
 		while making them easier to maintain
 	I want to be able to reuse steps across features
 
-Scenario: Using steps from a Step library
+Scenario: Reusing Step Definitions
 
 	Given the Feature contains
 	"
-		using Step Library
+		using Step Definitions
 
-		Scenario: Reuse a Step from the lib
-			Step from Lib
+		Scenario: Reuse a Step
+			Step from Step Definitions
 	"
 
 	The Runner should contain 
 	"
-		public StepLibrary StepLibrary = new StepLibrary();
+		public StepDefinitions StepDefinitions = new StepDefinitions();
 		
 		[TestMethod]
-		public void ReuseAStepFromTheLib()
+		public void ReuseAStep()
 		{
-			StepLibrary.Step_from_Lib();
+			StepDefinitions.Step_from_Step_Definitions();
 		}
 	"
 
-Scenario: Using steps from multiple Step libraries
+Scenario: Using steps from multiple Step Definitions
 
 	Given the Feature contains
 	"
-		using Step Library
-		using another Step Library
+		using Step Definitions
+		using another Step Definitions
 
-		Scenario: Reuse Steps from libs
-			Step from Lib
-			Step from another Lib
+		Scenario: Reuse Steps from multiple Definitions
+			Step from Step Definitions
+			Step from another Step Definitions
 	"
 
 	The Runner should contain 
 	"
-		public StepLibrary StepLibrary = new StepLibrary();
-		public AnotherStepLibrary AnotherStepLibrary = new AnotherStepLibrary();
+		public StepDefinitions StepDefinitions = new StepDefinitions();
+		public AnotherStepDefinitions AnotherStepDefinitions = new AnotherStepDefinitions();
 		
 		[TestMethod]
-		public void ReuseStepsFromLibs()
+		public void ReuseStepsFromMultipleDefinitions()
 		{
-			StepLibrary.Step_from_Lib();
-			AnotherStepLibrary.Step_from_another_Lib();
+			StepDefinitions.Step_from_Step_Definitions();
+			AnotherStepDefinitions.Step_from_another_Step_Definitions();
 		}
 	"

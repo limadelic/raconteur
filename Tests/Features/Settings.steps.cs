@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -18,7 +17,7 @@ namespace Features
         {
             backup.Add(Settings.XUnit);    
             backup.Add(Settings.Language);    
-            backup.Add(Settings.StepLibraries);    
+            backup.Add(Settings.StepDefinitions);    
         }
 
         void Given_the_settings(string Settings)
@@ -43,14 +42,14 @@ namespace Features
         {
             Settings.XUnit = backup[0];
             Settings.Language = backup[1];
-            Settings.StepLibraries = backup[2];
+            Settings.StepDefinitions = backup[2];
         }
 
-        void The_Step_Libraries_should_be_(params string[][] StepLibraries)
+        void The_Step_Definitions_should_be_(params string[][] StepDefinitions)
         {
-            Settings.StepLibraries.Count.ShouldBe(StepLibraries.Length);
-            foreach (var StepLibrary in StepLibraries)
-                Settings.StepLibraries.ShouldContain(StepLibrary[0]);
+            Settings.StepDefinitions.Count.ShouldBe(StepDefinitions.Length);
+            foreach (var StepDefinition in StepDefinitions)
+                Settings.StepDefinitions.ShouldContain(StepDefinition[0]);
         }
     }
 }

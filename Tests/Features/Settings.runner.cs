@@ -14,6 +14,8 @@ namespace Features
 @"
 xUnit: MbUnit
 language: es
+lib: Library
+lib: another Library
 using: StepDefinitions
 using: Another Step Definitions
 ");        
@@ -23,6 +25,11 @@ using: Another Step Definitions
             (        
                 new[] {"StepDefinitions"},        
                 new[] {"AnotherStepDefinitions"}
+            );        
+            The_Libraries_should_be_
+            (        
+                new[] {"Library"},        
+                new[] {"another Library"}
             );
         }
 

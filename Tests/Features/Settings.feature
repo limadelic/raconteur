@@ -9,6 +9,8 @@ Scenario: Setting the xUnit runner
 	"
 		xUnit: MbUnit
 		language: es
+		lib: Library
+		lib: another Library
 		using: StepDefinitions
 		using: Another Step Definitions
 	"
@@ -22,3 +24,7 @@ Scenario: Setting the xUnit runner
 	The Step Definitions should be:
 	|StepDefinitions|
 	|AnotherStepDefinitions|
+
+	The Libraries should be:
+	|Library|
+	|another Library|

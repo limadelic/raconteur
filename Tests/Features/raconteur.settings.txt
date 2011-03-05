@@ -1,2 +1,3 @@
 ﻿xUnit: MsTest
 language: en
+lib: Common

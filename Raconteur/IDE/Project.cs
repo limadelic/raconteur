@@ -25,7 +25,7 @@ namespace Raconteur.IDE
         }
 
         // breaking SRP shall eventually refactor
-        #region Settings
+        #region Settings Loader
 
         string[] settings;
 
@@ -53,6 +53,8 @@ namespace Raconteur.IDE
             if (usings.HasItems()) 
                 Raconteur.Settings.StepDefinitions = 
                     usings.Select(s => s.CamelCase()).ToList();
+
+            Raconteur.Settings.Libraries = Settings("lib:");
         }
         
         string Setting(string SettingName)
@@ -85,6 +87,6 @@ namespace Raconteur.IDE
             get { return File.ReadAllText(SettingsFileName); }
         }
 
-        #endregion
+        #endregion 
     }
 }

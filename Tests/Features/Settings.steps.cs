@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FluentSpec;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

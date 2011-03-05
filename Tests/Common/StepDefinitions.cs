@@ -12,6 +12,11 @@ namespace Common
         public void Step(){}
         public void Step_from_Lib(){}
     }
+
+    public class StepDefinitionsInLibrary
+    {
+        public void Step_from_Step_Definitions_in_Library(){}
+    }
 }
 
 namespace Uncommon

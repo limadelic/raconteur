@@ -7,17 +7,17 @@ using Raconteur.IDE;
 
 namespace Raconteur.Parsers
 {
-    public class FeatureParserClass : FeatureParser 
+    public class FeatureParserClass : FeatureParser
     {
-        string Content, Assembly;
+        string Content;
+        List<string> Assemblies;
 
         public ScenarioTokenizer ScenarioTokenizer { get; set; }
         public TypeResolver TypeResolver { get; set; }
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            Content = FeatureFile.Content.TrimLines();
-            Assembly = FeatureItem.Assembly;
+            SetUpContext(FeatureFile, FeatureItem);
 
             if (IsNotAValidFeature) return InvalidFeature;
 
@@ -29,6 +29,14 @@ namespace Raconteur.Parsers
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
                 StepDefinitions = StepDefinitions
             };
+        }
+
+        void SetUpContext(FeatureFile FeatureFile, FeatureItem FeatureItem) 
+        {
+            Content = FeatureFile.Content.TrimLines();
+
+            Assemblies = new List<string> {FeatureItem.Assembly};
+            Assemblies.AddRange(Settings.Libraries);
         }
 
         bool IsNotAValidFeature
@@ -87,10 +95,17 @@ namespace Raconteur.Parsers
                 return Matches.Cast<Match>()
                     .Select(Match => Match.Groups[1].Value.CamelCase())
                     .Union(Settings.StepDefinitions)
-                    .Select(ClassName => TypeResolver.TypeOf(ClassName, Assembly))
+                    .Select(TypeOfStepDefinitions)
                     .Where(Type => Type != null)
                     .ToList();
             }
+        }
+
+        Type TypeOfStepDefinitions(string ClassName)
+        {
+            return Assemblies
+                .Select(Assembly => TypeResolver.TypeOf(ClassName, Assembly))
+                .FirstOrDefault(Type => Type != null);
         }
     }
 }

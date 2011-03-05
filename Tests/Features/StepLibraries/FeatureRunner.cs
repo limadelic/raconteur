@@ -1,4 +1,6 @@
-﻿using FluentSpec;
+﻿using System.Collections;
+using Common;
+using FluentSpec;
 using NSubstitute;
 using Raconteur;
 using Raconteur.Generators;
@@ -30,28 +32,33 @@ namespace Features
             } 
         }
 
-        public void Given_the_Feature_is(string Feature)
+        public void Given_the_Feature_is(string Content)
         {
-            this.Feature = Feature;
+            Feature = Content;
         }
 
-        public virtual void Given_the_Feature_contains(string Feature)
+        public virtual void Given_the_Feature_contains(string Content)
         {
-            this.Feature = 
+            Feature = 
             @"
                 Feature: Feature Name
             "
-            + Feature;
+            + Content;
         }
 
-        public void The_Runner_should_be(string Runner)
+        public void The_Runner_should_be(string Content)
         {
-            this.Runner.ShouldBe(Runner.TrimLines());
+            Runner.ShouldBe(Content.TrimLines());
         }
 
-        public void The_Runner_should_contain(string Runner)
+        public void The_Runner_should_contain(string Content)
         {
-            this.Runner.ShouldContain(Runner.TrimLines());
+            Runner.ShouldContain(Content.TrimLines());
+        }
+
+        protected void Given_the_setting__contain(string Setting, string Value)
+        {
+            ((IList)Settings.Setting.Get(Setting)).Add(Value);
         }
     }
 }

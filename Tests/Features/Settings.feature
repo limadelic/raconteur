@@ -21,10 +21,10 @@ Scenario: Setting the xUnit runner
 	[ xUnit  | language ]
 	| MbUnit | Spanish  |
 
-	The Step Definitions should be:
-	|StepDefinitions|
-	|AnotherStepDefinitions|
-
 	The Libraries should be:
 	|Library|
 	|another Library|
+	
+	The Step Definitions should be:
+	|StepDefinitions|
+	|AnotherStepDefinitions|

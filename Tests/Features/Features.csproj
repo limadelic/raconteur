@@ -80,7 +80,7 @@
     <Compile Include="Comments.steps.cs">
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
-    <Compile Include="Context\FeatureRunner.cs" />
+    <Compile Include="StepLibraries\FeatureRunner.cs" />
     <Compile Include="GenerateRunner.steps.cs">
       <DependentUpon>GenerateRunner.feature</DependentUpon>
     </Compile>

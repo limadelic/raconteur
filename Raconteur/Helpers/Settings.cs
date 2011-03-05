@@ -37,7 +37,7 @@ namespace Raconteur
 
         static readonly Dictionary<object, Setting> SettingFor = new Dictionary<object, Setting>();
 
-        static Setting Setting { get { return SettingFor[project]; } }
+        public static Setting Setting { get { return SettingFor[project]; } }
 
         public static XUnit XUnit
         {

@@ -58,6 +58,7 @@ namespace Specs
             Parser.TypeResolver.TypeOf("StepDefinitions", "Common").Returns(typeof(StepDefinitions));
             Parser.TypeResolver.TypeOf("AnotherStepDefinitions", "Common").Returns(typeof(AnotherStepDefinitions));
             Parser.TypeResolver.TypeOf("StepDefinitionsInSameNamespace", "Common").Returns(typeof(StepDefinitionsInSameNamespace));
+            Parser.TypeResolver.TypeOf("StepDefinitionsInLibrary", "Library").Returns(typeof(StepDefinitionsInLibrary));
         }
 
         [TearDown]
@@ -103,6 +104,24 @@ namespace Specs
             }, FeatureItem);
 
             Feature.StepDefinitions.ShouldBe(StepDefinitions);
+        }
+
+        [Test]
+        public void should_find_StepsDefinitions_in_Libraries()
+        {
+            Settings.Libraries = new List<string> { "Library" };
+
+            var Feature = Parser.FeatureFrom(new FeatureFile
+            {
+                Content = 
+                @"
+                    Feature: Name
+
+                    using Step Definitions in Library
+                "
+            }, FeatureItem);
+
+            Feature.StepDefinitions.ShouldBe(new List<Type> { typeof(StepDefinitionsInLibrary) });
         }
 
         [Test]

@@ -1,5 +1,5 @@
+using Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Features;
 
 namespace Features.SyntaxHighlight 
 {

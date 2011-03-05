@@ -24,7 +24,7 @@ Scenario: Reusing Step Definitions
 		}
 	"
 
-Scenario: Using steps from multiple Step Definitions
+Scenario: Reusing steps from multiple Step Definitions
 
 	Given the Feature contains
 	"
@@ -46,5 +46,27 @@ Scenario: Using steps from multiple Step Definitions
 		{
 			StepDefinitions.Step_from_Step_Definitions();
 			AnotherStepDefinitions.Step_from_another_Step_Definitions();
+		}
+	"
+Scenario: Reusing Global Step Definitions
+Scenario: Reusing Step Definitions from Libraries
+
+	Given the setting "Libraries" contain "Common" 
+	Given the Feature contains
+	"
+		using Step Definitions in Library
+
+		Scenario: Reuse Steps from Library
+			Step from Step Definitions in Library
+	"
+
+	The Runner should contain 
+	"
+		public StepDefinitionsInLibrary StepDefinitionsInLibrary = new StepDefinitionsInLibrary();
+		
+		[TestMethod]
+		public void ReuseStepsFromLibrary()
+		{
+			StepDefinitionsInLibrary.Step_from_Step_Definitions_in_Library();
 		}
 	"

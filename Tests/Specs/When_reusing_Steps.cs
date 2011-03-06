@@ -88,6 +88,26 @@ namespace Specs
         }
 
         [Test]
+        public void should_find_the_StepDefinitions_before_the_Scenarios()
+        {
+            var Feature = Parser.FeatureFrom(new FeatureFile
+            {
+                Content = 
+                @"
+                    Feature: Name
+
+                    using Step Definitions
+
+                    Scenario: Lola
+
+                    using Another Step Definitions
+                "
+            }, FeatureItem);
+            
+            Feature.StepDefinitions.Count.ShouldBe(1);
+        }
+
+        [Test]
         public void should_include_the_StepsDefinitions_from_Settings()
         {
             Settings.StepDefinitions = new List<string> 

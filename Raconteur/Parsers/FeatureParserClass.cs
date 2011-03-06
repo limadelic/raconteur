@@ -35,6 +35,8 @@ namespace Raconteur.Parsers
         {
             Content = FeatureFile.Content.TrimLines();
 
+            Header = InitHeader;
+
             Assemblies = new List<string> {FeatureItem.Assembly};
             Assemblies.AddRange(Settings.Libraries);
         }
@@ -70,7 +72,7 @@ namespace Raconteur.Parsers
                 {
                     return Regex.Match
                     (
-                        Content, 
+                        Header, 
                         Settings.Language.Feature + @": (\w.+)(" + 
                             Environment.NewLine + "|$)"
                     )
@@ -80,13 +82,25 @@ namespace Raconteur.Parsers
             }
         }
 
+        string Header;
+        string InitHeader
+        {
+            get
+            {
+                var IndexOfScenario = Content.IndexOf("\r\n" + Settings.Language.Scenario);
+
+                return Content.StartsWith(Settings.Language.Scenario) ? string.Empty :
+                    IndexOfScenario == -1 ? Content : Content.Substring(0, IndexOfScenario);
+            }
+        }
+
         List<Type> StepDefinitions
         {
             get 
             {
                 var Matches = Regex.Matches
                 (
-                    Content, 
+                    Header, 
                     Settings.Language.Using + @" (\w.+)(\r\n|$)"
                 );
 

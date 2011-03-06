@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Features;
+using Features.StepDefinitions;
 
 namespace Features 
 {

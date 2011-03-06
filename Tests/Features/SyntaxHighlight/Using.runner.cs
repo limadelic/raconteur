@@ -1,4 +1,3 @@
-using Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Features.SyntaxHighlight 
@@ -6,7 +5,6 @@ namespace Features.SyntaxHighlight
     [TestClass]
     public partial class HighlightUsing 
     {
-        public StepDefinitions StepDefinitions = new StepDefinitions();
 
         
         [TestMethod]

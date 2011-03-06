@@ -6,7 +6,7 @@ using Raconteur;
 using Raconteur.Generators;
 using Raconteur.IDE;
 
-namespace Features
+namespace Features.StepDefinitions
 {
     public class FeatureRunner
     {

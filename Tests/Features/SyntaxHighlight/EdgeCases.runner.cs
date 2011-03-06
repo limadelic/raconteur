@@ -1,16 +1,19 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features.SyntaxHighlight 
 {
     [TestClass]
     public partial class TestHiglightingEdgeCases 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
+        public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
         [TestMethod]
         public void Keywords_Comments_TablesInMultilineArgDisplayLikeArg()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 ""
 Scenario: Name
@@ -22,7 +25,7 @@ MultiLine Comment
 |  value in table |
 ""
 ");        
-            Raconteur_should_highlight_like_a("String", 
+            HighlightFeature.Raconteur_should_highlight_like_a("String", 
 @"
 ""
 Scenario: Name
@@ -34,10 +37,10 @@ MultiLine Comment
 |  value in table |
 ""
 ");        
-            Raconteur_should_not_highlight("Scenario:");        
-            Raconteur_should_not_highlight("// Single Line Comment");        
-            Raconteur_should_not_highlight("value in table");        
-            Raconteur_should_not_highlight(
+            HighlightFeature.Raconteur_should_not_highlight("Scenario:");        
+            HighlightFeature.Raconteur_should_not_highlight("// Single Line Comment");        
+            HighlightFeature.Raconteur_should_not_highlight("value in table");        
+            HighlightFeature.Raconteur_should_not_highlight(
 @"
 /*
 MultiLine Comment
@@ -48,7 +51,7 @@ MultiLine Comment
         [TestMethod]
         public void Keywords_Args_TablesInsideMultilineCommentsDisplayLikeAComment()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 /*
 Scenario: Name
@@ -60,7 +63,7 @@ MultiLine Arg
 |  value in table |
 */
 ");        
-            Raconteur_should_highlight_like_a("Comment", 
+            HighlightFeature.Raconteur_should_highlight_like_a("Comment", 
 @"
 /*
 Scenario: Name
@@ -72,10 +75,10 @@ MultiLine Arg
 |  value in table |
 */
 ");        
-            Raconteur_should_not_highlight("Scenario:");        
-            Raconteur_should_not_highlight("\"Args\"");        
-            Raconteur_should_not_highlight("value in table");        
-            Raconteur_should_not_highlight(
+            HighlightFeature.Raconteur_should_not_highlight("Scenario:");        
+            HighlightFeature.Raconteur_should_not_highlight("\"Args\"");        
+            HighlightFeature.Raconteur_should_not_highlight("value in table");        
+            HighlightFeature.Raconteur_should_not_highlight(
 @"
 ""
 MultiLine Arg

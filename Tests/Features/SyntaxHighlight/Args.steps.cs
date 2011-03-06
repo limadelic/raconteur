@@ -1,4 +1,14 @@
+using Features.StepDefinitions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace Features.SyntaxHighlight 
 {
-    public partial class HighlightArgs {}
+    public partial class HighlightArgs
+    {
+        [TestInitialize]
+        public void SetUp()
+        {
+            HighlightFeature = new HighlightFeature { FeatureRunner = FeatureRunner };
+        }    
+    }
 }

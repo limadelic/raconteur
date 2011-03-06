@@ -1,13 +1,23 @@
 using System.Linq;
 using Features.StepDefinitions;
 using FluentSpec;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur;
+using Raconteur.IDEIntegration.SyntaxHighlighting.Parsing;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Features.SyntaxHighlight 
 {
-    public partial class MakeScenariosCollapsibles : HighlightFeature
+    public partial class MakeScenariosCollapsibles
     {
+        FeatureTagParser Sut { get { return HighlightFeature.Sut; } }
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            HighlightFeature = new HighlightFeature { FeatureRunner = FeatureRunner };
+        }
+
         void Raconteur_should_allow_to_collapse(string Region)
         {
             Sut.Tags.Any

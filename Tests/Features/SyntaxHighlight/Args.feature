@@ -2,8 +2,6 @@
 	In order to enhance the UX
 	Raconteur should highlight the Args 
 
-using Highlight Feature
-
 Scenario: Single line Arg
 
 	Given the Feature is

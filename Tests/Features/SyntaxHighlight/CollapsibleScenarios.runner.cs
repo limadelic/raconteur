@@ -1,16 +1,19 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features.SyntaxHighlight 
 {
     [TestClass]
     public partial class MakeScenariosCollapsibles 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
+        public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
         [TestMethod]
         public void ScenariosAreCollapsible()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: First
 Steps
@@ -34,14 +37,14 @@ Step2
         [TestMethod]
         public void SingleLineScenario()
         {         
-            Given_the_Feature_contains("Scenario: First");        
+            FeatureRunner.Given_the_Feature_contains("Scenario: First");        
             Raconteur_should_allow_to_collapse("Scenario: First");
         }
         
         [TestMethod]
         public void FeatureWithSingleLineScenario()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Feature: Name
 Scenario: Single
@@ -52,7 +55,7 @@ Scenario: Single
         [TestMethod]
         public void MultipleSingleLineScenarios()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: First
 Scenario: Second
@@ -66,7 +69,7 @@ Scenario: Third
         [TestMethod]
         public void ScenariosWithTags()
         {         
-            Given_the_Feature_is(
+            FeatureRunner.Given_the_Feature_is(
 @"
 Feature: Name
 Scenario: First
@@ -90,7 +93,7 @@ Steps
         [TestMethod]
         public void ScenariosWithMultipleTags()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 @tag
 Scenario: First
@@ -109,7 +112,7 @@ Scenario: First
         [TestMethod]
         public void LastScenarioEndsInMultilineLine()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: First
 /*

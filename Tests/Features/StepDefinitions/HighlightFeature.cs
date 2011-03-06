@@ -7,16 +7,25 @@ using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Features.StepDefinitions
 {
-    public class HighlightFeature : FeatureRunner
+    public class HighlightFeature
     {
+        public FeatureRunner FeatureRunner;
+
         public FeatureTagParser Sut
         {
-            get { return new FeatureTagParser(new SUT(Feature), Feature); }
+            get
+            {
+                return new FeatureTagParser
+                (
+                    new SUT(FeatureRunner.Feature), 
+                    FeatureRunner.Feature
+                );
+            }
         }
 
-        public override void Given_the_Feature_contains(string Feature) 
+        public void Given_the_Feature_contains(string Feature) 
         {
-            Given_the_Feature_is(Feature.TrimLines());
+            FeatureRunner.Given_the_Feature_is(Feature.TrimLines());
         }
 
         public void Raconteur_should_highlight(int Count, string Text, string Style)

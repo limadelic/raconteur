@@ -51,6 +51,26 @@ Scenario: Reusing steps from multiple Step Definitions
 		}
 	"
 Scenario: Reusing Global Step Definitions
+
+	Given the setting "Libraries" contains "Common" 
+	Given the setting "StepDefinitions" contains "StepDefinitions" 
+	Given the Feature contains
+	"
+		Scenario: Reuse a Step in global Step Definition
+			Step from Step Definitions
+	"
+
+	The Runner should contain 
+	"
+		public StepDefinitions StepDefinitions = new StepDefinitions();
+		
+		[TestMethod]
+		public void ReuseAStepInGlobalStepDefinition()
+		{
+			StepDefinitions.Step_from_Step_Definitions();
+		}
+	"
+
 Scenario: Reusing Step Definitions from Libraries
 
 	Given the setting "Libraries" contains "Common" 

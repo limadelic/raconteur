@@ -58,7 +58,23 @@ AnotherStepDefinitions.Step_from_another_Step_Definitions();
         
         [TestMethod]
         public void ReusingGlobalStepDefinitions()
-        { 
+        {         
+            FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
+            FeatureRunner.Given_the_setting__contains("StepDefinitions", "StepDefinitions");        
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Reuse a Step in global Step Definition
+Step from Step Definitions
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+public StepDefinitions StepDefinitions = new StepDefinitions();
+[TestMethod]
+public void ReuseAStepInGlobalStepDefinition()
+{
+StepDefinitions.Step_from_Step_Definitions();
+}
+");
         }
         
         [TestMethod]

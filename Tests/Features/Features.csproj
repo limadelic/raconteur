@@ -80,6 +80,9 @@
     <Compile Include="Comments.steps.cs">
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
+    <Compile Include="ReusingSteps.steps.cs">
+      <DependentUpon>ReusingSteps.feature</DependentUpon>
+    </Compile>
     <Compile Include="StepDefinitions\FeatureRunner.cs" />
     <Compile Include="GenerateRunner.steps.cs">
       <DependentUpon>GenerateRunner.feature</DependentUpon>
@@ -266,13 +269,10 @@
     <Compile Include="Tags.steps.cs">
       <DependentUpon>Tags.feature</DependentUpon>
     </Compile>
-    <Compile Include="UsingSteps.runner.cs">
+    <Compile Include="ReusingSteps.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UsingSteps.feature</DependentUpon>
-    </Compile>
-    <Compile Include="UsingSteps.steps.cs">
-      <DependentUpon>UsingSteps.feature</DependentUpon>
+      <DependentUpon>ReusingSteps.feature</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -368,9 +368,9 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Tags.runner.cs</LastGenOutput>
     </None>
-    <None Include="UsingSteps.feature">
+    <None Include="ReusingSteps.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>UsingSteps.runner.cs</LastGenOutput>
+      <LastGenOutput>ReusingSteps.runner.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

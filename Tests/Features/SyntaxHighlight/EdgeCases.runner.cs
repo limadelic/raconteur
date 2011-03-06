@@ -5,6 +5,7 @@ namespace Features.SyntaxHighlight
     [TestClass]
     public partial class TestHiglightingEdgeCases 
     {
+
         
         [TestMethod]
         public void Keywords_Comments_TablesInMultilineArgDisplayLikeArg()

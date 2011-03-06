@@ -5,6 +5,7 @@ namespace Features.SyntaxHighlight
     [TestClass]
     public partial class HighlightKeywords 
     {
+
         
         [TestMethod]
         public void FeatureAndScenarios()

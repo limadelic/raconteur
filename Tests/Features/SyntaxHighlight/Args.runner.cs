@@ -5,6 +5,7 @@ namespace Features.SyntaxHighlight
     [TestClass]
     public partial class HighlightArgs 
     {
+
         
         [TestMethod]
         public void SingleLineArg()

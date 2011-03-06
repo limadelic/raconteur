@@ -6,7 +6,7 @@ using Raconteur.IDEIntegration.SyntaxHighlighting.Classification;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Parsing;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
-namespace Features.SyntaxHighlight
+namespace Features.StepDefinitions
 {
     public class HighlightFeature : FeatureRunner
     {

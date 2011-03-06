@@ -225,7 +225,7 @@
     <Compile Include="SyntaxHighlight\EdgeCases.steps.cs">
       <DependentUpon>EdgeCases.feature</DependentUpon>
     </Compile>
-    <Compile Include="SyntaxHighlight\HighlightFeature.cs" />
+    <Compile Include="StepDefinitions\HighlightFeature.cs" />
     <Compile Include="SyntaxHighlight\Keywords.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

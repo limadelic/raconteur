@@ -10,6 +10,7 @@ namespace Features
         [TestMethod]
         public void ReusingStepDefinitions()
         {         
+            Given_the_setting__contains("Libraries", "Common");        
             Given_the_Feature_contains(
 @"
 using Step Definitions
@@ -30,6 +31,7 @@ StepDefinitions.Step_from_Step_Definitions();
         [TestMethod]
         public void ReusingStepsFromMultipleStepDefinitions()
         {         
+            Given_the_setting__contains("Libraries", "Common");        
             Given_the_Feature_contains(
 @"
 using Step Definitions
@@ -59,7 +61,7 @@ AnotherStepDefinitions.Step_from_another_Step_Definitions();
         [TestMethod]
         public void ReusingStepDefinitionsFromLibraries()
         {         
-            Given_the_setting__contain("Libraries", "Common");        
+            Given_the_setting__contains("Libraries", "Common");        
             Given_the_Feature_contains(
 @"
 using Step Definitions in Library

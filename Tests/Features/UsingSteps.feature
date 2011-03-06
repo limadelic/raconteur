@@ -5,6 +5,7 @@
 
 Scenario: Reusing Step Definitions
 
+	Given the setting "Libraries" contains "Common" 
 	Given the Feature contains
 	"
 		using Step Definitions
@@ -26,6 +27,7 @@ Scenario: Reusing Step Definitions
 
 Scenario: Reusing steps from multiple Step Definitions
 
+	Given the setting "Libraries" contains "Common" 
 	Given the Feature contains
 	"
 		using Step Definitions
@@ -51,7 +53,7 @@ Scenario: Reusing steps from multiple Step Definitions
 Scenario: Reusing Global Step Definitions
 Scenario: Reusing Step Definitions from Libraries
 
-	Given the setting "Libraries" contain "Common" 
+	Given the setting "Libraries" contains "Common" 
 	Given the Feature contains
 	"
 		using Step Definitions in Library

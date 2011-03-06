@@ -20,13 +20,13 @@ namespace Raconteur
                 select Type).FirstOrDefault();
         }
 
-        string AssemblyPath;
+        public string AssemblyPath;
         
         Assembly Load(string AssemblyName)
         {
             AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
 
-            AssemblyPath = Path.GetDirectoryName(AssemblyName);
+            AssemblyPath = AssemblyPath ?? Path.GetDirectoryName(AssemblyName);
             var Name = Path.GetFileNameWithoutExtension(AssemblyName);
 
             return Assembly.Load(Name);

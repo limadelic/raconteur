@@ -56,7 +56,7 @@ namespace Features
             Runner.ShouldContain(Content.TrimLines());
         }
 
-        protected void Given_the_setting__contain(string Setting, string Value)
+        protected void Given_the_setting__contains(string Setting, string Value)
         {
             ((IList)Settings.Setting.Get(Setting)).Add(Value);
         }

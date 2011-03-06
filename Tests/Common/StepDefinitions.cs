@@ -3,6 +3,7 @@ namespace Common
     public class StepDefinitions
     {
         public void Step(){}
+        public void Step(string Overloaded){}
         public void Step_from_Lib(){}
         public void Step_from_Step_Definitions(){}
     }

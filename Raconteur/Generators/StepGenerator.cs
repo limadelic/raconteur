@@ -111,7 +111,7 @@ namespace Raconteur.Generators
             if (StepDefinitions.IsEmpty()) return Step.Name;
 
             var StepDefinitionWithStep = StepDefinitions
-                .Where(l => l.GetMethod(Step.Name) != null)
+                .Where(l => l.GetMethods().Any(m => m.Name == Step.Name))
                 .FirstOrDefault();
 
             return StepDefinitionWithStep == null ? Step.Name :

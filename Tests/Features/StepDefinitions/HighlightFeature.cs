@@ -9,7 +9,7 @@ namespace Features.StepDefinitions
 {
     public class HighlightFeature : FeatureRunner
     {
-        protected FeatureTagParser Sut
+        public FeatureTagParser Sut
         {
             get { return new FeatureTagParser(new SUT(Feature), Feature); }
         }
@@ -19,7 +19,7 @@ namespace Features.StepDefinitions
             Given_the_Feature_is(Feature.TrimLines());
         }
 
-        protected void Raconteur_should_highlight(int Count, string Text, string Style)
+        public void Raconteur_should_highlight(int Count, string Text, string Style)
         {
             Sut.Tags.Where(Tag => 
                 Tag.Text == Text && 
@@ -27,7 +27,7 @@ namespace Features.StepDefinitions
                 .Count().ShouldBe(Count, "Did not find " + Count + " " + Text + " " + Style);
         }
 
-        protected void Raconteur_should_not_highlight(string Text)
+        public void Raconteur_should_not_highlight(string Text)
         {
             Sut.Tags.Any
             (
@@ -35,18 +35,18 @@ namespace Features.StepDefinitions
             ).ShouldBeFalse("Highlighted " + Text.Quoted());
         }
 
-        protected void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
+        public void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
         {
             Raconteur_should_highlight(Count, Text, Style);
 
         }
 
-        protected void Raconteur_should_highlight___like_a(int Count, string Text, string Style)
+        public void Raconteur_should_highlight___like_a(int Count, string Text, string Style)
         {
             Raconteur_should_highlight(Count, Text, Style);
         }
 
-        protected void Raconteur_should_highlight_like_a(string Style, string Text)
+        public void Raconteur_should_highlight_like_a(string Style, string Text)
         {
             Sut.Tags.Any(Tag => 
                 Tag.Text.TrimLines() == Text.TrimLines() && 

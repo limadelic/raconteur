@@ -203,5 +203,16 @@ namespace Specs
             )
             .Code.ShouldContain("AnotherStepDefinitions.another_Step();");
         }
+
+        [Test]
+        public void should_use_overloaded_Steps_from_StepDefinitions()
+        {
+            new StepGenerator
+            (
+                new Step { Name = "Step", Args = new List<string> { "Arg" } }, 
+                StepDefinitions
+            )
+            .Code.ShouldContain("StepDefinitions.Step(\"Arg\");");
+        }
     }
 }

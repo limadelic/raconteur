@@ -2,9 +2,11 @@
 	In order to enhance the UX
 	Raconteur should highlight the Args 
 
+using Highlight Feature
+
 Scenario: Single line Arg
 
-	Given the Feature contains
+	Given the Feature is
 	"
 		Scenario: Name
 			
@@ -18,7 +20,7 @@ Scenario: Single line Arg
 
 Scenario: Multiline Arg
 
-	Given the Feature contains
+	Given the Feature is
 	"
 		Scenario: Name
 			

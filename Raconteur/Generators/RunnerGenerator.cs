@@ -63,7 +63,7 @@ namespace {2}
 
         string StepDefinitionsNamespaces
         {
-            get { return AggregateStepDefinitions(Using, Lib => Lib.Namespace); }
+            get { return AggregateStepDefinitions(Using, Steps => Steps.Namespace); }
         }
 
         const string StepDefinitionsDeclaration =
@@ -71,15 +71,15 @@ namespace {2}
 ";
         string StepDefinitionsDeclarations
         {
-            get { return AggregateStepDefinitions(StepDefinitionsDeclaration, Lib => Lib.Name); }
+            get { return AggregateStepDefinitions(StepDefinitionsDeclaration, Steps => Steps.Name); }
         }
 
         string AggregateStepDefinitions(string Template, Func<Type, string> FieldFrom)
         {
             return !Feature.HasStepDefinitions ? null :
-                Feature.StepDefinitions.Aggregate(string.Empty, (Result, Lib) => 
+                Feature.StepDefinitions.Aggregate(string.Empty, (Result, Steps) => 
                 {
-                    var CurrentLine = string.Format(Template, FieldFrom(Lib));
+                    var CurrentLine = string.Format(Template, FieldFrom(Steps));
 
                     return Result.Contains(CurrentLine) ? Result : Result + CurrentLine;
                 });

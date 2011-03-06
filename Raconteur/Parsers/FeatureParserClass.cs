@@ -10,6 +10,7 @@ namespace Raconteur.Parsers
     public class FeatureParserClass : FeatureParser
     {
         string Content;
+        string Header;
         List<string> Assemblies;
 
         public ScenarioTokenizer ScenarioTokenizer { get; set; }
@@ -35,7 +36,7 @@ namespace Raconteur.Parsers
         {
             Content = FeatureFile.Content.TrimLines();
 
-            Header = InitHeader;
+            Header = Content.Header();
 
             Assemblies = new List<string> {FeatureItem.Assembly};
             Assemblies.AddRange(Settings.Libraries);
@@ -82,18 +83,6 @@ namespace Raconteur.Parsers
             }
         }
 
-        string Header;
-        string InitHeader
-        {
-            get
-            {
-                var IndexOfScenario = Content.IndexOf("\r\n" + Settings.Language.Scenario);
-
-                return Content.StartsWith(Settings.Language.Scenario) ? string.Empty :
-                    IndexOfScenario == -1 ? Content : Content.Substring(0, IndexOfScenario);
-            }
-        }
-
         List<Type> StepDefinitions
         {
             get 
@@ -120,6 +109,18 @@ namespace Raconteur.Parsers
             return Assemblies
                 .Select(Assembly => TypeResolver.TypeOf(ClassName, Assembly))
                 .FirstOrDefault(Type => Type != null);
+        }
+    }
+
+    public static class FeatureParserClassEx
+    {
+        public static string Header(this string Feature)
+        {
+            var IndexOfScenario = Feature.IndexOf("\r\n" + Settings.Language.Scenario);
+
+            return Feature.StartsWith(Settings.Language.Scenario) ? string.Empty :
+                IndexOfScenario == -1 ? Feature : 
+                Feature.Substring(0, IndexOfScenario);
         }
     }
 }

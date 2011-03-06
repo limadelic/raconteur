@@ -10,5 +10,6 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
         public int Position;
         public string FullLine;
         public string Line;
+        public bool FoundScenario;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
@@ -21,6 +22,8 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
             {
                 var Keyword = Line.Split(':')[0];
 
+                if (IsScenario(Keyword)) ParsingState.FoundScenario = true;
+
                 return !Keywords.Contains(Keyword) ? null : new List<ITagSpanWrap<FeatureTokenTag>> 
                 {
                     CreateTag
@@ -31,6 +34,12 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
                     )
                 };
             }
+        }
+
+        bool IsScenario(string Keyword)
+        {
+            return Keyword == Settings.Language.Scenario 
+                || Keyword == Settings.Language.ScenarioOutline; 
         }
     }
 }

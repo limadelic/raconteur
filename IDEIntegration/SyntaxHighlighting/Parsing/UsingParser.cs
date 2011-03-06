@@ -11,7 +11,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
         {
             get
             {
-                return !Line.StartsWith(Settings.Language.Using) ? null : new List<ITagSpanWrap<FeatureTokenTag>> 
+                var IsNotUsingTag = ParsingState.FoundScenario 
+                    || !Line.StartsWith(Settings.Language.Using);
+
+                return IsNotUsingTag ? null : new List<ITagSpanWrap<FeatureTokenTag>> 
                 {
                     CreateTag
                     (

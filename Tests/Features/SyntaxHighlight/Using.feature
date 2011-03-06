@@ -11,6 +11,9 @@ Scenario: Feature and Scenarios
 		using Step Definitions
 
 		Scenario: First
+
+		using after Scenario
 	"
 
 	Raconteur should highlight like a "Comment" "using Step Definitions"
+	Raconteur_should_not_highlight "using after Scenario"

@@ -7,6 +7,7 @@ namespace Features
     public partial class StepArguments 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
+        public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
         [TestMethod]

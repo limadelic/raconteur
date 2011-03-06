@@ -7,6 +7,7 @@ namespace Features
     public partial class InvalidFeatures 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
+        public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
         [TestMethod]

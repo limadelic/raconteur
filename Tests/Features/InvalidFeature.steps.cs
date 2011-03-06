@@ -1,13 +1,10 @@
-
-using Features.StepDefinitions;
-
 namespace Features
 {
-    public partial class InvalidFeatures : FeatureRunner
+    public partial class InvalidFeatures 
     {
         void Given_the_Feature_is_Empty()
         {
-            Given_the_Feature_is(string.Empty);
+            FeatureRunner.Given_the_Feature_is(string.Empty);
         }
     }
 }

@@ -1,10 +1,12 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features 
 {
     [TestClass]
     public partial class RefactorFeature 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
 
         
         [TestMethod]

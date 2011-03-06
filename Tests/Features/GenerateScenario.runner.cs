@@ -1,16 +1,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features 
 {
     [TestClass]
     public partial class GenerateScenario 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
 
         
         [TestMethod]
         public void GenerateTestMethods()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 If something happens
@@ -18,7 +20,7 @@ Then something else should happen
 If something happens
 And another thing too
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]
 public void ScenarioName()

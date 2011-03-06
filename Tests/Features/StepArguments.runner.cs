@@ -1,21 +1,23 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features 
 {
     [TestClass]
     public partial class StepArguments 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
 
         
         [TestMethod]
         public void GenerateArguments()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 If ""X"" happens
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 If__happens(""X"");
 ");
@@ -24,12 +26,12 @@ If__happens(""X"");
         [TestMethod]
         public void TypeInference()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 If the balance is ""42""
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 If_the_balance_is(42);
 ");
@@ -38,7 +40,7 @@ If_the_balance_is(42);
         [TestMethod]
         public void MultilineArg()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Multiline Arg
 Step Arg with multiple lines
@@ -47,7 +49,7 @@ could start on one line
 and finish on another
 ""
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 Step_Arg_with_multiple_lines(
 @""
@@ -60,7 +62,7 @@ and finish on another
         [TestMethod]
         public void StepStartingWithArg()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Name
 ""
@@ -68,7 +70,7 @@ Multiline Arg
 ""
 before a Step
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 before_a_Step(
 @""

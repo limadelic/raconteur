@@ -1,7 +1,4 @@
-
-using Features.StepDefinitions;
-
 namespace Features 
 {
-    public partial class Tags : FeatureRunner {}
+    public partial class Tags {}
 }

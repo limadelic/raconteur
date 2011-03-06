@@ -1,6 +1,4 @@
-using Features.StepDefinitions;
-
 namespace Features 
 {
-    public partial class GenerateScenario : FeatureRunner {}
+    public partial class GenerateScenario {}
 }

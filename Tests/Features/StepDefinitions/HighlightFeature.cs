@@ -1,5 +1,4 @@
 using System.Linq;
-using Features.StepDefinitions;
 using FluentSpec;
 using Raconteur;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Classification;

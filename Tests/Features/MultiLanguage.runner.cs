@@ -1,22 +1,24 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features 
 {
     [TestClass]
     public partial class Multilingual 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
 
         
         [TestMethod]
         public void QueVivaEspaña_YOlé_()
         {         
             Select_language("es");        
-            Given_the_Feature_is(
+            FeatureRunner.Given_the_Feature_is(
 @"
 Funcionalidad: Multilingue
 Escenario: En Español
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 [TestClass]
 public partial class Multilingue

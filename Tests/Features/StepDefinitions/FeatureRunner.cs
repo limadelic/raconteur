@@ -56,7 +56,7 @@ namespace Features.StepDefinitions
             Runner.ShouldContain(Content.TrimLines());
         }
 
-        protected void Given_the_setting__contains(string Setting, string Value)
+        public void Given_the_setting__contains(string Setting, string Value)
         {
             ((IList)Settings.Setting.Get(Setting)).Add(Value);
         }

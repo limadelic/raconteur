@@ -1,10 +1,9 @@
-using Features.StepDefinitions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur;
 
 namespace Features 
 {
-    public partial class Multilingual : FeatureRunner
+    public partial class Multilingual 
     {
         dynamic backup;
 

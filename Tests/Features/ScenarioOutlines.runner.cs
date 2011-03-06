@@ -1,16 +1,18 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features 
 {
     [TestClass]
     public partial class ScenarioOutlines 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
 
         
         [TestMethod]
         public void UsingScenarioOutlines()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Interest Rate
 Given ""account"" has ""amount""
@@ -21,7 +23,7 @@ Examples:
 |23     |42    |1       |
 |56     |23    |3       |
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]
 public void InterestRate1()
@@ -43,7 +45,7 @@ It_should_be(3);
         [TestMethod]
         public void OutlinesValuesInsideMultilineArgs()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Outline
 Given
@@ -55,7 +57,7 @@ Examples:
 |42    |1  |
 |23    |3  |
 ");        
-            The_Runner_should_contain(
+            FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]
 public void Outline1()

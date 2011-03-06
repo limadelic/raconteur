@@ -1,22 +1,24 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Features.StepDefinitions;
 
 namespace Features 
 {
     [TestClass]
     public partial class UsingMultipleRunners 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
 
         
         [TestMethod]
         public void MbUnitRunner()
         {         
             Using("MbUnit");        
-            Given_the_Feature_is(
+            FeatureRunner.Given_the_Feature_is(
 @"
 Feature: Feature
 Scenario: Scenario
 ");        
-            The_Runner_should_be(
+            FeatureRunner.The_Runner_should_be(
 @"
 using MbUnit.Framework;
 namespace Features
@@ -37,12 +39,12 @@ public void Scenario()
         public void NUnitRunner()
         {         
             Using("NUnit");        
-            Given_the_Feature_is(
+            FeatureRunner.Given_the_Feature_is(
 @"
 Feature: Feature
 Scenario: Scenario
 ");        
-            The_Runner_should_be(
+            FeatureRunner.The_Runner_should_be(
 @"
 using NUnit.Framework;
 namespace Features
@@ -63,12 +65,12 @@ public void Scenario()
         public void XUnitRunner()
         {         
             Using("xUnit");        
-            Given_the_Feature_is(
+            FeatureRunner.Given_the_Feature_is(
 @"
 Feature: Feature
 Scenario: Scenario
 ");        
-            The_Runner_should_be(
+            FeatureRunner.The_Runner_should_be(
 @"
 using Xunit;
 namespace Features

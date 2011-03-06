@@ -80,7 +80,7 @@ namespace Raconteur.IDE
 
         string SettingsFileName { get { return DTEProject.Items().First(IsSettingsFile).FileNames[1]; } }
 
-        bool IsSettingsFile(ProjectItem Item) { return Item.Name.EqualsEx("raconteur.settings.txt"); }
+        bool IsSettingsFile(ProjectItem Item) { return Item.Name.EqualsEx("raconteur.settings"); }
 
         public virtual string SettingsFileContent
         {

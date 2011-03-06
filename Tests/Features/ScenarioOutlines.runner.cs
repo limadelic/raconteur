@@ -5,6 +5,7 @@ namespace Features
     [TestClass]
     public partial class ScenarioOutlines 
     {
+
         
         [TestMethod]
         public void UsingScenarioOutlines()

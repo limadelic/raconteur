@@ -5,6 +5,7 @@ namespace Features
     [TestClass]
     public partial class IgnoringScenarios 
     {
+
         
         [TestMethod]
         public void IgnoreAScenario()

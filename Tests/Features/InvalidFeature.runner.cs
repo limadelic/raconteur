@@ -5,6 +5,7 @@ namespace Features
     [TestClass]
     public partial class InvalidFeatures 
     {
+
         
         [TestMethod]
         public void EmptyFeature()

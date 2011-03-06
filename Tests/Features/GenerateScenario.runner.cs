@@ -5,6 +5,7 @@ namespace Features
     [TestClass]
     public partial class GenerateScenario 
     {
+
         
         [TestMethod]
         public void GenerateTestMethods()

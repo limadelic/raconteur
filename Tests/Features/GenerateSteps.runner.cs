@@ -5,6 +5,7 @@ namespace Features
     [TestClass]
     public partial class GenerateStepDefinitionsFile 
     {
+
         
         [TestMethod]
         public void CreateStepDefinitionsFile()

@@ -5,6 +5,7 @@ namespace Features
     [TestClass]
     public partial class RefactorFeature 
     {
+
         
         [TestMethod]
         public void RenameFeature()

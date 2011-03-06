@@ -7,8 +7,11 @@ Scenario: Highlight all Tags
 	Given the Feature contains
 	"
 		@tag @tag
-		@tag
+		@multiword tag
 		Scenario: Name
 	"
 
-	Raconteur should highlight "3" "@tag" like a "Comment"
+	Raconteur should highlight like a "Comment" 
+	[ Count | Text           ]
+	|     1 | @tag @tag		 |
+	|     1 | @multiword tag |

@@ -19,19 +19,10 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing
                     select CreateTag
                     (
                         Position + Index,
-                        LengthOfTagAt(Index),
+                        FullLine.Length,
                         FeatureTokenTypes.Tag
                     );
             }
-        }
-
-        int LengthOfTagAt(int StartIndex)
-        {
-            var EndIndex = FullLine.IndexOf(' ', StartIndex + 1);
-
-            EndIndex = EndIndex > -1 ? EndIndex : FullLine.Length;
-
-            return EndIndex - StartIndex;
         }
     }
 }

@@ -16,10 +16,11 @@ namespace Features.SyntaxHighlight
             FeatureRunner.Given_the_Feature_contains(
 @"
 @tag @tag
-@tag
+@multiword tag
 Scenario: Name
 ");        
-            HighlightFeature.Raconteur_should_highlight___like_a(3, "@tag", "Comment");
+            HighlightFeature.Raconteur_should_highlight_like_a("Comment", 1, "@tag @tag");        
+            HighlightFeature.Raconteur_should_highlight_like_a("Comment", 1, "@multiword tag");
         }
 
     }

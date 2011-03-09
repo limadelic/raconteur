@@ -7,8 +7,9 @@ namespace Raconteur
         public string Name { get; set; }
         public List<Step> Steps { get; set; }
         
-        public bool IsOutline { get { return Examples != null;  } }
-        public Table Examples { get; set; }
+        public bool IsOutline { get { return Examples.Count > 0;  } }
+
+        public List<Table> Examples { get; set; }
         
         public List<string> Tags { get; set; }
 
@@ -16,6 +17,7 @@ namespace Raconteur
         {
             Steps = new List<Step>();
             Tags = new List<string>();
+            Examples = new List<Table>();
         }
     }
 }

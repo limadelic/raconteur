@@ -50,10 +50,7 @@ namespace Raconteur.Parsers
                 return Definition
                     .SkipWhile(IsNotDeclaration)
                     .First()
-                    .Split(A.Colon, 2)[1]
-                    .Trim()
-                    .CamelCase()
-                    .ToValidIdentifier();    
+                    .YamlIdentifier();    
             } 
         }
 
@@ -77,28 +74,7 @@ namespace Raconteur.Parsers
             return StepFrom;
         }
 
-        protected Table Examples
-        {
-            get
-            {
-                var Rows = Definition
-                    .SkipWhile(IsNotExample)
-                    .Skip(1)
-                    .Select(ParseTableRow).ToList();
-
-                return Rows.Count == 0 ? null : 
-                    new Table { Rows = Rows };
-            }
-        }
-
         bool InsideArg;
-
-        protected bool IsNotExample(string Line)
-        {
-            if (Line == "\"") InsideArg = !InsideArg;
-
-            return InsideArg || !Line.StartsWith(Settings.Language.Examples);
-        }
 
         protected bool IsNotDeclaration(string Line)
         {
@@ -113,5 +89,38 @@ namespace Raconteur.Parsers
                 .Select(x => x.Trim())
                 .ToList();
         }
+
+        #region examples
+		        
+        protected List<Table> Examples
+        {
+            get
+            {
+                var examples = new List<Table>();
+
+                foreach (var Line in Definition.SkipWhile(IsNotExample))
+                    if (IsExample(Line)) examples.Add
+                    (
+                        new Table { Name = Line.YamlIdentifier()}
+                    );
+                    else examples.Last().Add(ParseTableRow(Line));
+
+                return examples;
+            }
+        }
+
+        protected bool IsExample(string Line)
+        {
+            return !IsNotExample(Line);
+        }
+
+        protected bool IsNotExample(string Line)
+        {
+            if (Line == "\"") InsideArg = !InsideArg;
+
+            return InsideArg || !Line.StartsWith(Settings.Language.Examples);
+        }
+
+	    #endregion    
     }
 }

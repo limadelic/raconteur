@@ -59,11 +59,8 @@ namespace Raconteur.IDE
         
         string Setting(string SettingName)
         {
-            if (!settings.Any(x => x.StartsWithEx(SettingName))) return null;
-
-            return settings
-                .First(x => x.StartsWithEx(SettingName))
-                .Split(A.Colon, 2)[1].Trim();
+            var Setting = settings.FirstOrDefault(x => x.StartsWithEx(SettingName));
+            return Setting == null ? null : Setting.YamlValue();
         }
 
         List<string> Settings(string SettingName)
@@ -72,7 +69,7 @@ namespace Raconteur.IDE
 
             return settings
                 .Where(s => s.StartsWithEx(SettingName))
-                .Select(s => s.Split(A.Colon, 2)[1].Trim())
+                .Select(s => s.YamlValue())
                 .ToList();
         }
 

@@ -36,6 +36,8 @@ namespace Raconteur
 
         public static string ToValidIdentifier(this string Sentence)
         {
+            if (Sentence.IsEmpty()) return string.Empty;
+
             var Regex = new Regex(
                 @"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
 
@@ -177,6 +179,17 @@ namespace Raconteur
                 from Match Match 
                 in Regex.Matches(Whole, Regex.Escape(Part)) 
                 select Match.Index;
+        }
+
+        public static string YamlValue(this string Line)
+        {
+            return !Line.Contains(':') ? string.Empty : 
+                Line.Split(A.Colon, 2)[1].Trim();
+        }
+
+        public static string YamlIdentifier(this string Line)
+        {
+            return Line.YamlValue().CamelCase().ToValidIdentifier();
         }
     }
 }

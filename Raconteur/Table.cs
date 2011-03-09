@@ -4,12 +4,18 @@ namespace Raconteur
 {
     public class Table
     {
+        public string Name { get; set; }
         public List<List<string>> Rows { get; set; }
         public List<string> Header { get { return Rows[0]; } }
 
         public int Count { get { return Rows.Count - 1; } }
 
         public bool HasHeader { get; set; }
+
+        public bool HasRows
+        {
+            get { return Rows.Count > (HasHeader ? 1 : 0); }
+        }
 
         public string this[int Row, int Col]
         {
@@ -25,6 +31,11 @@ namespace Raconteur
         public void Add(List<string> Row)
         {
             Rows.Add(Row);
+        }
+
+        public void AddRows(List<List<string>> rows)
+        {
+            Rows.AddRange(rows);
         }
     }
 }

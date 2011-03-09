@@ -167,4 +167,10 @@
     <XmlPoke XmlInputPath="$(OutDir)\IDEIntegration\extension.vsixmanifest" Query="/vsx:Vsix/vsx:Identifier/vsx:InstalledByMsi" Value="true" Namespaces="&lt;Namespace Prefix='vsx' Uri='http://schemas.microsoft.com/developer/vsx-schema/2010' /&gt;">
     </XmlPoke>
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if not exist $(SolutionDir)live md $(SolutionDir)live
+copy $(TargetDir)IDEIntegration\*.* $(SolutionDir)live /y
+copy $(TargetDir)ItemTemplates\Templates.zip $(SolutionDir)live\RaconteurFeature.zip /y
+</PostBuildEvent>
+  </PropertyGroup>
 </Project>

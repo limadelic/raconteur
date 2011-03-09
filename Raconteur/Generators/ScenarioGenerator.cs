@@ -99,12 +99,13 @@ namespace Raconteur.Generators
                 var Result = string.Empty;
                 var Outline = ScenarioCode;
 
-                for (var Row = 0; Row < Scenario.Examples.Count; Row++)
+                foreach (var Example in Scenario.Examples)
+                for (var Row = 0; Row < Example.Count; Row++)
                 {
-                    var CurrentCode = ReplaceNameIn(Outline, Row);
+                    var CurrentCode = ReplaceNameIn(Outline, Row, Example);
 
-                    for (var Col = 0; Col < Scenario.Examples.Header.Count; Col++) 
-                        CurrentCode = ReplaceExampleIn(CurrentCode, Row, Col);
+                    for (var Col = 0; Col < Example.Header.Count; Col++) 
+                        CurrentCode = ReplaceExampleIn(CurrentCode, Row, Col, Example);
 
                     Result += CurrentCode;
                 }
@@ -113,27 +114,22 @@ namespace Raconteur.Generators
             }
         }
 
-        string ReplaceNameIn(string Outline, int Row)
+        string ReplaceNameIn(string Outline, int Row, Table Example)
         {
             return Outline.Replace
             (
                 Scenario.Name + "()", 
-                Scenario.Name + (Row + 1) + "()"
+                Scenario.Name + "_" + Example.Name + (Row + 1) + "()"
             );
         }
 
-        string ReplaceExampleIn(string Outline, int Row, int Col)
+        string ReplaceExampleIn(string Outline, int Row, int Col, Table Example)
         {
-            return Outline.Replace
-            (
-                Scenario.Examples.Header[Col].Quoted().Quoted(), 
-                ArgFormatter.ValueOf(Scenario.Examples[Row, Col])
-            )
-            .Replace
-            (
-                Scenario.Examples.Header[Col].Quoted(), 
-                ArgFormatter.ValueOf(Scenario.Examples[Row, Col])
-            );
+            var Value = ArgFormatter.ValueOf(Example[Row, Col]);
+            
+            return Outline
+                .Replace(Example.Header[Col].Quoted().Quoted(), Value)
+                .Replace(Example.Header[Col].Quoted(), Value);
         }
     }
 }

@@ -27,14 +27,14 @@ Examples:
             FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]
-public void InterestRate1()
+public void InterestRate_1()
 {
 Given__has(23, 42);
 When_interest_is_calculated();
 It_should_be(1);
 }
 [TestMethod]
-public void InterestRate2()
+public void InterestRate_2()
 {
 Given__has(56, 23);
 When_interest_is_calculated();
@@ -61,7 +61,7 @@ Examples:
             FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]
-public void Outline1()
+public void Outline_1()
 {
 Given(
 @""
@@ -69,12 +69,55 @@ Given(
 "");
 }
 [TestMethod]
-public void Outline2()
+public void Outline_2()
 {
 Given(
 @""
 23 in 3
 "");
+}
+");
+        }
+        
+        [TestMethod]
+        public void ScenarioOutlinesWithMultipleExamples()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Interest Rate
+Given ""account"" has ""amount""
+When interest is calculated
+It should be ""interest""
+Examples: Poor Man
+|account|amount|interest|
+|23     |42    |0.01    |
+Examples: Rich Man
+|account|amount  |interest|
+|007    |10000000|5       |
+|007    |50000000|10      |
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void InterestRate_PoorMan1()
+{
+Given__has(23, 42);
+When_interest_is_calculated();
+It_should_be(0.01);
+}
+[TestMethod]
+public void InterestRate_RichMan1()
+{
+Given__has(007, 10000000);
+When_interest_is_calculated();
+It_should_be(5);
+}
+[TestMethod]
+public void InterestRate_RichMan2()
+{
+Given__has(007, 50000000);
+When_interest_is_calculated();
+It_should_be(10);
 }
 ");
         }

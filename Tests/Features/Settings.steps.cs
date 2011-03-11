@@ -8,7 +8,8 @@ namespace Features
 {
     public partial class UserSettings
     {
-        readonly Project Project = Create.TestObjectFor<Project>();
+        readonly SettingsLoader SettingsLoader = 
+            Create.TestObjectFor<SettingsLoader>(new Project());
 
         readonly List<dynamic> backup = new List<dynamic>();
 
@@ -18,18 +19,18 @@ namespace Features
             backup.Add(Settings.XUnit);    
             backup.Add(Settings.Language);    
             backup.Add(Settings.StepDefinitions);    
-            backup.Add(Settings.Libraries);    
+            backup.Add(Settings.Libraries);
         }
 
         void Given_the_settings(string Settings)
         {
-            Given.That(Project).HasSettingsFile.Is(true);
-            Given.That(Project).SettingsFileContent.Is(Settings);
+            Given.That(SettingsLoader).HasSettingsFile.Is(true);
+            Given.That(SettingsLoader).SettingsFileContent.Is(Settings);
         }
 
         void When_the_project_is_loaded()
         {
-            Project.Load();
+            SettingsLoader.Load();
         }
 
         void The_Settings_should_be_(string xUnit, string Language)

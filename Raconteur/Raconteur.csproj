@@ -71,6 +71,7 @@
     <Compile Include="Helpers\XUnits.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
     <Compile Include="IDE\Project.cs" />
+    <Compile Include="IDE\SettingsLoader.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Parsers\ScenarioParser.cs" />
     <Compile Include="Parsers\ScenarioParserClass.cs" />

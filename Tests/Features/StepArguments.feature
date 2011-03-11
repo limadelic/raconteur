@@ -26,6 +26,16 @@ Scenario: Type Inference
 		If_the_balance_is(42);
 	"
 
+Scenario: List Arg
+
+	Given the Feature contains
+	"
+		Scenario: Scenario Name
+			If the balances are 
+			|42|50|0|
+	"
+	The Runner should contain "new[] {42, 50, 0}"
+
 Scenario: Multiline Arg
 
 	Given the Feature contains

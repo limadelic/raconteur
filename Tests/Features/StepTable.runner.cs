@@ -11,6 +11,29 @@ namespace Features
 
         
         [TestMethod]
+        public void SingleColumnTableBecomesArray()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Scenario Name
+Given some values:
+|0|
+|1|
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void ScenarioName()
+{
+Given_some_values_
+(
+new[] {0, 1}
+);
+}
+");
+        }
+        
+        [TestMethod]
         public void UsingTables()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -67,8 +90,8 @@ Given stuff in ""X"" place
 |one    |
 |another|
 ""Y"" stuff in
-|somewhere|
-|else	  |
+|some|where|
+|else|where|
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
@@ -79,8 +102,8 @@ Given_stuff_in__place(""X"", ""one"");
 Given_stuff_in__place(""X"", ""another"");
 stuff_in
 (
-new[] {""Y"", ""somewhere""},
-new[] {""Y"", ""else""}
+new[] {""Y"", ""some"", ""where""},
+new[] {""Y"", ""else"", ""where""}
 );
 }
 ");

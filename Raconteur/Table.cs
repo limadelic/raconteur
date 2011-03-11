@@ -12,6 +12,19 @@ namespace Raconteur
 
         public bool HasHeader { get; set; }
 
+        bool? isSingleColumn;
+        public bool IsSingleColumn
+        {
+            get
+            {
+                return Rows.Count > 0 && 
+                (
+                    isSingleColumn ?? (isSingleColumn = Rows[0].Count == 1)
+                )
+                .Value;
+            }
+        }
+
         public bool HasRows
         {
             get { return Rows.Count > (HasHeader ? 1 : 0); }

@@ -24,6 +24,18 @@ namespace Specs
             }
 
             [Test] 
+            public void should_turn_single_column_table_into_single_row()
+            {
+                var Step = 
+                When.StepFrom("Step table:");
+                And.StepFrom("|0|");
+                And.StepFrom("|1|");
+                And.StepFrom("|2|");
+                
+                Step.Table.Rows.Count.ShouldBe(1);
+            }
+
+            [Test] 
             public void should_include_header_in_Table()
             {
                 var Step = 

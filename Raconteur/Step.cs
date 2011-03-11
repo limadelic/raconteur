@@ -19,7 +19,9 @@ namespace Raconteur
         {
             if (!HasTable) Table = new Table();
 
-            Table.Add(Row);
+            if (Table.IsSingleColumn) 
+                Table.Rows[0].Add(Row[0]);
+            else Table.Add(Row);
         }
     }
 }

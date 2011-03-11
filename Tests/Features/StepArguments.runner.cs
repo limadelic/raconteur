@@ -39,6 +39,18 @@ If_the_balance_is(42);
         }
         
         [TestMethod]
+        public void ListArg()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Scenario Name
+If the balances are
+|42|50|0|
+");        
+            FeatureRunner.The_Runner_should_contain("new[] {42, 50, 0}");
+        }
+        
+        [TestMethod]
         public void MultilineArg()
         {         
             FeatureRunner.Given_the_Feature_contains(

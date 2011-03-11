@@ -2,6 +2,28 @@
 	In order to write tabular style tests
 	I want to be able to pass a table into a step
 
+Scenario: Single column Table becomes array
+
+	Given the Feature contains
+	"
+		Scenario: Scenario Name
+			Given some values:
+			|0|
+			|1|
+	"
+
+	The Runner should contain
+	"
+		[TestMethod]
+		public void ScenarioName()
+		{
+			Given_some_values_
+			(
+				new[] {0, 1}
+			);
+		}
+	"
+
 Scenario: Using Tables
 
 	Given the Feature contains

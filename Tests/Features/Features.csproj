@@ -187,14 +187,10 @@
       <DependentUpon>StepArguments.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StepTable.runner.cs">
+    <Compile Include="Tables.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StepTable.feature</DependentUpon>
-    </Compile>
-    <Compile Include="StepTable.steps.cs">
-      <DependentUpon>StepTable.feature</DependentUpon>
-      <SubType>Code</SubType>
+      <DependentUpon>Tables.feature</DependentUpon>
     </Compile>
     <Compile Include="SyntaxHighlight\Args.runner.cs">
       <AutoGen>True</AutoGen>
@@ -260,6 +256,17 @@
     </Compile>
     <Compile Include="SyntaxHighlight\Using.steps.cs">
       <DependentUpon>Using.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Tables.steps.cs">
+      <DependentUpon>Tables.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TableTypes.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TableTypes.feature</DependentUpon>
+    </Compile>
+    <Compile Include="TableTypes.steps.cs">
+      <DependentUpon>TableTypes.feature</DependentUpon>
     </Compile>
     <Compile Include="Tags.runner.cs">
       <AutoGen>True</AutoGen>
@@ -328,9 +335,9 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StepArguments.runner.cs</LastGenOutput>
     </None>
-    <None Include="StepTable.feature">
+    <None Include="Tables.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>StepTable.runner.cs</LastGenOutput>
+      <LastGenOutput>Tables.runner.cs</LastGenOutput>
     </None>
     <None Include="SyntaxHighlight\Args.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
@@ -363,6 +370,10 @@
     <None Include="SyntaxHighlight\Using.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Using.runner.cs</LastGenOutput>
+    </None>
+    <None Include="TableTypes.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>TableTypes.runner.cs</LastGenOutput>
     </None>
     <None Include="Tags.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

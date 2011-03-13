@@ -4,34 +4,11 @@ using Features.StepDefinitions;
 namespace Features 
 {
     [TestClass]
-    public partial class StepTable 
+    public partial class Tables 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
-        
-        [TestMethod]
-        public void SingleColumnTableBecomesArray()
-        {         
-            FeatureRunner.Given_the_Feature_contains(
-@"
-Scenario: Scenario Name
-Given some values:
-|0|
-|1|
-");        
-            FeatureRunner.The_Runner_should_contain(
-@"
-[TestMethod]
-public void ScenarioName()
-{
-Given_some_values_
-(
-new[] {0, 1}
-);
-}
-");
-        }
         
         [TestMethod]
         public void UsingTables()
@@ -90,8 +67,8 @@ Given stuff in ""X"" place
 |one    |
 |another|
 ""Y"" stuff in
-|some|where|
-|else|where|
+|somewhere|
+|else	  |
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
@@ -102,8 +79,7 @@ Given_stuff_in__place(""X"", ""one"");
 Given_stuff_in__place(""X"", ""another"");
 stuff_in
 (
-new[] {""Y"", ""some"", ""where""},
-new[] {""Y"", ""else"", ""where""}
+new[] {""Y"", ""somewhere"", ""else""}
 );
 }
 ");

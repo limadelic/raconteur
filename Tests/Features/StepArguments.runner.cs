@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class StepArguments 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void GenerateArguments()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -24,7 +24,7 @@ If__happens(""X"");
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void TypeInference()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -38,7 +38,7 @@ If_the_balance_is(42);
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ListArg()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -50,7 +50,7 @@ If the balances are
             FeatureRunner.The_Runner_should_contain("new[] {42, 50, 0}");
         }
         
-        [TestMethod]
+        [Test]
         public void MultilineArg()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -72,7 +72,7 @@ and finish on another
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void StepStartingWithArg()
         {         
             FeatureRunner.Given_the_Feature_contains(

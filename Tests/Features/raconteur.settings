@@ -1,4 +1,4 @@
-﻿xUnit: MsTest
+﻿xUnit: MbUnit
 language: en
 using: Feature Runner
 using: Highlight Feature

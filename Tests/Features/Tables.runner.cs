@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class Tables 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void UsingTables()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -34,7 +34,7 @@ new[] {0, 1}
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void TablesWithHeader()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -56,7 +56,7 @@ Verify_some_values_(0, 1);
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void TablesWithArgs()
         {         
             FeatureRunner.Given_the_Feature_contains(

@@ -2,24 +2,24 @@ using System.IO;
 using System.Runtime.InteropServices;
 using EnvDTE;
 using FluentSpec;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Raconteur;
 using Project = Raconteur.IDE.Project;
 
 namespace Features.Misc
 {
-    [TestClass]
+    [TestFixture]
     public class When_loading_a_project
     {
         dynamic backup;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp() { backup = Settings.Project;}
 
-        [TestCleanup]
+        [Test]
         public void TearDown() { Settings.Project = backup; }
 
-        [TestMethod]
+        [Test]
         public void should_index_settings_by_Project()
         {
             Settings.RestoreDefaults();

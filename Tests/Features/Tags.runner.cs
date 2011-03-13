@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class Tags 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void SingleTag()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -28,7 +28,7 @@ public void Tagged()
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void MultipleTags()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -44,7 +44,7 @@ Scenario: Tagged
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void MultipleTagsInOneLine()
         {         
             FeatureRunner.Given_the_Feature_contains(

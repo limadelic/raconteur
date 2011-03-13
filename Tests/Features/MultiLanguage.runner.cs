@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class Multilingual 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void QueVivaEspaña_YOlé_()
         {         
             Select_language("es");        

@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class UsingMultipleRunners 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void MbUnitRunner()
         {         
             Using("MbUnit");        
@@ -36,7 +36,7 @@ public void Scenario()
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void NUnitRunner()
         {         
             Using("NUnit");        
@@ -62,7 +62,7 @@ public void Scenario()
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void XUnitRunner()
         {         
             Using("xUnit");        

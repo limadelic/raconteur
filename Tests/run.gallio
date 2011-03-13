@@ -10,7 +10,10 @@
     <excludedFrameworkIds />
     <properties />
   </testPackage>
-  <testFilters />
+  <testFilters>
+    <testFilter filterName="LastRun" filterExpr="(Id: 54efee42b7f000ee or Id: af9c70acd6dc2c71 or Id: 698ac25a07da602f)" />
+    <testFilter filterName="AutoSave" filterExpr="(Id: 54efee42b7f000ee or Id: af9c70acd6dc2c71 or Id: 698ac25a07da602f)" />
+  </testFilters>
   <extensionSpecifications />
   <reportDirectory>Reports</reportDirectory>
   <reportNameFormat>test-report-{0}-{1}</reportNameFormat>

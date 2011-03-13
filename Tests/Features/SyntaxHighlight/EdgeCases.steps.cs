@@ -1,11 +1,11 @@
 using Features.StepDefinitions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 
 namespace Features.SyntaxHighlight 
 {
     public partial class TestHiglightingEdgeCases
     {
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             HighlightFeature = new HighlightFeature { FeatureRunner = FeatureRunner };

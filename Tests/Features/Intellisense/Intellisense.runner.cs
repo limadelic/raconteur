@@ -1,17 +1,19 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using MbUnit.Framework;
+using Features.StepDefinitions;
 
 namespace Features.Intellisense 
 {
-    [TestClass]
+    [TestFixture]
     public partial class Intellisense 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
+        public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
-        public void Completion1()
+        [Test]
+        public void Completion_1()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -23,10 +25,10 @@ Then this should happen
             Then__should_be_displayed("Scenario:");
         }
         
-        [TestMethod]
-        public void Completion2()
+        [Test]
+        public void Completion_2()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -38,10 +40,10 @@ Then this should happen
             Then__should_be_displayed("Scenario Outline:");
         }
         
-        [TestMethod]
-        public void Completion3()
+        [Test]
+        public void Completion_3()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -53,10 +55,10 @@ Then this should happen
             Then__should_be_displayed("Examples:");
         }
         
-        [TestMethod]
-        public void Completion4()
+        [Test]
+        public void Completion_4()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -68,10 +70,10 @@ Then this should happen
             Then__should_be_displayed("Feature:");
         }
         
-        [TestMethod]
-        public void Completion5()
+        [Test]
+        public void Completion_5()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -83,10 +85,10 @@ Then this should happen
             Then__should_be_displayed("I do something");
         }
         
-        [TestMethod]
-        public void Completion6()
+        [Test]
+        public void Completion_6()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -98,10 +100,10 @@ Then this should happen
             Then__should_be_displayed("I do another thing");
         }
         
-        [TestMethod]
-        public void Completion7()
+        [Test]
+        public void Completion_7()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Scenario Name
 I do something
@@ -113,10 +115,10 @@ Then this should happen
             Then__should_be_displayed("If something happens");
         }
         
-        [TestMethod]
-        public void IgnoreNon_steps1()
+        [Test]
+        public void IgnoreNon_steps_1()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Feature: Feature Name
 Description
@@ -133,10 +135,10 @@ I am an arg
             Then__should_not_be_displayed("Description");
         }
         
-        [TestMethod]
-        public void IgnoreNon_steps2()
+        [Test]
+        public void IgnoreNon_steps_2()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Feature: Feature Name
 Description
@@ -153,10 +155,10 @@ I am an arg
             Then__should_not_be_displayed("Scenario: Scenario Name");
         }
         
-        [TestMethod]
-        public void IgnoreNon_steps3()
+        [Test]
+        public void IgnoreNon_steps_3()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Feature: Feature Name
 Description
@@ -173,10 +175,10 @@ I am an arg
             Then__should_not_be_displayed("Feature: Feature Name");
         }
         
-        [TestMethod]
-        public void IgnoreNon_steps4()
+        [Test]
+        public void IgnoreNon_steps_4()
         {         
-            Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Feature: Feature Name
 Description

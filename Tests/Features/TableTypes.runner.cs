@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class TableTypes 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void SingleColumnTableBecomesAnArrayArg()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -33,8 +33,8 @@ new[] {0, 1}
 ");
         }
         
-        [TestMethod]        
-        [TestCategory("wip")]
+        [Test]        
+        [Category("wip")]
         public void ObjectTableWithSingleRowBecomesAnObjectArg()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -62,7 +62,7 @@ Password = ""53cr3t"",
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ObjectTableWithMultipleRowsBecomesAnObject__Arg()
         { 
         }

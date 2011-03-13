@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using FluentSpec;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Raconteur;
 using Raconteur.IDE;
 
@@ -13,7 +13,7 @@ namespace Features
 
         readonly List<dynamic> backup = new List<dynamic>();
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             backup.Add(Settings.XUnit);    
@@ -39,7 +39,7 @@ namespace Features
             Settings.Language.Name.ShouldBe(Language);
         }
 
-        [TestCleanup]
+        [TearDown]
         public void TearDown()
         {
             Settings.XUnit = backup[0];
@@ -48,18 +48,18 @@ namespace Features
             Settings.Libraries = backup[3];
         }
 
-        void The_Step_Definitions_should_be_(params string[][] StepDefinitions)
+        void The_Step_Definitions_should_be_(string[] StepDefinitions)
         {
             Settings.StepDefinitions.Count.ShouldBe(StepDefinitions.Length);
             foreach (var StepDefinition in StepDefinitions)
-                Settings.StepDefinitions.ShouldContain(StepDefinition[0]);
+                Settings.StepDefinitions.ShouldContain(StepDefinition);
         }
 
-        void The_Libraries_should_be_(params string[][] Libraries) 
+        void The_Libraries_should_be_(string[] Libraries) 
         {
             Settings.Libraries.Count.ShouldBe(Libraries.Length);
             foreach (var Library in Libraries)
-                Settings.Libraries.ShouldContain(Library[0]);
+                Settings.Libraries.ShouldContain(Library);
         }
     }
 }

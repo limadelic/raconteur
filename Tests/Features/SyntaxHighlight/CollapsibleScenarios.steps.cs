@@ -1,7 +1,7 @@
 using System.Linq;
 using Features.StepDefinitions;
 using FluentSpec;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Raconteur;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Parsing;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
@@ -12,7 +12,7 @@ namespace Features.SyntaxHighlight
     {
         FeatureTagParser Sut { get { return HighlightFeature.Sut; } }
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             HighlightFeature = new HighlightFeature { FeatureRunner = FeatureRunner };

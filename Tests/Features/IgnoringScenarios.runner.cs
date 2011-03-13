@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class IgnoringScenarios 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void IgnoreAScenario()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -28,7 +28,7 @@ public void Ignored()
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void IgnoreWithAReason()
         {         
             FeatureRunner.Given_the_Feature_contains(

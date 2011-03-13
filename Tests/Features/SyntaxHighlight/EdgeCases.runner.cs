@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features.SyntaxHighlight 
 {
-    [TestClass]
+    [TestFixture]
     public partial class TestHiglightingEdgeCases 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void Keywords_Comments_TablesInMultilineArgDisplayLikeArg()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -48,7 +48,7 @@ MultiLine Comment
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void Keywords_Args_TablesInsideMultilineCommentsDisplayLikeAComment()
         {         
             FeatureRunner.Given_the_Feature_contains(

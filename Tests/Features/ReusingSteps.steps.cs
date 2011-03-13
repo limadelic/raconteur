@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Raconteur;
 
 namespace Features 
@@ -8,7 +8,7 @@ namespace Features
     {
         readonly List<dynamic> backup = new List<dynamic>();
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             backup.Add(Settings.StepDefinitions);    
@@ -18,7 +18,7 @@ namespace Features
             Settings.Libraries = new List<string>();    
         }
 
-        [TestCleanup]
+        [TearDown]
         public void TearDown()
         {
             Settings.StepDefinitions = backup[0];

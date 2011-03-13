@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class UserSettings 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void SettingTheXUnitRunner()
         {         
             Given_the_settings(
@@ -26,13 +26,11 @@ using: Another Step Definitions
             The_Settings_should_be_("MbUnit", "Spanish");        
             The_Libraries_should_be_
             (        
-                new[] {"Library"},        
-                new[] {"another Library"}
+                new[] {"Library", "another Library"}
             );        
             The_Step_Definitions_should_be_
             (        
-                new[] {"StepDefinitions"},        
-                new[] {"AnotherStepDefinitions"}
+                new[] {"StepDefinitions", "AnotherStepDefinitions"}
             );
         }
 

@@ -1,4 +1,4 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Raconteur;
 
 namespace Features 
@@ -7,7 +7,7 @@ namespace Features
     {
         dynamic backup;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             backup = Settings.XUnit;    
@@ -18,7 +18,7 @@ namespace Features
             Settings.XUnit = XUnits.Framework[xUnit.ToLower()];
         }
 
-        [TestCleanup]
+        [TearDown]
         public void TearDown()
         {
             Settings.XUnit = backup;    

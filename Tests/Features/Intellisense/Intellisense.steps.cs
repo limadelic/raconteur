@@ -11,13 +11,9 @@ namespace Features.Intellisense
         private CompletionCalculator completions;
         private IEnumerable<Completion> results;
 
-        private void Given_the_Feature_contains(string feature)
-        {
-            completions = new CompletionCalculator { Feature = feature };
-        }
-
         private void When_I_begin_to_type__on_the_next_line(string fragment)
         {
+            completions = new CompletionCalculator { Feature = FeatureRunner.Feature };
             results = completions.For(fragment);
         }
 

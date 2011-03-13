@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class ReusingSteps 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void ReusingStepDefinitions()
         {         
             FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
@@ -31,7 +31,7 @@ StepDefinitions.Step_from_Step_Definitions();
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ReusingStepsFromMultipleStepDefinitions()
         {         
             FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
@@ -56,7 +56,7 @@ AnotherStepDefinitions.Step_from_another_Step_Definitions();
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ReusingGlobalStepDefinitions()
         {         
             FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
@@ -77,7 +77,7 @@ StepDefinitions.Step_from_Step_Definitions();
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ReusingStepDefinitionsFromLibraries()
         {         
             FeatureRunner.Given_the_setting__contains("Libraries", "Common");        

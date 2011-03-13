@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features.SyntaxHighlight 
 {
-    [TestClass]
+    [TestFixture]
     public partial class HighlightArgs 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void SingleLineArg()
         {         
             FeatureRunner.Given_the_Feature_is(
@@ -22,7 +22,7 @@ Step with ""Arg1"" and ""Arg2""
             HighlightFeature.Raconteur_should_highlight_like_a("String", 1, "\"Arg2\"");
         }
         
-        [TestMethod]
+        [Test]
         public void MultilineArg()
         {         
             FeatureRunner.Given_the_Feature_is(

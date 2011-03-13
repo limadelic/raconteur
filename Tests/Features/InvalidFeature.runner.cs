@@ -1,30 +1,30 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class InvalidFeatures 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void EmptyFeature()
         {         
             Given_the_Feature_is_Empty();        
             FeatureRunner.The_Runner_should_be("Feature file is Empty");
         }
         
-        [TestMethod]
+        [Test]
         public void UnparseableFeature()
         {         
             FeatureRunner.Given_the_Feature_is("unparseable feature");        
             FeatureRunner.The_Runner_should_be("Missing Feature declaration");
         }
         
-        [TestMethod]
+        [Test]
         public void UnnamedFeature()
         {         
             FeatureRunner.Given_the_Feature_is("Feature:");        

@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class ScenarioOutlines 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void UsingScenarioOutlines()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -43,7 +43,7 @@ It_should_be(3);
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void OutlinesValuesInsideMultilineArgs()
         {         
             FeatureRunner.Given_the_Feature_contains(
@@ -79,7 +79,7 @@ Given(
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ScenarioOutlinesWithMultipleExamples()
         {         
             FeatureRunner.Given_the_Feature_contains(

@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features 
 {
-    [TestClass]
+    [TestFixture]
     public partial class RefactorFeature 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void RenameFeature()
         {         
             Given_the_Step_Definition(
@@ -27,7 +27,7 @@ public partial class RenamedFeature {}
 ");
         }
         
-        [TestMethod]
+        [Test]
         public void ChangeDefaultNamespace()
         {         
             Given_the_Step_Definition(

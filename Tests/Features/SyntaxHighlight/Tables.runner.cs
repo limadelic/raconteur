@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features.SyntaxHighlight 
 {
-    [TestClass]
+    [TestFixture]
     public partial class TableValues 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void TableValuesAreDisplayedLikeStrings()
         {         
             FeatureRunner.Given_the_Feature_contains(

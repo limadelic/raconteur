@@ -1,6 +1,6 @@
 using Common;
 using FluentSpec;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Raconteur.IDE;
 using Raconteur.IDEIntegration;
 
@@ -15,7 +15,7 @@ namespace Features
 
         const string StepDefinitions = Actors.StepDefinitionsForFeatureWithOneScenario;
 
-        [TestInitialize]
+        [SetUp]
         public void SetUp()
         {
             FeatureItem = Create.TestObjectFor<FeatureItem>();

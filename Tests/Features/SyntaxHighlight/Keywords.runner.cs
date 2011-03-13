@@ -1,16 +1,16 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MbUnit.Framework;
 using Features.StepDefinitions;
 
 namespace Features.SyntaxHighlight 
 {
-    [TestClass]
+    [TestFixture]
     public partial class HighlightKeywords 
     {
         public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [TestMethod]
+        [Test]
         public void FeatureAndScenarios()
         {         
             FeatureRunner.Given_the_Feature_is(
@@ -18,9 +18,7 @@ namespace Features.SyntaxHighlight
 Feature: Name
 Scenario: First
 Scenario: Second
-");        
-            HighlightFeature.Raconteur_should_highlight(1, "Feature:", "Keyword");        
-            HighlightFeature.Raconteur_should_highlight(2, "Scenario:", "Keyword");
+");
         }
 
     }

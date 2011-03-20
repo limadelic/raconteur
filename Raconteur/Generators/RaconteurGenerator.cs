@@ -22,23 +22,26 @@ namespace Raconteur.Generators
         {
             Project.LoadFrom(FeatureItem);
 
-            var Feature = FeatureFrom(FeatureFilePath, Content);
+            var FeatureFile = new FeatureFile(FeatureFilePath){Content = Content};
 
+            var Feature = FeatureParser.FeatureFrom(FeatureFile, FeatureItem);
+
+            FeatureCompiler.Compile(Feature, FeatureItem);
+
+            GenerateStepDefinitions(Feature);
+
+            return ObjectFactory.NewRunnerGenerator(Feature).Code;
+        }
+
+        // Tech Debt: this is side effect to generate
+        void GenerateStepDefinitions(Feature Feature) 
+        {
             var StepDefinitions = ObjectFactory.NewStepDefinitionsGenerator
             (
                 Feature, FeatureItem.ExistingStepDefinitions
             ).Code;
 
             FeatureItem.AddStepDefinitions(StepDefinitions);
-
-            return ObjectFactory.NewRunnerGenerator(Feature).Code;
-        }
-
-        Feature FeatureFrom(string FeatureFilePath, string Content)
-        {
-            var FeatureFile = new FeatureFile(FeatureFilePath){Content = Content};
-            
-            return FeatureParser.FeatureFrom(FeatureFile, FeatureItem);
         }
     }
 }

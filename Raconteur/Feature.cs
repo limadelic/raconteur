@@ -6,6 +6,8 @@ namespace Raconteur
 {
     public class Feature 
     {
+        public string Header { get; set; }
+
         public List<Scenario> Scenarios { get; set; }
         public string Name { get; set; }
         public string Namespace { get; set; }

@@ -104,6 +104,8 @@ namespace Specs
                 "
             }, FeatureItem);
             
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
             Feature.StepDefinitions.ShouldBe(StepDefinitions);
         }
 
@@ -124,6 +126,8 @@ namespace Specs
                 "
             }, FeatureItem);
             
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
             Feature.StepDefinitions.Count.ShouldBe(1);
         }
 
@@ -143,6 +147,8 @@ namespace Specs
                 "
             }, FeatureItem);
 
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
             Feature.StepDefinitions.ShouldBe(StepDefinitions);
         }
 
@@ -160,6 +166,8 @@ namespace Specs
                     using Step Definitions in Library
                 "
             }, FeatureItem);
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.StepDefinitions.ShouldBe(new List<Type> { typeof(StepDefinitionsInLibrary) });
         }

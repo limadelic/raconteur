@@ -2,7 +2,6 @@
 using Common;
 using FluentSpec;
 using NSubstitute;
-using Raconteur;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -12,19 +11,21 @@ namespace Features.StepDefinitions
     {
         public string Feature;
 
+        // Tech Debt: why not using real code?
         public string Runner
         {
             get
             {
                 var FeatureFile = new FeatureFile { Content = Feature };
 
-                var Parser = ObjectFactory.NewFeatureParser;
-
                 var FeatureItem = Substitute.For<FeatureItem>();
                 FeatureItem.DefaultNamespace = "Features";
                 FeatureItem.Assembly.Returns("Features.dll");
 
-                var NewFeature = Parser.FeatureFrom(FeatureFile, FeatureItem);
+                var NewFeature = ObjectFactory.NewFeatureParser
+                    .FeatureFrom(FeatureFile, FeatureItem);
+
+                ObjectFactory.NewFeatureCompiler.Compile(NewFeature, FeatureItem);
 
                 var Code = ObjectFactory.NewRunnerGenerator(NewFeature).Code;
 

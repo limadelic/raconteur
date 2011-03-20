@@ -14,6 +14,7 @@ namespace Raconteur.Helpers
             {
                 FeatureItem = FeatureItem,
                 FeatureParser = NewFeatureParser,
+                FeatureCompiler = NewFeatureCompiler
             };
         }
 
@@ -31,6 +32,17 @@ namespace Raconteur.Helpers
                             StepParser = new StepParserClass()
                         }
                     }
+                };
+            }
+        }
+
+        public static FeatureCompiler NewFeatureCompiler
+        {
+            get 
+            {
+                return new FeatureCompilerClass
+                {
+                    TypeResolver = new TypeResolverClass(),
                 };
             }
         }

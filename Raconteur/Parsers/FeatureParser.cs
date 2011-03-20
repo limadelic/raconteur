@@ -33,9 +33,10 @@ namespace Raconteur.Parsers
                 FileName = FeatureFile.Name,
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
+                Header = Header,
                 DefaultStepDefinitions = DefaultStepDefinitions,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
-                StepDefinitions = StepDefinitions
+//                StepDefinitions = StepDefinitions
             };
         }
 
@@ -96,27 +97,6 @@ namespace Raconteur.Parsers
             {
                 try { return TypeOfStepDefinitions(Name); } 
                 catch { return null; }
-            }
-        }
-
-        List<Type> StepDefinitions
-        {
-            get 
-            {
-                var Matches = Regex.Matches
-                (
-                    Header, 
-                    Settings.Language.Using + @" (\w.+)(\r\n|$)"
-                );
-
-                if (Matches.Count == 0 && Settings.StepDefinitions.IsEmpty()) return null;
-
-                return Matches.Cast<Match>()
-                    .Select(Match => Match.Groups[1].Value.CamelCase())
-                    .Union(Settings.StepDefinitions)
-                    .Select(TypeOfStepDefinitions)
-                    .Where(Type => Type != null)
-                    .ToList();
             }
         }
 

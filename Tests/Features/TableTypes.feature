@@ -24,7 +24,7 @@ Scenario: Single column Table becomes an array Arg
 		}
 	"
 
-@wip
+@wip @ignore
 Scenario: Object Table with single row becomes an object Arg
 
 	Given the Feature contains

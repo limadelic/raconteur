@@ -34,7 +34,8 @@ new[] {0, 1}
         }
         
         [Test]        
-        [Category("wip")]
+        [Category("wip")]        
+        [Ignore]
         public void ObjectTableWithSingleRowBecomesAnObjectArg()
         {         
             FeatureRunner.Given_the_Feature_contains(

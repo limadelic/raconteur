@@ -70,6 +70,24 @@ namespace Specs
         #endregion
 
         [Test]
+        public void should_include_default_StepDefinitions_in_Feature()
+        {
+            Parser.TypeResolver
+                .TypeOf("FeatureName", "Common")
+                .Returns(typeof(StepDefinitions));
+
+            var Feature = Parser.FeatureFrom(new FeatureFile
+            {
+                Content = 
+                @"
+                    Feature: Feature Name
+                "
+            }, FeatureItem);
+            
+            Feature.DefaultStepDefinitions.ShouldBe(typeof(StepDefinitions));
+        }
+
+        [Test]
         public void should_find_the_StepDefinitions()
         {
             var Feature = Parser.FeatureFrom(new FeatureFile

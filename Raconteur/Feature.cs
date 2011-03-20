@@ -10,6 +10,7 @@ namespace Raconteur
         public string Namespace { get; set; }
         public string FileName { get; set; }
 
+        public Type DefaultStepDefinitions { get; set; }
         public bool HasStepDefinitions
         {
             get { return StepDefinitions.HasItems(); }

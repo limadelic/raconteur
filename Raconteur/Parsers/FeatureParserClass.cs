@@ -27,6 +27,7 @@ namespace Raconteur.Parsers
                 FileName = FeatureFile.Name,
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
+                DefaultStepDefinitions = DefaultStepDefinitions,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
                 StepDefinitions = StepDefinitions
             };
@@ -79,6 +80,15 @@ namespace Raconteur.Parsers
                     )
                     .Groups[1].Value.CamelCase().ToValidIdentifier();
                 } 
+                catch { return null; }
+            }
+        }
+
+        Type DefaultStepDefinitions 
+        { 
+            get 
+            {
+                try { return TypeOfStepDefinitions(Name); } 
                 catch { return null; }
             }
         }

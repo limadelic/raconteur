@@ -17,8 +17,8 @@ namespace Specs
             {
                 var Step = 
                 When.StepFrom("Step table:");
-                And.StepFrom("|X|Y|");
-                And.StepFrom("|2|1|");
+                 And.StepFrom("|X|Y|");
+                 And.StepFrom("|2|1|");
                 
                 Step.Table.Rows.Count.ShouldBe(2);
             }
@@ -28,9 +28,9 @@ namespace Specs
             {
                 var Step = 
                 When.StepFrom("Step table:");
-                And.StepFrom("|0|");
-                And.StepFrom("|1|");
-                And.StepFrom("|2|");
+                 And.StepFrom("|0|");
+                 And.StepFrom("|1|");
+                 And.StepFrom("|2|");
                 
                 Step.Table.Rows.Count.ShouldBe(1);
             }
@@ -40,7 +40,7 @@ namespace Specs
             {
                 var Step = 
                 When.StepFrom("Step table:");
-                And.StepFrom("[X|Y]");
+                 And.StepFrom("[X|Y]");
 
                 var Table = Step.Table;
 

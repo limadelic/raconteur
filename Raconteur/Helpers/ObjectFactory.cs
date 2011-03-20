@@ -24,7 +24,6 @@ namespace Raconteur.Helpers
             {
                 return new FeatureParserClass
                 {
-                    TypeResolver = new TypeResolverClass(),
                     ScenarioTokenizer = new ScenarioTokenizerClass
                     {
                         ScenarioParser = new ScenarioParserClass

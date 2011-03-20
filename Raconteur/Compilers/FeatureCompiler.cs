@@ -12,7 +12,7 @@ namespace Raconteur.Compilers
         void Compile(Feature Feature, FeatureItem FeatureItem);
     }
 
-    class FeatureCompilerClass : FeatureCompiler 
+    public class FeatureCompilerClass : FeatureCompiler 
     {
         public TypeResolver TypeResolver { get; set; }
 
@@ -30,13 +30,16 @@ namespace Raconteur.Compilers
             Assemblies.AddRange(Settings.Libraries);
 
             Feature.StepDefinitions = StepDefinitions;
+            Feature.DefaultStepDefinitions = DefaultStepDefinitions;
         }
 
-        Type TypeOfStepDefinitions(string ClassName)
-        {
-            return Assemblies
-                .Select(Assembly => TypeResolver.TypeOf(ClassName, Assembly))
-                .FirstOrDefault(Type => Type != null);
+        Type DefaultStepDefinitions 
+        { 
+            get 
+            {
+                try { return TypeOfStepDefinitions(Feature.Name); } 
+                catch { return null; }
+            }
         }
 
         List<Type> StepDefinitions
@@ -58,6 +61,13 @@ namespace Raconteur.Compilers
                     .Where(Type => Type != null)
                     .ToList();
             }
+        }
+
+        Type TypeOfStepDefinitions(string ClassName)
+        {
+            return Assemblies
+                .Select(Assembly => TypeResolver.TypeOf(ClassName, Assembly))
+                .FirstOrDefault(Type => Type != null);
         }
     }
 }

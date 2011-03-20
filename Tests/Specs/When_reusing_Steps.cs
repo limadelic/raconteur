@@ -30,6 +30,7 @@ namespace Specs
         FeatureItem FeatureItem;
 
         FeatureParserClass Parser;
+        FeatureCompilerClass Compiler;
         
         #region setup
 
@@ -40,6 +41,7 @@ namespace Specs
         {
             SetUpFeatureItem();
             SetUpParser();
+            SetUpCompiler();
 
             backup = Settings.StepDefinitions;
         }
@@ -54,13 +56,20 @@ namespace Specs
             Parser = new FeatureParserClass 
             {
                 ScenarioTokenizer = Substitute.For<ScenarioTokenizer>(),
+            };
+        }
+
+        void SetUpCompiler() 
+        {
+            Compiler = new FeatureCompilerClass 
+            {
                 TypeResolver = Substitute.For<TypeResolver>()
             };
 
-            Parser.TypeResolver.TypeOf("StepDefinitions", "Common").Returns(typeof(StepDefinitions));
-            Parser.TypeResolver.TypeOf("AnotherStepDefinitions", "Common").Returns(typeof(AnotherStepDefinitions));
-            Parser.TypeResolver.TypeOf("StepDefinitionsInSameNamespace", "Common").Returns(typeof(StepDefinitionsInSameNamespace));
-            Parser.TypeResolver.TypeOf("StepDefinitionsInLibrary", "Library").Returns(typeof(StepDefinitionsInLibrary));
+            Compiler.TypeResolver.TypeOf("StepDefinitions", "Common").Returns(typeof(StepDefinitions));
+            Compiler.TypeResolver.TypeOf("AnotherStepDefinitions", "Common").Returns(typeof(AnotherStepDefinitions));
+            Compiler.TypeResolver.TypeOf("StepDefinitionsInSameNamespace", "Common").Returns(typeof(StepDefinitionsInSameNamespace));
+            Compiler.TypeResolver.TypeOf("StepDefinitionsInLibrary", "Library").Returns(typeof(StepDefinitionsInLibrary));
         }
 
         [TearDown]
@@ -74,7 +83,7 @@ namespace Specs
         [Test]
         public void should_include_default_StepDefinitions_in_Feature()
         {
-            Parser.TypeResolver
+            Compiler.TypeResolver
                 .TypeOf("FeatureName", "Common")
                 .Returns(typeof(StepDefinitions));
 
@@ -85,7 +94,9 @@ namespace Specs
                     Feature: Feature Name
                 "
             }, FeatureItem);
-            
+
+            Compiler.Compile(Feature, FeatureItem);
+
             Feature.DefaultStepDefinitions.ShouldBe(typeof(StepDefinitions));
         }
 

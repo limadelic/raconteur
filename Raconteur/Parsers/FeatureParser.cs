@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using Raconteur.Compilers;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -16,38 +13,23 @@ namespace Raconteur.Parsers
     public class FeatureParserClass : FeatureParser
     {
         string Content;
-        string Header;
-        List<string> Assemblies;
 
         public ScenarioTokenizer ScenarioTokenizer { get; set; }
-        public TypeResolver TypeResolver { get; set; }
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            SetUpContext(FeatureFile, FeatureItem);
+            Content = FeatureFile.Content.TrimLines();
 
             if (IsNotAValidFeature) return InvalidFeature;
 
             return new Feature
             {
                 FileName = FeatureFile.Name,
+                Content = Content,
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
-                Header = Header,
-                DefaultStepDefinitions = DefaultStepDefinitions,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
-//                StepDefinitions = StepDefinitions
             };
-        }
-
-        void SetUpContext(FeatureFile FeatureFile, FeatureItem FeatureItem) 
-        {
-            Content = FeatureFile.Content.TrimLines();
-
-            Header = Content.Header();
-
-            Assemblies = new List<string> {FeatureItem.Assembly};
-            Assemblies.AddRange(Settings.Libraries);
         }
 
         bool IsNotAValidFeature
@@ -81,7 +63,7 @@ namespace Raconteur.Parsers
                 {
                     return Regex.Match
                     (
-                        Header, 
+                        Content.Header(), 
                         Settings.Language.Feature + @": (\w.+)(" + 
                             Environment.NewLine + "|$)"
                     )
@@ -89,22 +71,6 @@ namespace Raconteur.Parsers
                 } 
                 catch { return null; }
             }
-        }
-
-        Type DefaultStepDefinitions 
-        { 
-            get 
-            {
-                try { return TypeOfStepDefinitions(Name); } 
-                catch { return null; }
-            }
-        }
-
-        Type TypeOfStepDefinitions(string ClassName)
-        {
-            return Assemblies
-                .Select(Assembly => TypeResolver.TypeOf(ClassName, Assembly))
-                .FirstOrDefault(Type => Type != null);
         }
     }
 

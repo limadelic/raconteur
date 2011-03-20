@@ -45,6 +45,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compilers\FeatureCompiler.cs" />
     <Compile Include="Generators\CodeGenerator.cs" />
     <Compile Include="Generators\FeatureFile.cs" />
     <Compile Include="Feature.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />
     <Compile Include="Generators\StepGenerator.cs" />
     <Compile Include="Helpers\A.cs" />
-    <Compile Include="Boundary.cs" />
+    <Compile Include="Helpers\Boundary.cs" />
     <Compile Include="Helpers\ArgFormatter.cs" />
     <Compile Include="Helpers\CollectionsEx.cs" />
     <Compile Include="Helpers\Languages.cs" />
@@ -66,24 +67,20 @@
     <Compile Include="Helpers\StringEx.cs" />
     <Compile Include="Helpers\ObjectFactory.cs" />
     <Compile Include="Helpers\SyntaxExtensions.cs" />
-    <Compile Include="Helpers\TypeResolver.cs" />
+    <Compile Include="Compilers\TypeResolver.cs" />
     <Compile Include="Helpers\XmlDocument.cs" />
     <Compile Include="Helpers\XUnits.cs" />
     <Compile Include="IDE\FeatureItem.cs" />
     <Compile Include="IDE\Project.cs" />
     <Compile Include="IDE\SettingsLoader.cs" />
-    <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Parsers\ScenarioParser.cs" />
-    <Compile Include="Parsers\ScenarioParserClass.cs" />
     <Compile Include="IDE\VsFeatureItem.cs" />
     <Compile Include="Parsers\ScenarioTokenizer.cs" />
-    <Compile Include="Parsers\ScenarioTokenizerClass.cs" />
     <Compile Include="Parsers\StepParser.cs" />
-    <Compile Include="Parsers\StepParserClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generators\RaconteurGeneratorClass.cs" />
     <Compile Include="Generators\RunnerGenerator.cs" />
-    <Compile Include="Parsers\FeatureParserClass.cs" />
+    <Compile Include="Parsers\FeatureParser.cs" />
     <Compile Include="Scenario.cs" />
     <Compile Include="Step.cs" />
     <Compile Include="Table.cs" />

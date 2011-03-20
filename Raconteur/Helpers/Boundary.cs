@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Raconteur
+﻿namespace Raconteur
 {
     public class Boundary
     {

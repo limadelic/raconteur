@@ -7,6 +7,7 @@ namespace Raconteur.Generators
     {
         public FeatureItem FeatureItem { get; set; }
         public FeatureParser FeatureParser { get; set; }
+        public FeatureCompiler FeatureCompiler { get; set; }
         public RunnerGenerator RunnerGenerator { get; set; }
         public StepDefinitionsGenerator StepDefinitionsGenerator { get; set; }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -46,16 +45,7 @@ namespace Raconteur.Compilers
         {
             get 
             {
-                var Matches = Regex.Matches
-                (
-                    Feature.Header, 
-                    Settings.Language.Using + @" (\w.+)(\r\n|$)"
-                );
-
-                if (Matches.Count == 0 && Settings.StepDefinitions.IsEmpty()) return null;
-
-                return Matches.Cast<Match>()
-                    .Select(Match => Match.Groups[1].Value.CamelCase())
+                return Feature.DeclaredStepDefinitions
                     .Union(Settings.StepDefinitions)
                     .Select(TypeOfStepDefinitions)
                     .Where(Type => Type != null)

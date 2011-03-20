@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Raconteur.Helpers;
 using Raconteur.IDE;
@@ -25,10 +27,10 @@ namespace Raconteur.Parsers
             return new Feature
             {
                 FileName = FeatureFile.Name,
-                Content = Content,
                 Namespace = FeatureItem.DefaultNamespace,
                 Name = Name,
                 Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
+                DeclaredStepDefinitions = DeclaredStepDefinitions
             };
         }
 
@@ -70,6 +72,25 @@ namespace Raconteur.Parsers
                     .Groups[1].Value.CamelCase().ToValidIdentifier();
                 } 
                 catch { return null; }
+            }
+        }
+
+        List<string> DeclaredStepDefinitions
+        {
+            get 
+            {
+                var Matches = Regex.Matches
+                (
+                    Content.Header(), 
+                    Settings.Language.Using + @" (\w.+)(\r\n|$)"
+                );
+
+                if (Matches.Count == 0 && Settings.StepDefinitions.IsEmpty()) 
+                    return new List<string>();
+
+                return Matches.Cast<Match>()
+                    .Select(Match => Match.Groups[1].Value.CamelCase())
+                    .ToList();
             }
         }
     }

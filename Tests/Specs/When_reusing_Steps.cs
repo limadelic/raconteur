@@ -22,6 +22,11 @@ namespace Specs
             StepDefinitions = StepDefinitions
         };
 
+        static readonly List<string> DeclaredStepDefinitions = new List<string>
+        {
+            "StepDefinitions", "AnotherStepDefinitions", "StepDefinitionsInSameNamespace"
+        };
+
         static readonly List<Type> StepDefinitions = new List<Type>
         {
             typeof(StepDefinitions), typeof(AnotherStepDefinitions), typeof(StepDefinitionsInSameNamespace)
@@ -115,6 +120,8 @@ namespace Specs
                 "
             }, FeatureItem);
             
+            Feature.DeclaredStepDefinitions.ShouldBe(DeclaredStepDefinitions);
+
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.StepDefinitions.ShouldBe(StepDefinitions);

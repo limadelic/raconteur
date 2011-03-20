@@ -5,6 +5,7 @@ namespace Examples.TicTacToe
     [TestClass]
     public partial class TicTacToeRules 
     {
+
         
         [TestMethod]
         public void XIsFirstPlayer()

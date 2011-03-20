@@ -2,6 +2,7 @@ using Common;
 using MbUnit.Framework;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur;
+using Raconteur.Helpers;
 using Raconteur.IDEIntegration.Intellisense;
 
 namespace Specs

@@ -4,6 +4,7 @@ using EnvDTE;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
+using Raconteur.Helpers;
 using Project = Raconteur.IDE.Project;
 
 namespace Features.Misc

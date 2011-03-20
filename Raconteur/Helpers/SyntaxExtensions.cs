@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.Text;
 
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public static class SyntaxExtensions
     {

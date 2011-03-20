@@ -5,6 +5,7 @@ namespace Examples.GameOfLife
     [TestClass]
     public partial class EvolvingADeadCell 
     {
+
         
         [TestMethod]
         public void DeadCellWith0NeighborsStaysDead()

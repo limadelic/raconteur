@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
+using Raconteur.Helpers;
 using Raconteur.IDE;
 
 namespace Features 

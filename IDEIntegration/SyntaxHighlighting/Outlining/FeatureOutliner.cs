@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Tagging;
+using Raconteur.Helpers;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Outlining
@@ -11,7 +12,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Outlining
     {
         private readonly ITagAggregator<FeatureTokenTag> aggregator;
 
-        public FeatureOutliner(ITextBuffer buffer, ITagAggregator<FeatureTokenTag> tagAggregator)
+        public FeatureOutliner(ITagAggregator<FeatureTokenTag> tagAggregator)
         {
             aggregator = tagAggregator;
         }

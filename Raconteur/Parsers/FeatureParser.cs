@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Raconteur.Generators;
+using Raconteur.Compilers;
+using Raconteur.Helpers;
 using Raconteur.IDE;
 
 namespace Raconteur.Parsers

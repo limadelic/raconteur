@@ -2,7 +2,7 @@ using FluentSpec;
 using MbUnit.Framework;
 using NSubstitute;
 using Raconteur;
-using Raconteur.Generators;
+using Raconteur.Helpers;
 using Raconteur.IDE;
 using Raconteur.Parsers;
 

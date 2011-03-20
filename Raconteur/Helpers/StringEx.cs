@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public static class StringEx
     {

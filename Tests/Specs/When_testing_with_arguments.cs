@@ -5,6 +5,7 @@ using Common;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
+using Raconteur.Helpers;
 using Raconteur.Parsers;
 
 namespace Specs 

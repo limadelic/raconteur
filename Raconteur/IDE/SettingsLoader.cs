@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Raconteur.Helpers;
 using EnvDTE;
+using Languages = Raconteur.Helpers.Languages;
 
 namespace Raconteur.IDE
 {
@@ -18,8 +20,6 @@ namespace Raconteur.IDE
 
         Project Project { get; set; }
 
-        EnvDTE.Project DTEProject { get { return Project.DTEProject; } }
-
         public SettingsLoader(Project Project) 
         {
             this.Project = Project;
@@ -29,28 +29,28 @@ namespace Raconteur.IDE
         {
             if (!HasSettingsFile)
             {
-                Raconteur.Settings.RestoreDefaults();
+                Helpers.Settings.RestoreDefaults();
                 return;
             }
 
-            Raconteur.Settings.Project = Project.DTEProject;
+            Helpers.Settings.Project = Project.DTEProject;
 
             settings = Regex.Split(SettingsFileContent, Environment.NewLine);
 
             var setting = Setting("xunit:").ToLower();
             if (!setting.IsEmpty() && XUnits.Framework.ContainsKey(setting)) 
-                Raconteur.Settings.XUnit = XUnits.Framework[setting];
+                Helpers.Settings.XUnit = XUnits.Framework[setting];
                     
             setting = Setting("language:").ToLower();
             if (!setting.IsEmpty() && Languages.In.ContainsKey(setting))
-                Raconteur.Settings.Language = Languages.In[setting];
+                Helpers.Settings.Language = Languages.In[setting];
 
             var usings = Settings("using:");
             if (usings.HasItems()) 
-                Raconteur.Settings.StepDefinitions = 
+                Helpers.Settings.StepDefinitions = 
                     usings.Select(s => s.CamelCase()).ToList();
 
-            Raconteur.Settings.Libraries = Settings("lib:");
+            Helpers.Settings.Libraries = Settings("lib:");
         }
         
         string Setting(string SettingName)
@@ -71,12 +71,12 @@ namespace Raconteur.IDE
 
         public virtual bool HasSettingsFile
         {
-            get { return DTEProject.Items().Any(IsSettingsFile); }
+            get { return Project.Items().Any(IsSettingsFile); }
         }
 
         string SettingsFileName
         {
-            get { return DTEProject.Items().First(IsSettingsFile).FileNames[1]; }
+            get { return Project.Items().First(IsSettingsFile).FileNames[1]; }
         }
 
         bool IsSettingsFile(ProjectItem Item) { return Item.Name.EqualsEx("raconteur.settings"); }

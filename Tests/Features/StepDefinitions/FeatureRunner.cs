@@ -3,7 +3,7 @@ using Common;
 using FluentSpec;
 using NSubstitute;
 using Raconteur;
-using Raconteur.Generators;
+using Raconteur.Helpers;
 using Raconteur.IDE;
 
 namespace Features.StepDefinitions

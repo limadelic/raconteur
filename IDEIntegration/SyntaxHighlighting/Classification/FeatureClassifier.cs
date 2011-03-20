@@ -23,7 +23,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting.Classification
             {FeatureTokenTypes.Tag, "Comment"},
         };
 
-        public FeatureClassifier(ITextBuffer buffer, ITagAggregator<FeatureTokenTag> tagAggregator, IClassificationTypeRegistryService registry)
+        public FeatureClassifier(ITagAggregator<FeatureTokenTag> tagAggregator, IClassificationTypeRegistryService registry)
         {
             aggregator = tagAggregator;
 

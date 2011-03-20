@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Examples
+namespace Examples.TicTacToe
 {
     public class TicTacToeGame
     {
@@ -25,12 +23,14 @@ namespace Examples
         { 
             get
             {
-                foreach (var line in Lines)
-                    if (IsFilled(line[0]) && line[0] == line[1] && line[1] == line[2])
-                        return line[0];
-
-                return null;
-            } 
+                return 
+                (
+                    from line in Lines
+                    where IsFilled(line[0]) && line[0] == line[1] && line[1] == line[2]
+                    select line[0]
+                )
+                .FirstOrDefault();
+            }
         }
 
         public TicTacToeGame()

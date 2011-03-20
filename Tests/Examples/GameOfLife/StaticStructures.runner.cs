@@ -5,6 +5,7 @@ namespace Examples.GameOfLife
     [TestClass]
     public partial class CellConfigurationsThatAreStatic 
     {
+
         
         [TestMethod]
         public void Block()

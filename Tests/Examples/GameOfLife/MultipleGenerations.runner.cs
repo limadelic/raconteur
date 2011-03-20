@@ -5,6 +5,7 @@ namespace Examples.GameOfLife
     [TestClass]
     public partial class EvolvingAGridOverMultipleGenerations 
     {
+
         
         [TestMethod]
         public void CellsComeAliveThenDieOff()

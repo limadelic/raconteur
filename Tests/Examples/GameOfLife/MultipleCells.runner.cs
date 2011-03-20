@@ -5,6 +5,7 @@ namespace Examples.GameOfLife
     [TestClass]
     public partial class EvolvingAGridWithSomeCellsInIt 
     {
+
         
         [TestMethod]
         public void SparseGridWithNobodyStayingAlive()

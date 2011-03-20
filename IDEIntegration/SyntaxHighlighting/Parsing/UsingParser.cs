@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Raconteur.Helpers;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting.Parsing

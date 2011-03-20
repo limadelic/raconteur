@@ -1,6 +1,6 @@
 using FluentSpec;
-using Raconteur;
 using Raconteur.Generators;
+using Raconteur.Helpers;
 using Raconteur.IDE;
 
 namespace Features 

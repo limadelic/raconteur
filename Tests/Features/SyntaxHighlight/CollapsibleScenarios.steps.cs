@@ -3,6 +3,7 @@ using Features.StepDefinitions;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
+using Raconteur.Helpers;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Parsing;
 using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 

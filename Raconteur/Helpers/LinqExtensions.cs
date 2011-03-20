@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public static class LinqExtensions
     {

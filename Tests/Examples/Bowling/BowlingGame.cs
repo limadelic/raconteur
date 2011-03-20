@@ -1,11 +1,11 @@
-namespace Examples
+namespace Examples.Bowling
 {
     public class BowlingGame
     {
         private bool IsFirstRollOfFrame = true;
         private int Frame = 1;
         private int LastRoll;
-        private int[] RollMultiplier = new int[]{1,1};
+        private int[] RollMultiplier = new[]{1,1};
         private bool LastRollWasMark;
 
         public BowlingGame()

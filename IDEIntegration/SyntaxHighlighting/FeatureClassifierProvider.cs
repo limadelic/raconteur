@@ -29,7 +29,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
             var tagAggregator = Factory.CreateTagAggregator<FeatureTokenTag>(buffer);
-            return new FeatureClassifier(buffer, tagAggregator, Registry) as ITagger<T>;
+            return new FeatureClassifier(tagAggregator, Registry) as ITagger<T>;
         }
     }
 }

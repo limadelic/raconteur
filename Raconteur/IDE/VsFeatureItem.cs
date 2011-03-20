@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using EnvDTE;
+using Raconteur.Helpers;
 
 namespace Raconteur.IDE
 {

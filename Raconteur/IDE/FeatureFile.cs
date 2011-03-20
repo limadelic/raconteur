@@ -1,4 +1,4 @@
-﻿namespace Raconteur.Generators
+﻿namespace Raconteur.IDE
 {
     public class FeatureFile
     {

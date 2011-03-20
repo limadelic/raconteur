@@ -1,9 +1,10 @@
 using EnvDTE;
+using Raconteur.Compilers;
 using Raconteur.Generators;
 using Raconteur.IDE;
 using Raconteur.Parsers;
 
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public static class ObjectFactory
     {

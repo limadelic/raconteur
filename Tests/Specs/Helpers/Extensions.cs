@@ -1,4 +1,4 @@
-using Raconteur;
+using Raconteur.Helpers;
 
 namespace Specs
 {

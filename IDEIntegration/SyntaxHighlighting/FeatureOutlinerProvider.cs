@@ -17,7 +17,7 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
             var tagAggregator = Factory.CreateTagAggregator<FeatureTokenTag>(buffer);
-            return new FeatureOutliner(buffer, tagAggregator) as ITagger<T>;
+            return new FeatureOutliner(tagAggregator) as ITagger<T>;
         }
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public class Setting
     {

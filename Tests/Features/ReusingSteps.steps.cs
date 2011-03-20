@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using MbUnit.Framework;
 using Raconteur;
+using Raconteur.Helpers;
 
 namespace Features 
 {

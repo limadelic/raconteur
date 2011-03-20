@@ -5,6 +5,7 @@ namespace Examples.Demo
     [TestClass]
     public partial class DemoForVersion0_2 
     {
+
         
         [TestMethod]
         public void Retweet()
@@ -32,8 +33,7 @@ HTTP/1.1 200 OK
 Content-Length: 267
 Content-Type: application/xml
 Date: Wed, 19 Nov 2008 21:48:10 GMT
-");        
-            The_Header_should_have(200, 267, System.DateTime.Parse("11/19/2008"));
+");
         }
         
         [TestMethod]
@@ -52,7 +52,7 @@ Date: Wed, 19 Nov 2008 21:48:10 GMT
         }
         
         [TestMethod]
-        public void SupportingMultipleServicesToShortenUrls1()
+        public void SupportingMultipleServicesToShortenUrls_1()
         {         
             Select_url_shortener("is.gd");        
             Tweet("visit http://raconteur.github.com/");        
@@ -60,7 +60,7 @@ Date: Wed, 19 Nov 2008 21:48:10 GMT
         }
         
         [TestMethod]
-        public void SupportingMultipleServicesToShortenUrls2()
+        public void SupportingMultipleServicesToShortenUrls_2()
         {         
             Select_url_shortener("bit.ly");        
             Tweet("visit http://raconteur.github.com/");        
@@ -68,7 +68,7 @@ Date: Wed, 19 Nov 2008 21:48:10 GMT
         }
         
         [TestMethod]
-        public void SupportingMultipleServicesToShortenUrls3()
+        public void SupportingMultipleServicesToShortenUrls_3()
         {         
             Select_url_shortener("tinyurl");        
             Tweet("visit http://raconteur.github.com/");        

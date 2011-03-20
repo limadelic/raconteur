@@ -1,4 +1,4 @@
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public static class NumericExtensions
     {

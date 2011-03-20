@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using EnvDTE;
+using Project = Raconteur.IDE.Project;
 
-namespace Raconteur
+namespace Raconteur.Helpers
 {
     public static class ProjectEx
     {
         public static IEnumerable<ProjectItem> Items(this Project Project) 
         {
-            return Items(Project.ProjectItems);
+            return Items(Project.DTEProject.ProjectItems);
         }
 
         static IEnumerable<ProjectItem> Items(ProjectItems ProjectItems)

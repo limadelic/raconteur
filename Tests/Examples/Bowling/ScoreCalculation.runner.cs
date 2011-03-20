@@ -5,6 +5,7 @@ namespace Examples.Bowling
     [TestClass]
     public partial class ScoreCalculation 
     {
+
         
         [TestMethod]
         public void GutterGame()

@@ -5,6 +5,7 @@ namespace Examples.Demo
     [TestClass]
     public partial class EmployeeSearch 
     {
+
         
         [TestMethod]
         public void FindExistingEmployees()
@@ -57,21 +58,21 @@ namespace Examples.Demo
         }
         
         [TestMethod]
-        public void FindWaldo_Crusoe_AliBaba1()
+        public void FindWaldo_Crusoe_AliBaba_1()
         {         
             When_I_search_for_Employees_whose("first name", "is", "Waldo");        
             I_should_find_one_whose__is("first name", "Waldo");
         }
         
         [TestMethod]
-        public void FindWaldo_Crusoe_AliBaba2()
+        public void FindWaldo_Crusoe_AliBaba_2()
         {         
             When_I_search_for_Employees_whose("first name", "starts with", "Robin");        
             I_should_find_one_whose__is("last name", "Crusoe");
         }
         
         [TestMethod]
-        public void FindWaldo_Crusoe_AliBaba3()
+        public void FindWaldo_Crusoe_AliBaba_3()
         {         
             When_I_search_for_Employees_whose("last name", "contains", "Baba");        
             I_should_find_one_whose__is("first name", "Ali");

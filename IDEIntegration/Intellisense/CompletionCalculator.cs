@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.Language.Intellisense;
-using Raconteur.Parsers;
+using Raconteur.Helpers;
 
 namespace Raconteur.IDEIntegration.Intellisense
 {

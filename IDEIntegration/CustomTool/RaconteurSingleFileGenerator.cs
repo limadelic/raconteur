@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.Shell;
+using Raconteur.Helpers;
 using Raconteur.IDE;
 
 namespace Raconteur.IDEIntegration

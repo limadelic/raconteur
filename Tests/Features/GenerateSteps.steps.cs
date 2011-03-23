@@ -1,7 +1,6 @@
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
-using Raconteur;
 using Raconteur.IDE;
 using Raconteur.IDEIntegration;
 

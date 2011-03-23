@@ -14,32 +14,37 @@ namespace Raconteur.Parsers
 
     public class FeatureParserClass : FeatureParser
     {
-        string Content;
+        Feature Feature;
 
         public ScenarioTokenizer ScenarioTokenizer { get; set; }
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
-            Content = FeatureFile.Content.TrimLines();
+            Feature = new Feature
+            {
+                FileName = FeatureFile.Name,
+                Content = FeatureFile.Content.TrimLines(),
+            };
 
             if (IsNotAValidFeature) return InvalidFeature;
 
-            return new Feature
-            {
-                FileName = FeatureFile.Name,
-                Namespace = FeatureItem.DefaultNamespace,
-                Name = Name,
-                Scenarios = ScenarioTokenizer.ScenariosFrom(Content),
-                DeclaredStepDefinitions = DeclaredStepDefinitions
-            };
+            Feature.Namespace = FeatureItem.DefaultNamespace;
+            Feature.Name = Name;
+            Feature.DeclaredStepDefinitions = DeclaredStepDefinitions;
+
+            Feature.Scenarios = ScenarioTokenizer.ScenariosFrom(Feature.Content);
+            
+            Feature.Steps.ForEach(Step => Step.Feature = Feature);
+
+            return Feature;
         }
 
         bool IsNotAValidFeature
         {
             get
             {
-                return Content.IsEmpty()
-                    || !Content.StartsWith(Settings.Language.Feature)
+                return Feature.Content.IsEmpty()
+                    || !Feature.Content.StartsWith(Settings.Language.Feature)
                     || Name.IsEmpty();
             }
         }
@@ -48,12 +53,12 @@ namespace Raconteur.Parsers
         {
             get
             {
-                var Reason = 
-                    Content.IsEmpty() ? "Feature file is Empty"
-                    : !Content.StartsWith(Settings.Language.Feature) ? "Missing Feature declaration"
-                    : "Missing Feature Name";
-
-                return new InvalidFeature {Reason = Reason};
+                return new InvalidFeature
+                {
+                    Reason = Feature.Content.IsEmpty() ? "Feature file is Empty" : 
+                        !Feature.Content.StartsWith(Settings.Language.Feature) ? "Missing Feature declaration" : 
+                        "Missing Feature Name"
+                };
             }
         }
 
@@ -65,7 +70,7 @@ namespace Raconteur.Parsers
                 {
                     return Regex.Match
                     (
-                        Content.Header(), 
+                        Header, 
                         Settings.Language.Feature + @": (\w.+)(" + 
                             Environment.NewLine + "|$)"
                     )
@@ -81,7 +86,7 @@ namespace Raconteur.Parsers
             {
                 var Matches = Regex.Matches
                 (
-                    Content.Header(), 
+                    Header, 
                     Settings.Language.Using + @" (\w.+)(\r\n|$)"
                 );
 
@@ -93,17 +98,17 @@ namespace Raconteur.Parsers
                     .ToList();
             }
         }
-    }
 
-    public static class FeatureParserClassEx
-    {
-        public static string Header(this string Feature)
+        public string Header
         {
-            var IndexOfScenario = Feature.IndexOf("\r\n" + Settings.Language.Scenario);
+            get
+            {
+                var IndexOfScenario = Feature.Content.IndexOf("\r\n" + Settings.Language.Scenario);
 
-            return Feature.StartsWith(Settings.Language.Scenario) ? string.Empty :
-                IndexOfScenario == -1 ? Feature : 
-                Feature.Substring(0, IndexOfScenario);
+                return Feature.Content.StartsWith(Settings.Language.Scenario) ? string.Empty :
+                    IndexOfScenario == -1 ? Feature.Content : 
+                    Feature.Content.Substring(0, IndexOfScenario);            
+            }
         }
     }
 }

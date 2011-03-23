@@ -56,12 +56,16 @@ namespace Specs
             [Test]
             public void should_build_scenarios()
             {
+                var Scenarios = new List<Scenario>();
+
                 FeatureFile.Content = Actors.FeatureWithThreeScenarios;
+                
+                Given.ScenarioTokenizer
+                    .ScenariosFrom(Actors.FeatureWithThreeScenarios)
+                    .Are(Scenarios);
 
-                When.FeatureFrom(FeatureFile, FeatureItem);
-
-                Then.ScenarioTokenizer.Should()
-                    .ScenariosFrom(Actors.FeatureWithThreeScenarios.TrimLines());
+                When.FeatureFrom(FeatureFile, FeatureItem)
+                    .Scenarios.ShouldBe(Scenarios);
             }
 
             [Test]

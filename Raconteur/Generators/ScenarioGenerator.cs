@@ -91,7 +91,7 @@ namespace Raconteur.Generators
         
         bool IsNotIgnored(string Tag) { return !IsIgnored(Tag); }
 
-        string CodeFor(Step Step) { return new StepGenerator(Step, StepDefinitions).Code; }
+        string CodeFor(Step Step) { return new StepGenerator(Step).Code; }
 
         string OutlineScenarioCode
         {

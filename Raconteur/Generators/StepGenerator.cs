@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Raconteur.Helpers;
 
@@ -22,12 +21,10 @@ namespace Raconteur.Generators
                 new[] {{{0}}},";
 
         readonly Step Step;
-        readonly List<Type> StepDefinitions;
 
-        public StepGenerator(Step Step, List<Type> StepDefinitions = null)
+        public StepGenerator(Step Step)
         {
             this.Step = Step;
-            this.StepDefinitions = StepDefinitions;
         }
 
         public string Code
@@ -104,20 +101,7 @@ namespace Raconteur.Generators
 
             var Args = string.Join(", ", ArgsValues);
 
-            return string.Format(StepExecution, NameOf(Step), Args);
-        }
-
-        string NameOf(Step Step)
-        {
-            if (StepDefinitions.IsEmpty()) return Step.Name;
-
-            var StepDefinitionWithStep = StepDefinitions
-                .Where(l => l.GetMethods()
-                .Any(m => m.Name == Step.Name))
-                .FirstOrDefault();
-
-            return StepDefinitionWithStep == null ? Step.Name :
-                StepDefinitionWithStep.Name + "." + Step.Name;
+            return string.Format(StepExecution, Step.Call, Args);
         }
     }
 }

@@ -1,21 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Raconteur.Helpers;
 
 namespace Raconteur
 {
     public class Feature 
     {
-        public List<Scenario> Scenarios { get; set; }
+        public string FileName { get; set; }
+        public string Content { get; set; }
+
         public string Name { get; set; }
         public string Namespace { get; set; }
-        public string FileName { get; set; }
+
+        public List<Scenario> Scenarios { get; set; }
+        public List<Step> Steps
+        {
+            get
+            {
+                return Scenarios.IsEmpty() ? new List<Step>() : 
+                    Scenarios.SelectMany(Scenario => Scenario.Steps).ToList();
+            }
+        }
+
 
         public Type DefaultStepDefinitions { get; set; }
         public bool HasStepDefinitions
         {
             get { return StepDefinitions.HasItems(); }
         }
+
         public List<string> DeclaredStepDefinitions { get; set; }
         public List<Type> StepDefinitions { get; set; }
 

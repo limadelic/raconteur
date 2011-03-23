@@ -25,11 +25,30 @@ namespace Raconteur.Compilers
 
             this.Feature = Feature;
 
-            Assemblies = new List<string> {FeatureItem.Assembly};
-            Assemblies.AddRange(Settings.Libraries);
+            LoadAssemblies(FeatureItem);
+            CompileFeature();
+            CompileSteps();
+        }
 
+        void CompileSteps()
+        {
+            foreach (var Step in Feature.Steps)
+                Step.Implementation = Feature.StepDefinitions
+                    .Where(l => l.GetMethod(Step.Name) != null)
+                    .Select(l => l.GetMethod(Step.Name))
+                    .FirstOrDefault();
+        }
+
+        void CompileFeature() 
+        {
             Feature.StepDefinitions = StepDefinitions;
             Feature.DefaultStepDefinitions = DefaultStepDefinitions;
+        }
+
+        void LoadAssemblies(FeatureItem FeatureItem) 
+        {
+            Assemblies = new List<string> {FeatureItem.Assembly};
+            Assemblies.AddRange(Settings.Libraries);
         }
 
         Type DefaultStepDefinitions 

@@ -237,15 +237,21 @@ namespace Specs
         {
             new StepGenerator
             (
-                new Step { Name = "Step" }, 
-                StepDefinitions
+                new Step
+                {
+                    Name = "Step", 
+                    Implementation = Common.StepDefinitions.StepMethod
+                }
             )
             .Code.ShouldContain("StepDefinitions.Step();");
 
             new StepGenerator
             (
-                new Step { Name = "another_Step" }, 
-                StepDefinitions
+                new Step
+                {
+                    Name = "another_Step",
+                    Implementation = AnotherStepDefinitions.AnotherStepMethod
+                }
             )
             .Code.ShouldContain("AnotherStepDefinitions.another_Step();");
         }
@@ -255,8 +261,12 @@ namespace Specs
         {
             new StepGenerator
             (
-                new Step { Name = "Step", Args = new List<string> { "Arg" } }, 
-                StepDefinitions
+                new Step
+                {
+                    Name = "Step", 
+                    Args = new List<string> { "Arg" },
+                    Implementation = Common.StepDefinitions.StepMethod
+                }
             )
             .Code.ShouldContain("StepDefinitions.Step(\"Arg\");");
         }

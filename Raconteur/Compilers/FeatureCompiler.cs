@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -34,9 +35,15 @@ namespace Raconteur.Compilers
         {
             foreach (var Step in Feature.Steps)
                 Step.Implementation = Feature.StepDefinitions
-                    .Where(l => l.GetMethod(Step.Name) != null)
-                    .Select(l => l.GetMethod(Step.Name))
+                    .SelectMany(l => l.GetMethods())
+                    .Where(Method => Matches(Method, Step))
                     .FirstOrDefault();
+        }
+
+        bool Matches(MethodInfo Method, Step Step)
+        {
+            return Method.Name == Step.Name && 
+                Method.GetParameters().Count() == Step.Args.Count;
         }
 
         void CompileFeature() 

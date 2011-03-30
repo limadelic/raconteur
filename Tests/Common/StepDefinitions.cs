@@ -8,11 +8,17 @@ namespace Common
         public void Step(){}
 
         public static MethodInfo StepMethod;
+        public static MethodInfo StepOverloaded;
         
         static StepDefinitions()
         {
-            StepMethod = typeof(StepDefinitions).GetMethods()
-                .First(m => m.Name == "Step");
+            var Methods = typeof(StepDefinitions).GetMethods();
+
+            StepMethod = Methods.First(m => m.Name == "Step");
+            
+            StepOverloaded = 
+                Methods.Where(m => m.Name == "Step")
+                .Skip(1).First();
         }
 
         public void Step(string Overloaded){}

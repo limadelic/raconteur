@@ -264,11 +264,39 @@ namespace Specs
                 new Step
                 {
                     Name = "Step", 
-                    Args = new List<string> { "Arg" },
                     Implementation = Common.StepDefinitions.StepMethod
                 }
             )
-            .Code.ShouldContain("StepDefinitions.Step(\"Arg\");");
+            .Code.ShouldContain("StepDefinitions.Step();");
+        }
+
+        [Test]
+        public void should_resolve_method_overloading()
+        {
+            var Feature = new Feature 
+            { 
+                DeclaredStepDefinitions = { "StepDefinitions" },
+                Scenarios = { new Scenario { Steps =
+                {
+                    new Step
+                    {
+                        Name = "Step", 
+                    },
+                    new Step
+                    {
+                        Name = "Step", 
+                        Args = new List<string> { "Arg" },
+                    }, 
+                }
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepMethod);
+
+            Feature.Steps[1].Implementation
+                .ShouldBe(Common.StepDefinitions.StepOverloaded);
         }
     }
 }

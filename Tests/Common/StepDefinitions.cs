@@ -6,22 +6,23 @@ namespace Common
     public class StepDefinitions
     {
         public void Step(){}
+        public void Step(string Overloaded){}
+        public void Step(int Overloaded){}
 
         public static MethodInfo StepMethod;
         public static MethodInfo StepOverloaded;
+        public static MethodInfo StepOverloadedInt;
         
         static StepDefinitions()
         {
-            var Methods = typeof(StepDefinitions).GetMethods();
+            var Methods = typeof(StepDefinitions).GetMethods()
+                .Where(m => m.Name == "Step").ToList();
 
-            StepMethod = Methods.First(m => m.Name == "Step");
-            
-            StepOverloaded = 
-                Methods.Where(m => m.Name == "Step")
-                .Skip(1).First();
+            StepMethod = Methods[0];
+            StepOverloaded = Methods[1];
+            StepOverloadedInt = Methods[2];
         }
 
-        public void Step(string Overloaded){}
         public void Step_from_Lib(){}
         public void Step_from_Step_Definitions(){}
     }

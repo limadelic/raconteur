@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
+using Raconteur.Compilers;
 using Raconteur.Helpers;
 
 namespace Raconteur.Generators

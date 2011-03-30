@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using Raconteur;
 using Raconteur.Compilers;
@@ -271,7 +272,7 @@ namespace Specs
         }
 
         [Test]
-        public void should_resolve_method_overloading()
+        public void should_resolve_method_overloading_by_Arg_count()
         {
             var Feature = new Feature 
             { 
@@ -294,6 +295,37 @@ namespace Specs
 
             Feature.Steps[0].Implementation
                 .ShouldBe(Common.StepDefinitions.StepMethod);
+
+            Feature.Steps[1].Implementation
+                .ShouldBe(Common.StepDefinitions.StepOverloaded);
+        }
+
+        [Test]
+        [MbUnit.Framework.ExpectedException(typeof(AssertFailedException))]
+        public void should_resolve_method_overloading_by_Arg_type()
+        {
+            var Feature = new Feature 
+            { 
+                DeclaredStepDefinitions = { "StepDefinitions" },
+                Scenarios = { new Scenario { Steps =
+                {
+                    new Step
+                    {
+                        Name = "Step", 
+                        Args = new List<string> { "42" },
+                    },
+                    new Step
+                    {
+                        Name = "Step", 
+                        Args = new List<string> { "Arg" },
+                    }, 
+                }
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepOverloadedInt);
 
             Feature.Steps[1].Implementation
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);

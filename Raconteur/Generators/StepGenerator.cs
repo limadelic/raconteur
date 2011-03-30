@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Raconteur.Compilers;
 using Raconteur.Helpers;
@@ -98,11 +99,22 @@ namespace Raconteur.Generators
 
         string CodeFor(Step Step) 
         {
-            var ArgsValues = Step.Args.Select(ArgFormatter.ValueOf);
+            var ArgsValues = Step.IsImplemented ?
+                FormatArgsAsDeclared(Step) :  
+                Step.Args.Select(ArgFormatter.ValueOf);
 
             var Args = string.Join(", ", ArgsValues);
 
             return string.Format(StepExecution, Step.Call, Args);
+        }
+
+        IEnumerable<string> FormatArgsAsDeclared(Step Step)
+        {
+            return Step.Args.Select((Arg, i) => ArgFormatter.ValueOf
+            (
+                Arg, 
+                Step.Implementation.GetParameters()[i].ParameterType
+            ));
         }
     }
 }

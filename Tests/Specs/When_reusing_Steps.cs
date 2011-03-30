@@ -279,15 +279,8 @@ namespace Specs
                 DeclaredStepDefinitions = { "StepDefinitions" },
                 Scenarios = { new Scenario { Steps =
                 {
-                    new Step
-                    {
-                        Name = "Step", 
-                    },
-                    new Step
-                    {
-                        Name = "Step", 
-                        Args = new List<string> { "Arg" },
-                    }, 
+                    new Step { Name = "Step", },
+                    new Step { Name = "Step", Args = new List<string> { "Arg" }, }, 
                 }
             }}};
 
@@ -309,16 +302,8 @@ namespace Specs
                 DeclaredStepDefinitions = { "StepDefinitions" },
                 Scenarios = { new Scenario { Steps =
                 {
-                    new Step
-                    {
-                        Name = "Step", 
-                        Args = new List<string> { "42" },
-                    },
-                    new Step
-                    {
-                        Name = "Step", 
-                        Args = new List<string> { "Arg" },
-                    }, 
+                    new Step { Name = "Step", Args = new List<string> { "42" }, },
+                    new Step { Name = "Step", Args = new List<string> { "Arg" },}, 
                 }
             }}};
 
@@ -329,6 +314,30 @@ namespace Specs
 
             Feature.Steps[1].Implementation
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);
+        }
+
+        [Test]
+        public void should_format_args_according_the_declared_type_on_implementation()
+        {
+            new StepGenerator
+            (
+                new Step
+                {
+                    Name = "Step",
+                    Args = { "42" },
+                    Implementation = Common.StepDefinitions.StepOverloaded
+                }
+            )
+            .Code.ShouldContain("StepDefinitions.Step(\"42\");");
+        }
+
+        [Test]
+        [Row("default", typeof(object), "default")]
+        [Row("string", typeof(string), "\"string\"")]
+        [Row("1/1/77", typeof(DateTime), "System.DateTime.Parse(\"1/1/77\")")]
+        public void should_format_args_according_types(string Arg, Type Type, string ExpectedFormat)
+        {
+            ArgFormatter.ValueOf(Arg, Type).ShouldBe(ExpectedFormat);
         }
     }
 }

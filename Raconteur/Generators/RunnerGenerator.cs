@@ -57,7 +57,7 @@ namespace {2}
 
         string CodeFrom(Scenario Scenario)
         {
-            return new ScenarioGenerator(Scenario, Feature.StepDefinitions).Code;
+            return new ScenarioGenerator(Scenario).Code;
         }
 
         const string Using = "\r\n" + "using {0};";

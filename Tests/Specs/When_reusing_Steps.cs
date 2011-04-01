@@ -52,7 +52,8 @@ namespace Specs
             backup = Settings.StepDefinitions;
         }
 
-        void SetUpFeatureItem() {
+        void SetUpFeatureItem() 
+        {
             FeatureItem = Substitute.For<FeatureItem>();
             FeatureItem.Assembly.Returns("Common");
         }

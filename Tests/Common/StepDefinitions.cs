@@ -8,19 +8,22 @@ namespace Common
         public void Step(){}
         public void Step(string Overloaded){}
         public void Step(int Overloaded){}
+        public void Step_with_object(User User){}
 
         public static MethodInfo StepMethod;
         public static MethodInfo StepOverloaded;
         public static MethodInfo StepOverloadedInt;
+        public static MethodInfo StepWithObject;
         
         static StepDefinitions()
         {
             var Methods = typeof(StepDefinitions).GetMethods()
-                .Where(m => m.Name == "Step").ToList();
+                .Where(m => m.Name.StartsWith("Step")).ToList();
 
             StepMethod = Methods[0];
             StepOverloaded = Methods[1];
             StepOverloadedInt = Methods[2];
+            StepWithObject = Methods[3];
         }
 
         public void Step_from_Lib(){}
@@ -37,6 +40,8 @@ namespace Common
     {
         public void Step_from_Step_Definitions_in_Library(){}
     }
+
+    public class User { public string Name, Pass; }
 }
 
 namespace Uncommon

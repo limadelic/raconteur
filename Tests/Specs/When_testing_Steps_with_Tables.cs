@@ -2,24 +2,36 @@ using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
+using NSubstitute;
 using Raconteur;
 using Raconteur.Helpers;
+using Raconteur.IDE;
 using Raconteur.Parsers;
 
 namespace Specs
 {
     public class When_testing_Steps_with_Tables
     {
+        static Feature Feature;
+        static Step Step;
+
+        [SetUp]
+        public void SetUpFeatureStep() 
+        {
+            Feature = Actors.Feature;
+            Step = Feature.Scenarios[0].Steps[0];
+        }
+
         [TestFixture]
         public class The_parser : BehaviourOf<StepParserClass>
         {
             [Test] 
             public void should_associate_table_and_step()
             {
-                var Step = 
-                When.StepFrom("Step table:");
-                 And.StepFrom("|X|Y|");
-                 And.StepFrom("|2|1|");
+                Step = 
+                    When.StepFrom("Step table:");
+                     And.StepFrom("|X|Y|");
+                     And.StepFrom("|2|1|");
                 
                 Step.Table.Rows.Count.ShouldBe(2);
             }
@@ -53,16 +65,11 @@ namespace Specs
         [TestFixture]
         public class by_default
         {
-            Feature Feature;
-            Step Step;
             string Runner;
             
             [SetUp]
             public void SetUp() 
             {
-                Feature = Actors.Feature;
-                Step = Feature.Scenarios[0].Steps[0];
-                
                 Step.Table = new Table
                 {
                     Rows = new List<List<string>>
@@ -87,16 +94,11 @@ namespace Specs
         [TestFixture]
         public class with_Header
         {
-            Feature Feature;
-            Step Step;
             string Runner;
             
             [SetUp]
             public void SetUp() 
             {
-                Feature = Actors.Feature;
-                Step = Feature.Scenarios[0].Steps[0];
-                
                 Step.Table = new Table
                 {
                     HasHeader = true,
@@ -128,15 +130,9 @@ namespace Specs
         [TestFixture]
         public class Steps_with_Args
         {
-            Feature Feature;
-            Step Step;
-
             [SetUp]
             public void SetUp() 
             {
-                Feature = Actors.Feature;
-                Step = Feature.Scenarios[0].Steps[0];
-                
                 Step.Table = new Table
                 {
                     HasHeader = true,
@@ -157,6 +153,54 @@ namespace Specs
                 var Runner = ObjectFactory.NewRunnerGenerator(Feature).Code;            
 
                 Runner.ShouldContain(Step.Name + @"(""arg"", 1, 2);");
+            }
+        }
+
+        [TestFixture]
+        public class of_Objects
+        {
+            FeatureItem FeatureItem;
+
+            void SetUpFeatureItem() 
+            {
+                FeatureItem = Substitute.For<FeatureItem>();
+                FeatureItem.Assembly.Returns("Common");
+            }
+
+            [SetUp]
+            public void SetUp()
+            {
+                Step.Name = "Step_with_object";
+                Step.Table = new Table
+                {
+                    HasHeader = true,
+                    Rows = new List<List<string>>
+                    {
+                        new List<string> {"Name", "Pass"},
+                        new List<string> {"lola", "run"},
+                        new List<string> {"mani", "dumb"}
+                    }
+                };
+
+                SetUpFeatureItem();
+
+                Feature.DefaultStepDefinitions = typeof (StepDefinitions);
+            }
+
+            [Test]
+            [Ignore]
+            [Category("wip")]
+            public void should_resolve_table_header_to_object_arg()
+            {
+                ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+                Step.Implementation.ShouldBe(StepDefinitions.StepWithObject);
+            }
+
+            [Test]
+            public void should_pass_an_array_of_objects()
+            {
+                
             }
         }
     }

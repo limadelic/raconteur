@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compilers\FeatureCompiler.cs" />
+    <Compile Include="Compilers\StringParser.cs" />
     <Compile Include="Generators\CodeGenerator.cs" />
     <Compile Include="IDE\FeatureFile.cs" />
     <Compile Include="Feature.cs" />

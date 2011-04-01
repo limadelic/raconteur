@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Raconteur.Compilers;
 using Raconteur.Helpers;
 
@@ -21,12 +19,10 @@ namespace Raconteur.Generators
         {0}";
 
         readonly Scenario Scenario;
-        readonly List<Type> StepDefinitions;
 
-        public ScenarioGenerator(Scenario Scenario, List<Type> StepDefinitions = null)
+        public ScenarioGenerator(Scenario Scenario)
         {
             this.Scenario = Scenario;
-            this.StepDefinitions = StepDefinitions;
         }
 
         public string Code

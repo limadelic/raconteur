@@ -40,7 +40,7 @@ namespace Specs
         
         #region setup
 
-        List<dynamic> backup = new List<dynamic>();
+        readonly List<dynamic> backup = new List<dynamic>();
 
         [SetUp]
         public void SetUp() 
@@ -303,6 +303,21 @@ namespace Specs
         }
 
         [Test]
+        public void should_find_Step_in_DefaultStepDefitions()
+        {
+            var Feature = new Feature 
+            { 
+                Name = "StepDefinitions",
+                Scenarios = { new Scenario { Steps = { new Step { Name = "Step", } }
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepMethod);
+        }
+
+        [Test]
         public void should_resolve_method_overloading_by_Arg_count()
         {
             var Feature = new Feature 
@@ -310,7 +325,6 @@ namespace Specs
                 DeclaredStepDefinitions = { "StepDefinitions" },
                 Scenarios = { new Scenario { Steps =
                 {
-                    new Step { Name = "Step", },
                     new Step { Name = "Step", Args = new List<string> { "Arg" }, }, 
                 }
             }}};
@@ -318,10 +332,26 @@ namespace Specs
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.Steps[0].Implementation
-                .ShouldBe(Common.StepDefinitions.StepMethod);
-
-            Feature.Steps[1].Implementation
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);
+        }
+
+        [Test]
+        public void should_find_Step_with_table_in_DefaultStepDefitions()
+        {
+            var Feature = new Feature 
+            { 
+                Name = "StepDefinitions",
+                Scenarios = { new Scenario { Steps = { new Step
+                {
+                    Name = "Step",
+                    Table = new Table()
+                }}
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepWithTable);
         }
 
         [Test]
@@ -360,6 +390,34 @@ namespace Specs
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step(\"42\");");
+        }
+
+        [Test]
+        public void should_format_args_for_tables_according_the_declared_type_on_implementation()
+        {
+            new StepGenerator
+            (
+                new Step
+                {
+                    Name = "Given_the_Board",
+                    Table = new Table { Rows =
+                    {
+                        new List<string> {"0","" ,"" }, 
+                        new List<string> {"" ,"X","" }, 
+                        new List<string> {"" ,"" ,"X"}, 
+                    }},
+                    Implementation = Common.StepDefinitions.StepWithTable
+                }
+            )
+            .Code.TrimLines().ShouldContain
+            (@"
+		        Given_the_Board
+		        (
+			        new[] {""0"", """", """"},
+			        new[] {"""", ""X"", """"},
+			        new[] {"""", """", ""X""}
+		        );
+            ".TrimLines());
         }
 
         [Test]

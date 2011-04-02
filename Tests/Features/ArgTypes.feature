@@ -3,7 +3,6 @@
 	Raconteur should use the type declared in the Step implementation
 	(otherwise try guessing the type)
 
-@wip
 Scenario: Simple Args
 	
 	Given the Feature is
@@ -19,6 +18,28 @@ Scenario: Simple Args
 	"
 
 Scenario: Tables
+
+	Given the Feature is
+	"
+		Feature: Arg Types
+
+		Scenario: Use string instead of int in table
+			Given the Board
+			|0| | |
+			| |X| |
+			| | |X|
+	"
+	The Runner should contain 
+	"
+		Given_the_Board
+		(
+			new[] {""0"", """", """"},
+			new[] {"""", ""X"", """"},
+			new[] {"""", """", ""X""}
+		);
+	"
+
+@wip
 Scenario: Tables with Header
 Scenario: Scenario Outlines
 Scenario: Tables with Args

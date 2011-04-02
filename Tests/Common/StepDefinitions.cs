@@ -10,13 +10,15 @@ namespace Common
         public void Step(int Overloaded){}
         public void Step_with_object(User User){}
         public void Step(string One, string Another){}
+        public void Step(params string[][] Table){}
 
         public static MethodInfo StepMethod;
         public static MethodInfo StepOverloaded;
         public static MethodInfo StepOverloadedInt;
         public static MethodInfo StepWithObject;
         public static MethodInfo StepWithTwoArgs;
-        
+        public static MethodInfo StepWithTable;
+
         static StepDefinitions()
         {
             var Methods = typeof(StepDefinitions).GetMethods()
@@ -27,6 +29,7 @@ namespace Common
             StepOverloadedInt = Methods[2];
             StepWithObject = Methods[3];
             StepWithTwoArgs = Methods[4];
+            StepWithTable= Methods[5];
         }
 
         public void Step_from_Lib(){}

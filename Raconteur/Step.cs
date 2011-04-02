@@ -16,8 +16,9 @@ namespace Raconteur
             {
                 return 
                     Args.Count +
-                    (HasTable && Table.HasHeader ?
-                        Table.Header.Count : 0);
+                    (!HasTable ? 0 :
+                        !Table.HasHeader ? 1 :
+                            Table.Header.Count);
             }
         }
 

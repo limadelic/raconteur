@@ -89,11 +89,24 @@ namespace Raconteur.Generators
 
         string ArgsFrom(IEnumerable<string> Row) 
         { 
-            var ArgsValues = Step.Args
-                .Concat(Row)
-                .Select(ArgFormatter.ValueOf);
+            var ArgsValues = (Step.IsImplemented ?
+                FormatArgsAsDeclared(Row) :
+                Step.Args.Concat(Row).Select(ArgFormatter.ValueOf)).ToList();
 
             return string.Join(", ", ArgsValues);
+        }
+
+        IEnumerable<string> FormatArgsAsDeclared(IEnumerable<string> Row)
+        {
+            return FormatArgsAsDeclared(Step)
+                .Concat(FormatRowArgsAsDeclared(Row));
+        }
+
+        IEnumerable<string> FormatRowArgsAsDeclared(IEnumerable<string> Row)
+        {
+            var ArgsType = Step.TableItemType();
+            
+            return Row.Select(Arg => ArgFormatter.ValueOf(Arg, ArgsType));
         }
 
         string CodeFor(Step Step) 

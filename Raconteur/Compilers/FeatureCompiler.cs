@@ -43,7 +43,7 @@ namespace Raconteur.Compilers
         bool Matches(MethodInfo Method, Step Step)
         {
             return Method.Name == Step.Name && 
-                Method.GetParameters().Count() == Step.Args.Count;
+                Method.GetParameters().Count() == Step.ArgsCount;
         }
 
         void CompileFeature() 

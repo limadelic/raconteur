@@ -10,6 +10,17 @@ namespace Raconteur
         public string Name { get; set; }
         public List<string> Args { get; set; }
 
+        public int ArgsCount
+        {
+            get
+            {
+                return 
+                    Args.Count +
+                    (HasTable && Table.HasHeader ?
+                        Table.Header.Count : 0);
+            }
+        }
+
         public bool IsImplemented { get { return Implementation != null; } }
         public bool IsImplementedInFeatureSteps
         {

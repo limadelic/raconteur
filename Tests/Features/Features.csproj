@@ -72,6 +72,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgTypes.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArgTypes.feature</DependentUpon>
+    </Compile>
+    <Compile Include="ArgTypes.steps.cs">
+      <DependentUpon>ArgTypes.feature</DependentUpon>
+    </Compile>
     <Compile Include="Comments.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -187,6 +195,8 @@
       <DependentUpon>StepArguments.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StepDefinitions\ForTests\FeatureName.cs" />
+    <Compile Include="StepDefinitions\ForTests\TableTypesSteps.cs" />
     <Compile Include="Tables.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -283,6 +293,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ArgTypes.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>ArgTypes.runner.cs</LastGenOutput>
+    </None>
     <None Include="Comments.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>Comments.runner.cs</LastGenOutput>

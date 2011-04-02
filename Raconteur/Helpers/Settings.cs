@@ -17,6 +17,8 @@ namespace Raconteur.Helpers
     {
         static Settings() { Project = DefaultProject; }
 
+        public const string File = "raconteur.config";
+
         static readonly object DefaultProject = new object();
         public static void RestoreDefaults() { project = DefaultProject; }
 

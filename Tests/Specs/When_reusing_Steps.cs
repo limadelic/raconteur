@@ -273,6 +273,33 @@ namespace Specs
         }
 
         [Test]
+        public void should_consider_each_table_columns_as_arg_if_header()
+        {
+            var Feature = new Feature 
+            { 
+                DeclaredStepDefinitions = { "StepDefinitions" },
+                Scenarios = { new Scenario { Steps = { new Step
+                {
+                    Name = "Step",
+                    Table = new Table
+                    {
+                        HasHeader = true,
+                        Rows =
+                        {
+                            new List<string> {"X","Y"}, 
+                            new List<string> {"1","0"}
+                        }
+                    }
+                }
+            }}}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepWithTwoArgs);
+        }
+
+        [Test]
         public void should_resolve_method_overloading_by_Arg_count()
         {
             var Feature = new Feature 

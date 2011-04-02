@@ -34,7 +34,6 @@ Scenario: Object Table with single row becomes an object Arg
 			[user name|password]
 			|neo	  |53cr3t  |
 	"
-	And the Steps are "TableTypesSteps"
 /*  
 	containing a matching Step with an object Arg
 	that contain matching properties to Header column

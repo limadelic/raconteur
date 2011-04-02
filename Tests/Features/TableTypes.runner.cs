@@ -45,7 +45,6 @@ Given the User:
 [user name|password]
 |neo	  |53cr3t  |
 ");        
-            FeatureRunner.And_the_Steps_are("TableTypesSteps");        
             FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]

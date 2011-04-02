@@ -61,7 +61,5 @@ namespace Features.StepDefinitions
         {
             ((IList)Settings.Setting.Get(Setting)).Add(Value);
         }
-
-        public void And_the_Steps_are(string StepsClass) { }
     }
 }

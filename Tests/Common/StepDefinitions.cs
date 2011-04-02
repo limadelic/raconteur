@@ -9,11 +9,13 @@ namespace Common
         public void Step(string Overloaded){}
         public void Step(int Overloaded){}
         public void Step_with_object(User User){}
+        public void Step(string One, string Another){}
 
         public static MethodInfo StepMethod;
         public static MethodInfo StepOverloaded;
         public static MethodInfo StepOverloadedInt;
         public static MethodInfo StepWithObject;
+        public static MethodInfo StepWithTwoArgs;
         
         static StepDefinitions()
         {
@@ -24,6 +26,7 @@ namespace Common
             StepOverloaded = Methods[1];
             StepOverloadedInt = Methods[2];
             StepWithObject = Methods[3];
+            StepWithTwoArgs = Methods[4];
         }
 
         public void Step_from_Lib(){}

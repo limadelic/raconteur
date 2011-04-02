@@ -6,7 +6,7 @@ namespace Raconteur.Compilers
 {
     public static class ArgFormatter 
     {
-        public static string ValueOf(string Arg)
+        public static string Format(string Arg)
         {
             if (Arg.IsDateTime()) return @"System.DateTime.Parse(""" + Arg + @""")";
 
@@ -25,7 +25,7 @@ namespace Raconteur.Compilers
             { typeof(DateTime), s => @"System.DateTime.Parse(""" + s + @""")" },
         };
 
-        public static string ValueOf(string Arg, Type Type)
+        public static string Format(string Arg, Type Type)
         {
             return TypeFormatters.ContainsKey(Type)?
                 TypeFormatters[Type](Arg) : Arg;

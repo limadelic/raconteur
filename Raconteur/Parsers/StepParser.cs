@@ -50,24 +50,49 @@ namespace Raconteur.Parsers
             }
         }
 
-        bool IsTable { get { return Sentence.StartsWith("|") || IsHeader; } }
+        bool IsTable
+        {
+            get
+            {
+                return 
+                    LastStep != null &&
+                    (Sentence.StartsWith("|") || IsHeader);
+            }
+        }
 
-        bool IsHeader { get { return Sentence.StartsWith("["); } }
+        bool IsHeader
+        {
+            get
+            {
+                return
+                    !LastStep.HasTable &&    
+                    Sentence.StartsWith("[") && 
+                    Sentence.EndsWith("]");
+            }
+        }
 
         Step ParseTable
         {
             get
             {
                 LastStep.AddRow(ParseTableRow());
-
-                if (IsHeader) LastStep.Table.HasHeader = true;
-
                 return null;
             } 
         }
 
+        void TurnHeaderIntoRow()
+        {
+            Sentence = '|' + Sentence.Substring(1, Sentence.Length - 2) + '|';
+        }
+
         List<string> ParseTableRow()
         {
+            if (IsHeader)
+            {
+                LastStep.Table = new Table {HasHeader = true};
+                TurnHeaderIntoRow();
+            }
+
             return Sentence
                 .Split('|')
                 .Chop(1)

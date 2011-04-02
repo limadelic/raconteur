@@ -153,7 +153,7 @@ namespace Specs
             [Row("string", "\"string\"")]
             public void should_format_Args_by_type(string Arg, string Value)
             {
-                ArgFormatter.ValueOf(Arg).ShouldBe(Value);
+                ArgFormatter.Format(Arg).ShouldBe(Value);
             }
 
             [Test]

@@ -45,6 +45,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compilers\Extensions.cs" />
     <Compile Include="Compilers\FeatureCompiler.cs" />
     <Compile Include="Compilers\StringParser.cs" />
     <Compile Include="Generators\CodeGenerator.cs" />

@@ -82,16 +82,17 @@ namespace Raconteur.Generators
                 new Step
                 {
                     Name = Step.Name,
-                    Args = Step.Args.Concat(Row).ToList()
+                    Args = Step.Args.Concat(Row).ToList(),
+                    Implementation = Step.Implementation
                 }
             );
         }
 
         string ArgsFrom(IEnumerable<string> Row) 
         { 
-            var ArgsValues = Step.Args
-                .Concat(Row)
-                .Select(ArgFormatter.ValueOf);
+            var ArgsValues = (Step.IsImplemented ?
+                FormatArgs(Row) :
+                Step.Args.Concat(Row).Select(ArgFormatter.Format)).ToList();
 
             return string.Join(", ", ArgsValues);
         }
@@ -99,21 +100,50 @@ namespace Raconteur.Generators
         string CodeFor(Step Step) 
         {
             var ArgsValues = Step.IsImplemented ?
-                FormatArgsAsDeclared(Step) :  
-                Step.Args.Select(ArgFormatter.ValueOf);
+                FormatArgs(Step) :  
+                Step.Args.Select(ArgFormatter.Format);
 
             var Args = string.Join(", ", ArgsValues);
 
             return string.Format(StepExecution, Step.Call, Args);
         }
 
-        IEnumerable<string> FormatArgsAsDeclared(Step Step)
+        IEnumerable<string> FormatArgs(Step Step)
         {
-            return Step.Args.Select((Arg, i) => ArgFormatter.ValueOf
+            return Step.Args.Select((Arg, i) => ArgFormatter.Format
             (
                 Arg, 
                 Step.Implementation.GetParameters()[i].ParameterType
             ));
+        }
+
+        IEnumerable<string> FormatArgs(IEnumerable<string> Row)
+        {
+            return FormatArgs(Step)
+                .Concat(FormatArgsForTable(Row));
+        }
+
+        IEnumerable<string> FormatArgsForTable(IEnumerable<string> Row) 
+        {
+            return Step.Table.HasHeader ? 
+                FormatArgsAsDeclaredForTableWithHeader(Row) :
+                FormatArgsAsDeclaredForSimpleTable(Row);
+        }
+
+        IEnumerable<string> FormatArgsAsDeclaredForTableWithHeader(IEnumerable<string> Row)
+        {
+            var Args = Step.Implementation.GetParameters()
+                .Skip(Step.Args.Count).ToArray();
+
+            return Row.Select((Value, i) => 
+                ArgFormatter.Format(Value, Args[i].ParameterType));
+        }
+
+        IEnumerable<string> FormatArgsAsDeclaredForSimpleTable(IEnumerable<string> Row) 
+        {
+            var ArgsType = Step.TableItemType();
+            
+            return Row.Select(Arg => ArgFormatter.Format(Arg, ArgsType));
         }
     }
 }

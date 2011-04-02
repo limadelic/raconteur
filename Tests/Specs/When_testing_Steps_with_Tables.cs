@@ -53,12 +53,13 @@ namespace Specs
             {
                 var Step = 
                 When.StepFrom("Step table:");
-                 And.StepFrom("[X|Y]");
+                 And.StepFrom("[ X | Y ]");
 
                 var Table = Step.Table;
 
                 Table.Rows.Count.ShouldBe(1);
                 Table.HasHeader.ShouldBeTrue();
+                Table.Header.Count.ShouldBe(2);
             }
         }
 

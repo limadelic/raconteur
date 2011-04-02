@@ -40,7 +40,7 @@ namespace Specs
         
         #region setup
 
-        List<dynamic> backup = new List<dynamic>();
+        readonly List<dynamic> backup = new List<dynamic>();
 
         [SetUp]
         public void SetUp() 
@@ -245,7 +245,8 @@ namespace Specs
                 new Step
                 {
                     Name = "Step", 
-                    Implementation = Common.StepDefinitions.StepMethod
+                    Implementation = Common.StepDefinitions.StepMethod,
+                    Feature = new Feature()
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step();");
@@ -255,7 +256,8 @@ namespace Specs
                 new Step
                 {
                     Name = "another_Step",
-                    Implementation = AnotherStepDefinitions.AnotherStepMethod
+                    Implementation = AnotherStepDefinitions.AnotherStepMethod,
+                    Feature = new Feature()
                 }
             )
             .Code.ShouldContain("AnotherStepDefinitions.another_Step();");
@@ -269,7 +271,8 @@ namespace Specs
                 new Step
                 {
                     Name = "Step", 
-                    Implementation = Common.StepDefinitions.StepMethod
+                    Implementation = Common.StepDefinitions.StepMethod,
+                    Feature = new Feature()
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step();");
@@ -303,6 +306,21 @@ namespace Specs
         }
 
         [Test]
+        public void should_find_Step_in_DefaultStepDefitions()
+        {
+            var Feature = new Feature 
+            { 
+                Name = "StepDefinitions",
+                Scenarios = { new Scenario { Steps = { new Step { Name = "Step", } }
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepMethod);
+        }
+
+        [Test]
         public void should_resolve_method_overloading_by_Arg_count()
         {
             var Feature = new Feature 
@@ -310,7 +328,6 @@ namespace Specs
                 DeclaredStepDefinitions = { "StepDefinitions" },
                 Scenarios = { new Scenario { Steps =
                 {
-                    new Step { Name = "Step", },
                     new Step { Name = "Step", Args = new List<string> { "Arg" }, }, 
                 }
             }}};
@@ -318,10 +335,26 @@ namespace Specs
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.Steps[0].Implementation
-                .ShouldBe(Common.StepDefinitions.StepMethod);
-
-            Feature.Steps[1].Implementation
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);
+        }
+
+        [Test]
+        public void should_find_Step_with_table_in_DefaultStepDefitions()
+        {
+            var Feature = new Feature 
+            { 
+                Name = "StepDefinitions",
+                Scenarios = { new Scenario { Steps = { new Step
+                {
+                    Name = "Step",
+                    Table = new Table()
+                }}
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepWithTable);
         }
 
         [Test]
@@ -356,10 +389,68 @@ namespace Specs
                 {
                     Name = "Step",
                     Args = { "42" },
-                    Implementation = Common.StepDefinitions.StepOverloaded
+                    Implementation = Common.StepDefinitions.StepOverloaded,
+                    Feature = new Feature()
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step(\"42\");");
+        }
+
+        [Test]
+        public void should_format_args_for_tables_according_the_declared_type_on_implementation()
+        {
+            new StepGenerator
+            (
+                new Step
+                {
+                    Name = "Given_the_Board",
+                    Table = new Table { Rows =
+                    {
+                        new List<string> {"0","" ,"" }, 
+                        new List<string> {"" ,"X","" }, 
+                        new List<string> {"" ,"" ,"X"}, 
+                    }},
+                    Implementation = Common.StepDefinitions.StepWithTable
+                }
+            )
+            .Code.TrimLines().ShouldContain
+            (@"
+		        Given_the_Board
+		        (
+			        new[] {""0"", """", """"},
+			        new[] {"""", ""X"", """"},
+			        new[] {"""", """", ""X""}
+		        );
+            ".TrimLines());
+        }
+
+        [Test]
+        public void should_format_Args_for_Tables_with_Header_according_the_declared_type_on_implementation()
+        {
+            new StepGenerator
+            (
+                new Step
+                {
+                    Name = "Given_the_Address",
+                    Table = new Table 
+                    { 
+                        HasHeader = true, 
+                        Rows =
+                        {
+                            new List<string> { "state", "zip" }, 
+                            new List<string> { "FL" , "33131" }, 
+                            new List<string> { "NY" , "10001" }, 
+                        }
+                    },
+                    Implementation = Common.StepDefinitions.StepWithTwoArgs
+                }
+            )
+            .Code.TrimLines().ShouldContain
+            (@"
+		        Given_the_Address(""FL"", ""33131"");
+		        Given_the_Address(""NY"", ""10001"");
+            "
+            .TrimLines());
         }
 
         [Test]
@@ -368,7 +459,7 @@ namespace Specs
         [Row("1/1/77", typeof(DateTime), "System.DateTime.Parse(\"1/1/77\")")]
         public void should_format_args_according_types(string Arg, Type Type, string ExpectedFormat)
         {
-            ArgFormatter.ValueOf(Arg, Type).ShouldBe(ExpectedFormat);
+            ArgFormatter.Format(Arg, Type).ShouldBe(ExpectedFormat);
         }
     }
 }

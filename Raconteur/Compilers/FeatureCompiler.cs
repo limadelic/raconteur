@@ -48,8 +48,27 @@ namespace Raconteur.Compilers
 
         bool Matches(MethodInfo Method, Step Step)
         {
-            return Method.Name == Step.Name && 
-                Method.GetParameters().Count() == Step.ArgsCount;
+            return MatchesName(Method, Step) && 
+                MatchesArgsCount(Method, Step) &&
+                MatchesArgsTypes(Method, Step);
+        }
+
+        bool MatchesName(MethodInfo Method, Step Step)
+        {
+            return Method.Name == Step.Name;
+        }
+
+        bool MatchesArgsCount(MethodInfo Method, Step Step)
+        {
+            return Method.GetParameters().Count() == Step.ArgsCount;
+        }
+
+        bool MatchesArgsTypes(MethodInfo Method, Step Step)
+        {
+            if (Step.ArgsCount == 0) return true;
+
+            return Step.HasTable && !Step.Table.HasHeader ? 
+                Method.HasTableArg() : !Method.HasTableArg();
         }
 
         void CompileFeature() 

@@ -123,7 +123,7 @@ namespace Raconteur.Generators
 
         string ReplaceExampleIn(string Outline, int Row, int Col, Table Example)
         {
-            var Value = ArgFormatter.ValueOf(Example[Row, Col]);
+            var Value = ArgFormatter.Format(Example[Row, Col]);
             
             return Outline
                 .Replace(Example.Header[Col].Quoted().Quoted(), Value)

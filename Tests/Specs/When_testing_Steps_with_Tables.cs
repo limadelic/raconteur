@@ -184,7 +184,7 @@ namespace Specs
 
                 SetUpFeatureItem();
 
-                Feature.DefaultStepDefinitions = typeof (StepDefinitions);
+//                Feature.DefaultStepDefinitions = typeof (StepDefinitions);
             }
 
             [Test]

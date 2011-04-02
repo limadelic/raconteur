@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Raconteur.Helpers;
 
 namespace Raconteur.Compilers
 {
@@ -14,6 +15,8 @@ namespace Raconteur.Compilers
     {
         public Type TypeOf(string Name, string AssemblyName)
         {
+            if (Name.IsEmpty() || AssemblyName.IsEmpty()) return null;
+
             return
                 (from Type in Load(AssemblyName).GetTypes()
                 where Type.Name == Name

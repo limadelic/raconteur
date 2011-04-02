@@ -195,8 +195,6 @@
       <DependentUpon>StepArguments.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StepDefinitions\ForTests\FeatureName.cs" />
-    <Compile Include="StepDefinitions\ForTests\TableTypesSteps.cs" />
     <Compile Include="Tables.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

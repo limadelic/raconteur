@@ -40,22 +40,25 @@ namespace Specs
         
         #region setup
 
-        dynamic backup;
+        List<dynamic> backup = new List<dynamic>();
 
         [SetUp]
         public void SetUp() 
         {
+            backup.Add(Settings.StepDefinitions);
+            backup.Add(Settings.Libraries);
+
             SetUpFeatureItem();
             SetUpParser();
             SetUpCompiler();
 
-            backup = Settings.StepDefinitions;
+            Settings.Libraries = new List<string> { "Common" };
         }
 
         void SetUpFeatureItem() 
         {
             FeatureItem = Substitute.For<FeatureItem>();
-            FeatureItem.Assembly.Returns("Common");
+            FeatureItem.Assembly.Returns("Specs");
         }
 
         void SetUpParser() 
@@ -82,7 +85,8 @@ namespace Specs
         [TearDown]
         public void TearDown()
         {
-            Settings.StepDefinitions = backup;
+            Settings.StepDefinitions = backup[0];
+            Settings.Libraries = backup[1];
         }
 
         #endregion
@@ -105,6 +109,7 @@ namespace Specs
             Compiler.Compile(Feature, FeatureItem);
 
             Feature.DefaultStepDefinitions.ShouldBe(typeof(StepDefinitions));
+            Feature.StepDefinitions[0].ShouldBe(Feature.DefaultStepDefinitions);
         }
 
         [Test]
@@ -175,8 +180,6 @@ namespace Specs
         [Test]
         public void should_find_StepsDefinitions_in_Libraries()
         {
-            Settings.Libraries = new List<string> { "Library" };
-
             var Feature = Parser.FeatureFrom(new FeatureFile
             {
                 Content = 
@@ -277,7 +280,7 @@ namespace Specs
         {
             var Feature = new Feature 
             { 
-                DeclaredStepDefinitions = { "StepDefinitions" },
+                Name = "StepDefinitions",
                 Scenarios = { new Scenario { Steps = { new Step
                 {
                     Name = "Step",

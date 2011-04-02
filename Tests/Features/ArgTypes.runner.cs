@@ -22,7 +22,7 @@ Given the zipcode is ""33131""
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
-Given_the_zipcode_is_(""33131"");
+Given_the_zipcode_is(""33131"");
 ");
         }
         

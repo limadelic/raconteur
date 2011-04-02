@@ -24,7 +24,7 @@ namespace Raconteur
         }
 
 
-        public Type DefaultStepDefinitions { get; set; }
+        public Type DefaultStepDefinitions { get { return StepDefinitions[0]; } }
         public bool HasStepDefinitions
         {
             get { return StepDefinitions.HasItems(); }

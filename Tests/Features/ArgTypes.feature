@@ -15,7 +15,7 @@ Scenario: Simple Args
 	"
 	The Runner should contain 
 	"
-		Given_the_zipcode_is_(""33131"");
+		Given_the_zipcode_is(""33131"");
 	"
 
 Scenario: Tables

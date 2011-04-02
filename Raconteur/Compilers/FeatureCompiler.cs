@@ -31,6 +31,12 @@ namespace Raconteur.Compilers
             CompileSteps();
         }
 
+        void LoadAssemblies(FeatureItem FeatureItem) 
+        {
+            Assemblies = new List<string> {FeatureItem.Assembly};
+            Assemblies.AddRange(Settings.Libraries);
+        }
+
         void CompileSteps()
         {
             foreach (var Step in Feature.Steps)
@@ -49,29 +55,14 @@ namespace Raconteur.Compilers
         void CompileFeature() 
         {
             Feature.StepDefinitions = StepDefinitions;
-            Feature.DefaultStepDefinitions = DefaultStepDefinitions;
-        }
-
-        void LoadAssemblies(FeatureItem FeatureItem) 
-        {
-            Assemblies = new List<string> {FeatureItem.Assembly};
-            Assemblies.AddRange(Settings.Libraries);
-        }
-
-        Type DefaultStepDefinitions 
-        { 
-            get 
-            {
-                try { return TypeOfStepDefinitions(Feature.Name); } 
-                catch { return null; }
-            }
         }
 
         List<Type> StepDefinitions
         {
             get 
             {
-                return Feature.DeclaredStepDefinitions
+                return new List<string> { Feature.Name }
+                    .Union(Feature.DeclaredStepDefinitions)
                     .Union(Settings.StepDefinitions)
                     .Select(TypeOfStepDefinitions)
                     .Where(Type => Type != null)

@@ -44,11 +44,11 @@ namespace Raconteur.Generators
             {
                 return Step.Table.HasHeader ? 
                     CodeForStepTableWithHeader :
-                    CodeForStepTable;
+                    CodeForStepWithSimpleTable;
             }
         }
 
-        string CodeForStepTable
+        string CodeForStepWithSimpleTable
         {
             get
             {
@@ -56,11 +56,16 @@ namespace Raconteur.Generators
                     .Aggregate("", (Steps, Row) => Steps + 
                         string.Format(StepRowExecution, ArgsFrom(Row)));
 
+                var ArgsCode = Table.RemoveTail(1);
+                
+                if (Step.HasArgs) 
+                    ArgsCode = ArgsCode.Insert(0, "\r\n" + CodeForArgsOf(Step) + ",\r\n");
+
                 return string.Format
                 (
                     MultilineStepExecution, 
-                    Step.Name, 
-                    Table.RemoveTail(1)
+                    Step.Name,
+                    ArgsCode
                 );
             }
         }
@@ -91,21 +96,28 @@ namespace Raconteur.Generators
         string ArgsFrom(IEnumerable<string> Row) 
         { 
             var ArgsValues = (Step.IsImplemented ?
-                FormatArgs(Row) :
-                Step.Args.Concat(Row).Select(ArgFormatter.Format)).ToList();
+                FormatArgsForTable(Row) :
+                Row.Select(ArgFormatter.Format)).ToList();
 
             return string.Join(", ", ArgsValues);
         }
 
-        string CodeFor(Step Step) 
+        string CodeFor(Step Step)
         {
-            var ArgsValues = Step.IsImplemented ?
-                FormatArgs(Step) :  
-                Step.Args.Select(ArgFormatter.Format);
+            return string.Format
+            (
+                StepExecution, 
+                Step.Call, 
+                CodeForArgsOf(Step)
+            );
+        }
 
-            var Args = string.Join(", ", ArgsValues);
-
-            return string.Format(StepExecution, Step.Call, Args);
+        string CodeForArgsOf(Step Step)
+        {
+            return string.Join(", ", 
+                Step.IsImplemented ?
+                    FormatArgs(Step) :
+                    Step.Args.Select(ArgFormatter.Format));
         }
 
         IEnumerable<string> FormatArgs(Step Step)
@@ -115,12 +127,6 @@ namespace Raconteur.Generators
                 Arg, 
                 Step.Implementation.GetParameters()[i].ParameterType
             ));
-        }
-
-        IEnumerable<string> FormatArgs(IEnumerable<string> Row)
-        {
-            return FormatArgs(Step)
-                .Concat(FormatArgsForTable(Row));
         }
 
         IEnumerable<string> FormatArgsForTable(IEnumerable<string> Row) 

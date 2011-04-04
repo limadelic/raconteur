@@ -70,7 +70,8 @@ Scenario: Tables with Args
 			Given_stuff_in__place(""X"", ""another"");	
 			stuff_in
 			(
-				new[] {""Y"", ""somewhere"", ""else""}
+				""Y"",
+				new[] {""somewhere"", ""else""}
 			);
 		}
 	"

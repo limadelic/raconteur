@@ -454,8 +454,39 @@ namespace Specs
         }
 
         [Test]
+        public void should_format_args_for_tables_with_args_according_the_declared_type_on_implementation()
+        {
+            new StepGenerator
+            (
+                new Step
+                {
+                    Name = "Given_the_Board",
+                    Args = new List<string> { "0" },
+                    Table = new Table { Rows =
+                    {
+                        new List<string> {"0","" ,"" }, 
+                        new List<string> {"" ,"X","" }, 
+                        new List<string> {"" ,"" ,"X"}, 
+                    }},
+                    Implementation = Common.StepDefinitions.StepWithTableAndArg
+                }
+            )
+            .Code.TrimLines().ShouldContain
+            (@"
+		        Given_the_Board
+		        (
+                    ""0"",
+			        new[] {""0"", """", """"},
+			        new[] {"""", ""X"", """"},
+			        new[] {"""", """", ""X""}
+		        );
+            ".TrimLines());
+        }
+
+        [Test]
         [Row("default", typeof(object), "default")]
         [Row("string", typeof(string), "\"string\"")]
+        [Row("multiline \r\n string", typeof(string), "\r\n@\"multiline \r\n string\"")]
         [Row("1/1/77", typeof(DateTime), "System.DateTime.Parse(\"1/1/77\")")]
         public void should_format_args_according_types(string Arg, Type Type, string ExpectedFormat)
         {

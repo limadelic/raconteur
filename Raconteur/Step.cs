@@ -10,6 +10,8 @@ namespace Raconteur
         public string Name { get; set; }
         public List<string> Args { get; set; }
 
+        public bool HasArgs { get { return Args.Count > 0; } }
+
         public int ArgsCount
         {
             get

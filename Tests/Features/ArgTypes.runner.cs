@@ -48,7 +48,8 @@ new[] {"""", """", ""X""}
 ");
         }
         
-        [Test]
+        [Test]        
+        [Category("wip")]
         public void TablesWithHeader()
         {         
             FeatureRunner.Given_the_Feature_is(

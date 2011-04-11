@@ -36,6 +36,7 @@ Scenario: Using Scenario Outlines
 		}
 	"
 
+@wip
 Scenario: Outlines values inside multiline Args
 	
 	Given the Feature contains

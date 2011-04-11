@@ -119,5 +119,37 @@ Scenario: Tables with Header and Args
 		Given_the__Addresses_(""US"", ""NY"", ""10001"");
 	"
 
-@wip
 Scenario: Scenario Outlines
+
+	Given the Feature is
+	"
+		Feature: Arg Types
+
+		Scenario: Interest Rate
+			Given ""account"" has ""amount""
+			When interest is calculated
+			It should be ""interest""
+
+			Examples:
+			|account|amount|interest|
+			|23     |42    |1       |
+			|56     |23    |3       |    
+	"
+	The Runner should contain 
+	"
+		[TestMethod]
+		public void InterestRate_1()
+		{
+			Given__has(""23"", 42);
+			When_interest_is_calculated();
+			It_should_be(1);
+		}
+
+		[TestMethod]
+		public void InterestRate_2()
+		{
+			Given__has(""56"", 23);
+			When_interest_is_calculated();
+			It_should_be(3);
+		}
+	"

@@ -133,10 +133,38 @@ Given_the__Addresses_(""US"", ""NY"", ""10001"");
 ");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void ScenarioOutlines()
-        { 
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Arg Types
+Scenario: Interest Rate
+Given ""account"" has ""amount""
+When interest is calculated
+It should be ""interest""
+Examples:
+|account|amount|interest|
+|23     |42    |1       |
+|56     |23    |3       |
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void InterestRate_1()
+{
+Given__has(""23"", 42);
+When_interest_is_calculated();
+It_should_be(1);
+}
+[TestMethod]
+public void InterestRate_2()
+{
+Given__has(""56"", 23);
+When_interest_is_calculated();
+It_should_be(3);
+}
+");
         }
 
     }

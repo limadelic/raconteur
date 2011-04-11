@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Raconteur.Compilers;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Raconteur.Helpers;
 
 namespace Raconteur.Generators
@@ -58,8 +58,8 @@ namespace Raconteur.Generators
         {
             get
             {
-                return Scenario.Tags.Where(IsNotIgnored).Aggregate(string.Empty, (Tags, Tag) =>
-                    Tags + string.Format(TagDeclaration, 
+                return Scenario.Tags.Where(IsNotIgnored).Aggregate(string.Empty, (Results, Tag) =>
+                    Results + string.Format(TagDeclaration, 
                         string.Format(Settings.XUnit.Category, Tag)));
             }
         }
@@ -95,39 +95,56 @@ namespace Raconteur.Generators
             get
             {
                 var Result = string.Empty;
-                var Outline = ScenarioCode;
+                
+                SetupOutline();
 
                 foreach (var Example in Scenario.Examples)
                 for (var Row = 0; Row < Example.Count; Row++)
                 {
-                    var CurrentCode = ReplaceNameIn(Outline, Row, Example);
+                    Scenario.Name = Scenario.OriginalName + "_" + Example.Name + (Row + 1);
 
                     for (var Col = 0; Col < Example.Header.Count; Col++) 
-                        CurrentCode = ReplaceExampleIn(CurrentCode, Row, Col, Example);
+                        ReplaceExampleInStepsArgs(Example.Header[Col], Example[Row, Col]);
 
-                    Result += CurrentCode;
+                    Result += ScenarioCode;
                 }
 
                 return Result;
             }
         }
 
-        string ReplaceNameIn(string Outline, int Row, Table Example)
+        Dictionary<string, Dictionary<Step, List<int>>> ArgOutlines;
+
+        void SetupOutline()
         {
-            return Outline.Replace
-            (
-                Scenario.Name + "()", 
-                Scenario.Name + "_" + Example.Name + (Row + 1) + "()"
-            );
+            Scenario.OriginalName = Scenario.Name;
+
+            var Names = Scenario.Examples[0].Header;
+
+            ArgOutlines = new Dictionary<string, Dictionary<Step, List<int>>>();
+
+            foreach (var Step in Scenario.Steps)
+            for (var i = 0; i < Step.Args.Count; i++)
+            {
+                var Arg = Step.Args[i];    
+                
+                if (!Names.Contains(Arg)) continue;
+                
+                if (!ArgOutlines.ContainsKey(Arg)) ArgOutlines[Arg] = new Dictionary<Step, List<int>>();
+
+                if (!ArgOutlines[Arg].ContainsKey(Step)) ArgOutlines[Arg][Step] = new List<int>();
+
+                ArgOutlines[Arg][Step].Add(i);
+            }
         }
 
-        string ReplaceExampleIn(string Outline, int Row, int Col, Table Example)
+        void ReplaceExampleInStepsArgs(string Name, string Value)
         {
-            var Value = ArgFormatter.Format(Example[Row, Col]);
-            
-            return Outline
-                .Replace(Example.Header[Col].Quoted().Quoted(), Value)
-                .Replace(Example.Header[Col].Quoted(), Value);
+            if (!ArgOutlines.ContainsKey(Name)) return;
+
+            foreach (var Step in ArgOutlines[Name].Keys)
+            foreach (var Arg in ArgOutlines[Name][Step])
+                Step.Args[Arg] = Value;
         }
     }
 }

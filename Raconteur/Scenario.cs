@@ -5,6 +5,8 @@ namespace Raconteur
     public class Scenario
     {
         public string Name { get; set; }
+        public string OriginalName { get; set; }
+
         public List<Step> Steps { get; set; }
         
         public bool IsOutline { get { return Examples.Count > 0;  } }

@@ -10,7 +10,7 @@ Scenario: Generate Runner Class
 	"
 		Feature: Feature Name
 	"
-
+	 
 	The Runner should be
 	"
 		using Microsoft.VisualStudio.TestTools.UnitTesting;

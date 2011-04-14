@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Raconteur.Compilers;
 using Raconteur.Helpers;
 
 namespace Raconteur.Generators
@@ -96,6 +98,7 @@ namespace Raconteur.Generators
             {
                 var Result = string.Empty;
                 
+                BackupScenario();
                 SetupOutline();
 
                 foreach (var Example in Scenario.Examples)
@@ -107,44 +110,66 @@ namespace Raconteur.Generators
                         ReplaceExampleInStepsArgs(Example.Header[Col], Example[Row, Col]);
 
                     Result += ScenarioCode;
+
+                    RestoreScenario();
                 }
 
                 return Result;
             }
         }
 
-        Dictionary<string, Dictionary<Step, List<int>>> ArgOutlines;
+        Dictionary<string, Dictionary<Step, List<int>>> StepArgMap;
 
         void SetupOutline()
         {
-            Scenario.OriginalName = Scenario.Name;
+            StepArgMap = new Dictionary<string, Dictionary<Step, List<int>>>();
 
-            var Names = Scenario.Examples[0].Header;
-
-            ArgOutlines = new Dictionary<string, Dictionary<Step, List<int>>>();
-
+            foreach (var ColHeader in Scenario.Examples[0].Header)
             foreach (var Step in Scenario.Steps)
             for (var i = 0; i < Step.Args.Count; i++)
             {
-                var Arg = Step.Args[i];    
-                
-                if (!Names.Contains(Arg)) continue;
-                
-                if (!ArgOutlines.ContainsKey(Arg)) ArgOutlines[Arg] = new Dictionary<Step, List<int>>();
+                var Arg = Step.Args[i];
 
-                if (!ArgOutlines[Arg].ContainsKey(Step)) ArgOutlines[Arg][Step] = new List<int>();
+                var MatchesHeader = ColHeader == Arg;
+                var ContainsArg = Arg.IsMultiline() && Arg.Contains(ColHeader.Quoted());
+                
+                if (!MatchesHeader && !ContainsArg) continue;
+                
+                EnsureStepArgMapEntry(Step, ColHeader);
 
-                ArgOutlines[Arg][Step].Add(i);
+                StepArgMap[ColHeader][Step].Add(i);
             }
         }
 
-        void ReplaceExampleInStepsArgs(string Name, string Value)
+        void EnsureStepArgMapEntry(Step Step, string ColHeader)
         {
-            if (!ArgOutlines.ContainsKey(Name)) return;
+            if (!StepArgMap.ContainsKey(ColHeader)) 
+                StepArgMap[ColHeader] = new Dictionary<Step, List<int>>();
 
-            foreach (var Step in ArgOutlines[Name].Keys)
-            foreach (var Arg in ArgOutlines[Name][Step])
-                Step.Args[Arg] = Value;
+            if (!StepArgMap[ColHeader].ContainsKey(Step)) 
+                StepArgMap[ColHeader][Step] = new List<int>();
+        }
+
+        void RestoreScenario()
+        {
+            Scenario.Name = Scenario.OriginalName;
+            Scenario.Steps.ForEach(x => x.Args = x.OriginalArgs.ToList());
+        }
+
+        void BackupScenario()
+        {
+            Scenario.OriginalName = Scenario.Name;
+            Scenario.Steps.ForEach(x => x.OriginalArgs = x.Args.ToList());
+        }
+
+        void ReplaceExampleInStepsArgs(string ColHeader, string Value)
+        {
+            if (!StepArgMap.ContainsKey(ColHeader)) return;
+
+            foreach (var Step in StepArgMap[ColHeader].Keys)
+            foreach (var Arg in StepArgMap[ColHeader][Step])
+                Step.Args[Arg] = !Step.OriginalArgs[Arg].IsMultiline() ? Value :
+                    Step.Args[Arg].Replace(ColHeader.Quoted().Quoted(), Value);
         }
     }
 }

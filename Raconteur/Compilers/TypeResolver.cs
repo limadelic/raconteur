@@ -15,9 +15,9 @@ namespace Raconteur.Compilers
     {
         public Type TypeOf(string Name, string AssemblyName)
         {
-//            System.Diagnostics.Debugger.Launch();
-
             if (Name.IsEmpty() || AssemblyName.IsEmpty()) return null;
+
+            InitAssemblyPath(AssemblyName);
 
             return
                 (from Type in Load(AssemblyName).GetTypes()
@@ -26,12 +26,15 @@ namespace Raconteur.Compilers
         }
 
         string AssemblyPath;
-        
+        void InitAssemblyPath(string FirstAssembly)
+        {
+            AssemblyPath = AssemblyPath ?? Path.GetDirectoryName(FirstAssembly);
+        }
+
         Assembly Load(string AssemblyName)
         {
             AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
 
-            AssemblyPath = Path.GetDirectoryName(AssemblyName);
             var Name = Path.GetFileNameWithoutExtension(AssemblyName);
 
             return Assembly.Load(Name);

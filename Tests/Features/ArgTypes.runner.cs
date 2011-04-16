@@ -49,6 +49,45 @@ Given_the_zipcode_is(
         }
         
         [Test]
+        public void SingleColumnTable()
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Arg Types
+Scenario: Single Column Table
+Given the Zipcodes:
+|33131|
+|33133|
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+Given_the_Zipcodes_
+(
+new[] {""33131"", ""33133""}
+);
+");
+        }
+        
+        [Test]
+        public void SingleRowTable()
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Arg Types
+Scenario: Single Row Table
+Given the Zipcodes:
+|33131|33133|
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+Given_the_Zipcodes_
+(
+new[] {""33131"", ""33133""}
+);
+");
+        }
+        
+        [Test]
         public void Tables()
         {         
             FeatureRunner.Given_the_Feature_is(

@@ -39,6 +39,45 @@ Scenario: Multiline Args
 		"");
 	"
 
+Scenario: Single column Table
+
+	Given the Feature is
+	"
+		Feature: Arg Types
+
+		Scenario: Single Column Table
+			Given the Zipcodes:
+			|33131|
+			|33133|
+	"
+
+	The Runner should contain
+	"
+		Given_the_Zipcodes_
+		(
+			new[] {""33131"", ""33133""}
+		);
+	"
+
+Scenario: Single row Table
+
+	Given the Feature is
+	"
+		Feature: Arg Types
+
+		Scenario: Single Row Table
+			Given the Zipcodes:
+			|33131|33133|
+	"
+
+	The Runner should contain
+	"
+		Given_the_Zipcodes_
+		(
+			new[] {""33131"", ""33133""}
+		);
+	"
+
 Scenario: Tables
 
 	Given the Feature is

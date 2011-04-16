@@ -6,6 +6,8 @@ namespace Raconteur.Compilers
 {
     public static class Extensions
     {
+        static Type ArgType;
+
         public static bool HasTableArg(this MethodInfo StepDefinition)
         {
             return StepDefinition.GetParameters().Last()
@@ -14,8 +16,10 @@ namespace Raconteur.Compilers
 
         public static Type TableItemType(this Step Step)
         {
-            return Step.Implementation.GetParameters().Last()
-                .ParameterType.GetElementType().GetElementType();
+            ArgType = Step.Implementation.GetParameters().Last()
+                .ParameterType.GetElementType();
+
+            return ArgType.IsArray ? ArgType.GetElementType() : ArgType;
         }
     }
 }

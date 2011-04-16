@@ -208,8 +208,8 @@ namespace Specs
         {
             new RunnerGenerator(Feature).Code.TrimLines().ShouldContain
             (@"
-                using Common;
                 using Uncommon;
+                using Common;
             "
             .TrimLines());
         }
@@ -227,12 +227,22 @@ namespace Specs
         }
 
         [Test]
+        public void should_not_declare_the_DefaultStepDefinitions()
+        {
+            new RunnerGenerator(Feature).Code.TrimLines().ShouldNotContain
+            (@"
+                public StepDefinitions StepDefinitions = new StepDefinitions();
+            "
+            .TrimLines());
+        }
+
+        [Test]
         public void should_declare_the_StepDefinitions()
         {
             new RunnerGenerator(Feature).Code.TrimLines().ShouldContain
             (@"
-                public StepDefinitions StepDefinitions = new StepDefinitions();
                 public AnotherStepDefinitions AnotherStepDefinitions = new AnotherStepDefinitions();
+                public StepDefinitionsInSameNamespace StepDefinitionsInSameNamespace = new StepDefinitionsInSameNamespace();
             "
             .TrimLines());
         }
@@ -287,6 +297,7 @@ namespace Specs
                 Scenarios = { new Scenario { Steps = { new Step
                 {
                     Name = "Step",
+                    Args = new List<string> { "Arg" },
                     Table = new Table
                     {
                         HasHeader = true,
@@ -302,7 +313,7 @@ namespace Specs
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.Steps[0].Implementation
-                .ShouldBe(Common.StepDefinitions.StepWithTwoArgs);
+                .ShouldBe(Common.StepDefinitions.StepWithThreeArgs);
         }
 
         [Test]
@@ -329,13 +340,17 @@ namespace Specs
                 Scenarios = { new Scenario { Steps =
                 {
                     new Step { Name = "Step", Args = new List<string> { "Arg" }, }, 
+                    new Step { Name = "Step", Args = new List<string> { "Arg1", "2", "\"Arg3\"" }, }, 
                 }
             }}};
-
+            
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.Steps[0].Implementation
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);
+
+            Feature.Steps[1].Implementation
+                .ShouldBe(Common.StepDefinitions.StepWithThreeArgs);
         }
 
         [Test]
@@ -361,6 +376,8 @@ namespace Specs
         [MbUnit.Framework.ExpectedException(typeof(AssertFailedException))]
         public void should_resolve_method_overloading_by_Arg_type()
         {
+            typeof(string).IsArray.ShouldBeFalse();
+
             var Feature = new Feature 
             { 
                 DeclaredStepDefinitions = { "StepDefinitions" },

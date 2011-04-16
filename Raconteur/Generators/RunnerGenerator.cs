@@ -78,7 +78,7 @@ namespace {2}
         string AggregateStepDefinitions(string Template, Func<Type, string> FieldFrom)
         {
             return !Feature.HasStepDefinitions ? null :
-                Feature.StepDefinitions.Aggregate(string.Empty, (Result, Steps) => 
+                Feature.StepDefinitions.Skip(1).Aggregate(string.Empty, (Result, Steps) => 
                 {
                     var CurrentLine = string.Format(Template, FieldFrom(Steps));
 

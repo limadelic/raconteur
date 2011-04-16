@@ -18,7 +18,9 @@ namespace Features.SyntaxHighlight
 Feature: Name
 Scenario: First
 Scenario: Second
-");
+");        
+            HighlightFeature.Raconteur_should_highlight(1, "Feature:", "Keyword");        
+            HighlightFeature.Raconteur_should_highlight(2, "Scenario:", "Keyword");
         }
 
     }

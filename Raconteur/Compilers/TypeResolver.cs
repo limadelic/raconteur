@@ -17,6 +17,8 @@ namespace Raconteur.Compilers
         {
             if (Name.IsEmpty() || AssemblyName.IsEmpty()) return null;
 
+//            System.Diagnostics.Debugger.Launch();
+
             InitAssemblyPath(AssemblyName);
 
             return

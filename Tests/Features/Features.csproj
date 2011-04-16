@@ -91,6 +91,7 @@
     <Compile Include="ReusingSteps.steps.cs">
       <DependentUpon>ReusingSteps.feature</DependentUpon>
     </Compile>
+    <Compile Include="StepDefinitions\FeatureName.cs" />
     <Compile Include="StepDefinitions\FeatureRunner.cs" />
     <Compile Include="GenerateRunner.steps.cs">
       <DependentUpon>GenerateRunner.feature</DependentUpon>
@@ -411,7 +412,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="raconteur.settings" />
+    <None Include="raconteur.config">
+      <LastGenOutput>raconteur1.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

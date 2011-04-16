@@ -99,6 +99,27 @@ Scenario: Tables
 			new[] {"""", """", ""X""}
 		);
 	"
+Scenario: Tables in external StepDefinitions
+
+	Given the Feature contains
+	"
+		using Arg Types
+
+		Scenario: Use string instead of int in table
+			Given the Board
+			|0| | |
+			| |X| |
+			| | |X|
+	"
+	The Runner should contain 
+	"
+		Given_the_Board
+		(
+			new[] {""0"", """", """"},
+			new[] {"""", ""X"", """"},
+			new[] {"""", """", ""X""}
+		);
+	"
 
 Scenario: Tables with Header
 
@@ -158,6 +179,24 @@ Scenario: Tables with Header and Args
 		Given_the__Addresses_(""US"", ""NY"", ""10001"");
 	"
 
+Scenario: Tables with Header and Args in external StepDefinitions
+
+	Given the Feature contains
+	"
+		using Arg Types
+
+		Scenario: Tables with Header
+			Given the ""US"" Addresses:
+			[ state | zip  ]
+			|FL	    |33131 |
+			|NY	    |10001 |
+	"
+	The Runner should contain 
+	"
+		ArgTypes.Given_the__Addresses_(""US"", ""FL"", ""33131"");
+		ArgTypes.Given_the__Addresses_(""US"", ""NY"", ""10001"");
+	"
+	
 Scenario: Scenario Outlines
 
 	Given the Feature is

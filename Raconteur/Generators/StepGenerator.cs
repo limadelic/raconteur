@@ -86,6 +86,7 @@ namespace Raconteur.Generators
             (
                 new Step
                 {
+                    Feature = Step.Feature,
                     Name = Step.Name,
                     Args = Step.Args.Concat(Row).ToList(),
                     Implementation = Step.Implementation

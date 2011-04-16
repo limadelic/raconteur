@@ -19,7 +19,10 @@ Scenario: Name
 // Comment
 Step
 // Scenario:
-");
+");        
+            HighlightFeature.Raconteur_should_highlight(1, "// Comment", "Comment");        
+            HighlightFeature.Raconteur_should_highlight(1, "// Scenario:", "Comment");        
+            HighlightFeature.Raconteur_should_highlight(1, "Scenario:", "Keyword");
         }
         
         [Test]
@@ -37,7 +40,8 @@ Scenario: Commented
 /*
 Scenario: Commented
 */
-");
+");        
+            HighlightFeature.Raconteur_should_highlight(1, "Scenario:", "Keyword");
         }
         
         [Test]

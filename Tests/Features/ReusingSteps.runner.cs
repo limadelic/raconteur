@@ -11,6 +11,44 @@ namespace Features
 
         
         [Test]
+        public void DefaultStepDefinition()
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Reusing Steps
+Scenario: Reuse a Step
+Step
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void ReuseAStep()
+{
+Step();
+}
+");
+        }
+        
+        [Test]
+        public void InheritedStepInDefaultStepDefinition()
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Reusing Steps
+Scenario: Reuse a Step
+Inherited Step
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void ReuseAStep()
+{
+Inherited_Step();
+}
+");
+        }
+        
+        [Test]
         public void ReusingStepDefinitions()
         {         
             FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
@@ -27,6 +65,27 @@ public StepDefinitions StepDefinitions = new StepDefinitions();
 public void ReuseAStep()
 {
 StepDefinitions.Step_from_Step_Definitions();
+}
+");
+        }
+        
+        [Test]
+        public void ReusingInheritedStepInStepDefinitions()
+        {         
+            FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
+            FeatureRunner.Given_the_Feature_contains(
+@"
+using Step Definitions
+Scenario: Reuse a Step
+Base Step
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+public StepDefinitions StepDefinitions = new StepDefinitions();
+[TestMethod]
+public void ReuseAStep()
+{
+StepDefinitions.Base_Step();
 }
 ");
         }

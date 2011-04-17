@@ -4,7 +4,12 @@ using Raconteur.Helpers;
 
 namespace Features 
 {
-    public partial class ReusingSteps
+    public class BaseSteps
+    {
+        public void Inherited_Step() { }
+    }
+
+    public partial class ReusingSteps : BaseSteps
     {
         readonly List<dynamic> backup = new List<dynamic>();
 
@@ -24,5 +29,7 @@ namespace Features
             Settings.StepDefinitions = backup[0];
             Settings.Libraries = backup[1];
         }
+
+        public void Step() { }
     }
 }

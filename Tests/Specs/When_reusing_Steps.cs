@@ -256,7 +256,10 @@ namespace Specs
                 {
                     Name = "Step", 
                     Implementation = Common.StepDefinitions.StepMethod,
-                    Feature = new Feature()
+                    Feature = new Feature
+                    {
+                        StepDefinitions = {typeof(Feature), typeof(StepDefinitions)}
+                    }
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step();");
@@ -267,7 +270,10 @@ namespace Specs
                 {
                     Name = "another_Step",
                     Implementation = AnotherStepDefinitions.AnotherStepMethod,
-                    Feature = new Feature()
+                    Feature = new Feature
+                    {
+                        StepDefinitions = {typeof(Feature), typeof(AnotherStepDefinitions)}
+                    }
                 }
             )
             .Code.ShouldContain("AnotherStepDefinitions.another_Step();");
@@ -282,7 +288,10 @@ namespace Specs
                 {
                     Name = "Step", 
                     Implementation = Common.StepDefinitions.StepMethod,
-                    Feature = new Feature()
+                    Feature = new Feature
+                    {
+                        StepDefinitions = {typeof(Feature), typeof(StepDefinitions)}
+                    }
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step();");
@@ -407,7 +416,10 @@ namespace Specs
                     Name = "Step",
                     Args = { "42" },
                     Implementation = Common.StepDefinitions.StepOverloaded,
-                    Feature = new Feature()
+                    Feature = new Feature
+                    {
+                        StepDefinitions = {typeof(Feature), typeof(StepDefinitions)}
+                    }
                 }
             )
             .Code.ShouldContain("StepDefinitions.Step(\"42\");");

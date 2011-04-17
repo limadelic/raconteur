@@ -3,7 +3,12 @@ using System.Reflection;
 
 namespace Common
 {
-    public class StepDefinitions
+    public class StepDefinitionsBase
+    {
+        public void Base_Step(){}
+    }
+
+    public class StepDefinitions : StepDefinitionsBase
     {
         public void Step(){}
         public void Step(string Overloaded){}

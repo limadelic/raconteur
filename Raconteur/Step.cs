@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Raconteur
@@ -27,20 +29,9 @@ namespace Raconteur
             }
         }
 
-        public bool IsImplemented { get { return Implementation != null; } }
-        public bool IsImplementedInFeatureSteps
-        {
-            get
-            {
-                return Implementation != null && 
-                    (Feature == null || 
-                    Feature.Name == Implementation.DeclaringType.Name);
-            }
-        }
         public MethodInfo Implementation { get; set; }
         
-        public bool HasTable { get { return Table != null; } }
-        public Table Table { get; set; }
+        public bool IsImplemented { get { return Implementation != null; } }
 
         public Step()
         {
@@ -51,10 +42,41 @@ namespace Raconteur
         {
             get
             {
-                return !IsImplemented || IsImplementedInFeatureSteps ? Name :
-                    Implementation.DeclaringType.Name + "." + Name;
+                if (!IsImplemented || Feature == null || !Feature.HasStepDefinitions) 
+                    return Name;
+
+                return  IsImplementedInFeatureSteps ? Name :
+                    StepDefinitions.Name + "." + Name;
             } 
         }
+
+        bool IsImplementedInFeatureSteps
+        {
+            get
+            {
+                return StepDefinitions == null || 
+                    StepDefinitions == Feature.DefaultStepDefinitions;
+            }
+        }
+
+        Type stepDefinitions;
+        Type StepDefinitions
+        {
+            get
+            {
+                return stepDefinitions ?? 
+                    (stepDefinitions = Feature.StepDefinitions.Where(ImplementsStep).FirstOrDefault());
+            } 
+        }
+        
+        bool ImplementsStep(Type StepDefinition)
+        {
+            return StepDefinition == Implementation.DeclaringType
+                || StepDefinition.IsSubclassOf(Implementation.DeclaringType);
+        }
+
+        public bool HasTable { get { return Table != null; } }
+        public Table Table { get; set; }
 
         public void AddRow(List<string> Row)
         {

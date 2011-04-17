@@ -38,6 +38,11 @@ namespace Features.StepDefinitions
             Feature = Content;
         }
 
+        public void Given_the_Feature_is_the(string Content)
+        {
+            Feature = Content;
+        }
+
         public virtual void Given_the_Feature_contains(string Content)
         {
             Feature = 

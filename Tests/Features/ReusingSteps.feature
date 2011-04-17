@@ -3,6 +3,44 @@
 		while making them easier to maintain
 	I want to be able to reuse steps across features
 
+Scenario: Default Step Definition
+	
+	Given the Feature is
+	"
+		Feature: Reusing Steps
+
+		Scenario: Reuse a Step
+			Step
+	"
+
+	The Runner should contain 
+	"
+		[TestMethod]
+		public void ReuseAStep()
+		{
+			Step();
+		}
+	"
+
+Scenario: Inherited Step in Default Step Definition
+	
+	Given the Feature is
+	"
+		Feature: Reusing Steps
+
+		Scenario: Reuse a Step
+			Inherited Step
+	"
+
+	The Runner should contain 
+	"
+		[TestMethod]
+		public void ReuseAStep()
+		{
+			Inherited_Step();
+		}
+	"
+
 Scenario: Reusing Step Definitions
 
 	Given the setting "Libraries" contains "Common" 
@@ -22,6 +60,28 @@ Scenario: Reusing Step Definitions
 		public void ReuseAStep()
 		{
 			StepDefinitions.Step_from_Step_Definitions();
+		}
+	"
+
+Scenario: Reusing inherited Step in Step Definitions
+
+	Given the setting "Libraries" contains "Common" 
+	Given the Feature contains
+	"
+		using Step Definitions
+
+		Scenario: Reuse a Step
+			Base Step
+	"
+
+	The Runner should contain 
+	"
+		public StepDefinitions StepDefinitions = new StepDefinitions();
+		
+		[TestMethod]
+		public void ReuseAStep()
+		{
+			StepDefinitions.Base_Step();
 		}
 	"
 

@@ -6,6 +6,7 @@ using Feature Runner
 
 Scenario: Single line Comments
 	
+	//Given the Feature is the "thing"
 	Given the Feature contains
 	"
 		Scenario: The Doors

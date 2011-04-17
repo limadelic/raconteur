@@ -27,19 +27,32 @@ namespace Raconteur.Compilers
                 select Type).FirstOrDefault();
         }
 
+        string DefaultPath;
         string AssemblyPath;
-        void InitAssemblyPath(string FirstAssembly)
+        void InitAssemblyPath(string Assembly)
         {
-            AssemblyPath = AssemblyPath ?? Path.GetDirectoryName(FirstAssembly);
+            try
+            {
+                DefaultPath = DefaultPath ?? Path.GetDirectoryName(Assembly);
+                AssemblyPath = Path.GetDirectoryName(Assembly);
+            } 
+            catch { AssemblyPath = DefaultPath; }
         }
 
         Assembly Load(string AssemblyName)
         {
-            AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
-
             var Name = Path.GetFileNameWithoutExtension(AssemblyName);
 
-            return Assembly.Load(Name);
+            AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
+
+            try
+            {
+                return Assembly.Load(Name);
+            }
+            finally
+            {
+                AppDomain.CurrentDomain.AssemblyResolve -= LoadFromFile;
+            }
         }
 
         Assembly LoadFromFile(object Sender, ResolveEventArgs Args)
@@ -47,7 +60,11 @@ namespace Raconteur.Compilers
             var Parts = Args.Name.Split(',');
             var FileName = Path.Combine(AssemblyPath, Parts[0].Trim() + ".dll");
 
-            return Assembly.Load(File.ReadAllBytes(FileName));
+            try
+            {
+                return Assembly.Load(File.ReadAllBytes(FileName));
+            }
+            catch { return null; }
         }
     }    
 }

@@ -88,6 +88,7 @@
     <Compile Include="Comments.steps.cs">
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
+    <Compile Include="Misc\When_loading_assemblies.cs" />
     <Compile Include="ReusingSteps.steps.cs">
       <DependentUpon>ReusingSteps.feature</DependentUpon>
     </Compile>

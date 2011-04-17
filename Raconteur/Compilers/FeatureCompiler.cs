@@ -67,10 +67,8 @@ namespace Raconteur.Compilers
         {
             if (Step.ArgsCount == 0) return true;
 
-            var result = Step.HasTable && !Step.Table.HasHeader ? 
+            return Step.HasTable && !Step.Table.HasHeader ?
                 Method.HasTableArg() : !Method.HasTableArg();
-
-            return result;
         }
 
         void CompileFeature() 

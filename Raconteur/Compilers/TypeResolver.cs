@@ -42,23 +42,7 @@ namespace Raconteur.Compilers
         Assembly Load(string AssemblyName)
         {
             var Name = Path.GetFileNameWithoutExtension(AssemblyName);
-
-            AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
-
-            try
-            {
-                return Assembly.Load(Name);
-            }
-            finally
-            {
-                AppDomain.CurrentDomain.AssemblyResolve -= LoadFromFile;
-            }
-        }
-
-        Assembly LoadFromFile(object Sender, ResolveEventArgs Args)
-        {
-            var Parts = Args.Name.Split(',');
-            var FileName = Path.Combine(AssemblyPath, Parts[0].Trim() + ".dll");
+            var FileName = Path.Combine(AssemblyPath, Name.Trim() + ".dll");
 
             try
             {

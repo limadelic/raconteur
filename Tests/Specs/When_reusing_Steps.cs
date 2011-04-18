@@ -192,7 +192,7 @@ namespace Specs
 
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
-            Feature.StepDefinitions.ShouldBe(new List<Type> { typeof(StepDefinitionsInLibrary) });
+            Feature.StepDefinitions[0].ShouldBe(typeof(StepDefinitionsInLibrary));
         }
 
         [Test]

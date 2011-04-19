@@ -17,14 +17,20 @@ namespace Raconteur.Compilers
         {
             if (Name.IsEmpty() || AssemblyName.IsEmpty()) return null;
 
-//            System.Diagnostics.Debugger.Launch();
-
             InitAssemblyPath(AssemblyName);
 
-            return
-                (from Type in Load(AssemblyName).GetTypes()
-                where Type.Name == Name
-                select Type).FirstOrDefault();
+            try
+            {
+                AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
+
+                return 
+                    Load(AssemblyName)
+                    .GetTypes()
+                    .Where(x => x.Name == Name)
+                    .FirstOrDefault();
+            } 
+            catch { return null; }
+            finally { AppDomain.CurrentDomain.AssemblyResolve -= LoadFromFile; }
         }
 
         string DefaultPath;
@@ -43,6 +49,14 @@ namespace Raconteur.Compilers
         {
             var Name = Path.GetFileNameWithoutExtension(AssemblyName);
             var FileName = Path.Combine(AssemblyPath, Name.Trim() + ".dll");
+
+            return Assembly.Load(File.ReadAllBytes(FileName));
+        }
+
+        Assembly LoadFromFile(object Sender, ResolveEventArgs Args)
+        {
+            var Parts = Args.Name.Split(',');
+            var FileName = Path.Combine(AssemblyPath, Parts[0].Trim() + ".dll");
 
             try
             {

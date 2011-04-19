@@ -2,11 +2,9 @@
 	In order to enhance communication/documentation
 	Raconteur should allow comments in the Feature
 
-using Feature Runner
-
 Scenario: Single line Comments
 	
-	Given the Feature contains
+	Given the Feature contains a
 	"
 		Scenario: The Doors
 		

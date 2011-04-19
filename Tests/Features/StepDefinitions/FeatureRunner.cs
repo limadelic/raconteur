@@ -47,6 +47,15 @@ namespace Features.StepDefinitions
             + Content;
         }
 
+        public virtual void Given_the_Feature_contains_a(string Content)
+        {
+            Feature = 
+            @"
+                Feature: Feature Name
+            "
+            + Content;
+        }
+
         public void The_Runner_should_be(string Content)
         {
             Runner.ShouldBe(Content.TrimLines());

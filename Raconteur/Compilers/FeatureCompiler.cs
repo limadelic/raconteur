@@ -39,6 +39,7 @@ namespace Raconteur.Compilers
 
         void CompileSteps()
         {
+            System.Console.WriteLine("CompileSteps " + Feature.StepDefinitions.Count);
             foreach (var Step in Feature.Steps)
                 Step.Implementation = Feature.StepDefinitions
                     .SelectMany(l => l.GetMethods())
@@ -48,9 +49,21 @@ namespace Raconteur.Compilers
 
         bool Matches(MethodInfo Method, Step Step)
         {
-            return MatchesName(Method, Step) && 
-                MatchesArgsCount(Method, Step) &&
-                MatchesArgsTypes(Method, Step);
+            return 
+                MatchesName(Method, Step) && 
+                MatchesArgs(Method, Step);
+        }
+
+        bool MatchesArgs(MethodInfo Method, Step Step)
+        {
+            return 
+                MatchesSimpleArgs(Method, Step) || 
+                MatchesObjectArg(Method, Step);
+        }
+
+        bool MatchesSimpleArgs(MethodInfo Method, Step Step)
+        {
+            return (MatchesArgsCount(Method, Step) && MatchesArgsTypes(Method, Step));
         }
 
         bool MatchesName(MethodInfo Method, Step Step)
@@ -69,6 +82,22 @@ namespace Raconteur.Compilers
 
             return Step.HasTable && !Step.Table.HasHeader ?
                 Method.HasTableArg() : !Method.HasTableArg();
+        }
+
+        bool MatchesObjectArg(MethodInfo Method, Step Step)
+        {
+            if (!Step.HasTable || !Step.Table.HasHeader) return false;
+
+            var Args = Method.GetParameters();
+            if (Args.Length == 0) return false;
+
+            var Type = Args[0].ParameterType;
+            if (!Type.IsClass) return false;
+
+            var ArgsNames = Type.GetProperties().Select(x => x.Name)
+                .Union(Type.GetFields().Select(x => x.Name));
+
+            return Step.Table.Header.All(h => ArgsNames.Any(a => a == h));
         }
 
         void CompileFeature() 

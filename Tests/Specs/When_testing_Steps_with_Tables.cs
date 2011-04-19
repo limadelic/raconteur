@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Common;
 using FluentSpec;
@@ -177,7 +178,7 @@ namespace Specs
                     HasHeader = true,
                     Rows = new List<List<string>>
                     {
-                        new List<string> {"Name", "Pass"},
+                        new List<string> {"UserName", "Password"},
                         new List<string> {"lola", "run"},
                         new List<string> {"mani", "dumb"}
                     }
@@ -185,11 +186,10 @@ namespace Specs
 
                 SetUpFeatureItem();
 
-//                Feature.DefaultStepDefinitions = typeof (StepDefinitions);
+                Feature.DeclaredStepDefinitions = new List<string> { "StepDefinitions" };
             }
 
             [Test]
-            [Ignore]
             [Category("wip")]
             public void should_resolve_table_header_to_object_arg()
             {

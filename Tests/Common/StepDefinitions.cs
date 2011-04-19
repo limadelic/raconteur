@@ -58,7 +58,7 @@ namespace Common
         public void Step_from_Step_Definitions_in_Library(){}
     }
 
-    public class User { public string Name, Pass; }
+    public class User { public string UserName, Password; }
 }
 
 namespace Uncommon

@@ -24,24 +24,19 @@ Scenario: Single column Table becomes an array Arg
 		}
 	"
 
-@wip @ignore
+@wip
 Scenario: Object Table with single row becomes an object Arg
 
-	Given the Feature contains
+	Given the Feature is
 	"
+		Feature: Table Types
+
 		Scenario: Login User
 			Given the User:
 			[user name|password]
 			|neo	  |53cr3t  |
 	"
-/*  
-	containing a matching Step with an object Arg
-	that contain matching properties to Header column
-	
-	public Given_the_User(User User)
-	{
-	}
-*/
+
 	The Runner should contain
 	"
 		[TestMethod]

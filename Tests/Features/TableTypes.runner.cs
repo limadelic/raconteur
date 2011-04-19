@@ -34,12 +34,12 @@ new[] {0, 1}
         }
         
         [Test]        
-        [Category("wip")]        
-        [Ignore]
+        [Category("wip")]
         public void ObjectTableWithSingleRowBecomesAnObjectArg()
         {         
-            FeatureRunner.Given_the_Feature_contains(
+            FeatureRunner.Given_the_Feature_is(
 @"
+Feature: Table Types
 Scenario: Login User
 Given the User:
 [user name|password]

@@ -47,3 +47,9 @@ Scenario Outline: Ignore non-steps
 	| Sc       | Scenario: Scenario Name |
 	| Fe       | Feature: Feature Name   |
 	| I        | I am an arg             |
+
+@wip
+Scenario: Suggestions from Base Class
+	Given the Feature contains "Feature: Intellisense"
+	When I begin to type "In" on the next line
+	Then "Inherited Step" should be displayed

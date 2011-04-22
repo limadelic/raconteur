@@ -44,9 +44,16 @@ namespace Specs
             ResetLanguage();
         }
 
+        [TestMethod]
+        public void should_load_names_from_Type()
+        {
+            Given.Feature = "Feature: When_calculating_Completions";
+
+            When.For("Se").ShouldContain("SetUp");
+        }
+
         private void ResetLanguage()
         {
-
             Settings.Language = current;
         }
 

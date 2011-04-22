@@ -68,13 +68,9 @@ namespace Raconteur.Parsers
             {
                 try
                 {
-                    return Regex.Match
-                    (
-                        Header, 
-                        Settings.Language.Feature + @": (\w.+)(" + 
-                            Environment.NewLine + "|$)"
-                    )
-                    .Groups[1].Value.CamelCase().ToValidIdentifier();
+                    return Regex.Match(Header, 
+                        RegexExpressions.FeatureDefinition)
+                        .Groups[1].Value.CamelCase().ToValidIdentifier();
                 } 
                 catch { return null; }
             }
@@ -84,11 +80,8 @@ namespace Raconteur.Parsers
         {
             get 
             {
-                var Matches = Regex.Matches
-                (
-                    Header, 
-                    Settings.Language.Using + @" (\w.+)(\r\n|$)"
-                );
+                var Matches = Regex.Matches(Header, 
+                    RegexExpressions.UsingStatement);
 
                 if (Matches.Count == 0 && Settings.StepDefinitions.IsEmpty()) 
                     return new List<string>();

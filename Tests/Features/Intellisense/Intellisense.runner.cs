@@ -194,6 +194,15 @@ I am an arg
             When_I_begin_to_type__on_the_next_line("I");        
             Then__should_not_be_displayed("I am an arg");
         }
+        
+        [Test]        
+        [Category("wip")]
+        public void SuggestionsFromBaseClass()
+        {         
+            FeatureRunner.Given_the_Feature_contains("Feature: Intellisense");        
+            When_I_begin_to_type__on_the_next_line("In");        
+            Then__should_be_displayed("Inherited Step");
+        }
 
     }
 }

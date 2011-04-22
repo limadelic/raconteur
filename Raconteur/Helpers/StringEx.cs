@@ -38,8 +38,7 @@ namespace Raconteur.Helpers
         {
             if (Sentence.IsEmpty()) return string.Empty;
 
-            var Regex = new Regex(
-                @"[^\p{Ll}\p{Lu}\p{Lt}\p{Lo}\p{Nd}\p{Nl}\p{Mn}\p{Mc}\p{Cf}\p{Pc}\p{Lm}]");
+            var Regex = new Regex(RegexExpressions.Punctuation);
 
             var Result = Regex.Replace(Sentence.Trim(), "_"); 
             
@@ -48,6 +47,11 @@ namespace Raconteur.Helpers
             
             return CodeDomProvider.CreateProvider("C#")
                 .CreateEscapedIdentifier(Result);
+        }
+
+        public static string IdentifierToEnglish(this string Identifier)
+        {
+            return Identifier.Replace("__", "_\"\"_").Replace("_", " ");
         }
 
         public static bool IsEmpty(this string It)

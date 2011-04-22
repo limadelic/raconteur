@@ -5,7 +5,7 @@ using Raconteur.IDEIntegration.Intellisense;
 
 namespace Features.Intellisense 
 {
-    public partial class Intellisense
+    public partial class Intellisense : BaseSteps
     {
         private CompletionCalculator completions;
         private IEnumerable<Completion> results;

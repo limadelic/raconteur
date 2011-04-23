@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Common;
 using FluentSpec;
@@ -187,21 +186,29 @@ namespace Specs
                 SetUpFeatureItem();
 
                 Feature.DeclaredStepDefinitions = new List<string> { "StepDefinitions" };
+
+                ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
             }
 
             [Test]
-            [Category("wip")]
             public void should_resolve_table_header_to_object_arg()
             {
-                ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
-
                 Step.Implementation.ShouldBe(StepDefinitions.StepWithObject);
             }
 
             [Test]
-            public void should_pass_an_array_of_objects()
+            public void should_pass_the_object_in_the_call()
             {
-                
+                ObjectFactory.NewRunnerGenerator(Feature)
+                    .Code.TrimLines().ShouldContain(
+                    @"
+			            Step_with_object( 
+				            new Common.User
+				            {
+					            UserName = ""lola"",
+					            Password = ""run""
+				            });
+                    ".TrimLines());
             }
         }
     }

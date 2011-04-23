@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Raconteur.Compilers;
 
 namespace Raconteur
 {
@@ -32,6 +33,8 @@ namespace Raconteur
         public MethodInfo Implementation { get; set; }
         
         public bool IsImplemented { get { return Implementation != null; } }
+
+        public ParameterInfo[] ArgDefinitions { get { return Implementation.GetParameters(); } }
 
         public Step()
         {
@@ -77,6 +80,29 @@ namespace Raconteur
 
         public bool HasTable { get { return Table != null; } }
         public Table Table { get; set; }
+        public bool HasObjectImplementation
+        {
+            get
+            {
+                return IsImplemented 
+                    && HasTable 
+                    && Table.HasHeader 
+                    && Implementation.HasObjectArg()
+                    && ObjectHasFieldsMatchingHeader;
+            } 
+        }
+
+        protected bool ObjectHasFieldsMatchingHeader
+        {
+            get
+            {
+                var Object = ObjectArg;
+
+                return Table.Header.All(x => Object.FieldType(x) != null);
+            } 
+        }
+
+        public Type ObjectArg { get { return Implementation.LastArg(); } } 
 
         public void AddRow(List<string> Row)
         {

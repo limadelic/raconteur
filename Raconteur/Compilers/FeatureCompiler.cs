@@ -39,7 +39,6 @@ namespace Raconteur.Compilers
 
         void CompileSteps()
         {
-            System.Console.WriteLine("CompileSteps " + Feature.StepDefinitions.Count);
             foreach (var Step in Feature.Steps)
                 Step.Implementation = Feature.StepDefinitions
                     .SelectMany(l => l.GetMethods())
@@ -95,7 +94,7 @@ namespace Raconteur.Compilers
             if (!Type.IsClass) return false;
 
             var ArgsNames = Type.GetProperties().Select(x => x.Name)
-                .Union(Type.GetFields().Select(x => x.Name));
+                .Concat(Type.GetFields().Select(x => x.Name));
 
             return Step.Table.Header.All(h => ArgsNames.Any(a => a == h));
         }

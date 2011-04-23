@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Raconteur.Compilers;
 using Raconteur.Helpers;
@@ -90,7 +89,12 @@ namespace Raconteur.Generators
         
         bool IsNotIgnored(string Tag) { return !IsIgnored(Tag); }
 
-        string CodeFor(Step Step) { return new StepGenerator(Step).Code; }
+        string CodeFor(Step Step)
+        {
+            return Step.IsImplemented ? 
+                new StepGeneratorForCompiledStep(Step).Code :
+                new StepGeneratorForNewStep(Step).Code;
+        }
 
         string OutlineScenarioCode
         {

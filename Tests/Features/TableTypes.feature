@@ -33,8 +33,8 @@ Scenario: Object Table with single row becomes an object Arg
 
 		Scenario: Login User
 			Given the User:
-			[user name|password]
-			|neo	  |53cr3t  |
+			[UserName|Password]
+			|neo	 |53cr3t  |
 	"
 
 	The Runner should contain
@@ -42,14 +42,12 @@ Scenario: Object Table with single row becomes an object Arg
 		[TestMethod]
 		public void LoginUser()
 		{
-			Given_the_User
-			( 
-				new User
+			Given_the_User_( 
+				new Common.User
 				{
 					UserName = ""neo"",
-					Password = ""53cr3t"",
-				}
-			);
+					Password = ""53cr3t""
+				});
 		}
 	"
 

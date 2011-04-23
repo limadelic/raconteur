@@ -42,22 +42,20 @@ new[] {0, 1}
 Feature: Table Types
 Scenario: Login User
 Given the User:
-[user name|password]
-|neo	  |53cr3t  |
+[UserName|Password]
+|neo	 |53cr3t  |
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
 [TestMethod]
 public void LoginUser()
 {
-Given_the_User
-(
-new User
+Given_the_User_(
+new Common.User
 {
 UserName = ""neo"",
-Password = ""53cr3t"",
-}
-);
+Password = ""53cr3t""
+});
 }
 ");
         }

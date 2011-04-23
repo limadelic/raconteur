@@ -49,6 +49,8 @@
     <Compile Include="Compilers\FeatureCompiler.cs" />
     <Compile Include="Compilers\StringParser.cs" />
     <Compile Include="Generators\CodeGenerator.cs" />
+    <Compile Include="Generators\StepGeneratorForNewStep.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\RegexExpressions.cs" />
     <Compile Include="IDE\FeatureFile.cs" />
     <Compile Include="Feature.cs" />
@@ -56,7 +58,7 @@
     <Compile Include="Generators\InvalidStepDefinitionsGenerator.cs" />
     <Compile Include="Generators\ScenarioGenerator.cs" />
     <Compile Include="Generators\StepDefinitionsGenerator.cs" />
-    <Compile Include="Generators\StepGenerator.cs" />
+    <Compile Include="Generators\StepGeneratorForCompiledStep.cs" />
     <Compile Include="Helpers\A.cs" />
     <Compile Include="Helpers\Boundary.cs" />
     <Compile Include="Compilers\ArgFormatter.cs" />

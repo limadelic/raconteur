@@ -49,6 +49,7 @@
     <Compile Include="Compilers\FeatureCompiler.cs" />
     <Compile Include="Compilers\StringParser.cs" />
     <Compile Include="Generators\CodeGenerator.cs" />
+    <Compile Include="Generators\StepGenerator.cs" />
     <Compile Include="Generators\StepGeneratorForNewStep.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\RegexExpressions.cs" />

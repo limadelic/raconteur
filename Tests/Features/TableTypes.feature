@@ -24,7 +24,6 @@ Scenario: Single column Table becomes an array Arg
 		}
 	"
 
-@wip
 Scenario: Object Table with single row becomes an object Arg
 
 	Given the Feature is
@@ -51,4 +50,35 @@ Scenario: Object Table with single row becomes an object Arg
 		}
 	"
 
+@wip
 Scenario: Object Table with multiple rows becomes an object[] Arg
+
+	Given the Feature is
+	"
+		Feature: Table Types
+
+		Scenario: Login User
+			Given the Users:
+			[user name|password]
+			|neo	  |53cr3t  |
+			|lola	  |run	   |
+	"
+
+	The Runner should contain
+	"
+		[TestMethod]
+		public void LoginUser()
+		{
+			Given_the_Users_( 
+				new Common.User
+				{
+					UserName = ""neo"",
+					Password = ""53cr3t""
+				},				
+				new Common.User
+				{
+					UserName = ""lola"",
+					Password = ""run""
+				});
+		}
+	"

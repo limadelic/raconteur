@@ -33,8 +33,7 @@ new[] {0, 1}
 ");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void ObjectTableWithSingleRowBecomesAnObjectArg()
         {         
             FeatureRunner.Given_the_Feature_is(
@@ -60,9 +59,37 @@ Password = ""53cr3t""
 ");
         }
         
-        [Test]
+        [Test]        
+        [Category("wip")]
         public void ObjectTableWithMultipleRowsBecomesAnObject__Arg()
-        { 
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Table Types
+Scenario: Login User
+Given the Users:
+[user name|password]
+|neo	  |53cr3t  |
+|lola	  |run	   |
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void LoginUser()
+{
+Given_the_Users_(
+new Common.User
+{
+UserName = ""neo"",
+Password = ""53cr3t""
+},
+new Common.User
+{
+UserName = ""lola"",
+Password = ""run""
+});
+}
+");
         }
 
     }

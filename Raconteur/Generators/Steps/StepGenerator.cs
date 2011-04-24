@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Raconteur.Generators
+namespace Raconteur.Generators.Steps
 {
     public abstract class StepGenerator : CodeGenerator
     {
@@ -32,7 +32,5 @@ namespace Raconteur.Generators
         public CodeGenerator CodeGenerator { get; set; }
         
         public string Code { get { return CodeGenerator.Code; } }
-
-        public string CodeForStep { get { return new SimpleStepGenerator(this).Code; } }
     }
 }

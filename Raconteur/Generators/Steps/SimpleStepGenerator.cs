@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Raconteur.Generators
+namespace Raconteur.Generators.Steps
 {
     public class SimpleStepGenerator : StepCodeGenerator
     {

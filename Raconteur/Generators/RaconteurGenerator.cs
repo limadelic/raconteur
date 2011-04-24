@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Raconteur.Compilers;
+using Raconteur.Generators.Steps;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 using Raconteur.Parsers;

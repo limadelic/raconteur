@@ -1,6 +1,7 @@
 using EnvDTE;
 using Raconteur.Compilers;
 using Raconteur.Generators;
+using Raconteur.Generators.Steps;
 using Raconteur.IDE;
 using Raconteur.Parsers;
 
@@ -76,7 +77,7 @@ namespace Raconteur.Helpers
             return StepRunnerGenerator;
         }
 
-        public static CodeGenerator NewStepCodeGenerator(Step Step, StepGenerator StepRunnerGenerator)
+        static CodeGenerator NewStepCodeGenerator(Step Step, StepGenerator StepRunnerGenerator)
         {
             return Step.HasTable ?
                 (Step.Table.HasHeader ?

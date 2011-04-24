@@ -2,7 +2,7 @@
 using System.Linq;
 using Raconteur.Helpers;
 
-namespace Raconteur.Generators
+namespace Raconteur.Generators.Steps
 {
     public class StepWithSimpleTableGenerator : StepCodeGenerator
     {
@@ -22,11 +22,11 @@ namespace Raconteur.Generators
                     ArgsCode = ArgsCode.Insert(0, "\r\n" + CodeForArgsOnly + ",\r\n");
 
                 return string.Format
-                    (
-                        StepGenerator.MultilineStepExecution,
-                        Step.Name,
-                        ArgsCode
-                    );
+                (
+                    StepGenerator.MultilineStepExecution,
+                    Step.Name,
+                    ArgsCode
+                );
             }
         }
         

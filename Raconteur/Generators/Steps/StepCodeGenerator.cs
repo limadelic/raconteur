@@ -1,4 +1,4 @@
-﻿namespace Raconteur.Generators
+﻿namespace Raconteur.Generators.Steps
 {
     public abstract class StepCodeGenerator : CodeGenerator
     {

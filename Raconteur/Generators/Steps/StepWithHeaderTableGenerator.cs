@@ -1,11 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Raconteur.Generators
+namespace Raconteur.Generators.Steps
 {
     public class StepWithHeaderTableGenerator : StepCodeGenerator
     {
-        public StepWithHeaderTableGenerator(StepGenerator StepGenerator) : base(StepGenerator) {}
+        CodeGenerator CodeGenerator { get; set; }
+
+        public StepWithHeaderTableGenerator(StepGenerator StepGenerator) : base(StepGenerator)
+        {
+            CodeGenerator = new SimpleStepGenerator(StepGenerator); 
+        }
 
         public override string Code
         {
@@ -21,7 +26,7 @@ namespace Raconteur.Generators
         {
             StepGenerator.Row = Row;
 
-            return StepGenerator.CodeForStep;
+            return CodeGenerator.Code;
         }
     }
 }

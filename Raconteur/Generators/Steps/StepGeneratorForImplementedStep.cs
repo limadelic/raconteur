@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Raconteur.Compilers;
 
-namespace Raconteur.Generators
+namespace Raconteur.Generators.Steps
 {
     public class StepGeneratorForImplementedStep : StepGenerator
     {

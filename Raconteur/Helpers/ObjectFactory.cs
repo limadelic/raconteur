@@ -64,5 +64,25 @@ namespace Raconteur.Helpers
 
             return new StepDefinitionsGenerator(Feature, ExistingStepDefinitions);
         }
+
+        public static CodeGenerator NewStepRunnerGenerator(Step Step)
+        {
+            var StepRunnerGenerator = Step.IsImplemented ? 
+                new StepGeneratorForImplementedStep(Step) as StepGenerator:
+                new StepGeneratorForUnimplementedStep(Step);
+
+            StepRunnerGenerator.CodeGenerator = NewStepCodeGenerator(Step, StepRunnerGenerator);
+
+            return StepRunnerGenerator;
+        }
+
+        public static CodeGenerator NewStepCodeGenerator(Step Step, StepGenerator StepRunnerGenerator)
+        {
+            return Step.HasTable ?
+                (Step.Table.HasHeader ?
+                    new StepWithHeaderTableGenerator(StepRunnerGenerator) as CodeGenerator:
+                    new StepWithSimpleTableGenerator(StepRunnerGenerator)) :
+                new SimpleStepGenerator(StepRunnerGenerator);
+        }
     }
 }

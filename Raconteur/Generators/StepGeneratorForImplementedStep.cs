@@ -5,11 +5,11 @@ using Raconteur.Compilers;
 
 namespace Raconteur.Generators
 {
-    public class StepGeneratorForCompiledStep : StepGenerator
+    public class StepGeneratorForImplementedStep : StepGenerator
     {
-        public StepGeneratorForCompiledStep(Step Step) : base(Step) {}
+        public StepGeneratorForImplementedStep(Step Step) : base(Step) {}
 
-        protected override IEnumerable<string> FormatArgsOnly
+        public override IEnumerable<string> FormatArgsOnly
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Raconteur.Generators
             }
         }
 
-        protected override IEnumerable<string> FormatArgsForTable
+        public override IEnumerable<string> FormatArgsForTable
         {
             get
             {
@@ -82,7 +82,14 @@ namespace Raconteur.Generators
                     Row.Select((Value, i) => FormatArgForObjectInitializer(Value, ObjectArg, Step.Table.Header[i]));
 
                 return new List<string>
-                {string.Format(ObjectArgTemplate, ObjectArg.FullName, string.Join(",", FieldsInitialized))};
+                {
+                    string.Format
+                    (
+                        ObjectArgTemplate, 
+                        ObjectArg.FullName, 
+                        string.Join(",", FieldsInitialized)
+                    )
+                };
             }
         }
 

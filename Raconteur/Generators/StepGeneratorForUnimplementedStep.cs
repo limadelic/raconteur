@@ -4,16 +4,16 @@ using Raconteur.Compilers;
 
 namespace Raconteur.Generators
 {
-    public class StepGeneratorForNewStep : StepGenerator
+    public class StepGeneratorForUnimplementedStep : StepGenerator
     {
-        public StepGeneratorForNewStep(Step Step) : base(Step) {}
+        public StepGeneratorForUnimplementedStep(Step Step) : base(Step) {}
 
-        protected override IEnumerable<string> FormatArgsOnly
+        public override IEnumerable<string> FormatArgsOnly
         {
             get { return Step.Args.Select(ArgFormatter.Format); }
         }
 
-        protected override IEnumerable<string> FormatArgsForTable
+        public override IEnumerable<string> FormatArgsForTable
         {
             get { return Row.Select(ArgFormatter.Format); }
         }

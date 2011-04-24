@@ -91,9 +91,7 @@ namespace Raconteur.Generators
 
         string CodeFor(Step Step)
         {
-            return Step.IsImplemented ? 
-                new StepGeneratorForCompiledStep(Step).Code :
-                new StepGeneratorForNewStep(Step).Code;
+            return ObjectFactory.NewStepRunnerGenerator(Step).Code;
         }
 
         string OutlineScenarioCode

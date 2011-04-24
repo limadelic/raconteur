@@ -250,7 +250,7 @@ namespace Specs
         [Test]
         public void should_use_Steps_from_StepDefinitions()
         {
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {
@@ -264,7 +264,7 @@ namespace Specs
             )
             .Code.ShouldContain("StepDefinitions.Step();");
 
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {
@@ -282,7 +282,7 @@ namespace Specs
         [Test]
         public void should_use_overloaded_Steps_from_StepDefinitions()
         {
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {
@@ -409,7 +409,7 @@ namespace Specs
         [Test]
         public void should_format_args_according_the_declared_type_on_implementation()
         {
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {
@@ -428,7 +428,7 @@ namespace Specs
         [Test]
         public void should_format_args_for_tables_according_the_declared_type_on_implementation()
         {
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {
@@ -456,7 +456,7 @@ namespace Specs
         [Test]
         public void should_format_Args_for_Tables_with_Header_according_the_declared_type_on_implementation()
         {
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {
@@ -485,7 +485,7 @@ namespace Specs
         [Test]
         public void should_format_args_for_tables_with_args_according_the_declared_type_on_implementation()
         {
-            new StepGeneratorForCompiledStep
+            ObjectFactory.NewStepRunnerGenerator
             (
                 new Step
                 {

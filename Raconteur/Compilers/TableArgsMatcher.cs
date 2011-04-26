@@ -2,11 +2,9 @@
 {
     public class TableArgsMatcher : ArgsMatcherBase
     {
-        public TableArgsMatcher(StepCompiler StepCompiler) : base(StepCompiler) {}
-
-        protected override bool CouldMatch
+        public TableArgsMatcher(Step Step)
         {
-            get { return Step.HasTable && !Step.Table.HasHeader; }
+            this.Step = Step;    
         }
 
         protected override bool Matches 

@@ -2,16 +2,9 @@ namespace Raconteur.Compilers
 {
     public class SimpleArgsMatcher : ArgsMatcherBase
     {
-        public SimpleArgsMatcher(StepCompiler StepCompiler) : base(StepCompiler) {}
-        
-        public SimpleArgsMatcher(Step Step) : base(new StepCompiler())
+        public SimpleArgsMatcher(Step Step)
         {
             this.Step = Step;    
-        }
-
-        protected override bool CouldMatch
-        {
-            get { return !Step.HasTable; }
         }
 
         protected override bool Matches

@@ -2,16 +2,9 @@
 {
     public class HeaderTableArgsMatcher : ArgsMatcherBase
     {
-        public HeaderTableArgsMatcher(StepCompiler StepCompiler) : base(StepCompiler) {}
-
-        protected override bool CouldMatch
+        public HeaderTableArgsMatcher(Step Step)
         {
-            get
-            {
-                return Step.HasTable 
-                    && Step.Table.HasHeader 
-                    && !Method.HasObjectArgFor(Step);
-            }
+            this.Step = Step;    
         }
 
         protected override bool Matches 

@@ -7,18 +7,6 @@ namespace Raconteur.Compilers
 {
     public class StepCompiler
     {
-        readonly List<ArgsMatcher> ArgsMatchers;
-
-        public StepCompiler()
-        {
-            ArgsMatchers = new List<ArgsMatcher>
-            {
-                new SimpleArgsMatcher(this),
-                new TableArgsMatcher(this),
-                new HeaderTableArgsMatcher(this),
-            };
-        }
-
         public MethodInfo Method;
         public Step Step;
 
@@ -45,7 +33,7 @@ namespace Raconteur.Compilers
                 if (!ExpectsArgs && !HasArgs) return true;
                 if (ExpectsArgs ^ HasArgs) return false;
 
-                return ArgsMatchers.Any(x => x.IsMatch);
+                return Step.ArgsMatcher.Matches(Method);
             }
         }
     }

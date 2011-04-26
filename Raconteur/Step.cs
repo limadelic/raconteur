@@ -84,7 +84,13 @@ namespace Raconteur
         public Table Table
         {
             get { return table; } 
-            set { table = value;}
+            set
+            {
+                table = value;
+                ArgsMatcher = table.HasHeader?
+                    new HeaderTableArgsMatcher(this) as ArgsMatcher:
+                    new TableArgsMatcher(this);
+            }
         }
 
         public void AddRow(List<string> Row)
@@ -109,11 +115,6 @@ namespace Raconteur
 
         public Type ObjectArg { get { return Implementation.LastArg(); } }
 
-        ArgsMatcher ArgsMatcher;
-
-        public bool Matches(MethodInfo Method)
-        {
-            return ArgsMatcher.Matches(Method);
-        }
+        public ArgsMatcher ArgsMatcher;
     }
 }

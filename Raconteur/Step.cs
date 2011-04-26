@@ -6,8 +6,18 @@ using Raconteur.Compilers;
 
 namespace Raconteur
 {
+    public enum StepType
+    {
+        Simple,
+        Table,
+        HeaderTable,
+        ObjectTable    
+    }
+
     public class Step
     {
+        public StepType Type;
+
         public Feature Feature { get; set; }
 
         public string Name { get; set; }
@@ -37,7 +47,6 @@ namespace Raconteur
 
         public Step()
         {
-            ArgsMatcher = new SimpleArgsMatcher(this);
             Args = new List<string>();
         }
 
@@ -84,7 +93,14 @@ namespace Raconteur
         public Table Table
         {
             get { return table; } 
-            set { table = value;}
+            set
+            {
+                table = value;
+
+                Type = table.HasHeader? 
+                    StepType.HeaderTable : 
+                    StepType.Table;
+            }
         }
 
         public void AddRow(List<string> Row)
@@ -108,12 +124,5 @@ namespace Raconteur
         }
 
         public Type ObjectArg { get { return Implementation.LastArg(); } }
-
-        ArgsMatcher ArgsMatcher;
-
-        public bool Matches(MethodInfo Method)
-        {
-            return ArgsMatcher.Matches(Method);
-        }
     }
 }

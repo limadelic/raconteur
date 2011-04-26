@@ -14,6 +14,7 @@ namespace Raconteur
         public string Namespace { get; set; }
 
         public List<Scenario> Scenarios { get; set; }
+
         public List<Step> Steps
         {
             get

@@ -16,6 +16,8 @@ namespace Raconteur.Compilers
     {
         public TypeResolver TypeResolver { get; set; }
 
+        public StepCompiler StepCompiler { get; set; }
+
         List<string> Assemblies;
 
         Feature Feature { get; set; }
@@ -42,62 +44,10 @@ namespace Raconteur.Compilers
             foreach (var Step in Feature.Steps)
                 Step.Implementation = Feature.StepDefinitions
                     .SelectMany(l => l.GetMethods())
-                    .Where(Method => Matches(Method, Step))
+                    .Where(Method => StepCompiler.Matches(Method, Step))
                     .FirstOrDefault();
         }
 
-        bool Matches(MethodInfo Method, Step Step)
-        {
-            return 
-                MatchesName(Method, Step) && 
-                MatchesArgs(Method, Step);
-        }
-
-        bool MatchesArgs(MethodInfo Method, Step Step)
-        {
-            return 
-                MatchesSimpleArgs(Method, Step) || 
-                MatchesObjectArg(Method, Step);
-        }
-
-        bool MatchesSimpleArgs(MethodInfo Method, Step Step)
-        {
-            return (MatchesArgsCount(Method, Step) && MatchesArgsTypes(Method, Step));
-        }
-
-        bool MatchesName(MethodInfo Method, Step Step)
-        {
-            return Method.Name == Step.Name;
-        }
-
-        bool MatchesArgsCount(MethodInfo Method, Step Step)
-        {
-            return Method.GetParameters().Count() == Step.ArgsCount;
-        }
-
-        bool MatchesArgsTypes(MethodInfo Method, Step Step)
-        {
-            if (Step.ArgsCount == 0) return true;
-
-            return Step.HasTable && !Step.Table.HasHeader ?
-                Method.HasTableArg() : !Method.HasTableArg();
-        }
-
-        bool MatchesObjectArg(MethodInfo Method, Step Step)
-        {
-            if (!Step.HasTable || !Step.Table.HasHeader) return false;
-
-            var Args = Method.GetParameters();
-            if (Args.Length == 0) return false;
-
-            var Type = Args[0].ParameterType;
-            if (!Type.IsClass) return false;
-
-            var ArgsNames = Type.GetProperties().Select(x => x.Name)
-                .Concat(Type.GetFields().Select(x => x.Name));
-
-            return Step.Table.Header.All(h => ArgsNames.Any(a => a == h));
-        }
 
         void CompileFeature() 
         {

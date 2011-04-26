@@ -20,13 +20,12 @@ namespace Raconteur
         {
             get
             {
-                return 
-                    Args.Count +
+                return Args.Count/* +
                     (
                         !HasTable ? 0 :
                         !Table.HasHeader ? 1 :
                         Table.Header.Count
-                    );
+                    )*/;
             }
         }
 
@@ -38,6 +37,7 @@ namespace Raconteur
 
         public Step()
         {
+            ArgsMatcher = new SimpleArgsMatcher(this);
             Args = new List<string>();
         }
 
@@ -79,30 +79,13 @@ namespace Raconteur
         }
 
         public bool HasTable { get { return Table != null; } }
-        public Table Table { get; set; }
-        public bool HasObjectImplementation
+
+        Table table;
+        public Table Table
         {
-            get
-            {
-                return IsImplemented 
-                    && HasTable 
-                    && Table.HasHeader 
-                    && Implementation.HasObjectArg()
-                    && ObjectHasFieldsMatchingHeader;
-            } 
+            get { return table; } 
+            set { table = value;}
         }
-
-        protected bool ObjectHasFieldsMatchingHeader
-        {
-            get
-            {
-                var Object = ObjectArg;
-
-                return Table.Header.All(x => Object.FieldType(x) != null);
-            } 
-        }
-
-        public Type ObjectArg { get { return Implementation.LastArg(); } } 
 
         public void AddRow(List<string> Row)
         {
@@ -111,6 +94,26 @@ namespace Raconteur
             if (Table.IsSingleColumn && !Table.HasHeader) 
                 Table.Rows[0].Add(Row[0]);
             else Table.Add(Row);
+        }
+
+        public bool HasObjectImplementation
+        {
+            get
+            {
+                return IsImplemented 
+                    && HasTable 
+                    && Table.HasHeader 
+                    && Implementation.HasObjectArgFor(this);
+            } 
+        }
+
+        public Type ObjectArg { get { return Implementation.LastArg(); } }
+
+        ArgsMatcher ArgsMatcher;
+
+        public bool Matches(MethodInfo Method)
+        {
+            return ArgsMatcher.Matches(Method);
         }
     }
 }

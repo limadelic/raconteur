@@ -43,6 +43,7 @@ namespace Raconteur.Helpers
                 return new FeatureCompilerClass
                 {
                     TypeResolver = new TypeResolverClass(),
+                    StepCompiler = new StepCompiler()
                 };
             }
         }

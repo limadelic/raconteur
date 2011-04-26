@@ -45,9 +45,16 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compilers\ArgsMatcher.cs" />
+    <Compile Include="Compilers\ArgsMatcherBase.cs" />
     <Compile Include="Compilers\Extensions.cs" />
     <Compile Include="Compilers\FeatureCompiler.cs" />
+    <Compile Include="Compilers\HeaderTableArgsMatcher.cs" />
+    <Compile Include="Compilers\ObjectTableArgsMatcher.cs" />
+    <Compile Include="Compilers\SimpleArgsMatcher.cs" />
+    <Compile Include="Compilers\StepCompiler.cs" />
     <Compile Include="Compilers\StringParser.cs" />
+    <Compile Include="Compilers\TableArgsMatcher.cs" />
     <Compile Include="Generators\Steps\StepCodeGenerator.cs" />
     <Compile Include="Generators\Steps\StepWithHeaderTableGenerator.cs" />
     <Compile Include="Generators\Steps\StepWithSimpleTableGenerator.cs" />

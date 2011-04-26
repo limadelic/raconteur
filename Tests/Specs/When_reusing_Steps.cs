@@ -58,7 +58,7 @@ namespace Specs
         void SetUpFeatureItem() 
         {
             FeatureItem = Substitute.For<FeatureItem>();
-            FeatureItem.Assembly.Returns("Specs");
+            FeatureItem.Assembly.Returns("Common");
         }
 
         void SetUpParser() 
@@ -520,6 +520,35 @@ namespace Specs
         public void should_format_args_according_types(string Arg, Type Type, string ExpectedFormat)
         {
             ArgFormatter.Format(Arg, Type).ShouldBe(ExpectedFormat);
+        }
+
+        [Test]
+        [MbUnit.Framework.Ignore]
+        [Row("UserName")]
+        [Row("username")]
+        [Row("User Name")]
+        [Row("user name")]
+        public void should_match_Header_to_ObjectArg_field(string UserName)
+        {
+            var Feature = new Feature 
+            { 
+                Name = "StepDefinitions",
+                DeclaredStepDefinitions = new List<string> { "StepDefinitions" },
+                Scenarios = { new Scenario { Steps = { new Step
+                {
+                    Name = "Step_with_object",
+                    Table = new Table 
+                    { 
+                        HasHeader = true, 
+                        Rows = { new List<string> { UserName } }
+                    }
+                }}
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Implementation
+                .ShouldBe(Common.StepDefinitions.StepWithObject);
         }
     }
 }

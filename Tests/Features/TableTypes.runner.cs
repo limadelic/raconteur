@@ -33,7 +33,8 @@ new[] {0, 1}
 ");
         }
         
-        [Test]
+        [Test]        
+        [Category("wip")]
         public void ObjectTableWithSingleRowBecomesAnObjectArg()
         {         
             FeatureRunner.Given_the_Feature_is(

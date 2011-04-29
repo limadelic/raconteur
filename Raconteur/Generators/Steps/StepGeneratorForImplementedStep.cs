@@ -44,7 +44,7 @@ namespace Raconteur.Generators.Steps
         {
             get
             {
-                return Step.HasObjectImplementation
+                return Step.Type == StepType.ObjectTable
                     ? FormatArgsForObjectTable
                     : FormatArgsForSimpleTableWithHeader;
             }

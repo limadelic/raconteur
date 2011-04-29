@@ -16,11 +16,7 @@ namespace Raconteur.Compilers
                     (m.ArgsCount() == s.Args.Count + 1) && m.HasTableArg()
             },    
             {
-                StepType.HeaderTable, (s, m) => 
-                    m.ArgsCount() == s.Args.Count + s.Table.Header.Count
-            },    
-            {
-                StepType.ObjectTable, (s, m) => m.ArgsCount() == s.Args.Count + 1
+                StepType.HeaderTable, (s, m) => MatchesTableWithHeader(s, m)
             },    
         };
 
@@ -32,6 +28,16 @@ namespace Raconteur.Compilers
         public static int ArgsCount(this MethodInfo Method)
         {
             return Method.GetParameters().Length;
+        }
+
+        static bool MatchesTableWithHeader(Step Step, MethodInfo Method)
+        {
+            if (Method.HasObjectArgFor(Step)) Step.Type = StepType.ObjectTable;
+
+            var TableArgsCount = Step.Type == StepType.ObjectTable ? 1 
+                : Step.Table.Header.Count;
+
+            return Method.ArgsCount() == Step.Args.Count + TableArgsCount;
         }
     }
 }

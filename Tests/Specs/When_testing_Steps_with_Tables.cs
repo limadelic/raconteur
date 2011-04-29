@@ -158,7 +158,6 @@ namespace Specs
         }
         
         [TestFixture]
-        [Ignore("refactoring stuff")]
         public class of_Objects
         {
             FeatureItem FeatureItem;

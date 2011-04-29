@@ -112,17 +112,6 @@ namespace Raconteur
             else Table.Add(Row);
         }
 
-        public bool HasObjectImplementation
-        {
-            get
-            {
-                return IsImplemented 
-                    && HasTable 
-                    && Table.HasHeader 
-                    && Implementation.HasObjectArgFor(this);
-            } 
-        }
-
         public Type ObjectArg { get { return Implementation.LastArg(); } }
     }
 }

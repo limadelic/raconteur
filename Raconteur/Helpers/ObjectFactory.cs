@@ -80,11 +80,13 @@ namespace Raconteur.Helpers
 
         static CodeGenerator NewStepCodeGenerator(Step Step, StepGenerator StepRunnerGenerator)
         {
-            return Step.HasTable ?
-                (Step.Table.HasHeader ?
-                    new StepWithHeaderTableGenerator(StepRunnerGenerator) as CodeGenerator:
-                    new StepWithSimpleTableGenerator(StepRunnerGenerator)) :
-                new SimpleStepGenerator(StepRunnerGenerator);
+            switch (Step.Type)
+            {
+                case StepType.HeaderTable:
+                case StepType.ObjectTable: return new StepWithHeaderTableGenerator(StepRunnerGenerator);
+                case StepType.Table: return new StepWithSimpleTableGenerator(StepRunnerGenerator);
+                default: return new SimpleStepGenerator(StepRunnerGenerator);
+            }
         }
     }
 }

@@ -26,19 +26,6 @@ namespace Raconteur
 
         public bool HasArgs { get { return Args.Count > 0; } }
 
-        public int ArgsCount
-        {
-            get
-            {
-                return Args.Count/* +
-                    (
-                        !HasTable ? 0 :
-                        !Table.HasHeader ? 1 :
-                        Table.Header.Count
-                    )*/;
-            }
-        }
-
         public MethodInfo Implementation { get; set; }
         
         public bool IsImplemented { get { return Implementation != null; } }
@@ -76,8 +63,8 @@ namespace Raconteur
         {
             get
             {
-                return stepDefinitions ?? 
-                    (stepDefinitions = Feature.StepDefinitions.Where(ImplementsStep).FirstOrDefault());
+                return stepDefinitions ?? (stepDefinitions = 
+                    Feature.StepDefinitions.Where(ImplementsStep).FirstOrDefault());
             } 
         }
         
@@ -107,11 +94,13 @@ namespace Raconteur
         {
             if (!HasTable) Table = new Table();
 
-            if (Table.IsSingleColumn && !Table.HasHeader) 
-                Table.Rows[0].Add(Row[0]);
-            else Table.Add(Row);
+            Table.Add(Row);
         }
 
-        public Type ObjectArg { get { return Implementation.LastArg(); } }
+        Type objectArg;
+        public Type ObjectArg
+        {
+            get { return objectArg ?? (objectArg = Implementation.LastArg()); }
+        }
     }
 }

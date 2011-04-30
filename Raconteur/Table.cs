@@ -12,24 +12,6 @@ namespace Raconteur
 
         public bool HasHeader { get; set; }
 
-        bool? isSingleColumn;
-        public bool IsSingleColumn
-        {
-            get
-            {
-                return Rows.Count > 0 && 
-                (
-                    isSingleColumn ?? (isSingleColumn = Rows[0].Count == 1)
-                )
-                .Value;
-            }
-        }
-
-        public bool HasRows
-        {
-            get { return Rows.Count > (HasHeader ? 1 : 0); }
-        }
-
         public string this[int Row, int Col]
         {
             get { return Rows[Row + 1][Col]; }
@@ -43,12 +25,20 @@ namespace Raconteur
 
         public void Add(List<string> Row)
         {
-            Rows.Add(Row);
+            if (IsSingleColumn) Rows[0].Add(Row[0]);
+            else Rows.Add(Row);
         }
 
-        public void AddRows(List<List<string>> rows)
+        bool? isSingleColumn;
+        bool IsSingleColumn
         {
-            Rows.AddRange(rows);
+            get
+            {
+                return !HasHeader 
+                    && Rows.Count > 0 
+                    && (isSingleColumn ?? (isSingleColumn = 
+                        Rows[0].Count == 1)).Value;
+            }
         }
     }
 }

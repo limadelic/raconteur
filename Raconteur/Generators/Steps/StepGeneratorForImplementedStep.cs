@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Raconteur.Compilers;
+using Raconteur.Helpers;
 
 namespace Raconteur.Generators.Steps
 {
@@ -24,9 +25,9 @@ namespace Raconteur.Generators.Steps
         {
             get
             {
-                return Step.Table.HasHeader ? 
-                    FormatArgsForTableWithHeader : 
-                    FormatArgsForSimpleTable;
+                return Step.Type == StepType.Table ? 
+                    FormatArgsForSimpleTable :
+                    FormatArgsForTableWithHeader ;
             }
         }
 
@@ -44,9 +45,9 @@ namespace Raconteur.Generators.Steps
         {
             get
             {
-                return Step.Type == StepType.ObjectTable
-                    ? FormatArgsForObjectTable
-                    : FormatArgsForSimpleTableWithHeader;
+                return Step.Type == StepType.ObjectTable? 
+                    FormatArgsForObjectTable : 
+                    FormatArgsForSimpleTableWithHeader;
             }
         }
 
@@ -76,17 +77,18 @@ namespace Raconteur.Generators.Steps
         {
             get
             {
-                var ObjectArg = Step.ObjectArg;
-
-                var FieldsInitialized =
-                    Row.Select((Value, i) => FormatArgForObjectInitializer(Value, ObjectArg, Step.Table.Header[i]));
+                var FieldsInitialized = Row.Select((Value, i) => 
+                    FormatArgForObjectInitializer
+                    (
+                        Value, Step.ObjectArg, Step.Table.Header[i]
+                    ));
 
                 return new List<string>
                 {
                     string.Format
                     (
                         ObjectArgTemplate, 
-                        ObjectArg.FullName, 
+                        Step.ObjectArg.FullName, 
                         string.Join(",", FieldsInitialized)
                     )
                 };

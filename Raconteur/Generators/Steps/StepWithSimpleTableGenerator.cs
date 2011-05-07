@@ -6,6 +6,10 @@ namespace Raconteur.Generators.Steps
 {
     public class StepWithSimpleTableGenerator : StepCodeGenerator
     {
+        public const string StepRowExecutionTemplate = 
+            @"        
+                new[] {{{0}}},";
+
         public StepWithSimpleTableGenerator(StepGenerator StepGenerator) : base(StepGenerator) {}
 
         public override string Code
@@ -14,7 +18,7 @@ namespace Raconteur.Generators.Steps
             {
                 var Table = Step.Table.Rows
                     .Aggregate("", (Steps, Row) => Steps +
-                        string.Format(StepGenerator.StepRowExecution, ArgsFrom(Row)));
+                        string.Format(StepRowExecutionTemplate, ArgsFrom(Row)));
 
                 var ArgsCode = Table.RemoveTail(1);
 

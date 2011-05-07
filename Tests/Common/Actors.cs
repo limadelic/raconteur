@@ -1,10 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using NSubstitute;
 using Raconteur;
+using Raconteur.IDE;
 
 namespace Common
 {
     public class Actors
     {
+        public static FeatureItem FeatureItem(string Assembly, string DefaultNamespace = null)
+        {
+            var FeatureItem = Substitute.For<FeatureItem>();
+            FeatureItem.DefaultNamespace = DefaultNamespace ?? Assembly;
+            FeatureItem.Assembly.Returns(Assembly);
+            return FeatureItem;
+        }
+
         public const string FeatureWithThreeScenarios = 
         @"
             Feature: has three scenarios
@@ -87,6 +98,36 @@ namespace
                 };
             } 
         } 
+
+        public static Feature FeatureWithStepDefinitions 
+        { 
+            get
+            {
+                return new Feature
+                {
+                    Name = "StepDefinitions",
+                    Scenarios = { new Scenario { Steps = { new Step { Name = "Step" } } } }
+                };
+            } 
+        }
+
+
+        public static Table ObjectTable
+        {
+            get
+            {
+                return new Table
+                {
+                    HasHeader = true,
+                    Rows = 
+                    {
+                        new List<string> {"UserName", "Password"},
+                        new List<string> {"lola", "run"},
+                        new List<string> {"mani", "dumb"}
+                    }
+                };
+            }
+        }
 
         public static Feature FeatureWithArgs = new Feature
         {

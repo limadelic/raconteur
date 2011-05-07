@@ -18,6 +18,9 @@ namespace Raconteur.Compilers
             {
                 StepType.HeaderTable, (s, m) => MatchesTableWithHeader(s, m)
             },    
+            {
+                StepType.ObjectTable, (s, m) => MatchesTableWithHeader(s, m)
+            },    
         };
 
         public static bool Matches(this Step Step, MethodInfo Method)

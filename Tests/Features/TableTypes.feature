@@ -24,8 +24,32 @@ Scenario: Single column Table becomes an array Arg
 		}
 	"
 
-@wip
-Scenario: Object Table with single row becomes an object Arg
+Scenario: Table passed as an array
+
+	Given the Feature is
+	"
+		Feature: Table Types
+
+		Scenario: Scenario Name
+			Given some values:
+			|0|1|
+			|1|1|
+	"
+
+	The Runner should contain
+	"
+		[TestMethod]
+		public void ScenarioName()
+		{
+			Given_some_values_
+			(
+				new[] {""0"", ""1""},
+				new[] {""1"", ""1""}
+			);
+		}
+	"
+
+Scenario: Object Table implemented with ObjectArg generates multiple calls
 
 	Given the Feature is
 	"
@@ -35,6 +59,7 @@ Scenario: Object Table with single row becomes an object Arg
 			Given the User:
 			[UserName|Password]
 			|neo	 |53cr3t  |
+			|lola	 |run	  |
 	"
 
 	The Runner should contain
@@ -48,11 +73,17 @@ Scenario: Object Table with single row becomes an object Arg
 					UserName = ""neo"",
 					Password = ""53cr3t""
 				});
+			Given_the_User_( 
+				new Common.User
+				{
+					UserName = ""lola"",
+					Password = ""run""
+				});
 		}
 	"
 
 @wip
-Scenario: Object Table with multiple rows becomes an object[] Arg
+Scenario: Object Table with multiple rows becomes an [] Arg
 
 	Given the Feature is
 	"
@@ -70,7 +101,7 @@ Scenario: Object Table with multiple rows becomes an object[] Arg
 		[TestMethod]
 		public void LoginUser()
 		{
-			Given_the_Users_( 
+			Given_the_Users_(
 				new Common.User
 				{
 					UserName = ""neo"",

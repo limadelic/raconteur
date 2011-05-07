@@ -2,8 +2,6 @@
 	In order to run a Feature
 	Raconteur should generate its Runner
 
-using Feature Runner
-
 Scenario: Generate Runner Class
 
 	Given the Feature is

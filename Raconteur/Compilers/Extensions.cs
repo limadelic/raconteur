@@ -18,6 +18,12 @@ namespace Raconteur.Compilers
             return StepDefinition.GetParameters().Last().ParameterType;
         }
 
+        public static Type ElementType(this Type Type)
+        {
+            while (Type.IsArray) Type = Type.GetElementType();
+            return Type;
+        }
+
         public static bool HasTableArg(this MethodInfo StepDefinition)
         {
             return StepDefinition.LastArg().IsArray;
@@ -25,7 +31,7 @@ namespace Raconteur.Compilers
 
         public static bool HasObjectArgFor(this MethodInfo StepDefinition, Step Step)
         {
-            var Type = StepDefinition.LastArg();
+            var Type = StepDefinition.LastArg().ElementType();
 
             return Type.IsClass 
                 && Step.Table.Header.All(x => Type.FieldType(x) != null);
@@ -33,10 +39,7 @@ namespace Raconteur.Compilers
 
         public static Type TableItemType(this Step Step)
         {
-            ArgType = Step.Implementation.GetParameters().Last()
-                .ParameterType.GetElementType();
-
-            return ArgType.IsArray ? ArgType.GetElementType() : ArgType;
+            return Step.Implementation.LastArg().ElementType();
         }
 
         public static Type FieldType(this Type Type, string FieldName)

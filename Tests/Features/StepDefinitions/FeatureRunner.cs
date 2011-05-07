@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Common;
 using FluentSpec;
-using NSubstitute;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -18,9 +17,7 @@ namespace Features.StepDefinitions
             {
                 var FeatureFile = new FeatureFile { Content = Feature };
 
-                var FeatureItem = Substitute.For<FeatureItem>();
-                FeatureItem.DefaultNamespace = "Features";
-                FeatureItem.Assembly.Returns("Features.dll");
+                var FeatureItem = Actors.FeatureItem("Features.dll", "Features");
 
                 var NewFeature = ObjectFactory.NewFeatureParser
                     .FeatureFrom(FeatureFile, FeatureItem);

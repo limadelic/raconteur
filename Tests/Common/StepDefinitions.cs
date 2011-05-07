@@ -14,6 +14,7 @@ namespace Common
         public void Step(string Overloaded){}
         public void Step(int Overloaded){}
         public void Step_with_object(User User){}
+        public void Step_with_object_array(params User[] User){}
         public void Step(string One, string Another){}
         public void Step(params string[][] Table){}
         public void Step(string Arg, params string[][] Table){}
@@ -23,6 +24,7 @@ namespace Common
         public static MethodInfo StepOverloaded;
         public static MethodInfo StepOverloadedInt;
         public static MethodInfo StepWithObject;
+        public static MethodInfo StepWithObjectArray;
         public static MethodInfo StepWithTwoArgs;
         public static MethodInfo StepWithTable;
         public static MethodInfo StepWithTableAndArg;
@@ -37,10 +39,11 @@ namespace Common
             StepOverloaded = Methods[1];
             StepOverloadedInt = Methods[2];
             StepWithObject = Methods[3];
-            StepWithTwoArgs = Methods[4];
-            StepWithTable = Methods[5];
-            StepWithTableAndArg = Methods[6];
-            StepWithThreeArgs = Methods[7];
+            StepWithObjectArray = Methods[4];
+            StepWithTwoArgs = Methods[5];
+            StepWithTable = Methods[6];
+            StepWithTableAndArg = Methods[7];
+            StepWithThreeArgs = Methods[8];
         }
 
         public void Step_from_Lib(){}

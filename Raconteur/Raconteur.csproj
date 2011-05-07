@@ -50,6 +50,7 @@
     <Compile Include="Compilers\FeatureCompiler.cs" />
     <Compile Include="Compilers\StepCompiler.cs" />
     <Compile Include="Compilers\StringParser.cs" />
+    <Compile Include="Compilers\TableArgsFormatters.cs" />
     <Compile Include="Generators\Steps\StepCodeGenerator.cs" />
     <Compile Include="Generators\Steps\StepWithHeaderTableGenerator.cs" />
     <Compile Include="Generators\Steps\StepWithSimpleTableGenerator.cs" />

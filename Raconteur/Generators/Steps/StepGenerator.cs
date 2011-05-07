@@ -17,10 +17,6 @@ namespace Raconteur.Generators.Steps
             ({1}
             );";
 
-        public const string StepRowExecution = 
-            @"        
-                new[] {{{0}}},";
-
         public readonly Step Step;
         public IEnumerable<string> Row;
 

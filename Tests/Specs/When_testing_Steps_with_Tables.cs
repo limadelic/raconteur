@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
-using NSubstitute;
 using Raconteur;
 using Raconteur.Helpers;
-using Raconteur.IDE;
 using Raconteur.Parsers;
 
 namespace Specs
@@ -154,61 +152,6 @@ namespace Specs
                 var Runner = ObjectFactory.NewRunnerGenerator(Feature).Code;            
 
                 Runner.ShouldContain(Step.Name + @"(""arg"", 1, 2);");
-            }
-        }
-        
-        [TestFixture]
-        public class of_Objects
-        {
-            FeatureItem FeatureItem;
-
-            void SetUpFeatureItem() 
-            {
-                FeatureItem = Substitute.For<FeatureItem>();
-                FeatureItem.Assembly.Returns("Common");
-            }
-
-            [SetUp]
-            public void SetUp()
-            {
-                Step.Name = "Step_with_object";
-                Step.Table = new Table
-                {
-                    HasHeader = true,
-                    Rows = 
-                    {
-                        new List<string> {"UserName", "Password"},
-                        new List<string> {"lola", "run"},
-                        new List<string> {"mani", "dumb"}
-                    }
-                };
-
-                SetUpFeatureItem();
-
-                Feature.DeclaredStepDefinitions = new List<string> { "StepDefinitions" };
-
-                ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
-            }
-
-            [Test]
-            public void should_resolve_table_header_to_object_arg()
-            {
-                Step.Implementation.ShouldBe(StepDefinitions.StepWithObject);
-            }
-
-            [Test]
-            public void should_pass_the_object_in_the_call()
-            {
-                ObjectFactory.NewRunnerGenerator(Feature)
-                    .Code.TrimLines().ShouldContain(
-                    @"
-			            Step_with_object( 
-				            new Common.User
-				            {
-					            UserName = ""lola"",
-					            Password = ""run""
-				            });
-                    ".TrimLines());
             }
         }
     }

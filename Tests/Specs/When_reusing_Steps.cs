@@ -33,7 +33,7 @@ namespace Specs
             typeof(StepDefinitions), typeof(AnotherStepDefinitions), typeof(StepDefinitionsInSameNamespace)
         };
 
-        FeatureItem FeatureItem;
+        readonly FeatureItem FeatureItem = Actors.FeatureItem("Common");
 
         FeatureParserClass Parser;
         FeatureCompilerClass Compiler;
@@ -48,17 +48,10 @@ namespace Specs
             backup.Add(Settings.StepDefinitions);
             backup.Add(Settings.Libraries);
 
-            SetUpFeatureItem();
             SetUpParser();
             SetUpCompiler();
 
             Settings.Libraries = new List<string> { "Common" };
-        }
-
-        void SetUpFeatureItem() 
-        {
-            FeatureItem = Substitute.For<FeatureItem>();
-            FeatureItem.Assembly.Returns("Common");
         }
 
         void SetUpParser() 
@@ -360,25 +353,6 @@ namespace Specs
 
             Feature.Steps[1].Implementation
                 .ShouldBe(Common.StepDefinitions.StepWithThreeArgs);
-        }
-
-        [Test]
-        public void should_find_Step_with_table_in_DefaultStepDefitions()
-        {
-            var Feature = new Feature 
-            { 
-                Name = "StepDefinitions",
-                Scenarios = { new Scenario { Steps = { new Step
-                {
-                    Name = "Step",
-                    Table = new Table()
-                }}
-            }}};
-
-            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
-
-            Feature.Steps[0].Implementation
-                .ShouldBe(Common.StepDefinitions.StepWithTable);
         }
 
         [Test]

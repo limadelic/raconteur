@@ -38,33 +38,29 @@ namespace Raconteur.Compilers
                 {{{1}
                 }}";
 
-        private const string ObjectArrayArgTemplate = 
-@"        
-                new []
-                {{{0}
-                }}";
-
         private const string FieldInitializerTemplate = 
 @"        
                     {0} = {1}";
 
         static IEnumerable<string> FormatObjectTableArgs(Step Step, IEnumerable<string> Row)
         {
-                var FieldsInitialized = Row.Select((Value, i) => 
-                    FormatArgForObjectInitializer
-                    (
-                        Value, Step.ObjectArg, Step.Table.Header[i]
-                    ));
+            var FieldsInitialized = Row.Select((Value, i) => 
+                FormatArgForObjectInitializer
+                (
+                    Value, 
+                    Step.ObjectArg, 
+                    Step.ObjectArg.FieldName(Step.Table.Header[i])
+                ));
 
-                return new List<string>
-                {
-                    string.Format
-                    (
-                        ObjectArgTemplate, 
-                        Step.ObjectArg.FullName, 
-                        string.Join(",", FieldsInitialized)
-                    )
-                };
+            return new List<string>
+            {
+                string.Format
+                (
+                    ObjectArgTemplate, 
+                    Step.ObjectArg.FullName, 
+                    string.Join(",", FieldsInitialized)
+                )
+            };
         }
 
         static string FormatArgForObjectInitializer(string Value, Type ObjectArg, string FieldName)

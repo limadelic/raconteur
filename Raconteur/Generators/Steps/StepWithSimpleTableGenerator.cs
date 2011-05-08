@@ -10,15 +10,25 @@ namespace Raconteur.Generators.Steps
             @"        
                 new[] {{{0}}},";
 
+        public const string StepObjectRowExecutionTemplate = 
+            @"        
+                {0},";
+
         public StepWithSimpleTableGenerator(StepGenerator StepGenerator) : base(StepGenerator) {}
 
         public override string Code
         {
             get 
             {
-                var Table = Step.Table.Rows
+                var RowTemplate = Step.Type == StepType.Table ?
+                    StepRowExecutionTemplate : StepObjectRowExecutionTemplate;
+
+                var Rows = Step.Type == StepType.Table ? 
+                    Step.Table.Rows : Step.Table.Rows.Skip(1);
+
+                var Table = Rows
                     .Aggregate("", (Steps, Row) => Steps +
-                        string.Format(StepRowExecutionTemplate, ArgsFrom(Row)));
+                        string.Format(RowTemplate, ArgsFrom(Row)));
 
                 var ArgsCode = Table.RemoveTail(1);
 

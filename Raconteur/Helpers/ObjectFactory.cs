@@ -82,9 +82,11 @@ namespace Raconteur.Helpers
         {
             switch (Step.Type)
             {
-                case StepType.HeaderTable:
-                case StepType.ObjectTable: return new StepWithHeaderTableGenerator(StepRunnerGenerator);
                 case StepType.Table: return new StepWithSimpleTableGenerator(StepRunnerGenerator);
+                case StepType.HeaderTable: return new StepWithHeaderTableGenerator(StepRunnerGenerator);
+                case StepType.ObjectTable: return Step.Implementation.LastArg().IsArray ?
+                    new StepWithSimpleTableGenerator(StepRunnerGenerator) as CodeGenerator :
+                    new StepWithHeaderTableGenerator(StepRunnerGenerator);
                 default: return new SimpleStepGenerator(StepRunnerGenerator);
             }
         }

@@ -6,8 +6,6 @@ namespace Raconteur.Compilers
 {
     public static class Extensions
     {
-        static Type ArgType;
-
         public static bool HasArgs(this MethodInfo StepDefinition)
         {
             return StepDefinition.GetParameters().Length > 0;
@@ -44,21 +42,41 @@ namespace Raconteur.Compilers
 
         public static Type FieldType(this Type Type, string FieldName)
         {
+            FieldName = FieldName.Replace(" ", "").ToLower();
+
             return 
                 
                 Type.GetProperties()
-                .Where(x => x.Name == FieldName)
+                .Where(x => x.Name.ToLower() == FieldName)
                 .Select(x => x.PropertyType)
                 .FirstOrDefault() 
                 
                 ??
 
                 Type.GetFields()
-                .Where(x => x.Name == FieldName)
+                .Where(x => x.Name.ToLower() == FieldName)
                 .Select(x => x.FieldType)
                 .FirstOrDefault();
         }
 
+        public static string FieldName(this Type Type, string FieldName)
+        {
+            FieldName = FieldName.Replace(" ", "").ToLower();
+
+            return 
+                
+                Type.GetProperties()
+                .Where(x => x.Name.ToLower() == FieldName)
+                .Select(x => x.Name)
+                .FirstOrDefault() 
+                
+                ??
+
+                Type.GetFields()
+                .Where(x => x.Name.ToLower() == FieldName)
+                .Select(x => x.Name)
+                .FirstOrDefault();
+        }
 
     }
 }

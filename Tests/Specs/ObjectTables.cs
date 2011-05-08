@@ -10,7 +10,7 @@ namespace Specs
     [TestFixture]
     public class ObjectTables
     {
-        readonly Feature Feature = Actors.FeatureWithStepDefinitions;
+        Feature Feature;
         readonly FeatureItem FeatureItem = Actors.FeatureItem("Common");
         
         Step Step { get { return Feature.Steps[0]; } }
@@ -18,6 +18,7 @@ namespace Specs
         [SetUp]
         public void SetUp()
         {
+            Feature = Actors.FeatureWithStepDefinitions;
             Step.Table = Actors.ObjectTable;
         }
 
@@ -40,13 +41,17 @@ namespace Specs
         }
 
         [Test]
-        public void should_resolve_ObjectTable_to_params_object_array_Arg()
+        [Row("UserName")]
+        [Row("User Name")]
+        [Row("user name")]
+        public void should_resolve_Header_to_Fields(string UserName)
         {
-            Step.Name = "Step_with_object_array";
+            Step.Name = "Step_with_object";
+            Step.Table.Header[0] = UserName;
 
             Compile();
 
-            Step.Implementation.ShouldBe(StepDefinitions.StepWithObjectArray);        
+            Step.Implementation.ShouldBe(StepDefinitions.StepWithObject);
         }
 
         [Test]
@@ -86,7 +91,16 @@ namespace Specs
         }
 
         [Test]
-        [Category("wip")]
+        public void should_resolve_ObjectTable_to_params_object_array_Arg()
+        {
+            Step.Name = "Step_with_object_array";
+
+            Compile();
+
+            Step.Implementation.ShouldBe(StepDefinitions.StepWithObjectArray);        
+        }
+
+        [Test]
         public void should_generate_params_object_array_Arg()
         {
             Step.Name = "Step_with_object_array";
@@ -95,17 +109,19 @@ namespace Specs
 
             ShouldGenerate(
             @"
-			    Step_with_object_array( 
-					new Common.User
-					{
-						UserName = ""neo"",
-						Password = ""53cr3t""
-					},				
+			    Step_with_object_array
+                ( 
 					new Common.User
 					{
 						UserName = ""lola"",
 						Password = ""run""
-					});
+					},				
+					new Common.User
+					{
+						UserName = ""mani"",
+						Password = ""dumb""
+					}
+                );
             ");
         }
     }

@@ -91,8 +91,7 @@ Password = ""run""
 ");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void ObjectTableWithMultipleRowsBecomesAn__Arg()
         {         
             FeatureRunner.Given_the_Feature_is(
@@ -109,7 +108,8 @@ Given the Users:
 [TestMethod]
 public void LoginUser()
 {
-Given_the_Users_(
+Given_the_Users_
+(
 new Common.User
 {
 UserName = ""neo"",
@@ -119,7 +119,8 @@ new Common.User
 {
 UserName = ""lola"",
 Password = ""run""
-});
+}
+);
 }
 ");
         }

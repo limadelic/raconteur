@@ -82,7 +82,6 @@ Scenario: Object Table implemented with ObjectArg generates multiple calls
 		}
 	"
 
-@wip
 Scenario: Object Table with multiple rows becomes an [] Arg
 
 	Given the Feature is
@@ -101,7 +100,8 @@ Scenario: Object Table with multiple rows becomes an [] Arg
 		[TestMethod]
 		public void LoginUser()
 		{
-			Given_the_Users_(
+			Given_the_Users_
+			(
 				new Common.User
 				{
 					UserName = ""neo"",
@@ -111,6 +111,7 @@ Scenario: Object Table with multiple rows becomes an [] Arg
 				{
 					UserName = ""lola"",
 					Password = ""run""
-				});
+				}
+			);
 		}
 	"

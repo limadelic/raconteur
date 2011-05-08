@@ -11,7 +11,7 @@ namespace Raconteur
         Simple,
         Table,
         HeaderTable,
-        ObjectTable    
+        ObjectTable
     }
 
     public class Step
@@ -100,7 +100,7 @@ namespace Raconteur
         Type objectArg;
         public Type ObjectArg
         {
-            get { return objectArg ?? (objectArg = Implementation.LastArg()); }
+            get { return objectArg ?? (objectArg = Implementation.LastArg().ElementType()); }
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
@@ -14,27 +13,20 @@ namespace Raconteur.IDEIntegration.Intellisense
 {
     public class CompletionCalculator
     {
-        public string Feature { get; set; }
+        public virtual string Feature { get; set; }
+        
+        string FeatureWithoutArgValues
+        {
+            get { return Regex.Replace(Feature, "\"[^\"]*\"", "\"\""); }
+        }
 
         private IEnumerable<string> RelevantText
         {
             get
             {
-                var linesWithArgs = Feature.TrimLines().Lines()
+                return FeatureWithoutArgValues.TrimLines().Lines()
                     .SkipWhile(line => !line.StartsWith(Settings.Language.Scenario))
                     .Where(line => !line.StartsWithKeyword()).ToList();
-
-                var tempList = new List<string>();
-                var multiLineArgFound = false;
-
-                foreach (var line in linesWithArgs)
-                {
-                    if (line == "\"") multiLineArgFound = !multiLineArgFound;
-
-                    if (!multiLineArgFound) tempList.Add(line);
-                }
-
-                return tempList;
             }
         }
 
@@ -54,12 +46,10 @@ namespace Raconteur.IDEIntegration.Intellisense
             {
                 try
                 {
-                    var typeName = ProjectNavigator.DefaultNamespace + "."
-                                   + Regex.Match(Feature, RegexExpressions.FeatureDefinition)
-                                         .Groups[1].Value.CamelCase().ToValidIdentifier();
+                    var typeName = Regex.Match(Feature, RegexExpressions.FeatureDefinition)
+                                     .Groups[1].Value.CamelCase().ToValidIdentifier();
 
-                    var type = Assembly.LoadFrom(ProjectNavigator.ActiveAssemblyPath)
-                        .GetType(typeName);
+                    var type = ProjectNavigator.TypeInCurrentProject(typeName);
 
                     return type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
                         .Select(method => method.Name.IdentifierToEnglish());

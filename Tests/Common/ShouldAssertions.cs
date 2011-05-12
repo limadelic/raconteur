@@ -71,12 +71,22 @@ namespace Common
 
         public static void ShouldContain(this IEnumerable<Completion> completions, string text)
         {
-            completions.Any(completion => completion.DisplayText == text).ShouldBeTrue();
+            completions.Any(completion => completion.DisplayText == text)
+                .ShouldBeTrue(
+                    string.Format("Expected \"{0}\" to be found in \"{1}\"", 
+                    text, 
+                    completions.Aggregate(string.Empty, (seed, source) => seed + "\n" + source.DisplayText))
+                );
         }
 
         public static void ShouldNotContain(this IEnumerable<Completion> completions, string text)
         {
-            completions.Any(completion => completion.DisplayText == text).ShouldBeFalse();
+            completions.Any(completion => completion.DisplayText == text)
+               .ShouldBeFalse(
+                   string.Format("Found \"{0}\" in \"{1}\"",
+                   text,
+                   completions.Aggregate(string.Empty, (seed, source) => seed + "\n" + source.DisplayText))
+            );
         }
     }
 }

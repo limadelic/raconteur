@@ -1,31 +1,32 @@
 using Common;
+using FluentSpec;
 using MbUnit.Framework;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Raconteur;
 using Raconteur.Helpers;
 using Raconteur.IDEIntegration.Intellisense;
 
 namespace Specs
 {
     [TestFixture]
-    public class When_calculating_Completions : BehaviourOf<CompletionCalculator>
+    public class When_calculating_Completions : BehaviorOf<CompletionCalculator>
     {
         private Language current;
+        private const string scenarioDeclaration = "Scenario: Test Scenario\r\n";
 
-        [TestMethod]
+        [Test]
         public void should_complete_keywords()
         {
-            When.For("Sc").ShouldContain("Scenario");
-            When.For("Sc").ShouldContain("Scenario Outline");
-            When.For("Fe").ShouldContain("Feature");
-            When.For("Ex").ShouldContain("Examples");
-            When.For("Scenario O").ShouldNotContain("Scenario");
+            Given.Feature = scenarioDeclaration;
+            When.For("Sc").ShouldContain("Scenario:");
+            When.For("Sc").ShouldContain("Scenario Outline:");
+            When.For("Fe").ShouldContain("Feature:");
+            When.For("Ex").ShouldContain("Examples:");
+            When.For("Scenario O").ShouldNotContain("Scenario:");
         }
 
-        [TestMethod]
+        [Test]
         public void should_complete_repeated_Steps()
         {
-            Given.Feature = 
+            Given.Feature = scenarioDeclaration + 
                 @"I'm knocking on the doors of your Hummer
                 Yeah, we hungry like the wolves hunting dinner";
 
@@ -33,23 +34,34 @@ namespace Specs
             When.For("Ye").ShouldContain("Yeah, we hungry like the wolves hunting dinner");
         }
 
-        [TestMethod]
+        [Test]
+        public void should_remove_Arg_values()
+        {
+            Given.Feature = scenarioDeclaration + @"Not a ""second"" time";
+
+            When.For("Not").ShouldContain("Not a \"\" time");
+            When.For("Not").ShouldNotContain("Not a \"second\" time");
+        }
+
+        [Test]
         public void should_respect_language()
         {
             BackupCurrentLanguage();
             Settings.Language = Languages.In["hr"];
 
-            When.For("Os").ShouldContain("Osobina");
+
+            Given.Feature = scenarioDeclaration;
+            When.For("Os").ShouldContain("Osobina:");
 
             ResetLanguage();
         }
 
-        [TestMethod]
+        [Test]
         public void should_load_names_from_Type()
         {
             Given.Feature = "Feature: When_calculating_Completions";
 
-            When.For("Se").ShouldContain("SetUp");
+            When.For("Se").ShouldContain("Setup");
         }
 
         private void ResetLanguage()

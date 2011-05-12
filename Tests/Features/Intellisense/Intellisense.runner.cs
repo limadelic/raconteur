@@ -199,7 +199,7 @@ I am an arg
         [Category("wip")]
         public void SuggestionsFromBaseClass()
         {         
-            FeatureRunner.Given_the_Feature_contains("Feature: Intellisense");        
+            FeatureRunner.Given_the_Feature_is("Feature: Intellisense");        
             When_I_begin_to_type__on_the_next_line("In");        
             Then__should_be_displayed("Inherited Step");
         }

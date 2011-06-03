@@ -30,7 +30,7 @@ namespace Raconteur.IDEIntegration.Intellisense
         {
             var currentLine = GetCurrentLineFrom(session);
             var feature = session.TextView.TextSnapshot.GetText();
-            var completions = new CompletionCalculator { Feature = feature };
+            var completions = new CompletionCalculator { FeatureText = feature };
 
             completionSets.Add(new CompletionSet("Steps", "Steps", FindSpanAtCurrentPositionFrom(session),
                 completions.For(currentLine.Extent.GetText().Trim()), null));

@@ -20,6 +20,7 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("Sc");        
             Then__should_be_displayed("Scenario:");
@@ -35,6 +36,7 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("Sc");        
             Then__should_be_displayed("Scenario Outline:");
@@ -50,6 +52,7 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("Ex");        
             Then__should_be_displayed("Examples:");
@@ -65,6 +68,7 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("Fe");        
             Then__should_be_displayed("Feature:");
@@ -80,6 +84,7 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("I");        
             Then__should_be_displayed("I do something");
@@ -95,6 +100,7 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("I");        
             Then__should_be_displayed("I do another thing");
@@ -110,9 +116,26 @@ I do something
 I do another thing
 If something happens
 Then this should happen
+Do an ""arg"" thing
 ");        
             When_I_begin_to_type__on_the_next_line("I");        
             Then__should_be_displayed("If something happens");
+        }
+        
+        [Test]
+        public void Completion_8()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Scenario Name
+I do something
+I do another thing
+If something happens
+Then this should happen
+Do an ""arg"" thing
+");        
+            When_I_begin_to_type__on_the_next_line("Do");        
+            Then__should_be_displayed("Do an \"\" thing");
         }
         
         [Test]
@@ -195,13 +218,23 @@ I am an arg
             Then__should_not_be_displayed("I am an arg");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void SuggestionsFromBaseClass()
         {         
             FeatureRunner.Given_the_Feature_is("Feature: Intellisense");        
             When_I_begin_to_type__on_the_next_line("In");        
             Then__should_be_displayed("Inherited Step");
+        }
+        
+        [Test]
+        public void SuggestionsFromStepDefinitions()
+        {         
+            FeatureRunner.Given_the_setting__contains("Libraries", "Common");        
+            FeatureRunner.Given_the_Feature_contains("using Step Definitions");        
+            When_I_begin_to_type__on_the_next_line("St");        
+            Then__should_be_displayed("Step from Step Definitions");        
+            When_I_begin_to_type__on_the_next_line("Ba");        
+            Then__should_be_displayed("Base Step");
         }
 
     }

@@ -12,7 +12,7 @@ namespace Features.Intellisense
 
         private void When_I_begin_to_type__on_the_next_line(string fragment)
         {
-            completions = new CompletionCalculator { Feature = FeatureRunner.Feature };
+            completions = new CompletionCalculator { FeatureText = FeatureRunner.Feature };
             results = completions.For(fragment);
         }
 

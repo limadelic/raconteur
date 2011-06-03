@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
+using PlayDohs;
 using Raconteur.Helpers;
 using Raconteur.IDEIntegration.Intellisense;
 
@@ -10,12 +12,15 @@ namespace Specs
     public class When_calculating_Completions : BehaviorOf<CompletionCalculator>
     {
         private Language current;
-        private const string scenarioDeclaration = "Scenario: Test Scenario\r\n";
+        private const string scenarioDeclaration = "Feature: TestFeature\r\nScenario: Test Scenario\r\n";
 
         [Test]
         public void should_complete_keywords()
         {
-            Given.Feature = scenarioDeclaration;
+            Given.Compiler.StepNamesOf(null, null)
+                .IgnoringArgs().WillReturn(new List<string>());
+            Given.FeatureText = scenarioDeclaration;
+         
             When.For("Sc").ShouldContain("Scenario:");
             When.For("Sc").ShouldContain("Scenario Outline:");
             When.For("Fe").ShouldContain("Feature:");
@@ -26,7 +31,7 @@ namespace Specs
         [Test]
         public void should_complete_repeated_Steps()
         {
-            Given.Feature = scenarioDeclaration + 
+            Given.FeatureText = scenarioDeclaration + 
                 @"I'm knocking on the doors of your Hummer
                 Yeah, we hungry like the wolves hunting dinner";
 
@@ -37,7 +42,7 @@ namespace Specs
         [Test]
         public void should_remove_Arg_values()
         {
-            Given.Feature = scenarioDeclaration + @"Not a ""second"" time";
+            Given.FeatureText = scenarioDeclaration + @"Not a ""second"" time";
 
             When.For("Not").ShouldContain("Not a \"\" time");
             When.For("Not").ShouldNotContain("Not a \"second\" time");
@@ -50,18 +55,10 @@ namespace Specs
             Settings.Language = Languages.In["hr"];
 
 
-            Given.Feature = scenarioDeclaration;
+            Given.FeatureText = scenarioDeclaration;
             When.For("Os").ShouldContain("Osobina:");
 
             ResetLanguage();
-        }
-
-        [Test]
-        public void should_load_names_from_Type()
-        {
-            Given.Feature = "Feature: When_calculating_Completions";
-
-            When.For("Se").ShouldContain("Setup");
         }
 
         private void ResetLanguage()

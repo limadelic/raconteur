@@ -1,64 +1,44 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using EnvDTE;
 using Microsoft.VisualStudio.Language.Intellisense;
+using Raconteur.Compilers;
 using Raconteur.Helpers;
-using Raconteur.IDEIntegration.Helpers;
+using Raconteur.IDE;
+using Raconteur.Parsers;
 
 namespace Raconteur.IDEIntegration.Intellisense
 {
     public class CompletionCalculator
     {
-        public virtual string Feature { get; set; }
-        
-        string FeatureWithoutArgValues
-        {
-            get { return Regex.Replace(Feature, "\"[^\"]*\"", "\"\""); }
-        }
+        private readonly DTE Dte = Marshal.GetActiveObject("VisualStudio.DTE") as DTE;
+        private readonly FeatureParser Parser = ObjectFactory.NewFeatureParser;
+        public FeatureCompiler Compiler = ObjectFactory.NewFeatureCompiler;
+        private FeatureItem FeatureItem;
+        private Feature Feature;
 
-        private IEnumerable<string> RelevantText
+        private string _featureText;
+        public virtual string FeatureText
         {
-            get
+            get { return _featureText; }
+            set
             {
-                return FeatureWithoutArgValues.TrimLines().Lines()
-                    .SkipWhile(line => !line.StartsWith(Settings.Language.Scenario))
-                    .Where(line => !line.StartsWithKeyword()).ToList();
+                _featureText = value;
+                FeatureItem = ObjectFactory.FeatureItemFrom(Dte.ActiveDocument.ProjectItem);
+                Feature = Parser.FeatureFrom(FeatureText, FeatureItem);
             }
         }
 
         public IEnumerable<Completion> For(string fragment)
         {
-            var possibilities = RelevantText.Union(MethodList)
-                .Union(Settings.Language.Keywords.Select(keyword => keyword + ":"));
+            var possibilities = Compiler.StepNamesOf(Feature, FeatureItem)
+                .Union(Feature.Steps.Select(step => step.Name.IdentifierToEnglish())
+                .Union(Settings.Language.Keywords.Select(keyword => keyword + ":")));
             
             return possibilities
                 .Where(possibility => possibility.StartsWith(fragment.Trim(), true, null))
                 .Select(possibility => new Completion(possibility));
-        }
-
-        protected IEnumerable<string> MethodList
-        {
-            get
-            {
-                try
-                {
-                    var typeName = Regex.Match(Feature, RegexExpressions.FeatureDefinition)
-                                     .Groups[1].Value.CamelCase().ToValidIdentifier();
-
-                    var type = ProjectNavigator.TypeInCurrentProject(typeName);
-
-                    return type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
-                        .Select(method => method.Name.IdentifierToEnglish());
-                }
-                catch (Exception)
-                {
-                    return new List<string>();
-                }
-            }
         }
     }
 }

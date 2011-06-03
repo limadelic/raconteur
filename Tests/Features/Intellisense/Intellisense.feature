@@ -10,6 +10,7 @@ Scenario Outline: Completion
 			I do another thing
 			If something happens
 			Then this should happen
+			Do an ""arg"" thing
 	"
 	When I begin to type "fragment" on the next line
 	Then "suggestion" should be displayed
@@ -23,6 +24,7 @@ Scenario Outline: Completion
 	| I        | I do something        |
 	| I        | I do another thing    |
 	| I        | If something happens  |
+	| Do       | Do an \"\" thing      |
 
 Scenario Outline: Ignore non-steps
 	Given the Feature contains
@@ -48,8 +50,18 @@ Scenario Outline: Ignore non-steps
 	| Fe       | Feature: Feature Name   |
 	| I        | I am an arg             |
 
-@wip
+
 Scenario: Suggestions from Base Class
-	Given the Feature contains "Feature: Intellisense"
+	Given the Feature is "Feature: Intellisense"
 	When I begin to type "In" on the next line
 	Then "Inherited Step" should be displayed
+
+Scenario: Suggestions from Step Definitions
+	Given the setting "Libraries" contains "Common"
+	Given the Feature contains "using Step Definitions"
+	
+	When I begin to type "St" on the next line
+	Then "Step from Step Definitions" should be displayed
+
+	When I begin to type "Ba" on the next line
+	Then "Base Step" should be displayed

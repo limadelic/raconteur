@@ -10,6 +10,7 @@ namespace Raconteur.Parsers
     public interface FeatureParser 
     {
         Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem);
+        Feature FeatureFrom(string FeatureText, FeatureItem FeatureItem);
     }
 
     public class FeatureParserClass : FeatureParser
@@ -20,10 +21,20 @@ namespace Raconteur.Parsers
 
         public Feature FeatureFrom(FeatureFile FeatureFile, FeatureItem FeatureItem)
         {
+            return ParseFeature(FeatureFile.Name, FeatureFile.Content, FeatureItem);
+        }
+
+        public Feature FeatureFrom(string FeatureText, FeatureItem FeatureItem)
+        {
+            return ParseFeature(null, FeatureText, FeatureItem);
+        }
+
+        private Feature ParseFeature(string FeatureName, string Content, FeatureItem FeatureItem)
+        {
             Feature = new Feature
             {
-                FileName = FeatureFile.Name,
-                Content = FeatureFile.Content.TrimLines(),
+                FileName = FeatureName,
+                Content = Content.TrimLines(),
             };
 
             if (IsNotAValidFeature) return InvalidFeature;

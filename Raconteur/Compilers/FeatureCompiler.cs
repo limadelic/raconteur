@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -9,6 +10,7 @@ namespace Raconteur.Compilers
     public interface FeatureCompiler
     {
         void Compile(Feature Feature, FeatureItem FeatureItem);
+        IEnumerable<string> StepNamesOf(Feature Feature, FeatureItem FeatureItem);
     }
 
     public class FeatureCompilerClass : FeatureCompiler 
@@ -30,6 +32,17 @@ namespace Raconteur.Compilers
             LoadAssemblies(FeatureItem);
             CompileFeature();
             CompileSteps();
+        }
+
+        public virtual IEnumerable<string> StepNamesOf(Feature Feature, FeatureItem FeatureItem)
+        {
+            if (Feature is InvalidFeature) return new List<string>();
+
+            this.Feature = Feature;
+
+            LoadAssemblies(FeatureItem);
+            return StepDefinitions.SelectMany(type => 
+                type.GetMethods(BindingFlags.Public | BindingFlags.Instance).Select(method => method.Name.IdentifierToEnglish()));
         }
 
         void LoadAssemblies(FeatureItem FeatureItem) 

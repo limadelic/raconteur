@@ -14,6 +14,12 @@ namespace Specs
         private Language current;
         private const string scenarioDeclaration = "Feature: TestFeature\r\nScenario: Test Scenario\r\n";
 
+        [SetUp]
+        public void Setup()
+        {
+            BackupCurrentLanguage();
+        }
+
         [Test]
         public void should_complete_keywords()
         {
@@ -22,10 +28,10 @@ namespace Specs
             Given.FeatureText = scenarioDeclaration;
          
             When.For("Sc").ShouldContain("Scenario:");
-            When.For("Sc").ShouldContain("Scenario Outline:");
-            When.For("Fe").ShouldContain("Feature:");
-            When.For("Ex").ShouldContain("Examples:");
-            When.For("Scenario O").ShouldNotContain("Scenario:");
+            And.For("Sc").ShouldContain("Scenario Outline:");
+            And.For("Fe").ShouldContain("Feature:");
+            And.For("Ex").ShouldContain("Examples:");
+            And.For("Scenario O").ShouldNotContain("Scenario:");
         }
 
         [Test]
@@ -51,13 +57,15 @@ namespace Specs
         [Test]
         public void should_respect_language()
         {
-            BackupCurrentLanguage();
             Settings.Language = Languages.In["hr"];
-
 
             Given.FeatureText = scenarioDeclaration;
             When.For("Os").ShouldContain("Osobina:");
+        }
 
+        [TearDown]
+        public void TearDown()
+        {
             ResetLanguage();
         }
 

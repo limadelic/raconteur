@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
-using PlayDohs;
+using Raconteur;
 using Raconteur.Helpers;
 using Raconteur.IDEIntegration.Intellisense;
 
@@ -12,12 +12,12 @@ namespace Specs
     public class When_calculating_Completions : BehaviorOf<CompletionCalculator>
     {
         private Language current;
-        private const string scenarioDeclaration = "Feature: TestFeature\r\nScenario: Test Scenario\r\n";
 
         [SetUp]
         public void Setup()
         {
             BackupCurrentLanguage();
+            Given.Feature.Is(new Feature { Name = "FeatureName" } );
         }
 
         [Test]
@@ -25,8 +25,7 @@ namespace Specs
         {
             Given.Compiler.StepNamesOf(null, null)
                 .IgnoringArgs().WillReturn(new List<string>());
-            Given.FeatureText = scenarioDeclaration;
-         
+            
             When.For("Sc").ShouldContain("Scenario:");
             And.For("Sc").ShouldContain("Scenario Outline:");
             And.For("Fe").ShouldContain("Feature:");
@@ -37,18 +36,26 @@ namespace Specs
         [Test]
         public void should_complete_repeated_Steps()
         {
-            Given.FeatureText = scenarioDeclaration + 
-                @"I'm knocking on the doors of your Hummer
-                Yeah, we hungry like the wolves hunting dinner";
+            const string FirstStep = "I'm knocking on the doors of your Hummer";
+            const string SecondStep = "Yeah, we hungry like the wolves hunting dinner";
+            
+            Given.Feature.Steps.Is( 
+                new List<Step> { 
+                    new Step{ Name = FirstStep },
+                    new Step{ Name = SecondStep}
+            });
 
-            When.For("I'm").ShouldContain("I'm knocking on the doors of your Hummer");
-            When.For("Ye").ShouldContain("Yeah, we hungry like the wolves hunting dinner");
+            When.For("I'm").ShouldContain(FirstStep);
+            When.For("Ye").ShouldContain(SecondStep);
         }
 
         [Test]
         public void should_remove_Arg_values()
         {
-            Given.FeatureText = scenarioDeclaration + @"Not a ""second"" time";
+            Given.Feature.Steps.Is(
+                new List<Step> {
+                    new Step{Name = @"Not a ""second"" time"}     
+            }); 
 
             When.For("Not").ShouldContain("Not a \"\" time");
             When.For("Not").ShouldNotContain("Not a \"second\" time");
@@ -59,7 +66,6 @@ namespace Specs
         {
             Settings.Language = Languages.In["hr"];
 
-            Given.FeatureText = scenarioDeclaration;
             When.For("Os").ShouldContain("Osobina:");
         }
 

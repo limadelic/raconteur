@@ -403,6 +403,10 @@
       <Project>{96294E6F-8875-4D12-8577-4EC83E60BD6C}</Project>
       <Name>IDEIntegration</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PlayDoh\PlayDoh.csproj">
+      <Project>{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}</Project>
+      <Name>PlayDoh</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Raconteur\Raconteur.csproj">
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>

@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using EnvDTE;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur.Compilers;
 using Raconteur.Helpers;
@@ -12,20 +10,19 @@ namespace Raconteur.IDEIntegration.Intellisense
 {
     public class CompletionCalculator
     {
-        private readonly DTE Dte = Marshal.GetActiveObject("VisualStudio.DTE") as DTE;
         private readonly FeatureParser Parser = ObjectFactory.NewFeatureParser;
         public FeatureCompiler Compiler = ObjectFactory.NewFeatureCompiler;
-        private FeatureItem FeatureItem;
-        private Feature Feature;
-
+        
+        public FeatureItem FeatureItem { get; set; }
+        public Feature Feature { get; private set; }
+       
         private string _featureText;
-        public virtual string FeatureText
+        public string FeatureText
         {
             get { return _featureText; }
             set
             {
-                _featureText = value;
-                FeatureItem = ObjectFactory.FeatureItemFrom(Dte.ActiveDocument.ProjectItem);
+                _featureText = value; 
                 Feature = Parser.FeatureFrom(FeatureText, FeatureItem);
             }
         }

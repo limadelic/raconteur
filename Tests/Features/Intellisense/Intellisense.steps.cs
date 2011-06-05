@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using System.Reflection;
 using Common;
 using Microsoft.VisualStudio.Language.Intellisense;
+using NSubstitute;
+using Raconteur.IDE;
 using Raconteur.IDEIntegration.Intellisense;
 
 namespace Features.Intellisense 
@@ -12,7 +15,16 @@ namespace Features.Intellisense
 
         private void When_I_begin_to_type__on_the_next_line(string fragment)
         {
-            completions = new CompletionCalculator { FeatureText = FeatureRunner.Feature };
+            var featureItem = Substitute.For<FeatureItem>();
+            featureItem.DefaultNamespace = "Features.Intellisense";
+            featureItem.Assembly.Returns(Assembly.GetExecutingAssembly().CodeBase);
+
+            completions = new CompletionCalculator
+            {
+                FeatureItem = featureItem,
+                FeatureText = FeatureRunner.Feature
+            };
+
             results = completions.For(fragment);
         }
 

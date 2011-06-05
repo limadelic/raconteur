@@ -11,8 +11,8 @@ namespace Raconteur.IDEIntegration.Intellisense
     public class CompletionCalculator
     {
         private readonly FeatureParser Parser = ObjectFactory.NewFeatureParser;
-        public FeatureCompiler Compiler = ObjectFactory.NewFeatureCompiler;
-        
+
+        public virtual FeatureCompiler Compiler { get; private set; }
         public FeatureItem FeatureItem { get; set; }
         public Feature Feature { get; private set; }
        
@@ -25,6 +25,12 @@ namespace Raconteur.IDEIntegration.Intellisense
                 _featureText = value; 
                 Feature = Parser.FeatureFrom(FeatureText, FeatureItem);
             }
+        }
+
+        public CompletionCalculator()
+        {
+            Feature = new Feature();
+            Compiler = ObjectFactory.NewFeatureCompiler;
         }
 
         public IEnumerable<Completion> For(string fragment)

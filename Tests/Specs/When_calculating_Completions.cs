@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Common;
 using FluentSpec;
 using MbUnit.Framework;
+using NSubstitute;
 using Raconteur;
+using Raconteur.Compilers;
 using Raconteur.Helpers;
 using Raconteur.IDEIntegration.Intellisense;
 
@@ -12,20 +14,23 @@ namespace Specs
     public class When_calculating_Completions : BehaviorOf<CompletionCalculator>
     {
         private Language current;
+        private FeatureCompiler Compiler;
 
         [SetUp]
         public void Setup()
         {
             BackupCurrentLanguage();
-            Given.Feature.Is(new Feature { Name = "FeatureName" } );
+            Compiler = Substitute.For<FeatureCompiler>();
+            Compiler.StepNamesOf(null, null).ReturnsForAnyArgs(
+                new List<string>());
+
+            Given.Feature.Name = "FeatureName";
+            Given.Compiler.Is(Compiler);
         }
 
         [Test]
         public void should_complete_keywords()
-        {
-            Given.Compiler.StepNamesOf(null, null)
-                .IgnoringArgs().WillReturn(new List<string>());
-            
+        {            
             When.For("Sc").ShouldContain("Scenario:");
             And.For("Sc").ShouldContain("Scenario Outline:");
             And.For("Fe").ShouldContain("Feature:");
@@ -39,26 +44,14 @@ namespace Specs
             const string FirstStep = "I'm knocking on the doors of your Hummer";
             const string SecondStep = "Yeah, we hungry like the wolves hunting dinner";
             
-            Given.Feature.Steps.Is( 
-                new List<Step> { 
-                    new Step{ Name = FirstStep },
-                    new Step{ Name = SecondStep}
+            Compiler.StepNamesOf(null, null).ReturnsForAnyArgs( 
+                new List<string> { 
+                    FirstStep,
+                    SecondStep
             });
 
             When.For("I'm").ShouldContain(FirstStep);
             When.For("Ye").ShouldContain(SecondStep);
-        }
-
-        [Test]
-        public void should_remove_Arg_values()
-        {
-            Given.Feature.Steps.Is(
-                new List<Step> {
-                    new Step{Name = @"Not a ""second"" time"}     
-            }); 
-
-            When.For("Not").ShouldContain("Not a \"\" time");
-            When.For("Not").ShouldNotContain("Not a \"second\" time");
         }
 
         [Test]

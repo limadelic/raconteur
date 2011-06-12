@@ -218,7 +218,8 @@ I am an arg
             Then__should_not_be_displayed("I am an arg");
         }
         
-        [Test]
+        [Test]        
+        [Category("wip")]
         public void SuggestionsFromBaseClass()
         {         
             FeatureRunner.Given_the_Feature_is("Feature: Intellisense");        

@@ -50,7 +50,7 @@ Scenario Outline: Ignore non-steps
 	| Fe       | Feature: Feature Name   |
 	| I        | I am an arg             |
 
-
+@wip
 Scenario: Suggestions from Base Class
 	Given the Feature is "Feature: Intellisense"
 	When I begin to type "In" on the next line

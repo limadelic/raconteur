@@ -1,0 +1,1 @@
+devenv.exe /ReSharper.Plugin "%ProgramFiles(x86)%\JetBrains\ReSharper\v5.1\Bin\Plugins\Raconteur\Raconteur.Resharper.dll"

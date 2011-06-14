@@ -1,11 +1,12 @@
 using JetBrains.Annotations;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Feature.Services.Bulbs;
-using JetBrains.ReSharper.Intentions.CSharp.DataProviders;
+using JetBrains.ReSharper.Feature.Services.CSharp.Bulbs;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.Caches;
 using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.Impl.Caches2.SymbolCache;
 using JetBrains.ReSharper.Psi.Tree;
 using JetBrains.Util;
 
@@ -18,9 +19,9 @@ namespace Raconteur.Resharper
     {
         public ImplementIDisposable([NotNull] ICSharpContextActionDataProvider provider) : base(provider) { }
 
-        public override bool IsAvailable(IElement element)
+        public override bool IsAvailable(ITreeNode element)
         {
-            var classDeclaration = element.ToTreeNode().Parent as IClassDeclaration;
+            var classDeclaration = element.Parent as IClassDeclaration;
             if (classDeclaration == null) return false;
 
             foreach (var type in classDeclaration.DeclaredElement.GetSuperTypes())
@@ -30,9 +31,9 @@ namespace Raconteur.Resharper
             return true;
         }
 
-        protected override void Execute(IElement element)
+        protected override void Execute(ITreeNode element)
         {
-            var classDeclaration = element.ToTreeNode().Parent as IClassDeclaration;
+            var classDeclaration = element.Parent as IClassDeclaration;
             if (classDeclaration == null) return;
 
             using (ModificationCookie cookie = EnsureWritable())
@@ -103,6 +104,7 @@ namespace Raconteur.Resharper
 
         static void AddInterface(ISolution solution, IClassDeclaration classDeclaration)
         {
+/*
             IDeclarationsScope scope = DeclarationsScopeFactory.SolutionScope(solution, true);
             IDeclarationsCache cache = PsiManager.GetInstance(solution).GetDeclarationsCache(scope, true);
 
@@ -112,6 +114,7 @@ namespace Raconteur.Resharper
             IDeclaredType declaredType = TypeFactory.CreateType(typeElement);
 
             classDeclaration.AddSuperInterface(declaredType, false);
+*/
         }
 
         static void Execute(ISolution solution, IClassDeclaration classDeclaration)

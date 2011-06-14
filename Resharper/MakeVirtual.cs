@@ -1,6 +1,6 @@
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Feature.Services.Bulbs;
-using JetBrains.ReSharper.Intentions.CSharp.DataProviders;
+using JetBrains.ReSharper.Feature.Services.CSharp.Bulbs;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
@@ -14,7 +14,7 @@ namespace Raconteur.Resharper
     {
         public MakeVirtual([NotNull] ICSharpContextActionDataProvider provider) : base(provider) {}
 
-        public override bool IsAvailable(IElement element)
+        public override bool IsAvailable(ITreeNode element)
         {
             var item = Provider.GetSelectedElement<IMethodDeclaration>(false, true);
  
@@ -30,7 +30,7 @@ namespace Raconteur.Resharper
             return false;
         }
 
-        protected override void Execute(IElement element)
+        protected override void Execute(ITreeNode element)
         {
             var method = Provider.GetSelectedElement<IMethodDeclaration>(false, true);
  

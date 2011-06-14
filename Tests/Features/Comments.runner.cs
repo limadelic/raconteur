@@ -13,7 +13,7 @@ namespace Features
         [Test]
         public void SingleLineComments()
         {         
-            FeatureRunner.Given_the_Feature_contains_a(
+            FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: The Doors
 // When the doors of perception are cleansed,

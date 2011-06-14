@@ -4,7 +4,7 @@
 
 Scenario: Single line Comments
 	
-	Given the Feature contains a
+	Given the Feature contains
 	"
 		Scenario: The Doors
 		

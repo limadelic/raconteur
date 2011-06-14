@@ -1,9 +1,10 @@
   using JetBrains.Annotations;
   using JetBrains.Application;
+  using JetBrains.DocumentManagers;
   using JetBrains.DocumentModel;
   using JetBrains.ProjectModel;
   using JetBrains.ReSharper.Feature.Services.Bulbs;
-  using JetBrains.ReSharper.Intentions.CSharp.DataProviders;
+  using JetBrains.ReSharper.Feature.Services.CSharp.Bulbs;
   using JetBrains.ReSharper.Psi;
   using JetBrains.ReSharper.Psi.Tree;
   using JetBrains.TextControl;
@@ -29,7 +30,7 @@ namespace Raconteur.Resharper
 
         protected ITextControl TextControl { get { return provider.TextControl; } }
 
-        public abstract bool IsAvailable(IElement element);
+        public abstract bool IsAvailable(ITreeNode element);
 
         public bool IsAvailable(IUserDataHolder cache) { return IsAvailableInternal(); }
 
@@ -49,16 +50,18 @@ namespace Raconteur.Resharper
         [NotNull]
         protected ModificationCookie EnsureWritable()
         {
+/*
             if (Solution != null) return DocumentManager.GetInstance(Solution).EnsureWritable(TextControl.Document);
+*/
 
             return new ModificationCookie(EnsureWritableResult.FAILURE);
         }
 
-        protected abstract void Execute(IElement element);
+        protected abstract void Execute(ITreeNode element);
 
         protected void ExecuteInternal(params object[] param)
         {
-            var element = param[0] as IElement;
+            var element = param[0] as ITreeNode;
 
             if (startTransaction) Modify(element);
             else Execute(element);
@@ -70,17 +73,16 @@ namespace Raconteur.Resharper
 
         protected bool IsAvailableInternal()
         {
-            IElement element = provider.SelectedElement;
-            if (element == null) return false;
+            var element = provider.SelectedElement;
 
-            return IsAvailable(element);
+            return element != null && IsAvailable(element);
         }
 
         protected virtual void PostExecute() { }
 
         public IBulbItem[] Items { get { return new[] {this}; } }
 
-        void Modify(IElement element)
+        void Modify(ITreeNode element)
         {
             PsiManager psiManager = PsiManager.GetInstance(Solution);
             if (psiManager == null) return;
@@ -89,8 +91,10 @@ namespace Raconteur.Resharper
             {
                 if (cookie.EnsureWritableResult != EnsureWritableResult.SUCCESS) return;
 
+/*
                 using (CommandCookie.Create(string.Format("Context Action {0}", GetText()))) 
                     psiManager.DoTransaction(() => Execute(element));
+*/
             }
         }
 

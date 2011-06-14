@@ -89,6 +89,14 @@
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
     <Compile Include="Misc\When_loading_assemblies.cs" />
+    <Compile Include="Refactoring\RenameStep.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RenameStep.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Refactoring\RenameStep.steps.cs">
+      <DependentUpon>RenameStep.feature</DependentUpon>
+    </Compile>
     <Compile Include="ReusingSteps.steps.cs">
       <DependentUpon>ReusingSteps.feature</DependentUpon>
     </Compile>
@@ -337,6 +345,10 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>RefactorFeature.runner.cs</LastGenOutput>
     </None>
+    <None Include="Refactoring\RenameStep.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>RenameStep.runner.cs</LastGenOutput>
+    </None>
     <None Include="ScenarioOutlines.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>ScenarioOutlines.runner.cs</LastGenOutput>
@@ -421,6 +433,7 @@
       <LastGenOutput>raconteur1.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

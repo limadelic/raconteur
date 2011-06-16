@@ -51,7 +51,8 @@ namespace Raconteur.Resharper
         protected ModificationCookie EnsureWritable()
         {
 /*
-            if (Solution != null) return DocumentManager.GetInstance(Solution).EnsureWritable(TextControl.Document);
+            if (Solution != null) 
+                return DocumentManager.GetInstance(Solution).EnsureWritable(TextControl.Document);
 */
 
             return new ModificationCookie(EnsureWritableResult.FAILURE);
@@ -84,14 +85,14 @@ namespace Raconteur.Resharper
 
         void Modify(ITreeNode element)
         {
-            PsiManager psiManager = PsiManager.GetInstance(Solution);
+            var psiManager = PsiManager.GetInstance(Solution);
             if (psiManager == null) return;
 
             using (var cookie = EnsureWritable())
             {
                 if (cookie.EnsureWritableResult != EnsureWritableResult.SUCCESS) return;
-
 /*
+
                 using (CommandCookie.Create(string.Format("Context Action {0}", GetText()))) 
                     psiManager.DoTransaction(() => Execute(element));
 */

@@ -22,7 +22,7 @@ namespace Features.Intellisense
             completions = new CompletionCalculator
             {
                 FeatureItem = featureItem,
-                FeatureText = FeatureRunner.Feature
+                FeatureText = FeatureRunner.FeatureContent
             };
 
             results = completions.For(fragment);

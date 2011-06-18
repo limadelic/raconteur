@@ -6,12 +6,31 @@ namespace Features.Refactoring
     [TestFixture]
     public partial class RenameStep 
     {
+        public FeatureRunner FeatureRunner = new FeatureRunner();
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [Test]
+        [Test]        
+        [Category("wip")]
         public void RenameWithinFeature()
-        { 
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Name
+Step
+Step
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: Name
+new Step
+new Step
+");        
+            And_the_Runner_should_contain(
+@"
+new_Step()
+");
         }
 
     }

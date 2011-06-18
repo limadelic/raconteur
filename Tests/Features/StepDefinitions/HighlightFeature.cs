@@ -17,8 +17,8 @@ namespace Features.StepDefinitions
             {
                 return new FeatureTagParser
                 (
-                    new SUT(FeatureRunner.Feature), 
-                    FeatureRunner.Feature
+                    new SUT(FeatureRunner.FeatureContent), 
+                    FeatureRunner.FeatureContent
                 );
             }
         }

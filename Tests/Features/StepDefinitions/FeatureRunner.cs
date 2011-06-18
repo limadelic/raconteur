@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Common;
 using FluentSpec;
+using Raconteur;
 using Raconteur.Helpers;
 using Raconteur.IDE;
 
@@ -8,14 +9,13 @@ namespace Features.StepDefinitions
 {
     public class FeatureRunner
     {
-        public string Feature;
+        public string FeatureContent;
 
-        // Tech Debt: why not using real code?
-        public string Runner
+        public Feature Feature
         {
             get
             {
-                var FeatureFile = new FeatureFile { Content = Feature };
+                var FeatureFile = new FeatureFile { Content = FeatureContent };
 
                 var FeatureItem = Actors.FeatureItem("Features.dll", "Features");
 
@@ -24,20 +24,27 @@ namespace Features.StepDefinitions
 
                 ObjectFactory.NewFeatureCompiler.Compile(NewFeature, FeatureItem);
 
-                var Code = ObjectFactory.NewRunnerGenerator(NewFeature).Code;
+                return NewFeature;
+            }            
+        }
 
-                return Code.TrimLines();
+        // Tech Debt: why not using real code?
+        public string Runner
+        {
+            get
+            {
+                return ObjectFactory.NewRunnerGenerator(Feature).Code.TrimLines();
             } 
         }
 
         public void Given_the_Feature_is(string Content)
         {
-            Feature = Content;
+            FeatureContent = Content;
         }
 
         public virtual void Given_the_Feature_contains(string Content)
         {
-            Feature = 
+            FeatureContent = 
             @"
                 Feature: Feature Name
             "
@@ -46,7 +53,7 @@ namespace Features.StepDefinitions
 
         public virtual void Given_the_Feature_contains_a(string Content)
         {
-            Feature = 
+            FeatureContent = 
             @"
                 Feature: Feature Name
             "

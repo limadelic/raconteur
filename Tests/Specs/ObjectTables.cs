@@ -37,7 +37,7 @@ namespace Specs
 
             Compile();
 
-            Step.Implementation.ShouldBe(StepDefinitions.StepWithObject);
+            Step.Method.ShouldBe(StepDefinitions.StepWithObject);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Specs
 
             Compile();
 
-            Step.Implementation.ShouldBe(StepDefinitions.StepWithObject);
+            Step.Method.ShouldBe(StepDefinitions.StepWithObject);
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Specs
         {
             Step.Name = "Step_with_object";
             Step.Type = StepType.ObjectTable;
-            Step.Implementation = StepDefinitions.StepWithObject;
+            Step.Method = StepDefinitions.StepWithObject;
 
             ShouldGenerate(
             @"
@@ -77,7 +77,7 @@ namespace Specs
         {
             Step.Name = "Step_with_object";
             Step.Type = StepType.ObjectTable;
-            Step.Implementation = StepDefinitions.StepWithObject;
+            Step.Method = StepDefinitions.StepWithObject;
 
             ShouldGenerate(
             @"
@@ -97,7 +97,7 @@ namespace Specs
 
             Compile();
 
-            Step.Implementation.ShouldBe(StepDefinitions.StepWithObjectArray);        
+            Step.Method.ShouldBe(StepDefinitions.StepWithObjectArray);        
         }
 
         [Test]
@@ -105,7 +105,7 @@ namespace Specs
         {
             Step.Name = "Step_with_object_array";
             Step.Type = StepType.ObjectTable;
-            Step.Implementation = StepDefinitions.StepWithObjectArray;
+            Step.Method = StepDefinitions.StepWithObjectArray;
 
             ShouldGenerate(
             @"

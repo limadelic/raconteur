@@ -54,7 +54,7 @@ namespace Raconteur.Compilers
         void CompileSteps()
         {
             foreach (var Step in Feature.Steps)
-                Step.Implementation = Feature.StepDefinitions
+                Step.Method = Feature.StepDefinitions
                     .SelectMany(l => l.GetMethods())
                     .Where(Method => StepCompiler.Matches(Method, Step))
                     .FirstOrDefault();

@@ -26,11 +26,24 @@ namespace Raconteur
 
         public bool HasArgs { get { return Args.Count > 0; } }
 
-        public MethodInfo Implementation { get; set; }
+        public MethodInfo Method
+        {
+            get { return IsImplemented ? Implementation.Method : null; } 
+            set
+            {
+                if (value == null) return;
+
+                if (!IsImplemented) Implementation = new StepImplementation();
+
+                Implementation.Method = value;
+            } 
+        }
+
+        public StepImplementation Implementation { get; set; }
         
         public bool IsImplemented { get { return Implementation != null; } }
 
-        public ParameterInfo[] ArgDefinitions { get { return Implementation.GetParameters(); } }
+        public ParameterInfo[] ArgDefinitions { get { return Method.GetParameters(); } }
 
         public Step()
         {
@@ -70,8 +83,8 @@ namespace Raconteur
         
         bool ImplementsStep(Type StepDefinition)
         {
-            return StepDefinition == Implementation.DeclaringType
-                || StepDefinition.IsSubclassOf(Implementation.DeclaringType);
+            return StepDefinition == Method.DeclaringType
+                || StepDefinition.IsSubclassOf(Method.DeclaringType);
         }
 
         public bool HasTable { get { return Table != null; } }
@@ -100,7 +113,7 @@ namespace Raconteur
         Type objectArg;
         public Type ObjectArg
         {
-            get { return objectArg ?? (objectArg = Implementation.LastArg().ElementType()); }
+            get { return objectArg ?? (objectArg = Method.LastArg().ElementType()); }
         }
     }
 }

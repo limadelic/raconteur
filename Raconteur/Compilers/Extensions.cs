@@ -37,7 +37,7 @@ namespace Raconteur.Compilers
 
         public static Type TableItemType(this Step Step)
         {
-            return Step.Implementation.LastArg().ElementType();
+            return Step.Method.LastArg().ElementType();
         }
 
         public static Type FieldType(this Type Type, string FieldName)

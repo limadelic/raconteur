@@ -248,7 +248,7 @@ namespace Specs
                 new Step
                 {
                     Name = "Step", 
-                    Implementation = Common.StepDefinitions.StepMethod,
+                    Method = Common.StepDefinitions.StepMethod,
                     Feature = new Feature
                     {
                         StepDefinitions = {typeof(Feature), typeof(StepDefinitions)}
@@ -262,7 +262,7 @@ namespace Specs
                 new Step
                 {
                     Name = "another_Step",
-                    Implementation = AnotherStepDefinitions.AnotherStepMethod,
+                    Method = AnotherStepDefinitions.AnotherStepMethod,
                     Feature = new Feature
                     {
                         StepDefinitions = {typeof(Feature), typeof(AnotherStepDefinitions)}
@@ -280,7 +280,7 @@ namespace Specs
                 new Step
                 {
                     Name = "Step", 
-                    Implementation = Common.StepDefinitions.StepMethod,
+                    Method = Common.StepDefinitions.StepMethod,
                     Feature = new Feature
                     {
                         StepDefinitions = {typeof(Feature), typeof(StepDefinitions)}
@@ -314,7 +314,7 @@ namespace Specs
 
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
-            Feature.Steps[0].Implementation
+            Feature.Steps[0].Method
                 .ShouldBe(Common.StepDefinitions.StepWithThreeArgs);
         }
 
@@ -329,7 +329,7 @@ namespace Specs
 
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
-            Feature.Steps[0].Implementation
+            Feature.Steps[0].Method
                 .ShouldBe(Common.StepDefinitions.StepMethod);
         }
 
@@ -348,10 +348,10 @@ namespace Specs
             
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
-            Feature.Steps[0].Implementation
+            Feature.Steps[0].Method
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);
 
-            Feature.Steps[1].Implementation
+            Feature.Steps[1].Method
                 .ShouldBe(Common.StepDefinitions.StepWithThreeArgs);
         }
 
@@ -373,10 +373,10 @@ namespace Specs
 
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
-            Feature.Steps[0].Implementation
+            Feature.Steps[0].Method
                 .ShouldBe(Common.StepDefinitions.StepOverloadedInt);
 
-            Feature.Steps[1].Implementation
+            Feature.Steps[1].Method
                 .ShouldBe(Common.StepDefinitions.StepOverloaded);
         }
 
@@ -389,7 +389,7 @@ namespace Specs
                 {
                     Name = "Step",
                     Args = { "42" },
-                    Implementation = Common.StepDefinitions.StepOverloaded,
+                    Method = Common.StepDefinitions.StepOverloaded,
                     Feature = new Feature
                     {
                         StepDefinitions = {typeof(Feature), typeof(StepDefinitions)}
@@ -413,7 +413,7 @@ namespace Specs
                         new List<string> {"" ,"X","" }, 
                         new List<string> {"" ,"" ,"X"}, 
                     }},
-                    Implementation = Common.StepDefinitions.StepWithTable
+                    Method = Common.StepDefinitions.StepWithTable
                 }
             )
             .Code.TrimLines().ShouldContain
@@ -445,7 +445,7 @@ namespace Specs
                             new List<string> { "NY" , "10001" }, 
                         }
                     },
-                    Implementation = Common.StepDefinitions.StepWithTwoArgs
+                    Method = Common.StepDefinitions.StepWithTwoArgs
                 }
             )
             .Code.TrimLines().ShouldContain
@@ -471,7 +471,7 @@ namespace Specs
                         new List<string> {"" ,"X","" }, 
                         new List<string> {"" ,"" ,"X"}, 
                     }},
-                    Implementation = Common.StepDefinitions.StepWithTableAndArg
+                    Method = Common.StepDefinitions.StepWithTableAndArg
                 }
             )
             .Code.TrimLines().ShouldContain
@@ -521,7 +521,7 @@ namespace Specs
 
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
-            Feature.Steps[0].Implementation
+            Feature.Steps[0].Method
                 .ShouldBe(Common.StepDefinitions.StepWithObject);
         }
     }

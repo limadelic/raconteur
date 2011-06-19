@@ -3,8 +3,8 @@ using FluentSpec;
 using MbUnit.Framework;
 using NSubstitute;
 using Raconteur;
-using Raconteur.Refactorings;
-using Raconteur.Helpers;
+using Raconteur.Resharper.Refactorings;
+using ObjectFactory = Raconteur.Helpers.ObjectFactory;
 
 namespace Specs
 {
@@ -53,7 +53,7 @@ namespace Specs
             };
 
             Refactor.Rename(StepBeingRefactored, NewName);
-
+             
             StepSharingImplementation.Name.ShouldBe(NewName);
         }
 

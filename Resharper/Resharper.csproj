@@ -195,6 +195,10 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectFactory.cs" />
+    <Compile Include="Refactorings\Refactor.cs" />
+    <Compile Include="Refactorings\RenameStep.cs" />
+    <Compile Include="Refactorings\RenameMethod.cs" />
     <Compile Include="SingleItemContextAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenameStep.cs" />

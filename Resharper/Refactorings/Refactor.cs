@@ -1,6 +1,4 @@
-﻿using Raconteur.Helpers;
-
-namespace Raconteur.Refactorings
+﻿namespace Raconteur.Resharper.Refactorings
 {
     public interface Refactor<out T>
     {

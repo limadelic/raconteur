@@ -1,6 +1,5 @@
-
 using FluentSpec;
-using Raconteur.Refactorings;
+using Raconteur.Resharper.Refactorings;
 
 namespace Features.Refactoring 
 {

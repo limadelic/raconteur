@@ -93,9 +93,6 @@
     <Compile Include="Generators\RaconteurGenerator.cs" />
     <Compile Include="Generators\RunnerGenerator.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
-    <Compile Include="Refactorings\Refactor.cs" />
-    <Compile Include="Refactorings\RenameMethod.cs" />
-    <Compile Include="Refactorings\RenameStep.cs" />
     <Compile Include="Scenario.cs" />
     <Compile Include="Step.cs" />
     <Compile Include="StepImplementation.cs" />

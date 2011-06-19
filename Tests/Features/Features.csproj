@@ -423,6 +423,10 @@
       <Project>{EA882F82-3468-44E0-8473-C01C1E091BCD}</Project>
       <Name>Raconteur</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Resharper\Resharper.csproj">
+      <Project>{C1273207-E5D8-4B77-B1E8-476985AC39C8}</Project>
+      <Name>Resharper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{AF160E6F-283E-4DBC-8284-9A98727CCA81}</Project>
       <Name>Common</Name>

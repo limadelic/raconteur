@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using EnvDTE;
 using Raconteur.Compilers;
 using Raconteur.Generators;
 using Raconteur.Generators.Steps;
 using Raconteur.IDE;
 using Raconteur.Parsers;
-using Raconteur.Refactorings;
 
 namespace Raconteur.Helpers
 {
-    public static class ObjectFactory
+    public class ObjectFactory
     {
         public static RaconteurGenerator NewRaconteurGenerator(FeatureItem FeatureItem)
         {
@@ -95,30 +93,23 @@ namespace Raconteur.Helpers
             }
         }
 
-        public static Refactor<Step> NewRenameStep(Step Step, string NewName) {
-            return Object<RenameStep, Refactor<Step>>() ??
-                new RenameStep(Step, NewName);
-        }
-
-        public static Refactor<MethodInfo> NewRenameMethod(MethodInfo Method, string NewName) {
-            return Object<RenameMethod, Refactor<MethodInfo>>() ??
-                new RenameMethod(Method, NewName);
-        }
-
         #region Poor man IoC
 
         static readonly Dictionary<Type, object> Objects = new Dictionary<Type, object>();
 
-        static TResult Object<T, TResult>() where TResult : class {
+        protected static TResult Object<T, TResult>() where TResult : class 
+        {
             return Objects.ContainsKey(typeof(T)) ?
                 Objects[typeof(T)] as TResult : null;
         }
 
-        public static void Return<T>(object NewObject) where T : class {
+        public static void Return<T>(object NewObject) where T : class 
+        {
             Objects[typeof(T)] = NewObject;
         }
 
-        public static void ReturnNew<T>() where T : class {
+        public static void ReturnNew<T>() where T : class 
+        {
             if (!Objects.ContainsKey(typeof(T))) return;
 
             Objects.Remove(typeof(T));

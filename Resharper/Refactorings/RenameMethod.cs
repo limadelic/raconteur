@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace Raconteur.Refactorings
+namespace Raconteur.Resharper.Refactorings
 {
     public class RenameMethod : Refactor<MethodInfo>
     {

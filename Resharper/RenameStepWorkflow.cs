@@ -1,6 +1,7 @@
 using JetBrains.Application.Progress;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Refactorings.Rename;
+using Raconteur.Helpers;
 
 namespace Raconteur.Resharper
 {
@@ -18,23 +19,10 @@ namespace Raconteur.Resharper
         {
             if (!base.PostExecute(pi)) return false;
 
-            RenameStepsInFeature();
+            ObjectFactory.NewRenameStep(FileName, InitialName, InitialStageExecuter.NewName)
+                .Execute();
 
             return true;
         }
-
-        string InitialStepName { get { return InitialName.Replace("_"," "); } }
-
-        string NewStepName { get { return InitialStageExecuter.NewName.Replace("_"," "); } }
-
-        void RenameStepsInFeature()
-        {
-            var FeatureFile = FileName.Replace("steps.cs", "feature");
-            var FeatureContent = System.IO.File.ReadAllText(FeatureFile);
-            var NewContent = FeatureContent.Replace(InitialStepName, NewStepName);
-
-            System.IO.File.WriteAllText(FeatureFile, NewContent);
-        }
-
     }
 }

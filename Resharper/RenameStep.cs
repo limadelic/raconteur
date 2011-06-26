@@ -20,18 +20,14 @@ namespace Raconteur.Resharper
     [ContextAction(Group = "C#", Name = "Rename Step", Description = "do it", Priority = 15)]
     public class RenameStep : BulbItemImpl, IContextAction
     {
-        protected readonly ICSharpContextActionDataProvider Provider;
+        readonly ICSharpContextActionDataProvider Provider;
         
-        protected RenameStep(ICSharpContextActionDataProvider Provider)
+        public RenameStep(ICSharpContextActionDataProvider Provider)
         {
             this.Provider = Provider;
         }
         
         public override string Text { get { return "Rename Step"; } }
-
-/*
-        public new IBulbItem[] Items { get { return new[] {this}; } }
-*/
 
         IMethodDeclaration Method;
 

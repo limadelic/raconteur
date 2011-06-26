@@ -93,6 +93,8 @@
     <Compile Include="Generators\RaconteurGenerator.cs" />
     <Compile Include="Generators\RunnerGenerator.cs" />
     <Compile Include="Parsers\FeatureParser.cs" />
+    <Compile Include="Refactoring\Refactor.cs" />
+    <Compile Include="Refactoring\RenameStep.cs" />
     <Compile Include="Scenario.cs" />
     <Compile Include="Step.cs" />
     <Compile Include="StepImplementation.cs" />
@@ -101,6 +103,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

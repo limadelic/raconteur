@@ -6,6 +6,7 @@ using Raconteur.Generators;
 using Raconteur.Generators.Steps;
 using Raconteur.IDE;
 using Raconteur.Parsers;
+using Raconteur.Refactoring;
 
 namespace Raconteur.Helpers
 {
@@ -91,6 +92,11 @@ namespace Raconteur.Helpers
                     new StepWithHeaderTableGenerator(StepRunnerGenerator);
                 default: return new SimpleStepGenerator(StepRunnerGenerator);
             }
+        }
+
+        public static Refactor NewRenameStep(string FileName, string OriginalName, string NewName)
+        {
+            return new RenameStep(FileName, OriginalName, NewName);
         }
 
         #region Poor man IoC

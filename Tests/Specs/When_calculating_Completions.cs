@@ -3,7 +3,6 @@ using Common;
 using FluentSpec;
 using MbUnit.Framework;
 using NSubstitute;
-using Raconteur;
 using Raconteur.Compilers;
 using Raconteur.Helpers;
 using Raconteur.IDEIntegration.Intellisense;
@@ -17,7 +16,7 @@ namespace Specs
         private FeatureCompiler Compiler;
 
         [SetUp]
-        public void Setup()
+        public void SetUp()
         {
             BackupCurrentLanguage();
             Compiler = Substitute.For<FeatureCompiler>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.ActionManagement;
 using JetBrains.Application;
 using JetBrains.Application.DataContext;
@@ -7,6 +8,7 @@ using JetBrains.DataFlow;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Feature.Services.Bulbs;
 using JetBrains.ReSharper.Feature.Services.CSharp.Bulbs;
+using JetBrains.ReSharper.Intentions;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Services;
 using JetBrains.ReSharper.Refactorings.Workflow;
@@ -16,27 +18,39 @@ using JetBrains.Util;
 namespace Raconteur.Resharper
 {
     [ContextAction(Group = "C#", Name = "Rename Step", Description = "do it", Priority = 15)]
-    public class RenameStep : SingleItemContextAction
+    public class RenameStep : BulbItemImpl, IContextAction
     {
-
-        public RenameStep(ICSharpContextActionDataProvider Provider) : base(Provider) { }
+        protected readonly ICSharpContextActionDataProvider Provider;
+        
+        protected RenameStep(ICSharpContextActionDataProvider Provider)
+        {
+            this.Provider = Provider;
+        }
         
         public override string Text { get { return "Rename Step"; } }
 
+/*
+        public new IBulbItem[] Items { get { return new[] {this}; } }
+*/
+
         IMethodDeclaration Method;
 
-        public override bool IsAvailable(IUserDataHolder Cache)
+        public bool IsAvailable(IUserDataHolder Cache)
         {
             Method = Provider.GetSelectedElement<IMethodDeclaration>(false, true);
  
             return Method != null;
         }
 
+        ISolution Solution { get; set; }
+
         protected override Action<ITextControl> ExecutePsiTransaction(ISolution Solution, IProgressIndicator Progress)
         {
+            this.Solution = Solution;
+
             try
             {
-                RenameMethod(Solution, Provider.TextControl);
+                ExecuteRenameStep();
             } 
             catch (Exception e)
             {
@@ -48,18 +62,24 @@ namespace Raconteur.Resharper
 
         string FileName { get { return Provider.SourceFile.Document.Moniker; } }
 
-        void RenameMethod(ISolution Solution, ITextControl TextControl)
+        IEnumerable<IDataRule> Rules
         {
-            var Rules = DataRules
-                .AddRule("RenameStep", JetBrains.ReSharper.Psi.Services.DataConstants.DECLARED_ELEMENTS, Method.DeclaredElement.ToDeclaredElementsDataConstant())
-                .AddRule("RenameStep", JetBrains.TextControl.DataContext.DataConstants.TEXT_CONTROL, TextControl)
-                .AddRule("RenameStep", JetBrains.ProjectModel.DataContext.DataConstants.SOLUTION, Solution);
+            get
+            {
+                return DataRules
+                    .AddRule("RenameStep", JetBrains.ReSharper.Psi.Services.DataConstants.DECLARED_ELEMENTS, Method.DeclaredElement.ToDeclaredElementsDataConstant())
+                    .AddRule("RenameStep", JetBrains.TextControl.DataContext.DataConstants.TEXT_CONTROL, Provider.TextControl)
+                    .AddRule("RenameStep", JetBrains.ProjectModel.DataContext.DataConstants.SOLUTION, Solution);
+            }
+        }
 
-
-            Lifetimes.Using( Lifetime => RefactoringActionUtil.ExecuteRefactoring(
-                Shell.Instance.Components.ActionManager()
-                    .DataContexts.Create(Lifetime, Rules), 
-                new RenameStepWorkflow(FileName, Solution, null)));
+        void ExecuteRenameStep()
+        {
+            Lifetimes.Using(Lifetime => RefactoringActionUtil.ExecuteRefactoring
+            (
+                Shell.Instance.Components.ActionManager().DataContexts.Create(Lifetime, Rules), 
+                new RenameStepWorkflow(FileName, Solution, null)
+            ));
         }
     }
 }

@@ -21,8 +21,3 @@ Scenario: Rename within feature
 			new Step
 			new Step
 	"
-
-	And the Runner should contain
-	"
-		new_Step()
-	"

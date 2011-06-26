@@ -26,10 +26,6 @@ Step
 Scenario: Name
 new Step
 new Step
-");        
-            And_the_Runner_should_contain(
-@"
-new_Step()
 ");
         }
 

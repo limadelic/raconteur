@@ -8,7 +8,7 @@ namespace Raconteur.Resharper
     public abstract class SingleItemContextAction : BulbItemImpl, IContextAction
     {
         protected readonly ICSharpContextActionDataProvider Provider;
-
+        
         protected SingleItemContextAction(ICSharpContextActionDataProvider Provider)
         {
             this.Provider = Provider;
@@ -16,9 +16,6 @@ namespace Raconteur.Resharper
 
         public abstract bool IsAvailable(IUserDataHolder Cache);
 
-        public new IBulbItem[] Items
-        {
-            get { return new[] {this}; }
-        }
+        public new IBulbItem[] Items { get { return new[] {this}; } }
     }
 }

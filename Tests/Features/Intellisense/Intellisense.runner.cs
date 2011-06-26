@@ -219,7 +219,8 @@ I am an arg
         }
         
         [Test]        
-        [Category("wip")]
+        [Category("wip")]        
+        [Ignore]
         public void SuggestionsFromBaseClass()
         {         
             FeatureRunner.Given_the_Feature_is("Feature: Intellisense");        

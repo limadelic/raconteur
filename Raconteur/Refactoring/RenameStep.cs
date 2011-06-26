@@ -1,4 +1,6 @@
-﻿namespace Raconteur.Refactoring
+﻿using System.Text.RegularExpressions;
+
+namespace Raconteur.Refactoring
 {
     public class RenameStep : Refactor
     {
@@ -15,12 +17,26 @@
 
         public void Execute()
         {
-            Write(FeatureContent.Replace(OriginalName, NewName));
+            var Pattern = @"^((\s|\t)*)(" + OriginalName + @")((\s|\t)*)$";
+
+            Write(Regex.Replace
+            (
+                FeatureContent, 
+                Pattern, 
+                "$1" + NewName + "$4", 
+                RegexOptions.Multiline
+            ));
         }
 
-        string FeatureFile { get { return FileName.Replace("steps.cs", "feature"); } }
+        string FeatureFile
+        {
+            get { return FileName.Replace("steps.cs", "feature"); }
+        }
 
-        public virtual string FeatureContent { get { return System.IO.File.ReadAllText(FeatureFile); } }
+        public virtual string FeatureContent
+        {
+            get { return System.IO.File.ReadAllText(FeatureFile); }
+        }
 
         public virtual void Write(string NewContent)
         {

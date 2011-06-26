@@ -1,22 +1,26 @@
-using FluentSpec;
+using NSubstitute;
+using RenameStepRefactoring=Raconteur.Refactoring.RenameStep;
 
 namespace Features.Refactoring 
 {
     public partial class RenameStep
     {
-        string NewFeature;
+        RenameStepRefactoring RenameStepRefactoring;
 
         void When__is_renamed_to(string OldName, string NewName)
         {
-            var Step = FeatureRunner.Feature.Steps.Find(s => s.Name == OldName);
-/*
-            Refactor.Rename(Step, NewName);
-*/
+            RenameStepRefactoring = Substitute.For<RenameStepRefactoring>(null, OldName, NewName);
+            
+            RenameStepRefactoring.FeatureContent
+                .Returns(FeatureRunner.FeatureContent);
+
+            RenameStepRefactoring.Execute();
         }
 
         void The_Feature_should_contain(string Content)
         {
-            NewFeature.ShouldContain(Content);
+            RenameStepRefactoring.Received()
+                .Write(Arg.Is<string>(s => s.Contains(Content)));
         }
     }
 }

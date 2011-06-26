@@ -15,10 +15,15 @@
 
         public void Execute()
         {
-            var FeatureFile = FileName.Replace("steps.cs", "feature");
-            var FeatureContent = System.IO.File.ReadAllText(FeatureFile);
-            var NewContent = FeatureContent.Replace(OriginalName, NewName);
+            Write(FeatureContent.Replace(OriginalName, NewName));
+        }
 
+        string FeatureFile { get { return FileName.Replace("steps.cs", "feature"); } }
+
+        public virtual string FeatureContent { get { return System.IO.File.ReadAllText(FeatureFile); } }
+
+        public virtual void Write(string NewContent)
+        {
             System.IO.File.WriteAllText(FeatureFile, NewContent);
         }
     }

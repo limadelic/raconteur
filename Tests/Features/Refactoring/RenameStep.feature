@@ -3,7 +3,6 @@
 	it should be possible to rename a step 
 	having the changes propagated accordingly
 
-@wip
 Scenario: Rename within feature
 
 	Given the Feature contains

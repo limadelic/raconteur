@@ -10,8 +10,7 @@ namespace Features.Refactoring
         public HighlightFeature HighlightFeature = new HighlightFeature();
 
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void RenameWithinFeature()
         {         
             FeatureRunner.Given_the_Feature_contains(

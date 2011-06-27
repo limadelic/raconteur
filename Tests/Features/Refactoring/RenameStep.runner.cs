@@ -27,6 +27,25 @@ new Step
 new Step
 ");
         }
+        
+        [Test]        
+        [Category("wip")]
+        public void StepWithArgs()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Name
+Step
+Step ""with arg""
+");        
+            When__is_renamed_to("Step ", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: Name
+Step
+new Step ""with Arg""
+");
+        }
 
     }
 }

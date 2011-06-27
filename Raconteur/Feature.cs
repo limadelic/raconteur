@@ -24,7 +24,6 @@ namespace Raconteur
             }
         }
 
-
         public Type DefaultStepDefinitions { get { return StepDefinitions[0]; } }
         public bool HasStepDefinitions
         {
@@ -39,6 +38,11 @@ namespace Raconteur
             Scenarios = new List<Scenario>();
             StepDefinitions = new List<Type>();
             DeclaredStepDefinitions = new List<string>();
+        }
+
+        public void Refresh()
+        {
+            
         }
     }
 

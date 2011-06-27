@@ -7,42 +7,63 @@ namespace Specs
     [TestFixture]
     public class When_renaming_a_Step
     {
-        RenameStep RenameStepRefactoring;
+        RenameStep RenameStep;
+
+        void AssertRenamed(string OldStep, string OldContent, string NewStep, string NewContent)
+        {
+            RenameStep = Substitute.For<RenameStep>
+            (
+                null, OldStep, NewStep
+            );
+            
+            RenameStep.FeatureContent.Returns(OldContent);
+
+            RenameStep.Execute();
+
+            RenameStep.Received().Write(NewContent);
+        }
 
         [Test]
         public void should_replace_new_name_in_Feature()
         {
-            RenameStepRefactoring = Substitute.For<RenameStep>(null, "OldName", "NewName");
-            
-            RenameStepRefactoring.FeatureContent
-                .Returns("OldName");
-
-            RenameStepRefactoring.Execute();
-
-            RenameStepRefactoring.Received()
-                .Write("NewName");
+            AssertRenamed("OldName", "OldName", "NewName", "NewName");
         }
 
         [Test]
-        public void should_not_replace_common_prefixs()
+        public void should_match_the_whole_sentence_to_the_Step()
         {
-            RenameStepRefactoring = Substitute.For<RenameStep>
+            AssertRenamed
             (
-                null, "old_step", "renamed_step"
+                "old_step",
+                @"
+                    old step
+                    old step do not rename
+                ",
+                "renamed_step", 
+                @"
+                    renamed step
+                    old step do not rename
+                "
             );
-            
-            RenameStepRefactoring.FeatureContent.Returns(@"
-                old step
-                old step do not rename
-            ");
-
-            RenameStepRefactoring.Execute();
-
-            RenameStepRefactoring.Received().Write(@"
-                renamed step
-                old step do not rename
-            ");
         }
 
+        [Test]
+        [Category("wip")]
+        public void should_rename_Step_with_Args()
+        {
+            AssertRenamed
+            (
+                "old_step__with_Args",
+                @"
+                    old step
+                    old step ""X"" with Args
+                ",
+                "renamed_step__with_Arg", 
+                @"
+                    old step
+                    renamed step ""X"" with Arg
+                "
+            );
+        }
     }
 }

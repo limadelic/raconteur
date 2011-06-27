@@ -15,6 +15,20 @@ namespace Raconteur.Refactoring
             this.NewName = NewName.Replace("_"," ");
         }
 
+/*
+            var Feature = ObjectFactory.NewFeatureParser
+                .FeatureFrom(FeatureContent, ObjectFactory.NewFeatureItem);
+
+            Feature.Steps
+                .Where(s => s.Name == OriginalName)
+                .ForEach(s => s.Rename(NewName));
+
+            Feature.Refresh();
+
+            Write(Feature.Content);
+*/
+
+
         public void Execute()
         {
             var Pattern = @"^((\s|\t)*)(" + OriginalName + @")((\s|\t)*)$";

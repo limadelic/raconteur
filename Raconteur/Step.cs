@@ -115,5 +115,13 @@ namespace Raconteur
         {
             get { return objectArg ?? (objectArg = Method.LastArg().ElementType()); }
         }
+
+        public void Rename(string NewName)
+        {
+            Name = NewName;
+            IsDirty = true;
+        }
+
+        public bool IsDirty { get; set; }
     }
 }

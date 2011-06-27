@@ -51,6 +51,11 @@ namespace Raconteur.Helpers
             }
         }
 
+        public static FeatureItem NewFeatureItem
+        {
+            get { return new VsFeatureItem(); } 
+        }
+
         public static FeatureItem FeatureItemFrom(ProjectItem FeatureFile)
         {
             return new VsFeatureItem(FeatureFile);

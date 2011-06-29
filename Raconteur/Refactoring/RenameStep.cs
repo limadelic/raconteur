@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Raconteur.Helpers;
 
 namespace Raconteur.Refactoring
 {
@@ -15,10 +16,14 @@ namespace Raconteur.Refactoring
             this.NewName = NewName.Replace("_"," ");
         }
 
+        public void ExecuteNew()
+        {
 /*
             var Feature = ObjectFactory.NewFeatureParser
                 .FeatureFrom(FeatureContent, ObjectFactory.NewFeatureItem);
+*/
 
+/*
             Feature.Steps
                 .Where(s => s.Name == OriginalName)
                 .ForEach(s => s.Rename(NewName));
@@ -27,7 +32,7 @@ namespace Raconteur.Refactoring
 
             Write(Feature.Content);
 */
-
+        }
 
         public void Execute()
         {

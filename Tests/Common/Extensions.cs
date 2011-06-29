@@ -1,4 +1,6 @@
-﻿namespace Common 
+﻿using Raconteur.Helpers;
+
+namespace Common 
 {
     public static class Extensions 
     {
@@ -12,6 +14,13 @@
         {
             try { return O.GetType().GetProperty(Property).GetValue(O, null); }
             catch { return O.GetType().GetField(Property).GetValue(O); }
+        }
+
+        public static I Mock<I, T>(this object o) where I : class where T : class
+        {
+            var NewMock = NSubstitute.Substitute.For<I>();
+            ObjectFactory.Return<T>(NewMock);
+            return NewMock;
         }
     }
 }

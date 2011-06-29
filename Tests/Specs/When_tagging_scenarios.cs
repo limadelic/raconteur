@@ -27,7 +27,7 @@ namespace Specs
             };
 
             Sut.ScenarioDefinitions[0]
-                .Count.ShouldBe(2);
+                .Item1.Count.ShouldBe(2);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Specs
             };
 
             Sut.ScenarioDefinitions[0]
-                .Count.ShouldBe(4);
+                .Item1.Count.ShouldBe(4);
         }
 
         [Test]

@@ -5,6 +5,7 @@ using System.Reflection;
 using FluentSpec;
 using Microsoft.VisualStudio.Language.Intellisense;
 using Raconteur;
+using Raconteur.Parsers;
 
 namespace Common
 {
@@ -87,6 +88,12 @@ namespace Common
                    text,
                    completions.Aggregate(string.Empty, (seed, source) => seed + "\n" + source.DisplayText))
             );
+        }
+
+        public static void ShouldBe(this Location Location, int Start, int End, string Message=null)
+        {
+            Location.Start.ShouldBe(Start, Message ?? "Invalid Location Start");        
+            Location.End.ShouldBe(End, Message ?? "Invalid Location End");        
         }
     }
 }

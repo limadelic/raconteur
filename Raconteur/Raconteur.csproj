@@ -85,6 +85,7 @@
     <Compile Include="IDE\FeatureItem.cs" />
     <Compile Include="IDE\Project.cs" />
     <Compile Include="IDE\SettingsLoader.cs" />
+    <Compile Include="Parsers\Location.cs" />
     <Compile Include="Parsers\ScenarioParser.cs" />
     <Compile Include="IDE\VsFeatureItem.cs" />
     <Compile Include="Parsers\ScenarioTokenizer.cs" />

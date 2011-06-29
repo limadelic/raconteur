@@ -24,24 +24,46 @@ namespace Raconteur.Parsers
             return 
             (
                 from Definition in ScenarioDefinitions
-                select ScenarioParser.ScenarioFrom(Definition)
+                select ScenarioParser.ScenarioFrom(Definition.Item1)
             ).ToList();
         }
 
-        public List<List<string>> ScenarioDefinitions
+        void AddScenario(List<Tuple<List<string>, Location>> Scenarios, string Line)
+        {
+            var NewScenarioLocation = new Location
+            {
+                End = Content.Length
+            };
+
+            if (Scenarios.Count > 0)
+            {
+                var LastScenarioLocation = Scenarios.Last().Item2;
+
+                NewScenarioLocation.Start = Content.IndexOf(Line, LastScenarioLocation.Start + 1);
+                LastScenarioLocation.End = NewScenarioLocation.Start - 1;
+            } 
+            else
+            {
+                NewScenarioLocation.Start = Content.IndexOf(Line);
+            }
+
+            Scenarios.Add(new Tuple<List<string>, Location>(
+                new List<string>(), NewScenarioLocation));
+        }
+
+        public List<Tuple<List<string>, Location>> ScenarioDefinitions
         {
             get
             {
-                var Results = new List<List<string>>();
+                var Results = new List<Tuple<List<string>, Location>>();
 
                 foreach (var Line in Lines)
                 {
-                    if (IsScenarioStart(Line))
-                        Results.Add(new List<string>());
+                    if (IsScenarioStart(Line)) AddScenario(Results, Line);
 
                     if (Results.Count == 0) continue;
 
-                    Results.Last().Add(Line);
+                    Results.Last().Item1.Add(Line);
                 }
 
                 return Results;

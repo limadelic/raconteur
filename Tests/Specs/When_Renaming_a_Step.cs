@@ -1,5 +1,9 @@
-﻿using MbUnit.Framework;
+﻿using Common;
+using MbUnit.Framework;
 using NSubstitute;
+using Raconteur.Helpers;
+using Raconteur.IDE;
+using Raconteur.Parsers;
 using Raconteur.Refactoring;
 
 namespace Specs

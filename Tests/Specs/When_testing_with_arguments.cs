@@ -91,7 +91,7 @@ namespace Specs
                 ";
 
                 Then.ScenarioDefinitions[0]
-                    .Count().ShouldBe(5);
+                    .Item1.Count().ShouldBe(5);
             }
 
             [Test]

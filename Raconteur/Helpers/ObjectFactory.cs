@@ -26,7 +26,7 @@ namespace Raconteur.Helpers
         {
             get 
             {
-                return new FeatureParserClass
+                return Object<FeatureParserClass, FeatureParser>() ?? new FeatureParserClass
                 {
                     ScenarioTokenizer = new ScenarioTokenizerClass
                     {
@@ -53,7 +53,10 @@ namespace Raconteur.Helpers
 
         public static FeatureItem NewFeatureItem
         {
-            get { return new VsFeatureItem(); } 
+            get
+            {
+                return Object<VsFeatureItem, FeatureItem>() ?? new VsFeatureItem();
+            } 
         }
 
         public static FeatureItem FeatureItemFrom(ProjectItem FeatureFile)

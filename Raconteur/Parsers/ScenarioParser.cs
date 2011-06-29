@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,12 +13,15 @@ namespace Raconteur.Parsers
     public class ScenarioParserClass : ScenarioParser
     {
         public StepParser StepParser { get; set; }
+        public string Content { get; set; }
 
         public List<string> Definition;
+        public Location Location;
 
         public Scenario ScenarioFrom(List<string> Definition, Location Location=null)
         {
             this.Definition = Definition;
+            this.Location = Location;
 
             return new Scenario
             {
@@ -78,8 +80,7 @@ namespace Raconteur.Parsers
 
         Step Step(string Line)
         {
-            var StepFrom = StepParser.StepFrom(Line);
-            return StepFrom;
+            return StepParser.StepFrom(Line, Location);
         }
 
         bool InsideArg;

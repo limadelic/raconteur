@@ -7,7 +7,7 @@ namespace Raconteur.Parsers
 {
     public interface StepParser
     {
-        Step StepFrom(string Sentence);
+        Step StepFrom(string Sentence, Location ScenarioLocation=null);
     }
 
     public class StepParserClass : StepParser 
@@ -23,13 +23,30 @@ namespace Raconteur.Parsers
         }
 
         string Sentence;
-        public Step StepFrom(string Sentence)
+
+        public Step StepFrom(string Sentence, Location ScenarioLocation=null)
         {
             this.Sentence = Sentence;
+            
+            SetUpLocation(ScenarioLocation);
 
             return IsArg ? ParseArg :
                 IsTable ? ParseTable :
                 LastStep = ParseStep;
+        }
+
+        Location Location;
+
+        void SetUpLocation(Location ScenarioLocation)
+        {
+            if (ScenarioLocation == null) return;
+
+            var Start = (Location == null 
+                || ScenarioLocation.Start > Location.End) 
+                ? ScenarioLocation.Content.IndexOf(Sentence) 
+                : ScenarioLocation.Content.IndexOf(Sentence, Location.End - ScenarioLocation.Start);
+
+            Location = new Location(Start + ScenarioLocation.Start, Sentence);
         }
 
         Step ParseStep
@@ -45,7 +62,8 @@ namespace Raconteur.Parsers
                 return new Step
                 {
                     Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
-                    Args = Tokens.Odds().ToList()
+                    Args = Tokens.Odds().ToList(),
+                    Location = Location
                 };
             }
         }

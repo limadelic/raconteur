@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Raconteur.Compilers;
+using Raconteur.Parsers;
 
 namespace Raconteur
 {
@@ -19,6 +20,8 @@ namespace Raconteur
         public StepType Type;
 
         public Feature Feature { get; set; }
+
+        public Location Location { get; set; }
 
         public string Name { get; set; }
         public List<string> Args { get; set; }

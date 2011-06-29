@@ -44,12 +44,16 @@ namespace Raconteur.Parsers
                 var LastScenarioLocation = Scenarios.Last().Item2;
 
                 NewScenarioLocation.Start = Content.IndexOf(Line, LastScenarioLocation.Start + 1);
+                
                 LastScenarioLocation.End = NewScenarioLocation.Start - 1;
+                LastScenarioLocation.Set(Content);
             } 
             else
             {
                 NewScenarioLocation.Start = Content.IndexOf(Line);
             }
+
+            NewScenarioLocation.Set(Content);
 
             Scenarios.Add(new Tuple<List<string>, Location>(
                 new List<string>(), NewScenarioLocation));

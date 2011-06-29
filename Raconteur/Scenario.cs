@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Raconteur.Parsers;
 
 namespace Raconteur
 {
@@ -14,6 +15,8 @@ namespace Raconteur
         public List<Table> Examples { get; set; }
         
         public List<string> Tags { get; set; }
+
+        public Location Location { get; set; }
 
         public Scenario()
         {

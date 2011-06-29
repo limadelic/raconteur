@@ -24,7 +24,11 @@ namespace Raconteur.Parsers
             return 
             (
                 from Definition in ScenarioDefinitions
-                select ScenarioParser.ScenarioFrom(Definition.Item1)
+                select ScenarioParser.ScenarioFrom
+                (
+                    Definition.Item1, 
+                    Definition.Item2
+                )
             ).ToList();
         }
 

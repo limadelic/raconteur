@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,7 +8,7 @@ namespace Raconteur.Parsers
 {
     public interface ScenarioParser
     {
-        Scenario ScenarioFrom(List<string> Definition);
+        Scenario ScenarioFrom(List<string> Definition, Location Location=null);
     }
 
     public class ScenarioParserClass : ScenarioParser
@@ -16,7 +17,7 @@ namespace Raconteur.Parsers
 
         public List<string> Definition;
 
-        public Scenario ScenarioFrom(List<string> Definition)
+        public Scenario ScenarioFrom(List<string> Definition, Location Location=null)
         {
             this.Definition = Definition;
 
@@ -25,7 +26,8 @@ namespace Raconteur.Parsers
                 Tags = Tags,
                 Name = Name,
                 Steps = Steps,
-                Examples = Examples
+                Examples = Examples,
+                Location = Location
             };
         }
 

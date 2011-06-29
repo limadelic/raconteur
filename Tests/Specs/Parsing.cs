@@ -1,4 +1,7 @@
-﻿using MbUnit.Framework;
+﻿using System;
+using System.Collections.Generic;
+using FluentSpec;
+using MbUnit.Framework;
 using Raconteur.Parsers;
 using Common;
 
@@ -10,7 +13,7 @@ namespace Specs
         [Test]
         public void Tokenizer_should_include_Scenario_location()
         {
-            var Sut = new ScenarioTokenizerClass
+            var Scenarios = new ScenarioTokenizerClass
             {
                 Content =
                 @"
@@ -22,13 +25,25 @@ namespace Specs
                     @tag
                     Scenario: Another
                 "
-            };
+            }.ScenarioDefinitions;
 
-            Sut.ScenarioDefinitions[0]
-                .Item2.ShouldBe(59, 125);
+            Scenarios[0].Item2.ShouldBe(59, 125);
 
-            Sut.ScenarioDefinitions[1]
-                .Item2.ShouldBe(126, 187);
+            Scenarios[1].Item2.ShouldBe(126, 187);
+        }
+
+        [Test]
+        public void ScenarioParser_should_include_location_in_Scenario()
+        {
+            var expectedLocation = new Location();
+
+            new ScenarioParserClass()
+                .ScenarioFrom
+                (
+                    new List<string> { "Scenario: Name" }, 
+                    expectedLocation
+                )
+            .Location.ShouldBe(expectedLocation);
         }
     }
 }

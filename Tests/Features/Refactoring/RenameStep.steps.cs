@@ -1,4 +1,5 @@
 using NSubstitute;
+using Raconteur.Helpers;
 using RenameStepRefactoring=Raconteur.Refactoring.RenameStep;
 
 namespace Features.Refactoring 
@@ -20,7 +21,7 @@ namespace Features.Refactoring
         void The_Feature_should_contain(string Content)
         {
             RenameStepRefactoring.Received()
-                .Write(Arg.Is<string>(s => s.Contains(Content)));
+                .Write(Arg.Is<string>(s => s.Contains(Content.TrimLines())));
         }
     }
 }

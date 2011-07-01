@@ -42,7 +42,18 @@ namespace Raconteur
 
         public void Refresh()
         {
-            
+            Steps
+                .Where(s => s.IsDirty)
+                .Reverse()
+                .ForEach(Refresh);
+        }
+
+        void Refresh(Step Step)
+        {
+            Content = 
+                Content.Substring(0, Step.Location.Start) +
+                Step.Name +
+                Content.Substring(Step.Location.End);
         }
     }
 

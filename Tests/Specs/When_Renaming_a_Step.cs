@@ -1,8 +1,12 @@
-﻿using Common;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using Common;
 using MbUnit.Framework;
 using NSubstitute;
+using FluentSpec;
+using Raconteur;
 using Raconteur.Helpers;
-using Raconteur.IDE;
 using Raconteur.Parsers;
 using Raconteur.Refactoring;
 
@@ -13,6 +17,39 @@ namespace Specs
     {
         RenameStep RenameStep;
 
+        FeatureParser FeatureParser;
+
+        Feature Feature;
+        Step Step;
+
+        [SetUp]
+        public void SetUp()
+        {
+            Feature = Actors.FeatureWithStepDefinitions;
+            Step = Feature.Steps.First();
+
+            Feature.Content = 
+            @"
+                Feature: Name
+                Scenario: Name
+            ";
+
+            FeatureParser = Create.TestObjectFor<FeatureParser>();
+            
+            ObjectFactory.Return<FeatureParserClass>(FeatureParser);
+
+            Given.That(FeatureParser)
+                .IgnoringArgs()
+                .FeatureFrom("", null)
+                .WillReturn(Feature);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ObjectFactory.ReturnNew<FeatureParserClass>();
+        }
+
         void AssertRenamed(string OldStep, string OldContent, string NewStep, string NewContent)
         {
             RenameStep = Substitute.For<RenameStep>
@@ -20,11 +57,19 @@ namespace Specs
                 null, OldStep, NewStep
             );
             
-            RenameStep.FeatureContent.Returns(OldContent);
+            Feature.Content += OldContent;
+
+            Step.Name = RenameStep.OriginalName;
+            var Start = Feature.Content.IndexOf(RenameStep.OriginalName);
+            Step.Location = new Location(Start, RenameStep.OriginalName);
+
+            RenameStep.FeatureContent.Returns(Feature.Content);
 
             RenameStep.Execute();
 
-            RenameStep.Received().Write(NewContent);
+            RenameStep.Received().Write(Feature.Content);
+
+            Feature.Content.ShouldContain(NewContent);
         }
 
         [Test]
@@ -68,6 +113,30 @@ namespace Specs
                     renamed step ""X"" with Arg
                 "
             );
+        }
+
+        [Test]
+        public void should_refresh_the_Feature()
+        {
+            Feature.Content = 
+            @"
+                Feature: Name
+                ...
+                Step
+                ...
+            ";
+
+            Step.Location = new Location
+            (
+                Feature.Content.IndexOf(Step.Name),
+                Step.Name
+            );
+
+            Step.Rename("new step");
+
+            Feature.Refresh();
+
+            Feature.Content.ShouldContain("new step");
         }
     }
 }

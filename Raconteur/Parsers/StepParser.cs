@@ -41,10 +41,12 @@ namespace Raconteur.Parsers
         {
             if (ScenarioLocation == null) return;
 
-            var Start = (Location == null 
-                || ScenarioLocation.Start > Location.End) 
-                ? ScenarioLocation.Content.IndexOf(Sentence) 
-                : ScenarioLocation.Content.IndexOf(Sentence, Location.End - ScenarioLocation.Start);
+            var IsFirstLocation = Location == null 
+                || ScenarioLocation.Start > Location.End;
+
+            var Start = IsFirstLocation ? 
+                ScenarioLocation.Content.IndexOf(Sentence) : 
+                ScenarioLocation.Content.IndexOf(Sentence, Location.End - ScenarioLocation.Start);
 
             Location = new Location(Start + ScenarioLocation.Start, Sentence);
         }

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Raconteur.Helpers;
 
 namespace Raconteur.Refactoring
@@ -16,14 +17,11 @@ namespace Raconteur.Refactoring
             this.NewName = NewName.Replace("_"," ");
         }
 
-        public void ExecuteNew()
+        public void Execute()
         {
-/*
             var Feature = ObjectFactory.NewFeatureParser
                 .FeatureFrom(FeatureContent, ObjectFactory.NewFeatureItem);
-*/
 
-/*
             Feature.Steps
                 .Where(s => s.Name == OriginalName)
                 .ForEach(s => s.Rename(NewName));
@@ -31,20 +29,6 @@ namespace Raconteur.Refactoring
             Feature.Refresh();
 
             Write(Feature.Content);
-*/
-        }
-
-        public void Execute()
-        {
-            var Pattern = @"^((\s|\t)*)(" + OriginalName + @")((\s|\t)*)$";
-
-            Write(Regex.Replace
-            (
-                FeatureContent, 
-                Pattern, 
-                "$1" + NewName + "$4", 
-                RegexOptions.Multiline
-            ));
         }
 
         string FeatureFile

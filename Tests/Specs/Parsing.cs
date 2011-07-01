@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur.Parsers;
@@ -8,7 +7,7 @@ using Common;
 namespace Specs
 {
     [TestFixture]
-    public class KeepFeaturePosition
+    public class KeepFeatureLocation
     {
         [Test]
         public void Tokenizer_should_include_Scenario_location_with_one_scenario()

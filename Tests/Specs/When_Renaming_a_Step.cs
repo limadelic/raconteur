@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Common;
 using MbUnit.Framework;
@@ -50,7 +49,7 @@ namespace Specs
             ObjectFactory.ReturnNew<FeatureParserClass>();
         }
 
-        void AssertRenamed(string OldStep, string OldContent, string NewStep, string NewContent)
+        void AssertRenamed(string OldStep, string OldContent, string NewStep, string NewContent, Location Location = null)
         {
             RenameStep = Substitute.For<RenameStep>
             (
@@ -60,8 +59,8 @@ namespace Specs
             Feature.Content += OldContent;
 
             Step.Name = RenameStep.OriginalName;
-            var Start = Feature.Content.IndexOf(RenameStep.OriginalName);
-            Step.Location = new Location(Start, RenameStep.OriginalName);
+            Step.Location = Location ?? 
+                new Location(Feature.Content.IndexOf(RenameStep.OriginalName), RenameStep.OriginalName);
 
             RenameStep.FeatureContent.Returns(Feature.Content);
 
@@ -97,9 +96,12 @@ namespace Specs
         }
 
         [Test]
-        [Category("wip")]
         public void should_rename_Step_with_Args()
         {
+            Step.Args = new List<string> { "X" };
+
+            var Location = new Location(129, @"old step ""X"" with Args");
+
             AssertRenamed
             (
                 "old_step__with_Args",
@@ -111,7 +113,8 @@ namespace Specs
                 @"
                     old step
                     renamed step ""X"" with Arg
-                "
+                ",
+                Location
             );
         }
 
@@ -137,6 +140,40 @@ namespace Specs
             Feature.Refresh();
 
             Feature.Content.ShouldContain("new step");
+        }
+
+        [Test]
+        public void should_generate_new_name_for_Step_with_Args()
+        {
+            Step = new Step
+            {
+                Name = "new Name with an  and another  at the end",
+                Args = { "Arg", "Arg" },
+                Location = new Location
+                {
+                    Content = @"Name with an ""Arg"" and another ""Arg"""
+                },
+                IsDirty = true
+            };
+
+            Step.Sentence.ShouldBe(@"new Name with an ""Arg"" and another ""Arg"" at the end");
+        }
+
+        [Test]
+        public void should_generate_new_name_for_Step_with_Arg_at_the_end()
+        {
+            Step = new Step
+            {
+                Name = "new Name with an",
+                Args = { "Arg" },
+                Location = new Location
+                {
+                    Content = @"Name with an ""Arg"""
+                },
+                IsDirty = true
+            };
+
+            Step.Sentence.ShouldBe(@"new Name with an ""Arg""");
         }
     }
 }

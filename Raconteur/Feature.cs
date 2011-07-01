@@ -52,7 +52,7 @@ namespace Raconteur
         {
             Content = 
                 Content.Substring(0, Step.Location.Start) +
-                Step.Name +
+                Step.Sentence +
                 Content.Substring(Step.Location.End);
         }
     }

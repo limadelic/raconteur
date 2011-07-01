@@ -21,21 +21,20 @@ Scenario: Rename within feature
 			new Step
 	"
 
-@wip
 Scenario: Step with Args
 
 	Given the Feature contains
 	"
 		Scenario: Name
-			Step
-			Step ""with arg""
+			simple Step
+			Step ""with Arg""
 	"
 
-	When "Step " is renamed to "new Step"
+	When "Step" is renamed to "new Step"
 
 	The Feature should contain
 	"
 		Scenario: Name
-			Step
+			simple Step
 			new Step ""with Arg""
 	"

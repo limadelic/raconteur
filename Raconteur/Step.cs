@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Raconteur.Compilers;
+using Raconteur.Helpers;
 using Raconteur.Parsers;
 
 namespace Raconteur
@@ -126,5 +128,21 @@ namespace Raconteur
         }
 
         public bool IsDirty { get; set; }
+        
+        public string Sentence
+        {
+            get
+            {
+                if (!IsDirty) return Location.Content;
+
+                if (!HasArgs) return Name;
+
+                var NewName = Regex.Split(Name, @"\s\s");
+
+                return string.Join(" ", NewName
+                    .Zip(Args, (NamePart, Arg) => NamePart + " " + Arg.Quoted())
+                    .Concat(NewName.Skip(Args.Count)));
+            } 
+        }
     }
 }

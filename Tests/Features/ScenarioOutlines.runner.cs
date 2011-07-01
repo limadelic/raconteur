@@ -43,8 +43,7 @@ It_should_be(3);
 ");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void OutlinesValuesInsideMultilineArgs()
         {         
             FeatureRunner.Given_the_Feature_contains(

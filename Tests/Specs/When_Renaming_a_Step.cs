@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Common;
 using MbUnit.Framework;
@@ -146,41 +145,65 @@ namespace Specs
         [Test]
         
         [Row("2 Args starting with Name", 
-            2, "new Name with an  and another  at the end",
             @"Name with an ""Arg"" and another ""Arg""",
-            @"new Name with an ""Arg"" and another ""Arg"" at the end")]
+            @"new Name with an ""Arg"" and another ""Arg"" at the end",
+            "new Name with an  and another  at the end", "Arg", "Arg")]
         
         [Row("Arg at the end", 
-            1, "new Name with an", @"Name with an ""Arg""", 
-            @"new Name with an ""Arg""")]
+            @"Name with an ""Arg""", 
+            @"new Name with an ""Arg""", 
+            "new Name with an", "Arg", null)]
         
         [Row("Arg at the beginning",
-            1, "still at beginning", @"""Arg"" at beginning", 
-            @"""Arg"" still at beginning")]
+            @"""Arg"" at beginning", 
+            @"""Arg"" still at beginning", 
+            "still at beginning", "Arg", null)]
 
         [Row("Starting and ending with Args",
-            2, "still a sandwich", @"""Arg"" sandwich ""Arg""",
-            @"""Arg"" still a sandwich ""Arg""")]
+            @"""Arg"" sandwich ""Arg""",
+            @"""Arg"" still a sandwich ""Arg""", 
+            "still a sandwich", "Arg", "Arg")]
 
         [Row("Arg in the middle",
-            1, "the  is here", @"where the ""Arg"" is",
-            @"the ""Arg"" is here")]
+            @"where the ""Arg"" is",
+            @"the ""Arg"" is here", 
+            "the  is here", "Arg", null)]
 
-        public void should_generate_new_Sentence_for_Step_with_Args(
-            string Example, int ArgsCount, string NewName, string Content, string ExpectedSentence)
+        [Row("Multiline Arg",
+            @"
+                long text
+                ""
+                    blah blah blah
+                "" 
+            ",
+            @"
+                same long story
+                ""
+                    blah blah blah
+                "" 
+            ",
+            "same long story", 
+            @"
+                blah blah blah
+            ", 
+            null)]
+
+        public void should_generate_new_Sentence_for_Step_with_Args
+        (
+            string Example, 
+            string OriginalSentence, 
+            string NewSentence, 
+            string NewName, string Arg1, string Arg2
+        )
         {
-            var Args = new List<string>();
-            for (var i = 0; i < ArgsCount; i++) Args.Add("Arg");
-
-            Step = new Step
+            new Step
             {
                 Name = NewName,
-                Args = Args,
-                Location = new Location { Content = Content },
+                Args = new List<string> { Arg1, Arg2 }.WhereIsNotNull().ToList(),
+                Location = new Location { Content = OriginalSentence },
                 IsDirty = true
-            };
-
-            Step.Sentence.ShouldBe(ExpectedSentence, Example);
+            }
+            .Sentence.ShouldBe(NewSentence, Example);
         }
     }
 }

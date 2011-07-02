@@ -76,3 +76,29 @@ Scenario: Step starting with Arg
 			Multiline Arg
 		"");
 	"
+
+Scenario: Step starting and finishing with multiline Arg
+
+	Given the Feature contains
+	"
+		Scenario: Name
+			
+			""
+				Multiline Args
+			""
+			around a Step
+			""
+				Multiline Args
+			""
+	"
+
+	The Runner should contain
+	"
+		around_a_Step(
+		@""
+			Multiline Args
+		"",
+		@""
+			Multiline Args
+		"");
+	"

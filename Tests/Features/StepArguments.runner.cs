@@ -91,6 +91,32 @@ Multiline Arg
 "");
 ");
         }
+        
+        [Test]
+        public void StepStartingAndFinishingWithMultilineArg()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Name
+""
+Multiline Args
+""
+around a Step
+""
+Multiline Args
+""
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+around_a_Step(
+@""
+Multiline Args
+"",
+@""
+Multiline Args
+"");
+");
+        }
 
     }
 }

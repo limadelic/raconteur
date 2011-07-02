@@ -45,6 +45,29 @@ simple Step
 new Step ""with Arg""
 ");
         }
+        
+        [Test]        
+        [Category("wip")]
+        public void StepWithMultiline()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: With Multiline Arg in Step
+Step
+""
+Multiline Arg
+""
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: With Multiline Arg in Step
+new Step
+""
+Multiline Arg
+""
+");
+        }
 
     }
 }

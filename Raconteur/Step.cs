@@ -139,24 +139,56 @@ namespace Raconteur
 
                 if (!HasArgs) return Name;
 
-                var ZipNameAndArgs = StartsWithArg ?
-                    SentenceStartingWithArgs :
-                    SentenceStartingWithName;
-                
-                return ZipNameAndArgs + MissingLink;
+                if (HasMultilineArg) return SentenceWithMultilineArg;
+
+                return SentenceWithArgs;
             } 
+        }
+
+        IEnumerable<string> SimpleArgs { get { return Args.Where(a => !a.IsMultiline()); } }
+
+        string SentenceWithMultilineArg
+        {
+            get
+            {
+                var originalSentence = Regex.Split
+                (
+                    OriginalSentence,
+                    "^(.*)\"(.*)$",
+                    RegexOptions.Multiline
+                )[0].TrimLines();
+
+                return OriginalSentence.Replace(originalSentence, SentenceWithArgs);
+            } 
+        }
+
+        bool HasMultilineArg
+        {
+            get { return Args.Any(a => a.IsMultiline()); }
         }
 
         bool StartsWithArg { get { return OriginalSentence.StartsWith("\""); }}
 
         IEnumerable<string> NameParts { get { return Regex.Split(Name, @"\s\s"); }}
 
+        string SentenceWithArgs
+        {
+            get
+            {
+                var ZipNameAndArgs = StartsWithArg ?
+                    SentenceStartingWithArgs :
+                    SentenceStartingWithName;
+                
+                return (ZipNameAndArgs + MissingLink).Trim();
+            } 
+        }
+
         string MissingLink
         {
             get
             {
-                return Args.Count == NameParts.Count() ? "" : " " + (
-                    Args.Count > NameParts.Count() ? Args.Last().Quoted() : 
+                return SimpleArgs.Count() == NameParts.Count() ? "" : " " + (
+                    SimpleArgs.Count() > NameParts.Count() ? SimpleArgs.Last().Quoted() : 
                         NameParts.Last());
             }
         }
@@ -166,7 +198,7 @@ namespace Raconteur
             get
             {
                 return string.Join(" ", NameParts
-                    .Zip(Args, (NamePart, Arg) => NamePart + " " + Arg.Quoted()));
+                    .Zip(SimpleArgs, (NamePart, Arg) => NamePart + " " + Arg.Quoted()));
             } 
         }
 
@@ -174,7 +206,7 @@ namespace Raconteur
         {
             get
             {
-                return string.Join(" ", Args
+                return string.Join(" ", SimpleArgs
                     .Zip(NameParts, (Arg, NamePart) =>  Arg.Quoted() + " " + NamePart));
             } 
         }

@@ -38,3 +38,26 @@ Scenario: Step with Args
 			simple Step
 			new Step ""with Arg""
 	"
+
+@wip
+Scenario: Step with Multiline
+
+	Given the Feature contains
+	"
+		Scenario: With Multiline Arg in Step
+			Step 
+			""
+				Multiline Arg
+			""
+	"
+
+	When "Step" is renamed to "new Step"
+
+	The Feature should contain
+	"
+		Scenario: With Multiline Arg in Step
+			new Step
+			""
+				Multiline Arg
+			""
+	"	

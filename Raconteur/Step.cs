@@ -128,20 +128,54 @@ namespace Raconteur
         }
 
         public bool IsDirty { get; set; }
-        
+
+        string OriginalSentence { get { return Location.Content; } }
+
         public string Sentence
         {
             get
             {
-                if (!IsDirty) return Location.Content;
+                if (!IsDirty) return OriginalSentence;
 
                 if (!HasArgs) return Name;
 
-                var NewName = Regex.Split(Name, @"\s\s");
+                var ZipNameAndArgs = StartsWithArg ?
+                    SentenceStartingWithArgs :
+                    SentenceStartingWithName;
+                
+                return ZipNameAndArgs + MissingLink;
+            } 
+        }
 
-                return string.Join(" ", NewName
-                    .Zip(Args, (NamePart, Arg) => NamePart + " " + Arg.Quoted())
-                    .Concat(NewName.Skip(Args.Count)));
+        bool StartsWithArg { get { return OriginalSentence.StartsWith("\""); }}
+
+        IEnumerable<string> NameParts { get { return Regex.Split(Name, @"\s\s"); }}
+
+        string MissingLink
+        {
+            get
+            {
+                return Args.Count == NameParts.Count() ? "" : " " + (
+                    Args.Count > NameParts.Count() ? Args.Last().Quoted() : 
+                        NameParts.Last());
+            }
+        }
+
+        string SentenceStartingWithName
+        {
+            get
+            {
+                return string.Join(" ", NameParts
+                    .Zip(Args, (NamePart, Arg) => NamePart + " " + Arg.Quoted()));
+            } 
+        }
+
+        string SentenceStartingWithArgs
+        {
+            get
+            {
+                return string.Join(" ", Args
+                    .Zip(NameParts, (Arg, NamePart) =>  Arg.Quoted() + " " + NamePart));
             } 
         }
     }

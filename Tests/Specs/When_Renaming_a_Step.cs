@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common;
 using MbUnit.Framework;
@@ -143,37 +144,43 @@ namespace Specs
         }
 
         [Test]
-        public void should_generate_new_name_for_Step_with_Args()
+        
+        [Row("2 Args starting with Name", 
+            2, "new Name with an  and another  at the end",
+            @"Name with an ""Arg"" and another ""Arg""",
+            @"new Name with an ""Arg"" and another ""Arg"" at the end")]
+        
+        [Row("Arg at the end", 
+            1, "new Name with an", @"Name with an ""Arg""", 
+            @"new Name with an ""Arg""")]
+        
+        [Row("Arg at the beginning",
+            1, "still at beginning", @"""Arg"" at beginning", 
+            @"""Arg"" still at beginning")]
+
+        [Row("Starting and ending with Args",
+            2, "still a sandwich", @"""Arg"" sandwich ""Arg""",
+            @"""Arg"" still a sandwich ""Arg""")]
+
+        [Row("Arg in the middle",
+            1, "the  is here", @"where the ""Arg"" is",
+            @"the ""Arg"" is here")]
+
+        public void should_generate_new_Sentence_for_Step_with_Args(
+            string Example, int ArgsCount, string NewName, string Content, string ExpectedSentence)
         {
+            var Args = new List<string>();
+            for (var i = 0; i < ArgsCount; i++) Args.Add("Arg");
+
             Step = new Step
             {
-                Name = "new Name with an  and another  at the end",
-                Args = { "Arg", "Arg" },
-                Location = new Location
-                {
-                    Content = @"Name with an ""Arg"" and another ""Arg"""
-                },
+                Name = NewName,
+                Args = Args,
+                Location = new Location { Content = Content },
                 IsDirty = true
             };
 
-            Step.Sentence.ShouldBe(@"new Name with an ""Arg"" and another ""Arg"" at the end");
-        }
-
-        [Test]
-        public void should_generate_new_name_for_Step_with_Arg_at_the_end()
-        {
-            Step = new Step
-            {
-                Name = "new Name with an",
-                Args = { "Arg" },
-                Location = new Location
-                {
-                    Content = @"Name with an ""Arg"""
-                },
-                IsDirty = true
-            };
-
-            Step.Sentence.ShouldBe(@"new Name with an ""Arg""");
+            Step.Sentence.ShouldBe(ExpectedSentence, Example);
         }
     }
 }

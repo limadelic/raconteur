@@ -92,6 +92,7 @@ namespace Common
 
         public static void ShouldBe(this Location Location, int Start, int End, string Message=null)
         {
+            Location.ShouldNotBeNull();
             Location.Start.ShouldBe(Start, Message ?? "Invalid Location Start");        
             Location.End.ShouldBe(End, Message ?? "Invalid Location End");        
         }

@@ -23,13 +23,13 @@ namespace Raconteur.Parsers
         }
 
         string Sentence;
+        Location ScenarioLocation;
 
         public Step StepFrom(string Sentence, Location ScenarioLocation=null)
         {
             this.Sentence = Sentence;
+            this.ScenarioLocation = ScenarioLocation;
             
-            SetUpLocation(ScenarioLocation);
-
             return IsArg ? ParseArg :
                 IsTable ? ParseTable :
                 LastStep = ParseStep;
@@ -39,8 +39,6 @@ namespace Raconteur.Parsers
 
         void SetUpLocation(Location ScenarioLocation)
         {
-            if (ScenarioLocation == null) return;
-
             var IsFirstLocation = Location == null 
                 || ScenarioLocation.Start > Location.End;
 
@@ -55,15 +53,19 @@ namespace Raconteur.Parsers
         {
             get
             {   
+                if (ScenarioLocation != null) SetUpLocation(ScenarioLocation);
+
                 var Tokens = BeforeArg.IsEmpty() ? 
                     Sentence.Split('"') :
                     (BeforeArg.Quoted() + Sentence).Split('"');
 
                 BeforeArg = null;
 
+                var ValidIdentifier = Tokens.Evens().Aggregate((Name, Token) => Name + Token);
+
                 return new Step
                 {
-                    Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
+                    Name = ValidIdentifier.ToValidIdentifier(),
                     Args = Tokens.Odds().ToList(),
                     Location = Location
                 };

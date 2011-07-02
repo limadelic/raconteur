@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using FluentSpec;
 using MbUnit.Framework;
+using Raconteur;
+using Raconteur.Helpers;
 using Raconteur.Parsers;
 using Common;
 
@@ -65,6 +67,7 @@ namespace Specs
         }
 
         [Test]
+
         public void StepParser_should_include_Step_location()
         {
             var Parser = new StepParserClass();
@@ -77,6 +80,29 @@ namespace Specs
 
             Parser.StepFrom(@"Step", Location).Location.ShouldBe(10, 14);
             Parser.StepFrom(@"Step", Location).Location.ShouldBe(14, 18);
+        }
+
+        [Test]
+        public void StepParser_should_include_Step_location_for_multiline_Step()
+        {
+            var Parser = new StepParserClass();
+
+            const string Content = 
+                @"A multiline step arg
+                 ""
+                    line 1
+                    line 2
+                 """;
+                 
+            var Location = new Location { Content = Content };
+
+            Step Step = null;
+            
+            Content.TrimLines().Lines().ForEach(l => 
+                Step = Parser.StepFrom(l, Location) ?? Step);
+
+            Step.ShouldNotBeNull();
+            Step.Location.ShouldBe(0, 0 + "A multiline step arg".Length);
         }
     }
 }

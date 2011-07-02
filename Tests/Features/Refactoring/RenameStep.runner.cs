@@ -46,8 +46,7 @@ new Step ""with Arg""
 ");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void StepWithMultiline()
         {         
             FeatureRunner.Given_the_Feature_contains(

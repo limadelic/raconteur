@@ -23,28 +23,43 @@ namespace Raconteur.Parsers
         }
 
         string Sentence;
-        Location ScenarioLocation;
+
+        int CurrentPos;
+        Location scenarioLocation;
+        Location ScenarioLocation
+        {
+            get { return scenarioLocation; } 
+            set
+            {
+                if (scenarioLocation == value) return;
+
+                scenarioLocation = value;
+                
+                CurrentPos = scenarioLocation.Content.IndexOf(Environment.NewLine) + 1;
+            } 
+        }
+
 
         public Step StepFrom(string Sentence, Location ScenarioLocation=null)
         {
             this.Sentence = Sentence;
             this.ScenarioLocation = ScenarioLocation;
-            
-            return IsArg ? ParseArg :
+
+            var Step = 
+                IsArg ? ParseArg :
                 IsTable ? ParseTable :
                 LastStep = ParseStep;
+
+            CurrentPos += Sentence.Length;
+
+            return Step;
         }
 
         Location Location;
 
         void SetUpLocation(Location ScenarioLocation)
         {
-            var IsFirstLocation = Location == null 
-                || ScenarioLocation.Start > Location.End;
-
-            var Start = IsFirstLocation ? 
-                ScenarioLocation.Content.IndexOf(Sentence) : 
-                ScenarioLocation.Content.IndexOf(Sentence, Location.End - ScenarioLocation.Start);
+            var Start = ScenarioLocation.Content.IndexOf(Sentence, CurrentPos);
 
             Location = new Location(Start + ScenarioLocation.Start, Sentence);
         }

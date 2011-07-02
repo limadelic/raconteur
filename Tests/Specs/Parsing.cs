@@ -88,11 +88,12 @@ namespace Specs
             var Parser = new StepParserClass();
 
             const string Content = 
-                @"A multiline step arg
-                 ""
-                    line 1
-                    line 2
-                 """;
+                @"Scenario: Name
+                    A multiline step arg
+                    ""
+                        line 1
+                        line 2
+                    """;
                  
             var Location = new Location { Content = Content };
 
@@ -102,7 +103,7 @@ namespace Specs
                 Step = Parser.StepFrom(l, Location) ?? Step);
 
             Step.ShouldNotBeNull();
-            Step.Location.ShouldBe(0, 0 + "A multiline step arg".Length);
+            Step.Location.ShouldBe(36, 36 + "A multiline step arg".Length);
         }
     }
 }

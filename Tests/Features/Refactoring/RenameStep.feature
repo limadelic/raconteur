@@ -39,7 +39,6 @@ Scenario: Step with Args
 			new Step ""with Arg""
 	"
 
-@wip
 Scenario: Step with Multiline
 
 	Given the Feature contains

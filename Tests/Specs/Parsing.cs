@@ -12,44 +12,57 @@ namespace Specs
     public class KeepFeatureLocation
     {
         [Test]
-        public void Tokenizer_should_include_Scenario_location_with_one_scenario()
+
+        [Row("One Scenario",
+            @"
+                Scenario: One
+            ",
+            0, "Scenario: One")]
+
+        [Row("Many single line Scenarios",
+            @"
+                Scenario: One
+                Scenario: Two
+                Scenario: Three
+            ",
+            1, "Scenario: Two")]
+
+        [Row("Scenarios with tags",
+            @"
+                Scenario: One
+                Scenario: Two
+                Scenario: Three
+            ",
+            1, "Scenario: Two")]
+
+        [Row("Scenarios with tags",
+            @"
+                Scenario: One
+                    Step
+
+                @tag
+                Scenario: Another
+            ",
+            1, "@tag")]
+
+        public void Tokenizer_should_include_Scenario_location
+        (
+            string Example, 
+            string Content, 
+            int ExpectedIndex, 
+            string ExpectedContent
+        )
         {
-            var Scenarios = new ScenarioTokenizerClass
+            new ScenarioTokenizerClass
             {
                 Content =
                 @"
                     Feature: Name
-
-                    Scenario: One
                 "
-            }.ScenarioDefinitions;
-
-            Scenarios[0].Item2.ShouldBe(59, 90);
-            Scenarios[0].Item2.Content.ShouldStartWith("Scenario: One");
-        }
-
-        [Test]
-        public void Tokenizer_should_include_Scenario_location()
-        {
-            var Scenarios = new ScenarioTokenizerClass
-            {
-                Content =
-                @"
-                    Feature: Name
-
-                    Scenario: One
-                        Step
-
-                    @tag
-                    Scenario: Another
-                "
-            }.ScenarioDefinitions;
-
-            Scenarios[0].Item2.ShouldBe(59, 125);
-            Scenarios[0].Item2.Content.ShouldStartWith("Scenario: One");
-
-            Scenarios[1].Item2.ShouldBe(126, 187);
-            Scenarios[1].Item2.Content.ShouldContain("Scenario: Another");
+                + Content
+            }
+            .ScenarioDefinitions[ExpectedIndex].Item2
+                .Content.ShouldStartWith(ExpectedContent);
         }
 
         [Test]
@@ -68,42 +81,60 @@ namespace Specs
 
         [Test]
 
-        public void StepParser_should_include_Step_location()
+        [Row("Simple Step",
+            @"
+                Step 1
+                Step 2
+            ",
+            "Step 2")]
+
+        [Row("Step with Args",
+            @"
+                ""Arg"" Step ""Arg"" 
+            ",
+            @"""Arg"" Step ""Arg""")]
+
+        [Row("Step with Multiline Args",
+            @"
+                A multiline step arg
+                ""
+                    line 1
+                    line 2
+                ""
+            ",
+            "A multiline step arg")]
+
+        [Row("Step with all kind of Args",
+            @"
+                ""
+                    line 1
+                    line 2
+                ""
+                A multiline ""Arg"" step arg
+                ""
+                    line 1
+                    line 2
+                ""
+            ",
+            @"A multiline ""Arg"" step arg")]
+
+        public void StepParser_should_include_Step_location
+        (
+            string Example, 
+            string Content, 
+            string LocationContent
+        )
         {
             var Parser = new StepParserClass();
 
-            var Location = new Location
-            {
-                Start = 10,
-                Content = "StepStep"
-            };
-
-            Parser.StepFrom(@"Step", Location).Location.ShouldBe(10, 14);
-            Parser.StepFrom(@"Step", Location).Location.ShouldBe(14, 18);
-        }
-
-        [Test]
-        public void StepParser_should_include_Step_location_for_multiline_Step()
-        {
-            var Parser = new StepParserClass();
-
-            const string Content = 
-                @"Scenario: Name
-                    A multiline step arg
-                    ""
-                        line 1
-                        line 2
-                    """;
-                 
-            var Location = new Location { Content = Content };
+            var Location = new Location { Content = "Scenario: Name" + "Content" };
 
             Step Step = null;
             
             Content.TrimLines().Lines().ForEach(l => 
                 Step = Parser.StepFrom(l, Location) ?? Step);
 
-            Step.ShouldNotBeNull();
-            Step.Location.ShouldBe(36, 36 + "A multiline step arg".Length);
+            Step.Location.Content.ShouldBe(LocationContent);
         }
     }
 }

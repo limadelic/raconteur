@@ -59,9 +59,10 @@ namespace Raconteur.Parsers
 
         void SetUpLocation(Location ScenarioLocation)
         {
-            var Start = ScenarioLocation.Content.IndexOf(Sentence, CurrentPos);
+            var Start = ScenarioLocation.Start +
+                ScenarioLocation.Content.IndexOf(Sentence, CurrentPos);
 
-            Location = new Location(Start + ScenarioLocation.Start, Sentence);
+            Location = new Location(Start, Sentence);
         }
 
         Step ParseStep
@@ -76,11 +77,9 @@ namespace Raconteur.Parsers
 
                 BeforeArg = null;
 
-                var ValidIdentifier = Tokens.Evens().Aggregate((Name, Token) => Name + Token);
-
                 return new Step
                 {
-                    Name = ValidIdentifier.ToValidIdentifier(),
+                    Name = Tokens.Evens().Aggregate((Name, Token) => Name + Token).ToValidIdentifier(),
                     Args = Tokens.Odds().ToList(),
                     Location = Location
                 };

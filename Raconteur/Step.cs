@@ -121,8 +121,9 @@ namespace Raconteur
             get { return objectArg ?? (objectArg = Method.LastArg().ElementType()); }
         }
 
-        public void Rename(string NewName)
-        {
+        #region Rename Stuff
+        
+        public void Rename(string NewName) {
             Name = NewName;
             IsDirty = true;
         }
@@ -131,84 +132,50 @@ namespace Raconteur
 
         string OriginalSentence { get { return Location.Content; } }
 
-        public string Sentence
+        public string Sentence 
         {
-            get
+            get 
             {
                 if (!IsDirty) return OriginalSentence;
 
                 if (!HasArgs) return Name;
 
-                if (HasMultilineArg) return SentenceWithMultilineArg;
+                var ZipNameAndArgs = StartsWithArg ?
+                    SentenceStartingWithArgs :
+                    SentenceStartingWithName;
 
-                return SentenceWithArgs;
-            } 
+                return (ZipNameAndArgs + MissingLink).Trim();
+            }
         }
 
         IEnumerable<string> SimpleArgs { get { return Args.Where(a => !a.IsMultiline()); } }
 
-        string SentenceWithMultilineArg
-        {
-            get
-            {
-                var originalSentence = Regex.Split
-                (
-                    OriginalSentence,
-                    "^(.*)\"(.*)$",
-                    RegexOptions.Multiline
-                )[0].TrimLines();
+        bool StartsWithArg { get { return OriginalSentence.StartsWith("\""); } }
 
-                return OriginalSentence.Replace(originalSentence, SentenceWithArgs);
-            } 
-        }
+        IEnumerable<string> NameParts { get { return Regex.Split(Name, @"\s\s"); } }
 
-        bool HasMultilineArg
-        {
-            get { return Args.Any(a => a.IsMultiline()); }
-        }
-
-        bool StartsWithArg { get { return OriginalSentence.StartsWith("\""); }}
-
-        IEnumerable<string> NameParts { get { return Regex.Split(Name, @"\s\s"); }}
-
-        string SentenceWithArgs
-        {
-            get
-            {
-                var ZipNameAndArgs = StartsWithArg ?
-                    SentenceStartingWithArgs :
-                    SentenceStartingWithName;
-                
-                return (ZipNameAndArgs + MissingLink).Trim();
-            } 
-        }
-
-        string MissingLink
-        {
-            get
-            {
+        string MissingLink {
+            get {
                 return SimpleArgs.Count() == NameParts.Count() ? "" : " " + (
-                    SimpleArgs.Count() > NameParts.Count() ? SimpleArgs.Last().Quoted() : 
+                    SimpleArgs.Count() > NameParts.Count() ? SimpleArgs.Last().Quoted() :
                         NameParts.Last());
             }
         }
 
-        string SentenceStartingWithName
-        {
-            get
-            {
+        string SentenceStartingWithName {
+            get {
                 return string.Join(" ", NameParts
                     .Zip(SimpleArgs, (NamePart, Arg) => NamePart + " " + Arg.Quoted()));
-            } 
+            }
         }
 
-        string SentenceStartingWithArgs
-        {
-            get
-            {
+        string SentenceStartingWithArgs {
+            get {
                 return string.Join(" ", SimpleArgs
-                    .Zip(NameParts, (Arg, NamePart) =>  Arg.Quoted() + " " + NamePart));
-            } 
+                    .Zip(NameParts, (Arg, NamePart) => Arg.Quoted() + " " + NamePart));
+            }
         }
+
+        #endregion
     }
 }

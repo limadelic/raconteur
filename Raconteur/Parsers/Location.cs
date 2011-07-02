@@ -8,17 +8,12 @@
         {
             this.Start = Start;
             this.Content = Content;
-
-            End = Start + Content.Length;
         }
 
-        public int Start, End;
+        public int Start { get; set; }
 
         public string Content { get; set; }
 
-        public void Set(string Contents)
-        {
-            Content = Contents.Substring(Start, End - Start);
-        }
+        public int End { get { return Start + Content.Length; } }
     }
 }

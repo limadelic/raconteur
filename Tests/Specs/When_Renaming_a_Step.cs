@@ -169,25 +169,6 @@ namespace Specs
             @"the ""Arg"" is here", 
             "the  is here", "Arg", null)]
 
-        [Row("Multiline Arg",
-            @"
-                long text
-                ""
-                    blah blah blah
-                "" 
-            ",
-            @"
-                same long story
-                ""
-                    blah blah blah
-                "" 
-            ",
-            "same long story", 
-            @"
-                blah blah blah
-            ", 
-            null)]
-
         public void should_generate_new_Sentence_for_Step_with_Args
         (
             string Example, 

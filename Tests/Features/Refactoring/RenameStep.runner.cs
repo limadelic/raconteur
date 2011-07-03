@@ -47,7 +47,7 @@ new Step ""with Arg""
         }
         
         [Test]
-        public void StepWithMultiline()
+        public void StepWithMultilineArg()
         {         
             FeatureRunner.Given_the_Feature_contains(
 @"
@@ -65,6 +65,78 @@ new Step
 ""
 Multiline Arg
 ""
+");
+        }
+        
+        [Test]
+        public void StepWithTable()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Step with Table
+Step
+|X|0|X|
+|X|X|0|
+|0|0|X|
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: Step with Table
+new Step
+|X|0|X|
+|X|X|0|
+|0|0|X|
+");
+        }
+        
+        [Test]
+        public void StepWithHeaderTable()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Step with Header Table
+Step
+[X|Y]
+|1|0|
+|0|0|
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: Step with Header Table
+new Step
+[X|Y]
+|1|0|
+|0|0|
+");
+        }
+        
+        [Test]
+        public void StepWithMultilineArg_ArgsAndHeaderTable()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Step with Multiline Arg, Args and Header Table
+""
+Multiline Arg
+""
+Step ""Arg""
+[X|Y]
+|1|0|
+|0|0|
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: Step with Multiline Arg, Args and Header Table
+""
+Multiline Arg
+""
+new Step ""Arg""
+[X|Y]
+|1|0|
+|0|0|
 ");
         }
 

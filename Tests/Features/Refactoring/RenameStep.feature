@@ -39,7 +39,7 @@ Scenario: Step with Args
 			new Step ""with Arg""
 	"
 
-Scenario: Step with Multiline
+Scenario: Step with Multiline Arg
 
 	Given the Feature contains
 	"
@@ -59,4 +59,76 @@ Scenario: Step with Multiline
 			""
 				Multiline Arg
 			""
-	"	
+	"
+
+Scenario: Step with Table
+
+	Given the Feature contains
+	"
+		Scenario: Step with Table
+			Step 
+			|X|0|X|
+			|X|X|0|
+			|0|0|X|
+	"
+
+	When "Step" is renamed to "new Step"
+
+	The Feature should contain
+	"
+		Scenario: Step with Table
+			new Step
+			|X|0|X|
+			|X|X|0|
+			|0|0|X|
+	"
+
+Scenario: Step with Header Table
+
+	Given the Feature contains
+	"
+		Scenario: Step with Header Table
+			Step 
+			[X|Y]
+			|1|0|
+			|0|0|
+	"
+
+	When "Step" is renamed to "new Step"
+
+	The Feature should contain
+	"
+		Scenario: Step with Header Table
+			new Step
+			[X|Y]
+			|1|0|
+			|0|0|
+	"
+
+Scenario: Step with Multiline Arg, Args and Header Table
+
+	Given the Feature contains
+	"
+		Scenario: Step with Multiline Arg, Args and Header Table
+			""
+				Multiline Arg
+			""
+			Step ""Arg""
+			[X|Y]
+			|1|0|
+			|0|0|
+	"
+
+	When "Step" is renamed to "new Step"
+
+	The Feature should contain
+	"
+		Scenario: Step with Multiline Arg, Args and Header Table
+			""
+				Multiline Arg
+			""
+			new Step ""Arg""
+			[X|Y]
+			|1|0|
+			|0|0|
+	"

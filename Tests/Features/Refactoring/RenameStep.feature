@@ -117,6 +117,8 @@ Scenario: Step with Multiline Arg, Args and Header Table
 			[X|Y]
 			|1|0|
 			|0|0|
+			""Arg"" Step ""Arg""
+			Step ""Arg"" Step
 	"
 
 	When "Step" is renamed to "new Step"
@@ -129,6 +131,40 @@ Scenario: Step with Multiline Arg, Args and Header Table
 			""
 			new Step ""Arg""
 			[X|Y]
+			|1|0|
+			|0|0|
+			""Arg"" new Step ""Arg""
+			Step ""Arg"" Step
+	"
+
+Scenario: Step in Scenario Outline
+
+	Given the Feature contains
+	"
+		Scenario Ouline: Step in Scenario Outline
+
+			Step ""X""
+			""Y"" Step
+			Step ""X"" + ""Y""
+
+			Examples:
+			|X|Y|
+			|1|0|
+			|0|0|
+	"
+
+	When "Step" is renamed to "new Step"
+
+	The Feature should contain
+	"
+		Scenario Ouline: Step in Scenario Outline
+
+			new Step ""X""
+			""Y"" new Step
+			Step ""X"" + ""Y""
+
+			Examples:
+			|X|Y|
 			|1|0|
 			|0|0|
 	"

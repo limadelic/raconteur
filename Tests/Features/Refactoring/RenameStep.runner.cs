@@ -125,6 +125,8 @@ Step ""Arg""
 [X|Y]
 |1|0|
 |0|0|
+""Arg"" Step ""Arg""
+Step ""Arg"" Step
 ");        
             When__is_renamed_to("Step", "new Step");        
             The_Feature_should_contain(
@@ -135,6 +137,36 @@ Multiline Arg
 ""
 new Step ""Arg""
 [X|Y]
+|1|0|
+|0|0|
+""Arg"" new Step ""Arg""
+Step ""Arg"" Step
+");
+        }
+        
+        [Test]
+        public void StepInScenarioOutline()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario Ouline: Step in Scenario Outline
+Step ""X""
+""Y"" Step
+Step ""X"" + ""Y""
+Examples:
+|X|Y|
+|1|0|
+|0|0|
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario Ouline: Step in Scenario Outline
+new Step ""X""
+""Y"" new Step
+Step ""X"" + ""Y""
+Examples:
+|X|Y|
 |1|0|
 |0|0|
 ");

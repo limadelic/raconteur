@@ -45,8 +45,8 @@ namespace Features.Refactoring
 
         void The_Feature__should_contain(string Name, string Content)
         {
-            File.ReadAllText(Name + ".feature")
-                .ShouldContain(Content);
+            File.ReadAllText(Name + ".feature").TrimLines()
+                .ShouldContain(Content.TrimLines());
         }
 
         void and_the_Feature__should_contain(string Name, string Content)

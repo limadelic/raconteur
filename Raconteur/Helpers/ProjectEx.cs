@@ -26,5 +26,10 @@ namespace Raconteur.Helpers
             foreach (var ChildItem in Items(Item.ProjectItems)) 
                 yield return ChildItem;
         }
+
+        public static string FeatureFileFromRunner(this string File)
+        {
+            return File.Replace(".runner.cs", ".feature");
+        }
     }
 }

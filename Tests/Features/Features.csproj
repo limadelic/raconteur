@@ -88,7 +88,7 @@
     <Compile Include="Comments.steps.cs">
       <DependentUpon>Comments.feature</DependentUpon>
     </Compile>
-    <Compile Include="Misc\When_loading_assemblies.cs" />
+    <Compile Include="Integration\When_loading_assemblies.cs" />
     <Compile Include="Refactoring\RenameStep.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,7 +152,7 @@
     <Compile Include="InvalidFeature.steps.cs">
       <DependentUpon>InvalidFeature.feature</DependentUpon>
     </Compile>
-    <Compile Include="Misc\When_loading_a_project.cs" />
+    <Compile Include="Integration\When_loading_a_project.cs" />
     <Compile Include="MultiLanguage.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

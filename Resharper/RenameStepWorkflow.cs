@@ -19,8 +19,12 @@ namespace Raconteur.Resharper
         {
             if (!base.PostExecute(pi)) return false;
 
+            this.Debug();
+
+/*
             ObjectFactory.NewRenameStep(FileName, InitialName, InitialStageExecuter.NewName)
                 .Execute();
+*/
 
             return true;
         }

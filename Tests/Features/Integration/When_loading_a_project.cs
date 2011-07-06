@@ -7,7 +7,7 @@ using Raconteur;
 using Raconteur.Helpers;
 using Project = Raconteur.IDE.Project;
 
-namespace Features.Misc
+namespace Features.Integration
 {
     [TestFixture]
     public class When_loading_a_project

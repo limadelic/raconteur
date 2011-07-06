@@ -3,7 +3,7 @@
 	it should be possible to rename a step 
 	having the changes propagated accordingly
 
-Scenario: Rename within feature
+Scenario: Step within Feature
 
 	Given the Feature contains
 	"
@@ -18,6 +18,39 @@ Scenario: Rename within feature
 	"
 		Scenario: Name
 			new Step
+			new Step
+	"
+
+@wip
+Scenario: Step shared among Features
+
+	Given the Feature "Alpha" contains
+	"
+		Scenario: Name
+			// Step in Alpha
+			Step
+	"
+
+	And the Feature "Beta" contains
+	"
+		Scenario: Name
+			// Step in Beta
+			Step
+	"
+
+	When "Step" used in multiple features is renamed to "new Step"
+
+	The Feature "Alpha" should contain
+	"
+		Scenario: Name
+			// Step in Alpha
+			new Step
+	"
+
+	and the Feature "Beta" should contain
+	"
+		Scenario: Name
+			// Step in Beta
 			new Step
 	"
 

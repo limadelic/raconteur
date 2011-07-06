@@ -60,6 +60,7 @@
     <Compile Include="Generators\Steps\StepGeneratorForUnimplementedStep.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\RegexExpressions.cs" />
+    <Compile Include="Helpers\RunnerFileWatcher.cs" />
     <Compile Include="IDE\FeatureFile.cs" />
     <Compile Include="Feature.cs" />
     <Compile Include="Generators\InvalidRunnerGenerator.cs" />

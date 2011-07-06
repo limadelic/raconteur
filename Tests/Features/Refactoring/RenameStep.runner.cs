@@ -11,7 +11,7 @@ namespace Features.Refactoring
 
         
         [Test]
-        public void RenameWithinFeature()
+        public void StepWithinFeature()
         {         
             FeatureRunner.Given_the_Feature_contains(
 @"
@@ -24,6 +24,37 @@ Step
 @"
 Scenario: Name
 new Step
+new Step
+");
+        }
+        
+        [Test]        
+        [Category("wip")]
+        public void StepSharedAmongFeatures()
+        {         
+            Given_the_Feature__contains("Alpha", 
+@"
+Scenario: Name
+// Step in Alpha
+Step
+");        
+            And_the_Feature__contains("Beta", 
+@"
+Scenario: Name
+// Step in Beta
+Step
+");        
+            When__used_in_multiple_features_is_renamed_to("Step", "new Step");        
+            The_Feature__should_contain("Alpha", 
+@"
+Scenario: Name
+// Step in Alpha
+new Step
+");        
+            and_the_Feature__should_contain("Beta", 
+@"
+Scenario: Name
+// Step in Beta
 new Step
 ");
         }

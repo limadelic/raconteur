@@ -3,7 +3,7 @@ using FluentSpec;
 using MbUnit.Framework;
 using Raconteur.Compilers;
 
-namespace Features.Misc
+namespace Features.Integration
 {
     [TestFixture]
     public class When_loading_assemblies

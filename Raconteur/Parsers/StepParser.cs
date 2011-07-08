@@ -7,7 +7,8 @@ namespace Raconteur.Parsers
 {
     public interface StepParser
     {
-        Step StepFrom(string Sentence, Location ScenarioLocation=null);
+//        Step StepFrom(string Sentence, Location ScenarioLocation=null);
+        Step StepFrom(Location Location);
     }
 
     public class StepParserClass : StepParser 
@@ -22,12 +23,30 @@ namespace Raconteur.Parsers
             ArgColMap = new List<List<string>>();
         }
 
-        string Sentence;
+        Location Location;
+
+        string Sentence
+        {
+            get { return Location.Content; }
+            set { Location.Content = value; }
+        }
+
+        public Step StepFrom(Location Location)
+        {
+            this.Location = Location;
+
+            return IsArg ? ParseArg:
+                IsTable ? ParseTable:
+                LastStep = ParseStep;
+        }
+
+/*
+        Location ScenarioLocation;
 
         int CurrentPos;
         Location scenarioLocation;
-        Location ScenarioLocation
-        {
+
+ * {
             get { return scenarioLocation; } 
             set
             {
@@ -38,8 +57,10 @@ namespace Raconteur.Parsers
                 CurrentPos = scenarioLocation.Content.IndexOf(Environment.NewLine) + 1;
             } 
         }
+*/
 
 
+/*
         public Step StepFrom(string Sentence, Location ScenarioLocation=null)
         {
             this.Sentence = Sentence;
@@ -55,21 +76,23 @@ namespace Raconteur.Parsers
             return Step;
         }
 
-        Location Location;
-
-        void SetUpLocation(Location ScenarioLocation)
+        * void SetUpLocation(Location ScenarioLocation)
         {
             var Start = ScenarioLocation.Start +
                 ScenarioLocation.Content.IndexOf(Sentence, CurrentPos);
 
             Location = new Location(Start, Sentence);
         }
+*/
+
 
         Step ParseStep
         {
             get
             {   
+/*
                 if (ScenarioLocation != null) SetUpLocation(ScenarioLocation);
+*/
 
                 var Tokens = BeforeArg.IsEmpty() ? 
                     Sentence.Split('"') :

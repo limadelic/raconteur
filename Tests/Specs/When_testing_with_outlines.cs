@@ -26,7 +26,7 @@ namespace Specs
                     "|A|B|C|",
                     "|0|0|0|",
                     "|0|1|1|"
-                });
+                }.AsLocations());
             }
 
             [Test]
@@ -68,7 +68,7 @@ namespace Specs
                     "|A |B |C |",
                     "|0 |-1|-1|",
                     "|-1|-1|-2|"
-                });
+                }.AsLocations());
             }
 
             [Test]

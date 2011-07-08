@@ -27,9 +27,9 @@ namespace Specs
             public void should_associate_table_and_step()
             {
                 Step = 
-                    When.StepFrom("Step table:");
-                     And.StepFrom("|X|Y|");
-                     And.StepFrom("|2|1|");
+                    When.StepFrom("Step table:".AsLocation());
+                     And.StepFrom("|X|Y|".AsLocation());
+                     And.StepFrom("|2|1|".AsLocation());
                 
                 Step.Table.Rows.Count.ShouldBe(2);
             }
@@ -38,10 +38,10 @@ namespace Specs
             public void should_turn_single_column_table_into_single_row()
             {
                 var Step = 
-                When.StepFrom("Step table:");
-                 And.StepFrom("|0|");
-                 And.StepFrom("|1|");
-                 And.StepFrom("|2|");
+                When.StepFrom("Step table:".AsLocation());
+                 And.StepFrom("|0|".AsLocation());
+                 And.StepFrom("|1|".AsLocation());
+                 And.StepFrom("|2|".AsLocation());
                 
                 Step.Table.Rows.Count.ShouldBe(1);
             }
@@ -50,8 +50,8 @@ namespace Specs
             public void should_include_header_in_Table()
             {
                 var Step = 
-                When.StepFrom("Step table:");
-                 And.StepFrom("[ X | Y ]");
+                When.StepFrom("Step table:".AsLocation());
+                 And.StepFrom("[ X | Y ]".AsLocation());
 
                 var Table = Step.Table;
 

@@ -126,8 +126,8 @@ namespace Specs
             [Test]
             public void should_name_steps()
             {
-                var Step = TestObjectFor<Step>();
-                Given.StepParser.StepFrom("Do what you like").Is(Step);
+                var Step = new Step();
+                Given.StepParser.IgnoringArgs().StepFrom(null).Is(Step);
 
                 Definition = new List<string>
                 {
@@ -135,7 +135,7 @@ namespace Specs
                       "Do what you like"
                 };
 
-                The.ScenarioFrom(Definition)
+                The.ScenarioFrom(Definition.AsLocations())
                     .Steps[0].ShouldBe(Step);
             }
 
@@ -147,7 +147,7 @@ namespace Specs
                     "Scenario: Scenario Name"
                 };
 
-                The.ScenarioFrom(Definition)
+                The.ScenarioFrom(Definition.AsLocations())
                     .Name.ShouldBe("ScenarioName");
             }
 
@@ -159,17 +159,17 @@ namespace Specs
                     "Scenario: Scenario + Name"
                 };
 
-                The.ScenarioFrom(Definition)
+                The.ScenarioFrom(Definition.AsLocations())
                     .Name.ShouldBe("Scenario_Name");
             }
 
             [Test]
             public void should_create_steps()
             {
-                The.ScenarioFrom(Actors.ScenarioWithNoSteps)
+                The.ScenarioFrom(Actors.ScenarioWithNoSteps.AsLocations())
                     .Steps.Count.ShouldBe(0);
 
-                The.ScenarioFrom(Actors.ScenarioWithTwoSteps)
+                The.ScenarioFrom(Actors.ScenarioWithTwoSteps.AsLocations())
                     .Steps.Count.ShouldBe(2);
 
             }
@@ -181,7 +181,7 @@ namespace Specs
             [Test]
             public void should_build_steps_from_sentences()
             {
-                The.StepFrom("Do what you like")
+                The.StepFrom("Do what you like".AsLocation())
                     .Name.ShouldBe("Do_what_you_like");
             }
         }

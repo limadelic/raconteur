@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
@@ -53,15 +54,14 @@ namespace Specs
         [Test]
         public void should_read_tags_of_Scenarios()
         {
-            var Sut = new ScenarioParserClass();
-
-            ShouldAssertions.ShouldBe(Sut.ScenarioFrom(new List<string>
-                {
-                    "@a tag @another tag",
-                    "@a tag",
-                    "Scenario: With Tag"
-                })
-                .Tags, "a tag", "another tag");
+            new ScenarioParserClass().ScenarioFrom(new List<string>
+            {
+                "@a tag @another tag",
+                "@a tag",
+                "Scenario: With Tag"
+            }.AsLocations())
+            .
+            Tags.ShouldBe("a tag", "another tag");
         }
 
         readonly Scenario Scenario = new Scenario { Tags = { "tag" } };

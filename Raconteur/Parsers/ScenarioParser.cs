@@ -7,7 +7,7 @@ namespace Raconteur.Parsers
 {
     public interface ScenarioParser
     {
-        Scenario ScenarioFrom(List<string> Definition, Location Location=null);
+        Scenario ScenarioFrom(List<Location> Definition, Location Location=null);
     }
 
     public class ScenarioParserClass : ScenarioParser
@@ -15,13 +15,16 @@ namespace Raconteur.Parsers
         public StepParser StepParser { get; set; }
         public string Content { get; set; }
 
-        public List<string> Definition;
-        public Location Location;
+        public List<Location> Definition;
 
-        public Scenario ScenarioFrom(List<string> Definition, Location Location=null)
+        IEnumerable<string> DefinitionContent
+        {
+            get { return Definition.Select(x => x.Content); }
+        }
+
+        public Scenario ScenarioFrom(List<Location> Definition, Location Location=null)
         {
             this.Definition = Definition;
-            this.Location = Location;
 
             return new Scenario
             {
@@ -37,7 +40,7 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Definition
+                return DefinitionContent
                     .TakeWhile(IsNotDeclaration)
                     .SelectMany(TagsInLine)
                     .Distinct()
@@ -57,7 +60,7 @@ namespace Raconteur.Parsers
         {
             get
             {
-                return Definition
+                return DefinitionContent
                     .SkipWhile(IsNotDeclaration)
                     .First()
                     .YamlIdentifier();    
@@ -78,14 +81,19 @@ namespace Raconteur.Parsers
             }
         }
 
-        Step Step(string Line)
+        Step Step(Location Location)
         {
-            return StepParser.StepFrom(Line, Location);
+            return StepParser.StepFrom(Location);
         }
 
         bool InsideArg;
 
-        protected bool IsNotDeclaration(string Line)
+        bool IsNotDeclaration(Location Location)
+        {
+            return IsNotDeclaration(Location.Content);
+        }
+
+        bool IsNotDeclaration(string Line)
         {
             return !Line.StartsWith(Settings.Language.Scenario);
         }
@@ -107,7 +115,7 @@ namespace Raconteur.Parsers
             {
                 var examples = new List<Table>();
 
-                foreach (var Line in Definition.SkipWhile(IsNotExample))
+                foreach (var Line in DefinitionContent.SkipWhile(IsNotExample))
                     if (IsExample(Line)) examples.Add
                     (
                         new Table { Name = Line.YamlIdentifier()}
@@ -121,6 +129,11 @@ namespace Raconteur.Parsers
         protected bool IsExample(string Line)
         {
             return !IsNotExample(Line);
+        }
+
+        protected bool IsNotExample(Location Location)
+        {
+            return IsNotExample(Location.Content);
         }
 
         protected bool IsNotExample(string Line)

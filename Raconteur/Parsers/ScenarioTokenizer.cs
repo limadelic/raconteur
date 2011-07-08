@@ -32,48 +32,55 @@ namespace Raconteur.Parsers
             ).ToList();
         }
 
-        void AddScenario(List<Tuple<List<string>, Location>> Scenarios, string Line)
+        void AddScenario(Location Location)
         {
             var NewScenarioLocation = new Location();
 
-            if (Scenarios.Count > 0)
+            if (scenarioDefinitions.Count > 0)
             {
-                var LastScenarioLocation = Scenarios.Last().Item2;
+                var EndOfCurrentScenario = scenarioDefinitions.Last().Item1.Last().End;
 
-                NewScenarioLocation.Start = Content.IndexOf(Line, LastScenarioLocation.Start + 1);
+                NewScenarioLocation.Start = Content.IndexOf(Location.Content, EndOfCurrentScenario + 1);
 
-                LastScenarioLocation.Content = Content.Substring
+                CurrentScenarioLocation.Content = Content.Substring
                 (
-                    LastScenarioLocation.Start, NewScenarioLocation.Start - LastScenarioLocation.Start
+                    CurrentScenarioLocation.Start, NewScenarioLocation.Start - CurrentScenarioLocation.Start
                 );
             } 
             else
             {
-                NewScenarioLocation.Start = Content.IndexOf(Line);
+                NewScenarioLocation.Start = Content.IndexOf(Location.Content);
             }
 
             NewScenarioLocation.Content = Content.Substring(NewScenarioLocation.Start);
 
-            Scenarios.Add(new Tuple<List<string>, Location>(
-                new List<string>(), NewScenarioLocation));
+            scenarioDefinitions.Add(new Tuple<List<Location>, Location>(
+                new List<Location>(), NewScenarioLocation));
         }
 
-        public List<Tuple<List<string>, Location>> ScenarioDefinitions
+        List<Tuple<List<Location>, Location>> scenarioDefinitions;
+
+        Location CurrentScenarioLocation
+        {
+            get { return scenarioDefinitions.Last().Item2; }
+        }
+
+        public List<Tuple<List<Location>, Location>> ScenarioDefinitions
         {
             get
             {
-                var Results = new List<Tuple<List<string>, Location>>();
+                scenarioDefinitions = new List<Tuple<List<Location>, Location>>();
 
-                foreach (var Line in Lines)
+                foreach (var Location in Locations)
                 {
-                    if (IsScenarioStart(Line)) AddScenario(Results, Line);
+                    if (IsScenarioStart(Location.Content)) AddScenario(Location);
 
-                    if (Results.Count == 0) continue;
+                    if (scenarioDefinitions.Count == 0) continue;
 
-                    Results.Last().Item1.Add(Line);
+                    scenarioDefinitions.Last().Item1.Add(Location);
                 }
 
-                return Results;
+                return scenarioDefinitions;
             }
         }
 
@@ -98,17 +105,40 @@ namespace Raconteur.Parsers
             return HasTags = false;
         }
 
-        IEnumerable<string> Lines
+        IEnumerable<Location> Locations
         {
             get
             {
+                CurrentLocation = 0;
+
                 return Regex.Split(Content, Environment.NewLine)
-                    .Select(Line => Line.Trim())
+                    .Select(Location)
                     .Where(HasCode);
             }
         }
 
+        int CurrentLocation;
+
+        Location Location(string Line)
+        {
+            var TrimmedLine = Line.Trim();
+
+            var Result = TrimmedLine.IsEmpty() ? 
+                new Location(CurrentLocation, TrimmedLine) : 
+                new Location
+                (
+                    Content.IndexOf(TrimmedLine, CurrentLocation),
+                    TrimmedLine
+                );
+
+            CurrentLocation = Result.End;
+
+            return Result;
+        }
+
         bool InsideArg;
+
+        bool HasCode(Location Location) { return HasCode(Location.Content); }
 
         bool HasCode(string Line)
         {

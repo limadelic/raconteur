@@ -123,7 +123,8 @@ namespace Raconteur
 
         #region Rename Stuff
         
-        public void Rename(string NewName) {
+        public void Rename(string NewName) 
+        {
             Name = NewName;
             IsDirty = true;
         }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Common;
 using FluentSpec;
 using MbUnit.Framework;
 using Raconteur;
@@ -72,7 +73,7 @@ namespace Specs
             new ScenarioParserClass()
                 .ScenarioFrom
                 (
-                    new List<string> { "Scenario: Name" }, 
+                    new List<string> { "Scenario: Name" }.AsLocations(), 
                     expectedLocation
                 )
             .Location.ShouldBe(expectedLocation);
@@ -80,20 +81,26 @@ namespace Specs
 
         [Test]
 
-        [Row("Simple Step",
+        [Row("Simple Step", 0,
             @"
-                Step 1
-                Step 2
+                Step
             ",
-            "Step 2")]
+            "Step")]
 
-        [Row("Step with Args",
+        [Row("Repeated Step", 1,
+            @"
+                Step
+                Step
+            ",
+            "Step")]
+
+        [Row("Step with Args", 0,
             @"
                 ""Arg"" Step ""Arg"" 
             ",
             @"""Arg"" Step ""Arg""")]
 
-        [Row("Step with Multiline Args",
+        [Row("Step with Multiline Args", 0,
             @"
                 A multiline step arg
                 ""
@@ -103,7 +110,7 @@ namespace Specs
             ",
             "A multiline step arg")]
 
-        [Row("Step with all kind of Args",
+        [Row("Step with all kind of Args", 4,
             @"
                 ""
                     line 1
@@ -117,23 +124,27 @@ namespace Specs
             ",
             @"A multiline ""Arg"" step arg")]
 
-        public void StepParser_should_include_Step_location
+        public void ScenarioTokenizer_should_include_Step_locations
         (
-            string Example, 
-            string Content, 
-            string LocationContent
+            string Example,
+            int StepLocation, 
+            string Steps, 
+            string StepLocationContent
         )
         {
-            var Parser = new StepParserClass();
+            new ScenarioTokenizerClass
+            {
+                Content =
+                @"
+                    Feature: Name
 
-            var Location = new Location { Content = "Scenario: Name" + "Content" };
+                    Scenario: Name
+                "
+                + Steps
+            }
+            .ScenarioDefinitions[0].Item1[StepLocation + 1]
+                .Content.ShouldBe(StepLocationContent);
 
-            Step Step = null;
-            
-            Content.TrimLines().Lines().ForEach(l => 
-                Step = Parser.StepFrom(l, Location) ?? Step);
-
-            Step.Location.Content.ShouldBe(LocationContent);
         }
     }
 }

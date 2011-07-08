@@ -25,15 +25,15 @@ Scenario: Step shared among Features
 
 	Given the Feature "Alpha" contains
 	"
-		// Alpha
 		Scenario: Name
+			// Step in Alpha
 			Step
 	"
 
 	And the Feature "Beta" contains
 	"
-		// Beta
 		Scenario: Name
+			// Step in Beta
 			Step
 	"
 
@@ -41,15 +41,15 @@ Scenario: Step shared among Features
 
 	The Feature "Alpha" should contain
 	"
-		// Alpha
 		Scenario: Name
+			// Step in Alpha
 			new Step
 	"
 
 	and the Feature "Beta" should contain
 	"
-		// Beta
 		Scenario: Name
+			// Step in Beta
 			new Step
 	"
 
@@ -199,4 +199,22 @@ Scenario: Step in Scenario Outline
 			|X|Y|
 			|1|0|
 			|0|0|
+	"
+
+Scenario: Step mentioned in comments
+
+	Given the Feature contains
+	"
+		Scenario: Name
+			// Step
+			Step
+	"
+
+	When "Step" is renamed to "new Step"
+
+	The Feature should contain
+	"
+		Scenario: Name
+			// Step
+			new Step
 	"

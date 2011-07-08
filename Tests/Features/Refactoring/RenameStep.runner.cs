@@ -33,27 +33,27 @@ new Step
         {         
             Given_the_Feature__contains("Alpha", 
 @"
-// Alpha
 Scenario: Name
+// Step in Alpha
 Step
 ");        
             And_the_Feature__contains("Beta", 
 @"
-// Beta
 Scenario: Name
+// Step in Beta
 Step
 ");        
             When__used_in_multiple_features_is_renamed_to("Step", "new Step");        
             The_Feature__should_contain("Alpha", 
 @"
-// Alpha
 Scenario: Name
+// Step in Alpha
 new Step
 ");        
             and_the_Feature__should_contain("Beta", 
 @"
-// Beta
 Scenario: Name
+// Step in Beta
 new Step
 ");
         }
@@ -199,6 +199,24 @@ Examples:
 |X|Y|
 |1|0|
 |0|0|
+");
+        }
+        
+        [Test]
+        public void StepMentionedInComments()
+        {         
+            FeatureRunner.Given_the_Feature_contains(
+@"
+Scenario: Name
+// Step
+Step
+");        
+            When__is_renamed_to("Step", "new Step");        
+            The_Feature_should_contain(
+@"
+Scenario: Name
+// Step
+new Step
 ");
         }
 

@@ -42,7 +42,9 @@ namespace Raconteur.Parsers
             Feature.Name = Name;
             Feature.DeclaredStepDefinitions = DeclaredStepDefinitions;
 
-            Feature.Scenarios = ScenarioTokenizer.ScenariosFrom(Feature.Content);
+            // Hack Tech Debt
+            Feature.Content = Content;
+            Feature.Scenarios = ScenarioTokenizer.ScenariosFrom(Content);
             
             Feature.Steps.ForEach(Step => Step.Feature = Feature);
 
@@ -78,7 +80,7 @@ namespace Raconteur.Parsers
             {
                 try
                 {
-                    return Regex.Match(Header, 
+                    return Regex.Match(Header.TrimLines(), 
                         RegexExpressions.FeatureDefinition)
                         .Groups[1].Value.CamelCase().ToValidIdentifier();
                 } 
@@ -90,7 +92,7 @@ namespace Raconteur.Parsers
         {
             get 
             {
-                var Matches = Regex.Matches(Header, 
+                var Matches = Regex.Matches(Header.TrimLines(), 
                     RegexExpressions.UsingStatement);
 
                 if (Matches.Count == 0 && Settings.StepDefinitions.IsEmpty()) 

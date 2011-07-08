@@ -19,7 +19,7 @@ namespace Specs
             [Test]
             public void should_create_a_Step_with_Args()
             {
-                The.StepFrom(@"If ""X"" happens")
+                The.StepFrom(@"If ""X"" happens".AsLocation())
                     .Name.ShouldBe("If__happens");
                 And.LastStep.Args.Count.ShouldBe(1);
                 And.LastStep.Args[0].ShouldBe("X");
@@ -28,7 +28,7 @@ namespace Specs
             [Test]
             public void should_create_a_Step_with_multiple_Args()
             {
-                The.StepFrom(@"If ""X"" and ""Y"" happens")
+                The.StepFrom(@"If ""X"" and ""Y"" happens".AsLocation())
                     .Name.ShouldBe("If__and__happens");
                 And.LastStep.Args.Count.ShouldBe(2);
                 And.LastStep.Args[1].ShouldBe("Y");
@@ -37,12 +37,12 @@ namespace Specs
             [Test]
             public void should_append_a_multiline_Arg_to_the_Step()
             {
-                Given.StepFrom("A multiline step arg");
-                And.StepFrom("\"");
-                And.StepFrom("line 1");
-                And.StepFrom("line 2");
+                Given.StepFrom("A multiline step arg".AsLocation());
+                And.StepFrom("\"".AsLocation());
+                And.StepFrom("line 1".AsLocation());
+                And.StepFrom("line 2".AsLocation());
                 
-                When.StepFrom("\"");
+                When.StepFrom("\"".AsLocation());
 
                 The.LastStep.Name.ShouldBe("A_multiline_step_arg");
                 And.LastStep.Args[0].ShouldBe
@@ -54,7 +54,7 @@ namespace Specs
             [Test]
             public void should_allow_to_start_a_Step_with_an_Arg()
             {
-                The.StepFrom(@"""Arg"" starting a Step")
+                The.StepFrom(@"""Arg"" starting a Step".AsLocation())
                     .Name.ShouldBe("starting_a_Step");
                 And.LastStep.Args[0].ShouldBe("Arg");
             }
@@ -62,10 +62,10 @@ namespace Specs
             [Test]
             public void should_allow_to_start_a_Step_with_a_multiline_Arg()
             {
-                Given.StepFrom("\"");
-                And.StepFrom("multiline Arg");
-                And.StepFrom("\"");
-                And.StepFrom("starting a Step");
+                Given.StepFrom("\"".AsLocation());
+                And.StepFrom("multiline Arg".AsLocation());
+                And.StepFrom("\"".AsLocation());
+                And.StepFrom("starting a Step".AsLocation());
 
                 The.LastStep.Name.ShouldBe("starting_a_Step");
                 And.LastStep.Args[0].ShouldBe
@@ -123,7 +123,7 @@ namespace Specs
                         "\"",
                         "Examples:",
                         "\"",
-                };
+                }.AsLocations();
                 And.StepParser.StepFrom(null)
                     .IgnoringArgs().WillReturn(new Step());
                 

@@ -1,4 +1,7 @@
-﻿using Raconteur.Helpers;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Raconteur.Helpers;
+using Raconteur.Parsers;
 
 namespace Common 
 {
@@ -21,6 +24,16 @@ namespace Common
             var NewMock = NSubstitute.Substitute.For<I>();
             ObjectFactory.Return<T>(NewMock);
             return NewMock;
+        }
+
+        public static Location AsLocation(this string Content)
+        {
+            return new Location(0, Content);
+        }
+
+        public static List<Location> AsLocations(this List<string> Contents)
+        {
+            return Contents.Select(x => x.AsLocation()).ToList();
         }
     }
 }

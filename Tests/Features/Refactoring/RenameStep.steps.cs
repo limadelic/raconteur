@@ -60,6 +60,8 @@ namespace Features.Refactoring
             Directory.EnumerateFiles(".", "*.feature").ForEach( f => 
                 File.WriteAllText(Path.GetFileNameWithoutExtension(f) + ".runner.cs",""));
 
+            RunnerFileWatcher.Timeout = 50;
+
             RunnerFileWatcher.OnFileChange(f =>
                 ObjectFactory.NewRenameStep(f.FeatureFileFromRunner(), OldName, NewName).Execute());
             
@@ -67,12 +69,16 @@ namespace Features.Refactoring
             Directory.EnumerateFiles(".", "*.feature").ForEach( f => 
                 File.WriteAllText(Path.GetFileNameWithoutExtension(f) + ".runner.cs",""));
 
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
+
+            RunnerFileWatcher.IsRunning.ShouldBeFalse("Watcher did not stop");
         }
 
         [TearDown]
         public void TearDown()
         {
+            RunnerFileWatcher.Timeout = RunnerFileWatcher.DefaultTimeout;
+
             Directory.EnumerateFiles(".", "*.feature")
                 .ForEach(File.Delete);
 

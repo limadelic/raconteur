@@ -56,12 +56,12 @@ namespace Features.Refactoring
 
             RunnerFileWatcher.OnFileChange(f =>
                 ObjectFactory.NewRenameStep
-                (
-                    f.FeatureFileFromRunner(), 
-                    OldName.Replace(" ", "_"), 
-                    NewName.Replace(" ", "_")
-                )
-                .Execute());
+                    (
+                        f.FeatureFileFromRunner(), 
+                        OldName.Replace(" ", "_"), 
+                        NewName.Replace(" ", "_")
+                    )
+                    .Execute());
             
             ChangeRunnerFile();
 

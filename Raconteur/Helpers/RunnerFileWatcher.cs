@@ -39,6 +39,8 @@ namespace Raconteur.Helpers
 
         static Action<string> FileChangeHandler; 
 
+        public static string Path { set { Watcher.Path = value; } }
+
         public static bool IsRunning { get { return Watcher.EnableRaisingEvents; } }
 
         static readonly Timer Timer;

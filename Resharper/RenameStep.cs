@@ -56,8 +56,6 @@ namespace Raconteur.Resharper
             return null;
         }
 
-        string FileName { get { return Provider.SourceFile.Document.Moniker; } }
-
         IEnumerable<IDataRule> Rules
         {
             get
@@ -74,7 +72,7 @@ namespace Raconteur.Resharper
             Lifetimes.Using(Lifetime => RefactoringActionUtil.ExecuteRefactoring
             (
                 Shell.Instance.Components.ActionManager().DataContexts.Create(Lifetime, Rules), 
-                new RenameStepWorkflow(FileName, Solution, null)
+                new RenameStepWorkflow(Solution, null)
             ));
         }
     }

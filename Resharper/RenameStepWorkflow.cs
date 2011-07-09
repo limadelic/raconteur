@@ -1,30 +1,41 @@
+using System;
 using JetBrains.Application.Progress;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Refactorings.Rename;
+using JetBrains.Util;
 using Raconteur.Helpers;
 
 namespace Raconteur.Resharper
 {
     public class RenameStepWorkflow : RenameWorkflow
     {
-        public string FileName { get; set; }
-
-        public RenameStepWorkflow(string FileName, ISolution Solution, string ActionId) 
+        public RenameStepWorkflow(ISolution Solution, string ActionId) 
             : base(Solution, ActionId)
         {
-            this.FileName = FileName;
         }
 
         public override bool PostExecute(IProgressIndicator pi) 
         {
-            if (!base.PostExecute(pi)) return false;
+            try 
+            {
+                if (!base.PostExecute(pi)) return false;
 
-            this.Debug();
+                RunnerFileWatcher.Path = Solution.SolutionFilePath.Directory.FullPath;
 
-/*
-            ObjectFactory.NewRenameStep(FileName, InitialName, InitialStageExecuter.NewName)
-                .Execute();
-*/
+                RunnerFileWatcher.OnFileChange(f =>
+                    ObjectFactory.NewRenameStep
+                    (
+                        f.FeatureFileFromRunner(), 
+                        InitialName, 
+                        InitialStageExecuter.NewName
+                    )
+                    .Execute());
+
+            } 
+            catch (Exception e)
+            {
+                MessageBox.ShowInfo(e.ToString());
+            }
 
             return true;
         }

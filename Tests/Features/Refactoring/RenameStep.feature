@@ -8,11 +8,11 @@ Scenario: Step within Feature
 	Given the Feature contains
 	"
 		Scenario: Name
-			Step
-			Step
+			old Step
+			old Step
 	"
 
-	When "Step" is renamed to "new Step"
+	When "old Step" is renamed to "new Step"
 
 	The Feature should contain
 	"

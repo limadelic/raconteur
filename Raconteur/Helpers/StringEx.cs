@@ -49,7 +49,7 @@ namespace Raconteur.Helpers
                 .CreateEscapedIdentifier(Result);
         }
 
-        public static string IdentifierToEnglish(this string Identifier)
+        public static string InNaturalLanguage(this string Identifier)
         {
             return Identifier.Replace("__", "_\"\"_").Replace("_", " ");
         }

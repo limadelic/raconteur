@@ -139,7 +139,7 @@ namespace Raconteur
             {
                 if (!IsDirty) return OriginalSentence;
 
-                if (!HasArgs) return Name;
+                if (!HasArgs) return Name.InNaturalLanguage();
 
                 var ZipNameAndArgs = StartsWithArg ?
                     SentenceStartingWithArgs :
@@ -153,7 +153,10 @@ namespace Raconteur
 
         bool StartsWithArg { get { return OriginalSentence.StartsWith("\""); } }
 
-        IEnumerable<string> NameParts { get { return Regex.Split(Name, @"\s\s"); } }
+        IEnumerable<string> NameParts
+        {
+            get { return Regex.Split(Name.InNaturalLanguage(), " \"\" "); }
+        }
 
         string MissingLink {
             get {
@@ -163,14 +166,16 @@ namespace Raconteur
             }
         }
 
-        string SentenceStartingWithName {
+        string SentenceStartingWithName 
+        {
             get {
-                return string.Join(" ", NameParts
-                    .Zip(SimpleArgs, (NamePart, Arg) => NamePart + " " + Arg.Quoted()));
+                return string.Join(" ", NameParts.Zip(SimpleArgs, 
+                    (NamePart, Arg) => NamePart + " " + Arg.Quoted()));
             }
         }
 
-        string SentenceStartingWithArgs {
+        string SentenceStartingWithArgs 
+        {
             get {
                 return string.Join(" ", SimpleArgs
                     .Zip(NameParts, (Arg, NamePart) => Arg.Quoted() + " " + NamePart));

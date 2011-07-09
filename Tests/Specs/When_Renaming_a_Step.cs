@@ -59,8 +59,11 @@ namespace Specs
             Feature.Content += OldContent;
 
             Step.Name = RenameStep.OriginalName;
-            Step.Location = Location ?? 
-                new Location(Feature.Content.IndexOf(RenameStep.OriginalName), RenameStep.OriginalName);
+            Step.Location = Location ?? new Location
+            (
+                Feature.Content.IndexOf(RenameStep.OriginalName), 
+                RenameStep.OriginalName
+            );
 
             RenameStep.FeatureContent.Returns(Feature.Content);
 
@@ -82,12 +85,12 @@ namespace Specs
         {
             AssertRenamed
             (
-                "old_step",
+                "old step",
                 @"
                     old step
                     old step do not rename
                 ",
-                "renamed_step", 
+                "renamed step", 
                 @"
                     renamed step
                     old step do not rename
@@ -147,27 +150,27 @@ namespace Specs
         [Row("2 Args starting with Name", 
             @"Name with an ""Arg"" and another ""Arg""",
             @"new Name with an ""Arg"" and another ""Arg"" at the end",
-            "new Name with an  and another  at the end", "Arg", "Arg")]
+            "new_Name_with_an__and_another__at_the_end", "Arg", "Arg")]
         
         [Row("Arg at the end", 
             @"Name with an ""Arg""", 
             @"new Name with an ""Arg""", 
-            "new Name with an", "Arg", null)]
+            "new_Name_with_an", "Arg", null)]
         
         [Row("Arg at the beginning",
             @"""Arg"" at beginning", 
             @"""Arg"" still at beginning", 
-            "still at beginning", "Arg", null)]
+            "still_at_beginning", "Arg", null)]
 
         [Row("Starting and ending with Args",
             @"""Arg"" sandwich ""Arg""",
             @"""Arg"" still a sandwich ""Arg""", 
-            "still a sandwich", "Arg", "Arg")]
+            "still_a_sandwich", "Arg", "Arg")]
 
         [Row("Arg in the middle",
             @"where the ""Arg"" is",
             @"the ""Arg"" is here", 
-            "the  is here", "Arg", null)]
+            "the__is_here", "Arg", null)]
 
         public void should_generate_new_Sentence_for_Step_with_Args
         (

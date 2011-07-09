@@ -94,6 +94,13 @@ namespace Specs
             ",
             "Step")]
 
+        [Row("Two Steps", 1,
+            @"
+                one Step
+                another Step
+            ",
+            "another Step")]
+
         [Row("Step with Args", 0,
             @"
                 ""Arg"" Step ""Arg"" 

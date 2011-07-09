@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Raconteur.Helpers;
 
 namespace Raconteur.Refactoring
@@ -13,8 +12,8 @@ namespace Raconteur.Refactoring
         public RenameStep(string FileName, string OriginalName, string NewName)
         {
             this.FileName = FileName;
-            this.OriginalName = OriginalName.Replace("_"," ");
-            this.NewName = NewName.Replace("_"," ");
+            this.OriginalName = OriginalName;
+            this.NewName = NewName;
         }
 
         public void Execute()

@@ -35,7 +35,12 @@ namespace Features.Refactoring
 
         void When__is_renamed_to(string OldName, string NewName)
         {
-            RenameStepRefactoring = Substitute.For<RenameStepRefactoring>(null, OldName, NewName);
+            RenameStepRefactoring = Substitute.For<RenameStepRefactoring>
+            (
+                null, 
+                OldName.Replace(" ", "_"), 
+                NewName.Replace(" ", "_")
+            );
             
             RenameStepRefactoring.FeatureContent
                 .Returns(FeatureRunner.FeatureContent);
@@ -48,7 +53,13 @@ namespace Features.Refactoring
             EnsureRunnerFileExists();
 
             RunnerFileWatcher.OnFileChange(f =>
-                ObjectFactory.NewRenameStep(f.FeatureFileFromRunner(), OldName, NewName).Execute());
+                ObjectFactory.NewRenameStep
+                (
+                    f.FeatureFileFromRunner(), 
+                    OldName.Replace(" ", "_"), 
+                    NewName.Replace(" ", "_")
+                )
+                .Execute());
             
             ChangeRunnerFile();
 

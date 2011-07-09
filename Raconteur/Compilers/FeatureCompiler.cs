@@ -42,7 +42,7 @@ namespace Raconteur.Compilers
 
             LoadAssemblies(FeatureItem);
             return StepDefinitions.SelectMany(type => 
-                type.GetMethods(BindingFlags.Public | BindingFlags.Instance).Select(method => method.Name.IdentifierToEnglish()));
+                type.GetMethods(BindingFlags.Public | BindingFlags.Instance).Select(method => method.Name.InNaturalLanguage()));
         }
 
         void LoadAssemblies(FeatureItem FeatureItem) 

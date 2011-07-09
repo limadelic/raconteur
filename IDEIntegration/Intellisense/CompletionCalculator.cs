@@ -36,7 +36,7 @@ namespace Raconteur.IDEIntegration.Intellisense
         public IEnumerable<Completion> For(string fragment)
         {
             var possibilities = Compiler.StepNamesOf(Feature, FeatureItem)
-                .Union(Feature.Steps.Select(step => step.Name.IdentifierToEnglish())
+                .Union(Feature.Steps.Select(step => step.Name.InNaturalLanguage())
                 .Union(Settings.Language.Keywords.Select(keyword => keyword + ":")));
             
             return possibilities

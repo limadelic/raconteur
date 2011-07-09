@@ -16,10 +16,10 @@ namespace Features.Refactoring
             FeatureRunner.Given_the_Feature_contains(
 @"
 Scenario: Name
-Step
-Step
+old Step
+old Step
 ");        
-            When__is_renamed_to("Step", "new Step");        
+            When__is_renamed_to("old Step", "new Step");        
             The_Feature_should_contain(
 @"
 Scenario: Name

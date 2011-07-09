@@ -7,7 +7,6 @@ namespace Raconteur.Parsers
 {
     public interface StepParser
     {
-//        Step StepFrom(string Sentence, Location ScenarioLocation=null);
         Step StepFrom(Location Location);
     }
 
@@ -40,60 +39,10 @@ namespace Raconteur.Parsers
                 LastStep = ParseStep;
         }
 
-/*
-        Location ScenarioLocation;
-
-        int CurrentPos;
-        Location scenarioLocation;
-
- * {
-            get { return scenarioLocation; } 
-            set
-            {
-                if (scenarioLocation == value) return;
-
-                scenarioLocation = value;
-                
-                CurrentPos = scenarioLocation.Content.IndexOf(Environment.NewLine) + 1;
-            } 
-        }
-*/
-
-
-/*
-        public Step StepFrom(string Sentence, Location ScenarioLocation=null)
-        {
-            this.Sentence = Sentence;
-            this.ScenarioLocation = ScenarioLocation;
-
-            var Step = 
-                IsArg ? ParseArg :
-                IsTable ? ParseTable :
-                LastStep = ParseStep;
-
-            CurrentPos += Sentence.Length;
-
-            return Step;
-        }
-
-        * void SetUpLocation(Location ScenarioLocation)
-        {
-            var Start = ScenarioLocation.Start +
-                ScenarioLocation.Content.IndexOf(Sentence, CurrentPos);
-
-            Location = new Location(Start, Sentence);
-        }
-*/
-
-
         Step ParseStep
         {
             get
             {   
-/*
-                if (ScenarioLocation != null) SetUpLocation(ScenarioLocation);
-*/
-
                 var Tokens = BeforeArg.IsEmpty() ? 
                     Sentence.Split('"') :
                     (BeforeArg.Quoted() + Sentence).Split('"');

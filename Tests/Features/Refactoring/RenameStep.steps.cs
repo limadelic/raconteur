@@ -16,7 +16,7 @@ namespace Features.Refactoring
         [SetUp]
         public void SetUp()
         {
-            RunnerFileWatcher.Timeout = 100;
+            TestingWithWatcher = false;
         }
 
         void Given_the_Feature__contains(string Name, string Content)
@@ -50,6 +50,8 @@ namespace Features.Refactoring
 
         void Rename__to(string OldName, string NewName)
         {
+            TestingWithWatcher = true;
+
             EnsureRunnerFileExists();
 
             RunnerFileWatcher.OnFileChange(f =>
@@ -63,9 +65,7 @@ namespace Features.Refactoring
             
             ChangeRunnerFile();
 
-            Thread.Sleep(200);
-
-            RunnerFileWatcher.IsRunning.ShouldBeFalse("Watcher did not stop");
+            Thread.Sleep(50);
         }
 
         static void EnsureRunnerFileExists()
@@ -106,16 +106,35 @@ namespace Features.Refactoring
         [TearDown]
         public void TearDown()
         {
-            RunnerFileWatcher.Timeout = RunnerFileWatcher.DefaultTimeout;
+            CheckWatcher();
 
             Directory.EnumerateFiles(".", "*.feature")
                 .ForEach(File.Delete);
 
             Directory.EnumerateFiles(".", "*.runner.cs")
                 .ForEach(File.Delete);
+        }
 
-            Thread.Sleep(50);
+        bool testingWithWatcher;
+        bool TestingWithWatcher
+        {
+            get { return testingWithWatcher; }
+            set
+            {
+                testingWithWatcher = value;
+                if (testingWithWatcher) RunnerFileWatcher.Timeout = 100;
+            }
+        }
 
+        void CheckWatcher()
+        {
+            if (!TestingWithWatcher) return;
+
+            // restore timeout
+            RunnerFileWatcher.Timeout = RunnerFileWatcher.DefaultTimeout;
+
+            RunnerFileWatcher.IsRunning.ShouldBeTrue("Watcher stopped before expected time");
+            Thread.Sleep(100);
             RunnerFileWatcher.IsRunning.ShouldBeFalse("Watcher did not stop");
         }
     }

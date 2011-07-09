@@ -53,7 +53,6 @@ Scenario: Step shared among Features
 			new Step
 	"
 
-@wip
 Scenario: Step renamed twice
 
 	Given the Feature "A" contains

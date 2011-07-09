@@ -58,8 +58,7 @@ new Step
 ");
         }
         
-        [Test]        
-        [Category("wip")]
+        [Test]
         public void StepRenamedTwice()
         {         
             Given_the_Feature__contains("A", 

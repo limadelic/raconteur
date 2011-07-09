@@ -7,9 +7,8 @@ namespace Raconteur.Helpers
     public static class RunnerFileWatcher
     {
         public const int DefaultTimeout = 60000;
-        public static int Timeout = DefaultTimeout;
 
-        static readonly Timer Timer;
+        public static int Timeout = DefaultTimeout;
 
         static readonly FileSystemWatcher Watcher;
 
@@ -30,19 +29,19 @@ namespace Raconteur.Helpers
         public static void OnFileChange(Action<string> FileChangeHandler)
         {
             RunnerFileWatcher.FileChangeHandler = FileChangeHandler;
-            Start();
-        }
-
-        static void Start()
-        {
-/*
-            if (IsRunning) ResetTimer();
-            else StartWatching();   
-*/
             StartWatching();
         }
 
-        public static bool IsRunning { get { return Timer.Enabled; } }
+        static void RunnerFileChanged(object sender, FileSystemEventArgs e) 
+        {
+            FileChangeHandler(e.FullPath);
+        }
+
+        static Action<string> FileChangeHandler; 
+
+        public static bool IsRunning { get { return Watcher.EnableRaisingEvents; } }
+
+        static readonly Timer Timer;
 
         static void StartWatching()
         {
@@ -57,14 +56,5 @@ namespace Raconteur.Helpers
             Watcher.EnableRaisingEvents = false;
             Timer.Stop();
         }
-
-        static void RunnerFileChanged(object sender, FileSystemEventArgs e) 
-        {
-            FileChangeHandler(e.FullPath);
-        }
-
-        static void ResetTimer() {  }
-
-        static Action<string> FileChangeHandler; 
     }
 }

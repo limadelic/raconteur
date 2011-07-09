@@ -43,7 +43,7 @@ Scenario: Name
 // Step in Beta
 Step
 ");        
-            When__used_in_multiple_features_is_renamed_to("Step", "new Step");        
+            Rename__to("Step", "new Step");        
             The_Feature__should_contain("Alpha", 
 @"
 Scenario: Name
@@ -55,6 +55,29 @@ new Step
 Scenario: Name
 // Step in Beta
 new Step
+");
+        }
+        
+        [Test]        
+        [Category("wip")]
+        public void StepRenamedTwice()
+        {         
+            Given_the_Feature__contains("A", 
+@"
+Scenario: Name
+Step
+");        
+            Rename__to("Step", "new Step");        
+            The_Feature__should_contain("A", 
+@"
+Scenario: Name
+new Step
+");        
+            Rename__to("new Step", "old Step");        
+            The_Feature__should_contain("A", 
+@"
+Scenario: Name
+old Step
 ");
         }
         

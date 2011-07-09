@@ -36,6 +36,15 @@ namespace Specs
             }
 
             [Test]
+            public void should_read_the_name_with_single_letter()
+            {
+                FeatureFile.Content = @"Feature: A";
+                
+                The.FeatureFrom(FeatureFile, FeatureItem).Name
+                    .ShouldBe("A");
+            }
+
+            [Test]
             public void should_camel_case_the_name()
             {
                 FeatureFile.Content = "Feature: feature name";

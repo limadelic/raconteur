@@ -37,7 +37,7 @@ Scenario: Step shared among Features
 			Step
 	"
 
-	When "Step" used in multiple features is renamed to "new Step"
+	Rename "Step" to "new Step"
 
 	The Feature "Alpha" should contain
 	"
@@ -51,6 +51,31 @@ Scenario: Step shared among Features
 		Scenario: Name
 			// Step in Beta
 			new Step
+	"
+
+@wip
+Scenario: Step renamed twice
+
+	Given the Feature "A" contains
+	"
+		Scenario: Name
+			Step
+	"
+
+	Rename "Step" to "new Step"
+
+	The Feature "A" should contain
+	"
+		Scenario: Name
+			new Step
+	"
+
+	Rename "new Step" to "old Step"
+
+	The Feature "A" should contain
+	"
+		Scenario: Name
+			old Step
 	"
 
 Scenario: Step with Args

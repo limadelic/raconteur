@@ -8,7 +8,7 @@ namespace Raconteur.Helpers
         {
             get
             {
-                return Settings.Language.Feature + @": (\w.+)(" +
+                return Settings.Language.Feature + @": (.+)(" +
                     Environment.NewLine + "|$)";
             }
         }

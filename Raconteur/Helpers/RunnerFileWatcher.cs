@@ -35,8 +35,11 @@ namespace Raconteur.Helpers
 
         static void Start()
         {
+/*
             if (IsRunning) ResetTimer();
             else StartWatching();   
+*/
+            StartWatching();
         }
 
         public static bool IsRunning { get { return Timer.Enabled; } }

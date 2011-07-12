@@ -11,6 +11,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 
+// ReSharper disable RedundantDefaultFieldInitializer
 namespace Raconteur.IDEIntegration.Intellisense
 {
     [Export(typeof(IVsTextViewCreationListener))]
@@ -19,7 +20,7 @@ namespace Raconteur.IDEIntegration.Intellisense
     [TextViewRole(PredefinedTextViewRoles.Editable)]
     internal class CompletionHandlerProvider : IVsTextViewCreationListener
     {
-        [Import] internal IVsEditorAdaptersFactoryService AdapterService;
+        [Import] internal IVsEditorAdaptersFactoryService AdapterService = null;
 
         [Import]
         internal ICompletionBroker CompletionBroker { get; set; }
@@ -27,33 +28,31 @@ namespace Raconteur.IDEIntegration.Intellisense
         [Import]
         internal SVsServiceProvider ServiceProvider { get; set; }
         
-        public void VsTextViewCreated(IVsTextView textViewAdapter)
+        public void VsTextViewCreated(IVsTextView TextViewAdapter)
         {
-            ITextView textView = AdapterService.GetWpfTextView(textViewAdapter);
-            if (textView == null) return;
+            ITextView TextView = AdapterService.GetWpfTextView(TextViewAdapter);
+            if (TextView == null) return;
 
-            Func<CompletionHandler> createHandler = () => 
-                new CompletionHandler(textViewAdapter, textView, this);
-
-            textView.Properties.GetOrCreateSingletonProperty(createHandler);
+            TextView.Properties.GetOrCreateSingletonProperty(() => 
+                new CompletionHandler(TextViewAdapter, TextView, this));
         }
     }
 
     internal class CompletionHandler : IOleCommandTarget
     {
-        private readonly IOleCommandTarget nextHandler;
-        private readonly ITextView textView;
-        private readonly CompletionHandlerProvider provider;
-        private ICompletionSession session;
+        private readonly IOleCommandTarget NextHandler;
+        private readonly ITextView TextView;
+        private readonly CompletionHandlerProvider Provider;
+        private ICompletionSession Session;
         private CommandInfo commandInfo;
 
         public CompletionHandler(IVsTextView textViewAdapter, ITextView textView, CompletionHandlerProvider provider)
         {
-            this.textView = textView;
-            this.provider = provider;
+            this.TextView = textView;
+            this.Provider = provider;
 
             //add the command to the command chain
-            textViewAdapter.AddCommandFilter(this, out nextHandler);
+            textViewAdapter.AddCommandFilter(this, out NextHandler);
         }
 
         private char TypedCharacter
@@ -85,13 +84,13 @@ namespace Raconteur.IDEIntegration.Intellisense
             }
         }
 
-        private bool IsSelection { get { return session != null && !session.IsDismissed; } }
-        private bool IsFullySelected { get { return session.SelectedCompletionSet.SelectionStatus.IsSelected; } }
-        private bool NoActiveSession { get { return session == null || session.IsDismissed; } }
+        private bool IsSelection { get { return Session != null && !Session.IsDismissed; } }
+        private bool IsFullySelected { get { return Session.SelectedCompletionSet.SelectionStatus.IsSelected; } }
+        private bool NoActiveSession { get { return Session == null || Session.IsDismissed; } }
 
         public int QueryStatus(ref Guid pguidCmdGroup, uint cCmds, OLECMD[] prgCmds, IntPtr pCmdText)
         {
-            return nextHandler.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
+            return NextHandler.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
         }
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
@@ -105,17 +104,17 @@ namespace Raconteur.IDEIntegration.Intellisense
                 PvaOut = pvaOut,
             };
 
-            if (VsShellUtilities.IsInAutomationFunction(provider.ServiceProvider))
+            if (VsShellUtilities.IsInAutomationFunction(Provider.ServiceProvider))
                 return PassCommandAlong();
 
             if (IsCommitCharacter && IsSelection)
             {
                 if (IsFullySelected)
                 {
-                    session.Commit();
+                    Session.Commit();
                     return VSConstants.S_OK;
                 }
-                session.Dismiss();
+                Session.Dismiss();
             }
 
             var retVal = PassCommandAlong();
@@ -125,13 +124,13 @@ namespace Raconteur.IDEIntegration.Intellisense
                 if (NoActiveSession)
                     TriggerCompletion();
                     
-                session.Filter();
+                Session.Filter();
                 handled = true;
             }
             else if (IsDeletionCharacter)
             {
                 if (IsSelection)
-                    session.Filter();
+                    Session.Filter();
                 handled = true;
             }
             return handled ? VSConstants.S_OK : retVal;
@@ -140,34 +139,34 @@ namespace Raconteur.IDEIntegration.Intellisense
         private int PassCommandAlong()
         {
             var commandGroup = commandInfo.CommandGroup;
-            return nextHandler.Exec(ref commandGroup, commandInfo.CommandId, commandInfo.ExecOpt, commandInfo.PvaIn, commandInfo.PvaOut);
+            return NextHandler.Exec(ref commandGroup, commandInfo.CommandId, commandInfo.ExecOpt, commandInfo.PvaIn, commandInfo.PvaOut);
         }
 
         private void TriggerCompletion()
         {
             //the caret must be in a non-projection location 
             SnapshotPoint? caretPoint =
-            textView.Caret.Position.Point.GetPoint(
+            TextView.Caret.Position.Point.GetPoint(
             textBuffer => (!textBuffer.ContentType.IsOfType("projection")), PositionAffinity.Predecessor);
             
             if (!caretPoint.HasValue) return;
 
-            session = provider.CompletionBroker.CreateCompletionSession
-         (textView,
+            Session = Provider.CompletionBroker.CreateCompletionSession
+         (TextView,
                 caretPoint.Value.Snapshot.CreateTrackingPoint(caretPoint.Value.Position, PointTrackingMode.Positive),
                 true);
 
             //subscribe to the Dismissed event on the session 
-            session.Dismissed += OnSessionDismissed;
-            session.Start();
+            Session.Dismissed += OnSessionDismissed;
+            Session.Start();
 
             return;
         }
 
         private void OnSessionDismissed(object sender, EventArgs e)
         {
-            session.Dismissed -= OnSessionDismissed;
-            session = null;
+            Session.Dismissed -= OnSessionDismissed;
+            Session = null;
         }
 
         class CommandInfo
@@ -180,3 +179,4 @@ namespace Raconteur.IDEIntegration.Intellisense
         }
     }
 }
+// ReSharper restore RedundantDefaultFieldInitializer

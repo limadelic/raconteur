@@ -7,12 +7,13 @@ using Raconteur.IDEIntegration.SyntaxHighlighting.Token;
 
 namespace Raconteur.IDEIntegration.SyntaxHighlighting
 {
+// ReSharper disable RedundantDefaultFieldInitializer
     [Export(typeof(ITaggerProvider))]
     [ContentType("Raconteur")]
     [TagType(typeof(OutliningRegionTag))]
     internal sealed class FeatureOutlinerProvider : ITaggerProvider
     {
-        [Import] internal IBufferTagAggregatorFactoryService Factory;
+        [Import] internal IBufferTagAggregatorFactoryService Factory = null;
                 
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
@@ -20,4 +21,5 @@ namespace Raconteur.IDEIntegration.SyntaxHighlighting
             return new FeatureOutliner(tagAggregator) as ITagger<T>;
         }
     }
+// ReSharper restore RedundantDefaultFieldInitializer
 }

@@ -98,8 +98,6 @@
     <Reference Include="JetBrains.Platform.ReSharper.VSIntegration">
       <HintPath>..\lib\resharper\JetBrains.Platform.ReSharper.VSIntegration.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.ReSharper.Daemon, Version=6.0.2160.226, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL" />
-    <Reference Include="JetBrains.ReSharper.Daemon.CSharp, Version=6.0.2160.226, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL" />
     <Reference Include="JetBrains.ReSharper.ExternalSources">
       <HintPath>..\lib\resharper\JetBrains.ReSharper.ExternalSources.dll</HintPath>
     </Reference>
@@ -182,7 +180,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\resharper\JetBrains.ReSharper.Psi.Services.CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="JetBrains.ReSharper.Psi.Xml, Version=6.0.2165.98, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL" />
     <Reference Include="JetBrains.ReSharper.Refactorings.CSharp">
       <HintPath>..\lib\resharper\JetBrains.ReSharper.Refactorings.CSharp.dll</HintPath>
     </Reference>

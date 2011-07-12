@@ -152,7 +152,9 @@
       <Name>Raconteur</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <CopyVsixExtensionLocation>$(OutDir)\IDEIntegration</CopyVsixExtensionLocation>

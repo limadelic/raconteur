@@ -46,7 +46,7 @@ namespace Raconteur.IDEIntegration.Intellisense
                 completions.For(currentLine.Extent.GetText().Trim()), null));
         }
 
-        private ITextViewLine GetCurrentLineFrom(ICompletionSession session)
+        public ITextViewLine GetCurrentLineFrom(ICompletionSession session)
         {
             return session.TextView.Caret.ContainingTextViewLine;
         }

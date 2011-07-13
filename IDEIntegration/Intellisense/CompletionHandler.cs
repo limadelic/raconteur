@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
+using System.Windows;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Language.Intellisense;
@@ -10,6 +11,7 @@ using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
+using Raconteur.Helpers;
 
 // ReSharper disable RedundantDefaultFieldInitializer
 namespace Raconteur.IDEIntegration.Intellisense
@@ -46,13 +48,13 @@ namespace Raconteur.IDEIntegration.Intellisense
         private ICompletionSession Session;
         private CommandInfo commandInfo;
 
-        public CompletionHandler(IVsTextView textViewAdapter, ITextView textView, CompletionHandlerProvider provider)
+        public CompletionHandler(IVsTextView TextViewAdapter, ITextView TextView, CompletionHandlerProvider Provider)
         {
-            this.TextView = textView;
-            this.Provider = provider;
+            this.TextView = TextView;
+            this.Provider = Provider;
 
             //add the command to the command chain
-            textViewAdapter.AddCommandFilter(this, out NextHandler);
+            TextViewAdapter.AddCommandFilter(this, out NextHandler);
         }
 
         private char TypedCharacter
@@ -90,22 +92,39 @@ namespace Raconteur.IDEIntegration.Intellisense
 
         public int QueryStatus(ref Guid pguidCmdGroup, uint cCmds, OLECMD[] prgCmds, IntPtr pCmdText)
         {
-            return NextHandler.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
+            return QueryStatusGotoDefinition(pguidCmdGroup, prgCmds) ? VSConstants.S_OK :
+                NextHandler.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
+        }
+
+        bool QueryStatusGotoDefinition(Guid pguidCmdGroup, OLECMD[] prgCmds)
+        {
+            if (pguidCmdGroup != VSConstants.GUID_VSStandardCommandSet97) return false;
+
+            switch ((VSConstants.VSStd97CmdID) prgCmds[0].cmdID)
+            {
+                case VSConstants.VSStd97CmdID.GotoDefn:
+                    prgCmds[0].cmdf = (uint) OLECMDF.OLECMDF_ENABLED | (uint) OLECMDF.OLECMDF_SUPPORTED;
+                    return true;
+            }
+
+            return false;
         }
 
         public int Exec(ref Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
-            commandInfo = new CommandInfo
-            {
-                CommandGroup = pguidCmdGroup,
-                CommandId = nCmdID,
-                ExecOpt = nCmdexecopt,
-                PvaIn = pvaIn,
-                PvaOut = pvaOut,
-            };
+            SetUpCommandInfo(pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
 
+            if (pguidCmdGroup == VSConstants.GUID_VSStandardCommandSet97)
+                switch ((VSConstants.VSStd97CmdID)nCmdID)
+                {
+                    case VSConstants.VSStd97CmdID.GotoDefn:
+                        MessageBox.Show("going to impl of ... " + 
+                            TextView.Caret.Position.BufferPosition.GetContainingLine().GetText());
+                        return VSConstants.S_OK;
+                }
+            
             if (VsShellUtilities.IsInAutomationFunction(Provider.ServiceProvider))
-                return PassCommandAlong();
+                return PassCommandAlong;
 
             if (IsCommitCharacter && IsSelection)
             {
@@ -117,29 +136,53 @@ namespace Raconteur.IDEIntegration.Intellisense
                 Session.Dismiss();
             }
 
-            var retVal = PassCommandAlong();
-            var handled = false;
-            if (!TypedCharacter.Equals(char.MinValue) && char.IsLetterOrDigit(TypedCharacter))
-            {
-                if (NoActiveSession)
-                    TriggerCompletion();
-                    
-                Session.Filter();
-                handled = true;
-            }
-            else if (IsDeletionCharacter)
-            {
-                if (IsSelection)
-                    Session.Filter();
-                handled = true;
-            }
-            return handled ? VSConstants.S_OK : retVal;
+            var Result = PassCommandAlong;
+
+            return LetterOrDigit || DeletionCharacter ? 
+                VSConstants.S_OK : 
+                Result;
         }
 
-        private int PassCommandAlong()
+        bool LetterOrDigit
         {
-            var commandGroup = commandInfo.CommandGroup;
-            return NextHandler.Exec(ref commandGroup, commandInfo.CommandId, commandInfo.ExecOpt, commandInfo.PvaIn, commandInfo.PvaOut);
+            get
+            {
+                if (!char.IsLetterOrDigit(TypedCharacter)) return false;
+
+                if (NoActiveSession) TriggerCompletion();
+
+                Session.Filter();
+
+                return true;
+            } 
+        }
+
+        bool DeletionCharacter
+        {
+            get
+            {
+                if (!IsDeletionCharacter) return false;
+
+                if (IsSelection) Session.Filter();
+
+                return true;
+            } 
+        }
+
+        void SetUpCommandInfo(Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
+        {
+            commandInfo = new CommandInfo
+            {CommandGroup = pguidCmdGroup, CommandId = nCmdID, ExecOpt = nCmdexecopt, PvaIn = pvaIn, PvaOut = pvaOut,};
+        }
+
+        int PassCommandAlong
+        {
+            get
+            {
+                var commandGroup = commandInfo.CommandGroup;
+                return NextHandler.Exec(ref commandGroup, commandInfo.CommandId, commandInfo.ExecOpt, commandInfo.PvaIn,
+                    commandInfo.PvaOut);
+            }
         }
 
         private void TriggerCompletion()

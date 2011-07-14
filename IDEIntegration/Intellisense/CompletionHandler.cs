@@ -170,20 +170,21 @@ namespace Raconteur.IDEIntegration.Intellisense
 
                 var CodeFunction = project.CodeFunction(Step);
 
-                if (CodeFunction != null)
+                if (CodeFunction == null)
                 {
-                    if (!CodeFunction.ProjectItem.IsOpen)
-                    {
-                        CodeFunction.ProjectItem.Open();
-                    }
-                    var navigatePoint = CodeFunction.GetStartPoint(vsCMPart.vsCMPartHeader);
-                    navigatePoint.TryToShow();
-                    navigatePoint.Parent.Selection.MoveToPoint(navigatePoint);
+                    MessageBox.Show("This step is not implemented");
+                    return;
                 }
+
+                if (!CodeFunction.ProjectItem.IsOpen) CodeFunction.ProjectItem.Open();
+
+                var NavigatePoint = CodeFunction.GetStartPoint(vsCMPart.vsCMPartHeader);
+                NavigatePoint.TryToShow();
+                NavigatePoint.Parent.Selection.MoveToPoint(NavigatePoint);
             } 
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("Error:" + e);
             }
         }
 

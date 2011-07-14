@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -34,32 +33,41 @@ namespace Raconteur.Helpers
             return File.Replace(".runner.cs", ".feature");
         }
 
-        public static CodeFunction CodeFunction(Project project, MethodInfo Method)
+        public static CodeFunction CodeFunction(this Project Project, Step Step)
         {
-            return project.Classes()
+            return Step.IsImplemented ? 
+                Project.CodeFunction(Step.Implementation.Method) :
+                Project.CodeFunctionForUnimplemented(Step);
+        }
+
+        static CodeFunction CodeFunction(this Project Project, MethodInfo Method)
+        {
+            return Project.Classes()
                 .Where(x => x.FullName == Method.DeclaringType.FullName)
                 .SelectMany(x => x.Functions())
                 .FirstOrDefault(x => x.EqualsTo(Method));
         }
 
+        static CodeFunction CodeFunctionForUnimplemented(this Project project, Step Step)
+        {
+            var Class = Step.Feature.Namespace + "." + Step.Feature.Name;
+
+            return project.Classes()
+                .Where(x => x.FullName == Class)
+                .SelectMany(x => x.Functions())
+                .FirstOrDefault(x => x.EqualsTo(Step));
+        }
+
         static bool EqualsTo(this CodeFunction CodeFunction, MethodInfo Method)
         {
             return CodeFunction.Name == Method.Name 
-                && CodeFunction.Type.EqualsTo(Method.DeclaringType) 
-                && CodeFunction.Parameters.EqualsTo(Method.GetParameters());        
+                && CodeFunction.Parameters.Count == Method.GetParameters().Length;        
         }
 
-        static bool EqualsTo(this CodeTypeRef CodeType, Type Type)
+        static bool EqualsTo(this CodeFunction CodeFunction, Step Step)
         {
-            return CodeType.AsFullName == Type.FullName;
-        }
-
-        static bool EqualsTo(this CodeElements CodeFunctionArgs, IEnumerable<ParameterInfo> MethodArgs)
-        {
-            return CodeFunctionArgs.Count == MethodArgs.Count()
-                && CodeFunctionArgs.Cast<CodeParameter>()
-                    .Zip(MethodArgs, (x, y) => x.Type.EqualsTo(y.ParameterType))
-                    .All(IsTrue => IsTrue);
+            return CodeFunction.Name == Step.Name 
+                && CodeFunction.Parameters.Count == Step.Args.Count;        
         }
 
         static IEnumerable<CodeFunction> Functions(this CodeClass codeClass)

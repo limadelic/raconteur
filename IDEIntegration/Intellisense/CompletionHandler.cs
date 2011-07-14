@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 using System.Windows;
+using EnvDTE;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Language.Intellisense;
@@ -12,6 +13,8 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 using Raconteur.Helpers;
+using Raconteur.IDE;
+using Project = Raconteur.IDE.Project;
 
 // ReSharper disable RedundantDefaultFieldInitializer
 namespace Raconteur.IDEIntegration.Intellisense
@@ -42,11 +45,11 @@ namespace Raconteur.IDEIntegration.Intellisense
 
     internal class CompletionHandler : IOleCommandTarget
     {
-        private readonly IOleCommandTarget NextHandler;
-        private readonly ITextView TextView;
-        private readonly CompletionHandlerProvider Provider;
-        private ICompletionSession Session;
-        private CommandInfo commandInfo;
+        readonly IOleCommandTarget NextHandler;
+        readonly ITextView TextView;
+        readonly CompletionHandlerProvider Provider;
+        ICompletionSession Session;
+        CommandInfo CommandInfo;
 
         public CompletionHandler(IVsTextView TextViewAdapter, ITextView TextView, CompletionHandlerProvider Provider)
         {
@@ -57,38 +60,38 @@ namespace Raconteur.IDEIntegration.Intellisense
             TextViewAdapter.AddCommandFilter(this, out NextHandler);
         }
 
-        private char TypedCharacter
+        char TypedCharacter
         {
             get
             {
-                return commandInfo.CommandGroup == VSConstants.VSStd2K &&
-                       commandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.TYPECHAR
-                           ? (char)(ushort)Marshal.GetObjectForNativeVariant(commandInfo.PvaIn)
+                return CommandInfo.CommandGroup == VSConstants.VSStd2K &&
+                       CommandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.TYPECHAR
+                           ? (char)(ushort)Marshal.GetObjectForNativeVariant(CommandInfo.PvaIn)
                            : char.MinValue;
             }
         }
 
-        private bool IsCommitCharacter
+        bool IsCommitCharacter
         {
             get
             {
-                return commandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.RETURN
-                       || commandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.TAB;
+                return CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.RETURN
+                       || CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.TAB;
             }
         }
 
-        private bool IsDeletionCharacter
+        bool IsDeletionCharacter
         {
             get
             {
-                return commandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.BACKSPACE
-                       || commandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.DELETE;
+                return CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.BACKSPACE
+                       || CommandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.DELETE;
             }
         }
 
-        private bool IsSelection { get { return Session != null && !Session.IsDismissed; } }
-        private bool IsFullySelected { get { return Session.SelectedCompletionSet.SelectionStatus.IsSelected; } }
-        private bool NoActiveSession { get { return Session == null || Session.IsDismissed; } }
+        bool IsSelection { get { return Session != null && !Session.IsDismissed; } }
+        bool IsFullySelected { get { return Session.SelectedCompletionSet.SelectionStatus.IsSelected; } }
+        bool NoActiveSession { get { return Session == null || Session.IsDismissed; } }
 
         public int QueryStatus(ref Guid pguidCmdGroup, uint cCmds, OLECMD[] prgCmds, IntPtr pCmdText)
         {
@@ -118,8 +121,7 @@ namespace Raconteur.IDEIntegration.Intellisense
                 switch ((VSConstants.VSStd97CmdID)nCmdID)
                 {
                     case VSConstants.VSStd97CmdID.GotoDefn:
-                        MessageBox.Show("going to impl of ... " + 
-                            TextView.Caret.Position.BufferPosition.GetContainingLine().GetText());
+                        GotoDefinition();
                         return VSConstants.S_OK;
                 }
             
@@ -141,6 +143,48 @@ namespace Raconteur.IDEIntegration.Intellisense
             return LetterOrDigit || DeletionCharacter ? 
                 VSConstants.S_OK : 
                 Result;
+        }
+
+        void GotoDefinition()
+        {
+            try
+            {
+                var Sentence = TextView.Caret.Position.BufferPosition
+                    .GetContainingLine().GetText().Trim();
+
+                var ProjectItem = (Marshal.GetActiveObject("VisualStudio.DTE") as DTE).ActiveDocument.ProjectItem;
+            
+                var FeatureItem = ObjectFactory.FeatureItemFrom(ProjectItem);
+            
+                var FeatureContent = TextView.TextSnapshot.GetText();
+
+                var project = Project.LoadFrom(FeatureItem);
+
+                var Feature = ObjectFactory.NewFeatureParser.FeatureFrom(FeatureContent, FeatureItem);
+
+                ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+                var Step = Feature.Steps.Find(x => x.Location.Content == Sentence);
+
+                if (Step == null) return;
+
+                var CodeFunction = project.CodeFunction(Step);
+
+                if (CodeFunction != null)
+                {
+                    if (!CodeFunction.ProjectItem.IsOpen)
+                    {
+                        CodeFunction.ProjectItem.Open();
+                    }
+                    var navigatePoint = CodeFunction.GetStartPoint(vsCMPart.vsCMPartHeader);
+                    navigatePoint.TryToShow();
+                    navigatePoint.Parent.Selection.MoveToPoint(navigatePoint);
+                }
+            } 
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
 
         bool LetterOrDigit
@@ -171,7 +215,7 @@ namespace Raconteur.IDEIntegration.Intellisense
 
         void SetUpCommandInfo(Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
-            commandInfo = new CommandInfo
+            CommandInfo = new CommandInfo
             {CommandGroup = pguidCmdGroup, CommandId = nCmdID, ExecOpt = nCmdexecopt, PvaIn = pvaIn, PvaOut = pvaOut,};
         }
 
@@ -179,9 +223,9 @@ namespace Raconteur.IDEIntegration.Intellisense
         {
             get
             {
-                var commandGroup = commandInfo.CommandGroup;
-                return NextHandler.Exec(ref commandGroup, commandInfo.CommandId, commandInfo.ExecOpt, commandInfo.PvaIn,
-                    commandInfo.PvaOut);
+                var commandGroup = CommandInfo.CommandGroup;
+                return NextHandler.Exec(ref commandGroup, CommandInfo.CommandId, CommandInfo.ExecOpt, CommandInfo.PvaIn,
+                    CommandInfo.PvaOut);
             }
         }
 
@@ -211,15 +255,15 @@ namespace Raconteur.IDEIntegration.Intellisense
             Session.Dismissed -= OnSessionDismissed;
             Session = null;
         }
+    }
 
-        class CommandInfo
-        {
-            public Guid CommandGroup { get; set; }
-            public uint CommandId { get; set; }
-            public uint ExecOpt { get; set; }
-            public IntPtr PvaIn { get; set; }
-            public IntPtr PvaOut { get; set; }
-        }
+    class CommandInfo
+    {
+        public Guid CommandGroup { get; set; }
+        public uint CommandId { get; set; }
+        public uint ExecOpt { get; set; }
+        public IntPtr PvaIn { get; set; }
+        public IntPtr PvaOut { get; set; }
     }
 }
 // ReSharper restore RedundantDefaultFieldInitializer

@@ -4,12 +4,15 @@ namespace Raconteur.IDE
     {
         public EnvDTE.Project DTEProject;
 
-        public static void LoadFrom(FeatureItem FeatureItem)
+        public static Project LoadFrom(FeatureItem FeatureItem)
         {
-            if (FeatureItem.Project == null) return;
+            if (FeatureItem.Project == null) return null;
 
-            new Project { DTEProject = FeatureItem.Project }
-                .Load();
+            var Result = new Project { DTEProject = FeatureItem.Project };
+            
+            Result.Load();
+
+            return Result;
         }
 
         public void Load()

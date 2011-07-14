@@ -60,7 +60,6 @@ namespace Raconteur.Compilers
                     .FirstOrDefault();
         }
 
-
         void CompileFeature() 
         {
             Feature.StepDefinitions = StepDefinitions;

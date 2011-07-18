@@ -20,7 +20,7 @@ def deploy_raconteur
 end
 
 def deploy_resharper_plugin
-  plugin_dir = "#{ENV['programfiles']}/JetBrains/ReSharper/v6.0/Bin/Plugins/Raconteur".gsub(/\\/, '/')
+  plugin_dir = "#{program_files}/JetBrains/ReSharper/v6.0/Bin/Plugins/Raconteur".gsub(/\\/, '/')
 
   FileUtils.rm_r plugin_dir if Dir.exist? plugin_dir
   FileUtils.mkdir plugin_dir

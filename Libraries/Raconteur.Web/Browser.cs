@@ -22,7 +22,7 @@ namespace Raconteur.Web
             Driver = NewBrowser(browser);
         }
 
-        public void Exit()
+        public void End()
         {
             Driver.Quit();
         }

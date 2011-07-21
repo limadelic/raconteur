@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resharper", "Resharper\Resh
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{81FF7F3E-99BD-4DB0-A91E-E95B1EF1D990}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raconteur.Selenium", "Libraries\Raconteur.Selenium\Raconteur.Selenium.csproj", "{8E16C1B9-2051-4747-A43A-626EC6D58159}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raconteur.Web", "Libraries\Raconteur.Web\Raconteur.Web.csproj", "{8E16C1B9-2051-4747-A43A-626EC6D58159}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

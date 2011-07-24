@@ -1,7 +1,7 @@
 using MbUnit.Framework;
 using Raconteur.Web;
 
-namespace Raconteur.Web 
+namespace Raconteur.Web.Examples 
 {
     [TestFixture]
     public partial class FindRaconteur 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using FluentSpec;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -39,11 +40,28 @@ namespace Raconteur.Web
             query.Submit(); 
         }
 
+        public void Click_on__with_text(string xpath, string text)
+        {
+            FindElementWithText(xpath, text).Click();
+        }
+
         public void Title_should_be(string title)
         {
             (new WebDriverWait(Driver, new TimeSpan(0, 0, 10)))
                 .Until(d => d.Title.Equals(title));
             Driver.Title.ShouldBe(title);
+        }
+
+        public void Find_link_with(string text)
+        {
+            var link = FindElementWithText("//a", text);
+            link.ShouldNotBeNull();
+        }
+
+        IWebElement FindElementWithText(string xpath, string text)
+        {
+            var query = Driver.FindElements(By.XPath(xpath));
+            return query.First(e => e.Text == text);
         }
 
         IWebDriver NewBrowser(string browser)

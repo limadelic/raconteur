@@ -52,20 +52,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Browser.cs" />
-    <Compile Include="FindRaconteur.runner.cs">
+    <Compile Include="Examples\FindRaconteur.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FindRaconteur.feature</DependentUpon>
     </Compile>
-    <Compile Include="FindRaconteur.steps.cs">
+    <Compile Include="Examples\FindRaconteur.steps.cs">
       <DependentUpon>FindRaconteur.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Top250InIMdb.steps.cs">
+      <DependentUpon>Top250InIMdb.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Examples\Top250InIMdb.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Top250InIMdb.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="FindRaconteur.feature">
+    <None Include="Examples\FindRaconteur.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>FindRaconteur.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Examples\Top250InIMdb.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Top250InIMdb.runner.cs</LastGenOutput>
     </None>
     <None Include="raconteur.config" />
   </ItemGroup>

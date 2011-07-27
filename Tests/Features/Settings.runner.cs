@@ -11,7 +11,15 @@ namespace Features
 
         
         [Test]
-        public void SettingTheXUnitRunner()
+        public void DefaultSettings()
+        {         
+            Given_the_settings("");        
+            When_the_project_is_loaded();        
+            The_Settings_should_be_("MsTest", "English");
+        }
+        
+        [Test]
+        public void AllSettings()
         {         
             Given_the_settings(
 @"

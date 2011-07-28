@@ -28,6 +28,12 @@ namespace Specs
         }
 
         [Test]
+        public void should_show_all()
+        {
+            When.For("").ShouldContain("Scenario:");
+        }
+
+        [Test]
         public void should_complete_keywords()
         {            
             When.For("Sc").ShouldContain("Scenario:");

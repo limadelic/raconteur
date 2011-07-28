@@ -56,6 +56,7 @@ namespace Raconteur.IDEIntegration.Intellisense
             var currentPoint = (session.TextView.Caret.Position.BufferPosition) - 1;
             var navigator = provider.NavigatorService.GetTextStructureNavigator(buffer);
             var extent = navigator.GetExtentOfWord(currentPoint);
+
             return currentPoint.Snapshot.CreateTrackingSpan(extent.Span, SpanTrackingMode.EdgeInclusive);
         }
     }

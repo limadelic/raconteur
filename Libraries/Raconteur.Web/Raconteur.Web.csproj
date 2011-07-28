@@ -45,46 +45,24 @@
     <Reference Include="System.Xml" />
     <Reference Include="WebDriver">
       <HintPath>..\..\lib\Selenium\WebDriver.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Webdriver.Support">
       <HintPath>..\..\lib\Selenium\Webdriver.Support.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Browser.cs" />
-    <Compile Include="Examples\FindRaconteur.runner.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FindRaconteur.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Examples\FindRaconteur.steps.cs">
-      <DependentUpon>FindRaconteur.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Examples\Top250InIMdb.steps.cs">
-      <DependentUpon>Top250InIMdb.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Examples\Top250InIMdb.runner.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Top250InIMdb.feature</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Examples\FindRaconteur.feature">
-      <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>FindRaconteur.runner.cs</LastGenOutput>
-    </None>
-    <None Include="Examples\Top250InIMdb.feature">
-      <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>Top250InIMdb.runner.cs</LastGenOutput>
-    </None>
-    <None Include="raconteur.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="chromedriver.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

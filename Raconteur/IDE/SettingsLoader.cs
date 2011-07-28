@@ -49,7 +49,7 @@ namespace Raconteur.IDE
             if (usings.HasItems()) 
                 Helpers.Settings.StepDefinitions = 
                     usings.Select(s => s.CamelCase()).ToList();
-
+            
             Helpers.Settings.Libraries = Settings("lib:");
         }
         

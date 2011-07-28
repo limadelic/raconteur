@@ -4,8 +4,7 @@
 
 Scenario: Find 250 movies
 
-	Use "Firefox"
-	Visit "http://www.imdb.com"
+	Visit "http://www.imdb.com"	
 
 	Click on "//a" with text "Top 250"
 
@@ -17,5 +16,12 @@ Scenario: Find 250 movies
 	|The Matrix	  |
 	|Memento      |
 
-	End
+Scenario: Scores of my favorite movies 
 
+	Visit "http://www.imdb.com/chart/top"
+
+	My favorite movies should be there
+	[ Rank | Rating | Title        ]
+	|  5   | 8.9    | Pulp Fiction | 
+	| 22   | 8.7    | The Matrix   |
+	| 31   | 8.6    | Memento      | 

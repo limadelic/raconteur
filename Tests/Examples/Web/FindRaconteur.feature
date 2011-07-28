@@ -2,13 +2,13 @@ Feature: Find Raconteur
 	In order to find Raconteur
 	Needs to be googled
 
-Scenario: Using Firefox
+using Raconteur Web Browser
 
-	Use "Firefox"
+Scenario: Using Firefox (default)
+
 	Visit "http://google.com"
 	Set "q" to "Raconteur"
 	Title should be "raconteur - Google Search"
-	End
 
 Scenario: Using Chrome
 
@@ -16,4 +16,3 @@ Scenario: Using Chrome
 	Visit "http://google.com"
 	Set "q" to "Raconteur"
 	Title should be "raconteur - Google Search"
-	End

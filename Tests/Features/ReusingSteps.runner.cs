@@ -16,6 +16,7 @@ namespace Features
             FeatureRunner.Given_the_Feature_is(
 @"
 Feature: Reusing Steps
+
 Scenario: Reuse a Step
 Step
 ");        
@@ -35,6 +36,7 @@ Step();
             FeatureRunner.Given_the_Feature_is(
 @"
 Feature: Reusing Steps
+
 Scenario: Reuse a Step
 Inherited Step
 ");        
@@ -55,12 +57,14 @@ Inherited_Step();
             FeatureRunner.Given_the_Feature_contains(
 @"
 using Step Definitions
+
 Scenario: Reuse a Step
 Step from Step Definitions
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
 public StepDefinitions StepDefinitions = new StepDefinitions();
+
 [TestMethod]
 public void ReuseAStep()
 {
@@ -76,12 +80,14 @@ StepDefinitions.Step_from_Step_Definitions();
             FeatureRunner.Given_the_Feature_contains(
 @"
 using Step Definitions
+
 Scenario: Reuse a Step
 Base Step
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
 public StepDefinitions StepDefinitions = new StepDefinitions();
+
 [TestMethod]
 public void ReuseAStep()
 {
@@ -98,6 +104,7 @@ StepDefinitions.Base_Step();
 @"
 using Step Definitions
 using another Step Definitions
+
 Scenario: Reuse Steps from multiple Definitions
 Step from Step Definitions
 Step from another Step Definitions
@@ -106,6 +113,7 @@ Step from another Step Definitions
 @"
 public StepDefinitions StepDefinitions = new StepDefinitions();
 public AnotherStepDefinitions AnotherStepDefinitions = new AnotherStepDefinitions();
+
 [TestMethod]
 public void ReuseStepsFromMultipleDefinitions()
 {
@@ -128,6 +136,7 @@ Step from Step Definitions
             FeatureRunner.The_Runner_should_contain(
 @"
 public StepDefinitions StepDefinitions = new StepDefinitions();
+
 [TestMethod]
 public void ReuseAStepInGlobalStepDefinition()
 {
@@ -143,16 +152,41 @@ StepDefinitions.Step_from_Step_Definitions();
             FeatureRunner.Given_the_Feature_contains(
 @"
 using Step Definitions in Library
+
 Scenario: Reuse Steps from Library
 Step from Step Definitions in Library
 ");        
             FeatureRunner.The_Runner_should_contain(
 @"
 public StepDefinitionsInLibrary StepDefinitionsInLibrary = new StepDefinitionsInLibrary();
+
 [TestMethod]
 public void ReuseStepsFromLibrary()
 {
 StepDefinitionsInLibrary.Step_from_Step_Definitions_in_Library();
+}
+");
+        }
+        
+        [Test]
+        public void ReusingStepDefinitionsFromRaconteur_Web()
+        {         
+            FeatureRunner.Given_the_setting__contains("Libraries", "Raconteur.Web");        
+            FeatureRunner.Given_the_Feature_contains(
+@"
+using Browser
+
+Scenario: Reuse Steps from Library
+Title should be ""IMDb Top 250""
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+public Browser Browser = new Browser();
+
+[TestMethod]
+public void ReuseStepsFromLibrary()
+{
+Browser.Title_should_be(""IMDb Top 250"");
 }
 ");
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using FluentSpec;
 using OpenQA.Selenium;
@@ -16,7 +17,7 @@ namespace Raconteur.Web
 
     public class Browser
     {
-        IWebDriver Driver;
+        public IWebDriver Driver;
 
         public void Use(string browser)
         {
@@ -52,6 +53,12 @@ namespace Raconteur.Web
             Driver.Title.ShouldBe(title);
         }
 
+        public void WaitForPageToLoad()
+        {
+            (new WebDriverWait(Driver, new TimeSpan(0, 0, 10)))
+                .Until(d => !string.IsNullOrEmpty(d.Title));
+        }
+
         public void Find_link_with(string text)
         {
             var link = FindElementWithText("//a", text);
@@ -60,8 +67,13 @@ namespace Raconteur.Web
 
         IWebElement FindElementWithText(string xpath, string text)
         {
-            var query = Driver.FindElements(By.XPath(xpath));
+            var query = FindElementsByXPath(xpath);
             return query.First(e => e.Text == text);
+        }
+
+        public ReadOnlyCollection<IWebElement> FindElementsByXPath(string xpath)
+        {
+            return Driver.FindElements(By.XPath(xpath));
         }
 
         IWebDriver NewBrowser(string browser)

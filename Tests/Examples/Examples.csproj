@@ -133,6 +133,22 @@
       <DependentUpon>TicTacToe.feature</DependentUpon>
     </Compile>
     <Compile Include="TicTacToe\TicTacToeGame.cs" />
+    <Compile Include="Web\FindRaconteur.runner.cs">
+      <DependentUpon>FindRaconteur.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Web\FindRaconteur.steps.cs">
+      <DependentUpon>FindRaconteur.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Web\Top250InIMdb.runner.cs">
+      <DependentUpon>Top250InIMdb.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Web\Top250InIMdb.steps.cs">
+      <DependentUpon>Top250InIMdb.feature</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Bowling\ScoreCalculation.feature">
@@ -171,12 +187,25 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StaticStructures.runner.cs</LastGenOutput>
     </None>
+    <None Include="raconteur.config" />
     <None Include="TicTacToe\TicTacToe.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>TicTacToe.runner.cs</LastGenOutput>
     </None>
+    <None Include="Web\FindRaconteur.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>FindRaconteur.runner.cs</LastGenOutput>
+    </None>
+    <None Include="Web\Top250InIMdb.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Top250InIMdb.runner.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Raconteur.Web\Raconteur.Web.csproj">
+      <Project>{8E16C1B9-2051-4747-A43A-626EC6D58159}</Project>
+      <Name>Raconteur.Web</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PlayDoh\PlayDoh.csproj">
       <Project>{D13052DC-F9B3-4CAD-A019-D59EBEFC3771}</Project>
       <Name>PlayDoh</Name>
@@ -190,6 +219,7 @@
       <Name>Specs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

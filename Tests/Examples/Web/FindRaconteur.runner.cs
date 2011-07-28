@@ -1,32 +1,29 @@
-using MbUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur.Web;
 
-namespace Raconteur.Web.Examples 
+namespace Examples.Web 
 {
-    [TestFixture]
+    [TestClass]
     public partial class FindRaconteur 
     {
         public Browser Browser = new Browser();
 
         
-        [Test]
-        public void UsingFirefox()
+        [TestMethod]
+        public void UsingFirefox_default_()
         {         
-            Browser.Use("Firefox");        
             Browser.Visit("http://google.com");        
             Browser.Set__to("q", "Raconteur");        
-            Browser.Title_should_be("raconteur - Google Search");        
-            Browser.End();
+            Browser.Title_should_be("raconteur - Google Search");
         }
         
-        [Test]
+        [TestMethod]
         public void UsingChrome()
         {         
             Browser.Use("Chrome");        
             Browser.Visit("http://google.com");        
             Browser.Set__to("q", "Raconteur");        
-            Browser.Title_should_be("raconteur - Google Search");        
-            Browser.End();
+            Browser.Title_should_be("raconteur - Google Search");
         }
 
     }

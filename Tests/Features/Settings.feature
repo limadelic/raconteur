@@ -3,7 +3,15 @@
 	Raconteur should provide User Settings
 	
 
-Scenario: Setting the xUnit runner
+Scenario: Default settings
+	
+	Given the settings ""
+	When the project is loaded
+	The Settings should be:
+	[ xUnit  | language ]
+	| MsTest | English  |
+
+Scenario: All settings
 
 	Given the settings
 	"

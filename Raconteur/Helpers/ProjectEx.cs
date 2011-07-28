@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -42,20 +43,42 @@ namespace Raconteur.Helpers
 
         static CodeFunction CodeFunction(this Project Project, MethodInfo Method)
         {
+            var DeclaringType = Method.DeclaringType();
+
             return Project.Classes()
-                .Where(x => x.FullName == Method.DeclaringType.FullName)
+                .Where(x => x.FullName == DeclaringType)
                 .SelectMany(x => x.Functions())
                 .FirstOrDefault(x => x.EqualsTo(Method));
         }
 
         static CodeFunction CodeFunctionForUnimplemented(this Project project, Step Step)
         {
-            var Class = Step.Feature.Namespace + "." + Step.Feature.Name;
-
             return project.Classes()
-                .Where(x => x.FullName == Class)
+                .Where(x => x.Name == Step.Feature.Name)
                 .SelectMany(x => x.Functions())
                 .FirstOrDefault(x => x.EqualsTo(Step));
+        }
+
+        static string DeclaringType(this MethodInfo Method)
+        {
+            return Method.DeclaringType.GenericFullName() ?? 
+                Method.DeclaringType.FullName;
+        }
+
+        static string GenericFullName(this Type Type)
+        {
+            if (!Type.IsGenericType) return null;
+
+            var GenericType = Type.GetGenericTypeDefinition().ToString();
+
+            var ClassName = GenericType.Substring(0, GenericType.IndexOf("`"));
+
+            var GenericArgs = GenericType
+                .Substring(GenericType.IndexOf('[') + 1)
+                .RemoveTail(1)
+                .Replace(",", ", ");
+
+            return ClassName + "<" + GenericArgs + ">";
         }
 
         static bool EqualsTo(this CodeFunction CodeFunction, MethodInfo Method)

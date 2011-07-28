@@ -28,7 +28,6 @@ namespace Features.StepDefinitions
             }            
         }
 
-        // Tech Debt: why not using real code?
         public string Runner
         {
             get

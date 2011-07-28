@@ -37,13 +37,13 @@ namespace Raconteur.IDE
 
             settings = Regex.Split(SettingsFileContent, Environment.NewLine);
 
-            var setting = Setting("xunit:").ToLower();
-            if (!setting.IsEmpty() && XUnits.Framework.ContainsKey(setting)) 
-                Helpers.Settings.XUnit = XUnits.Framework[setting];
+            var setting = Setting("xunit:");
+            if (!setting.IsEmpty() && XUnits.Framework.ContainsKey(setting.ToLower())) 
+                Helpers.Settings.XUnit = XUnits.Framework[setting.ToLower()];
                     
-            setting = Setting("language:").ToLower();
-            if (!setting.IsEmpty() && Languages.In.ContainsKey(setting))
-                Helpers.Settings.Language = Languages.In[setting];
+            setting = Setting("language:");
+            if (!setting.IsEmpty() && Languages.In.ContainsKey(setting.ToLower()))
+                Helpers.Settings.Language = Languages.In[setting.ToLower()];
 
             var usings = Settings("using:");
             if (usings.HasItems()) 

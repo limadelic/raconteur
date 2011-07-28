@@ -46,7 +46,7 @@ namespace Raconteur.Compilers
 
         Assembly Load(string AssemblyName)
         {
-            var Name = AssemblyName.EndsWith(".dll") ? AssemblyName : AssemblyName + ".dll";
+            var Name = AssemblyName.EndsWith(".dll", true, null) ? AssemblyName : AssemblyName + ".dll";
             var FileName = Path.Combine(AssemblyPath, Name.Trim());
 
             return Assembly.Load(File.ReadAllBytes(FileName));

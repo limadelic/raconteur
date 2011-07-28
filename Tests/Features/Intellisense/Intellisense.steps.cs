@@ -17,7 +17,7 @@ namespace Features.Intellisense
         {
             var featureItem = Substitute.For<FeatureItem>();
             featureItem.DefaultNamespace = "Features.Intellisense";
-            featureItem.Assembly.Returns(Assembly.GetExecutingAssembly().CodeBase);
+            featureItem.Assembly.Returns("Common");
 
             completions = new CompletionCalculator
             {

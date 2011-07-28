@@ -6,6 +6,7 @@ using Raconteur Web Browser
 
 Scenario: Using Firefox (default)
 
+    Use "Firefox"
 	Visit "http://google.com"
 	Set "q" to "Raconteur"
 	Title should be "raconteur - Google Search"

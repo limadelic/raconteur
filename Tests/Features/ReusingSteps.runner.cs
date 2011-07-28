@@ -167,29 +167,6 @@ StepDefinitionsInLibrary.Step_from_Step_Definitions_in_Library();
 }
 ");
         }
-        
-        [Test]
-        public void ReusingStepDefinitionsFromRaconteur_Web()
-        {         
-            FeatureRunner.Given_the_setting__contains("Libraries", "Raconteur.Web");        
-            FeatureRunner.Given_the_Feature_contains(
-@"
-using Browser
-
-Scenario: Reuse Steps from Library
-Title should be ""IMDb Top 250""
-");        
-            FeatureRunner.The_Runner_should_contain(
-@"
-public Browser Browser = new Browser();
-
-[TestMethod]
-public void ReuseStepsFromLibrary()
-{
-Browser.Title_should_be(""IMDb Top 250"");
-}
-");
-        }
 
     }
 }

@@ -152,24 +152,3 @@ Scenario: Reusing Step Definitions from Libraries
 			StepDefinitionsInLibrary.Step_from_Step_Definitions_in_Library();
 		}
 	"
-Scenario: Reusing Step Definitions from Raconteur.Web
-
-	Given the setting "Libraries" contains "Raconteur.Web" 
-	Given the Feature contains
-	"
-		using Browser
-
-		Scenario: Reuse Steps from Library
-			Title should be ""IMDb Top 250""
-	"
-
-	The Runner should contain 
-	"
-		public Browser Browser = new Browser();
-		
-		[TestMethod]
-		public void ReuseStepsFromLibrary()
-		{
-			Browser.Title_should_be(""IMDb Top 250"");
-		}
-	"

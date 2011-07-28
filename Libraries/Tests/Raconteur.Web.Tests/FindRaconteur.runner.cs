@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raconteur.Web;
 
-namespace Examples.Web 
+namespace Raconteur.Web.Tests 
 {
     [TestClass]
     public partial class FindRaconteur 
@@ -12,6 +12,7 @@ namespace Examples.Web
         [TestMethod]
         public void UsingFirefox_default_()
         {         
+            Browser.Use("Firefox");        
             Browser.Visit("http://google.com");        
             Browser.Set__to("q", "Raconteur");        
             Browser.Title_should_be("raconteur - Google Search");

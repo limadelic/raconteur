@@ -28,11 +28,12 @@ namespace Features.Integration
             Sut = new TypeResolverClass();
 
             Assembly = Path.Combine(CurrentDirectory, //"Examples.dll");
-                                    @"..\..\..\Examples\bin\Debug\Examples.dll");
+                @"..\..\..\Examples\bin\Debug\Examples.dll");
 
             Sut.TypeOf("BowlingGame", Assembly).Name.ShouldBe("BowlingGame");
         }
 
+        [Ignore]
         [Test]
         public void should_find_types_on_assemblies_names_without_file_extension()
         {

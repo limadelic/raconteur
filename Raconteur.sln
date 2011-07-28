@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raconteur.Web", "Libraries\Raconteur.Web\Raconteur.Web.csproj", "{8E16C1B9-2051-4747-A43A-626EC6D58159}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{18C79E39-93F3-4165-96BD-29090F2F3733}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raconteur.Web.Tests", "Libraries\Tests\Raconteur.Web.Tests\Raconteur.Web.Tests.csproj", "{A0A27075-7617-4095-BA95-9926BACD9EA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +142,16 @@ Global
 		{8E16C1B9-2051-4747-A43A-626EC6D58159}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8E16C1B9-2051-4747-A43A-626EC6D58159}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8E16C1B9-2051-4747-A43A-626EC6D58159}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A0A27075-7617-4095-BA95-9926BACD9EA7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -148,5 +162,7 @@ Global
 		{E0053ED4-EEC1-4339-9148-E54665BEFC8A} = {041FA850-5929-4F70-853B-AB7579FBC814}
 		{AF160E6F-283E-4DBC-8284-9A98727CCA81} = {041FA850-5929-4F70-853B-AB7579FBC814}
 		{8E16C1B9-2051-4747-A43A-626EC6D58159} = {81FF7F3E-99BD-4DB0-A91E-E95B1EF1D990}
+		{18C79E39-93F3-4165-96BD-29090F2F3733} = {81FF7F3E-99BD-4DB0-A91E-E95B1EF1D990}
+		{A0A27075-7617-4095-BA95-9926BACD9EA7} = {18C79E39-93F3-4165-96BD-29090F2F3733}
 	EndGlobalSection
 EndGlobal

@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Raconteur.Web;
 
-namespace Examples.Web 
+namespace Raconteur.Web.Tests 
 {
     [TestClass]
     public partial class Find250MoviesInIMdb 

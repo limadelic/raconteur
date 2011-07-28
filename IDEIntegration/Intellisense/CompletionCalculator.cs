@@ -38,7 +38,7 @@ namespace Raconteur.IDEIntegration.Intellisense
             var possibilities = Compiler.StepNamesOf(Feature, FeatureItem)
                 .Union(Feature.Steps.Select(step => step.Name.InNaturalLanguage())
                 .Union(Settings.Language.Keywords.Select(keyword => keyword + ":")));
-            
+
             return possibilities
                 .Where(possibility => possibility.StartsWith(fragment.Trim(), true, null))
                 .Select(possibility => new Completion(possibility));

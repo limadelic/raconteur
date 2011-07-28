@@ -22,7 +22,10 @@ namespace Specs
             Step.Table = Actors.ObjectTable;
         }
 
-        void Compile() { ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem); }
+        void Compile()
+        {
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+        }
 
         void ShouldGenerate(string Code)
         {

@@ -13,7 +13,6 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 using Microsoft.VisualStudio.Utilities;
 using Raconteur.Helpers;
-using Raconteur.IDE;
 using Project = Raconteur.IDE.Project;
 
 // ReSharper disable RedundantDefaultFieldInitializer
@@ -64,10 +63,10 @@ namespace Raconteur.IDEIntegration.Intellisense
         {
             get
             {
-                return CommandInfo.CommandGroup == VSConstants.VSStd2K &&
-                       CommandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.TYPECHAR
-                           ? (char)(ushort)Marshal.GetObjectForNativeVariant(CommandInfo.PvaIn)
-                           : char.MinValue;
+                return CommandInfo.CommandGroup == VSConstants.VSStd2K 
+                    && CommandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.TYPECHAR ? 
+                        (char)(ushort)Marshal.GetObjectForNativeVariant(CommandInfo.PvaIn) : 
+                        char.MinValue;
             }
         }
 
@@ -76,7 +75,7 @@ namespace Raconteur.IDEIntegration.Intellisense
             get
             {
                 return CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.RETURN
-                       || CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.TAB;
+                    || CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.TAB;
             }
         }
 
@@ -85,7 +84,16 @@ namespace Raconteur.IDEIntegration.Intellisense
             get
             {
                 return CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.BACKSPACE
-                       || CommandInfo.CommandId == (uint)VSConstants.VSStd2KCmdID.DELETE;
+                    || CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.DELETE;
+            }
+        }
+
+        bool IsAutocompleteCharacter
+        {
+            get
+            {
+                return CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.AUTOCOMPLETE
+                    || CommandInfo.CommandId == (uint) VSConstants.VSStd2KCmdID.COMPLETEWORD;
             }
         }
 
@@ -140,9 +148,11 @@ namespace Raconteur.IDEIntegration.Intellisense
 
             var Result = PassCommandAlong;
 
-            return LetterOrDigit || DeletionCharacter ? 
-                VSConstants.S_OK : 
-                Result;
+            return LetterOrDigit 
+                || DeletionCharacter 
+                || AutocompleteCommand ? 
+                    VSConstants.S_OK : 
+                    Result;
         }
 
         void GotoDefinition()
@@ -214,10 +224,30 @@ namespace Raconteur.IDEIntegration.Intellisense
             } 
         }
 
+        bool AutocompleteCommand
+        {
+            get
+            {
+                if (!IsAutocompleteCharacter) return false;
+
+                if (NoActiveSession) TriggerCompletion();
+
+                Session.Filter();
+
+                return true;
+            }
+        }
+
         void SetUpCommandInfo(Guid pguidCmdGroup, uint nCmdID, uint nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
             CommandInfo = new CommandInfo
-            {CommandGroup = pguidCmdGroup, CommandId = nCmdID, ExecOpt = nCmdexecopt, PvaIn = pvaIn, PvaOut = pvaOut,};
+            {
+                CommandGroup = pguidCmdGroup, 
+                CommandId = nCmdID, 
+                ExecOpt = nCmdexecopt, 
+                PvaIn = pvaIn, 
+                PvaOut = pvaOut,
+            };
         }
 
         int PassCommandAlong

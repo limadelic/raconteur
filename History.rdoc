@@ -1,4 +1,15 @@
-=== Version 0.3 
+=== Version 0.4 - Dante
+
+* Features
+  * Intellisense
+  * Refactoring
+  * Goto Step Definition
+  * StepLibrary 
+  * Libraries
+  * Object Tables
+  * Type Inference
+
+=== Version 0.3 - El Quijote
 
 * Features
   * Syntax Highlight
@@ -8,14 +19,14 @@
   * Tags
   * Ignore
 
-=== Version 0.2
+=== Version 0.2 - Homer
 
 * Features
   * Args
   * Tables
   * Scenario Outlines
 
-=== Version 0.1
+=== Version 0.1 - Aesop
 
 * Features
   * Steps

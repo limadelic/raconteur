@@ -178,11 +178,13 @@ namespace Raconteur.IDEIntegration.Intellisense
 
                 if (Step == null) return;
 
+                MessageBox.Show("looking for " + Step.Name + " in " + Step.Feature.Name);
+
                 var CodeFunction = project.CodeFunction(Step);
 
                 if (CodeFunction == null)
                 {
-                    MessageBox.Show("This step is not implemented");
+                    MessageBox.Show("Step implementation not found ...");
                     return;
                 }
 

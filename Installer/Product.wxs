@@ -65,7 +65,6 @@
 							 Title="Core Components">
         
 				<ComponentGroupRef Id="CompGroup_CoreFiles" />
-				<ComponentGroupRef Id="Product.Generated" />
         
 			</Feature>
 

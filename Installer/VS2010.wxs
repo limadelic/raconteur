@@ -16,9 +16,9 @@
     <DirectoryRef Id="INSTALLLOCATION">
       <Component Id="Comp_Integration_Core" Guid="122C987F-37FF-4383-AF8D-81325A218F31">
         <File Id="Icon.ico" Name="Icon.ico" Source="$(var.SetupResourcesDir)icon.ico" />
-        <File Id="Raconteur.dll" Name="Raconteur.dll" Source="$(var.LiveDir)Raconteur.dll" />
-        <File Id="Raconteur.IDEIntegration.dll" Name="Raconteur.IDEIntegration.dll" Source="$(var.LiveDir)Raconteur.IDEIntegration.dll" />
-        <File Id="extension.vsixmanifest" Name="extension.vsixmanifest" Source="$(var.LiveDir)extension.vsixmanifest" />
+        <File Id="Raconteur.dll" Name="Raconteur.dll" Source="$(var.BinDir)Raconteur.dll" />
+        <File Id="Raconteur.IDEIntegration.dll" Name="Raconteur.IDEIntegration.dll" Source="$(var.BinDir)Raconteur.IDEIntegration.dll" />
+        <File Id="extension.vsixmanifest" Name="extension.vsixmanifest" Source="$(var.BinDir)extension.vsixmanifest" />
       </Component>
 
       <Directory Id="Dir_VS2010_ROOT_FOLDER" Name="VS2010_Root">
@@ -51,7 +51,7 @@
       </Directory>
 
       <Directory Id="Dir_VS2010_ItemTemplates" Name="VS2010_ItemTemplates">
-        <Directory Id="Dir_VS2010_ItemTemplates_CSharp" Name="CSharp" FileSource="$(var.LiveDir)">
+        <Directory Id="Dir_VS2010_ItemTemplates_CSharp" Name="CSharp" FileSource="$(var.BinDir)">
           <Component Id="Comp_VS2010ItemTemplates_CSharp" Guid="df3eaf56-fb0c-4f62-8586-5ec60355456d">
             <File Id="File_RaconteurFeature.zip_VS2010" Name="RaconteurFeature.zip" />
           </Component>

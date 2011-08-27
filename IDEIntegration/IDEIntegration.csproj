@@ -30,7 +30,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\live\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -170,9 +170,9 @@
     </XmlPoke>
   </Target>
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(SolutionDir)live md $(SolutionDir)live
-copy $(TargetDir)IDEIntegration\*.* $(SolutionDir)live /y
-copy $(TargetDir)ItemTemplates\Templates.zip $(SolutionDir)live\RaconteurFeature.zip /y
+    <PostBuildEvent>if not exist $(SolutionDir)bin md $(SolutionDir)bin
+copy $(TargetDir)IDEIntegration\*.* $(SolutionDir)bin /y
+copy $(TargetDir)ItemTemplates\Templates.zip $(SolutionDir)bin\RaconteurFeature.zip /y
 </PostBuildEvent>
   </PropertyGroup>
 </Project>

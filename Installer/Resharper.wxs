@@ -18,8 +18,8 @@
                   <Directory Id="RRaconteur" Name="Raconteur">
                     <Component Id="Comp_ResharperPlugin" Guid="6BE9323D-74C8-449a-9E9A-F159D098D93B">
                       <RegistryValue Root="HKCU" Key="SOFTWARE\Limadelic\Raconteur" Type="string" Value="" KeyPath="yes" />                    
-                      <File Id="RRaconteur.dll" Name="Raconteur.dll" Source="$(var.LiveDir)Raconteur.dll" />
-                      <File Id="RRaconteur.Resharper.dll" Name="Raconteur.Resharper.dll" Source="$(var.LiveDir)Raconteur.Resharper.dll" />
+                      <File Id="RRaconteur.dll" Name="Raconteur.dll" Source="$(var.BinDir)Raconteur.dll" />
+                      <File Id="RRaconteur.Resharper.dll" Name="Raconteur.Resharper.dll" Source="$(var.BinDir)Raconteur.Resharper.dll" />
                       <RemoveFolder Id="RemoveRaconteur" Directory="RRaconteur" On="uninstall" />
                       <RemoveFolder Id="RemovePlugins" Directory="Plugins" On="uninstall" />
                       <RemoveFolder Id="Removevs10.0" Directory="vs10.0" On="uninstall" />

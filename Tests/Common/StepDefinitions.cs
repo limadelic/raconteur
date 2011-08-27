@@ -19,6 +19,7 @@ namespace Common
         public void Step(params string[][] Table){}
         public void Step(string Arg, params string[][] Table){}
         public void Step(string One, int Two, string Three){}
+        private void StepPrivate(){}
 
         public static MethodInfo StepMethod;
         public static MethodInfo StepOverloaded;
@@ -29,11 +30,20 @@ namespace Common
         public static MethodInfo StepWithTable;
         public static MethodInfo StepWithTableAndArg;
         public static MethodInfo StepWithThreeArgs;
+        public static MethodInfo PrivateStep;
 
         static StepDefinitions()
         {
-            var Methods = typeof(StepDefinitions).GetMethods()
-                .Where(m => m.Name.StartsWith("Step")).ToList();
+            var Methods = 
+                typeof(StepDefinitions)
+                .GetMethods
+                (
+                    BindingFlags.NonPublic | 
+                    BindingFlags.Instance |
+                    BindingFlags.Public
+                )
+                .Where(m => m.Name.StartsWith("Step"))
+                .ToList();
 
             StepMethod = Methods[0];
             StepOverloaded = Methods[1];
@@ -44,6 +54,7 @@ namespace Common
             StepWithTable = Methods[6];
             StepWithTableAndArg = Methods[7];
             StepWithThreeArgs = Methods[8];
+            PrivateStep = Methods[9];
         }
 
         public void Step_from_Lib(){}

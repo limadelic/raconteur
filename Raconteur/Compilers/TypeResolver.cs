@@ -23,12 +23,10 @@ namespace Raconteur.Compilers
             {
                 AppDomain.CurrentDomain.AssemblyResolve += LoadFromFile;
 
-                var result = Load(AssemblyName)
+                return Load(AssemblyName)
                     .GetTypes()
-                    .Where(x => x.Name == Name)
+                    .Where(T => T.Name == Name)
                     .FirstOrDefault();
-
-                return result;
             } 
             catch { return null; }
             finally { AppDomain.CurrentDomain.AssemblyResolve -= LoadFromFile; }
@@ -40,13 +38,16 @@ namespace Raconteur.Compilers
         {
             DefaultPath = DefaultPath ?? Path.GetDirectoryName(Assembly);
             AssemblyPath = Path.GetDirectoryName(Assembly);
+
             if (AssemblyPath.IsEmpty())
                 AssemblyPath = DefaultPath;
         }
 
         Assembly Load(string AssemblyName)
         {
-            var Name = AssemblyName.EndsWith(".dll", true, null) ? AssemblyName : AssemblyName + ".dll";
+            var Name = AssemblyName.EndsWith(".dll", true, null) ? 
+                AssemblyName : AssemblyName + ".dll";
+
             var FileName = Path.Combine(AssemblyPath, Name.Trim());
 
             return Assembly.Load(File.ReadAllBytes(FileName));

@@ -31,6 +31,28 @@ Step();
         }
         
         [Test]
+        public void PrivateAndProtectedStepInDefaultStepDefinition()
+        {         
+            FeatureRunner.Given_the_Feature_is(
+@"
+Feature: Reusing Steps
+
+Scenario: Reuse a Step
+Step ""123""
+Inherited Step ""123""
+");        
+            FeatureRunner.The_Runner_should_contain(
+@"
+[TestMethod]
+public void ReuseAStep()
+{
+Step(""123"");
+Inherited_Step(""123"");
+}
+");
+        }
+        
+        [Test]
         public void InheritedStepInDefaultStepDefinition()
         {         
             FeatureRunner.Given_the_Feature_is(

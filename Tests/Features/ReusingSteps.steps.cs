@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using MbUnit.Framework;
 using Raconteur.Helpers;
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedParameter.Local
 
 namespace Features 
 {
     public class BaseSteps
     {
         public void Inherited_Step() { }
+
+        protected void Inherited_Step(string Arg) { }
     }
 
     public partial class ReusingSteps : BaseSteps
@@ -31,5 +35,10 @@ namespace Features
         }
 
         public void Step() { }
+
+        void Step(string Arg) { }
     }
 }
+// ReSharper restore UnusedParameter.Local
+// ReSharper restore UnusedMember.Local
+

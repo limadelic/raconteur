@@ -22,6 +22,27 @@ Scenario: Default Step Definition
 		}
 	"
 
+Scenario: private and protected Step in Default Step Definition
+	
+	Given the Feature is
+	"
+		Feature: Reusing Steps
+
+		Scenario: Reuse a Step
+			Step ""123""
+			Inherited Step ""123""
+	"
+
+	The Runner should contain 
+	"
+		[TestMethod]
+		public void ReuseAStep()
+		{
+			Step(""123"");
+			Inherited_Step(""123"");
+		}
+	"
+
 Scenario: Inherited Step in Default Step Definition
 	
 	Given the Feature is

@@ -178,8 +178,6 @@ namespace Raconteur.IDEIntegration.Intellisense
 
                 if (Step == null) return;
 
-                MessageBox.Show("looking for " + Step.Name + " in " + Step.Feature.Name);
-
                 var CodeFunction = project.CodeFunction(Step);
 
                 if (CodeFunction == null)

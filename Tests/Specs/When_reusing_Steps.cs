@@ -18,7 +18,7 @@ namespace Specs
     [TestFixture]
     public class When_reusing_Steps
     {
-        readonly Feature Feature = new Feature
+        Feature Feature = new Feature
         {
             StepDefinitions = StepDefinitions
         };
@@ -84,16 +84,16 @@ namespace Specs
 
         #endregion
 
+        #region find StepDefinitions
+        
         [Test]
-        public void should_include_default_StepDefinitions_in_Feature()
-        {
+        public void should_include_default_StepDefinitions_in_Feature() {
             Compiler.TypeResolver
                 .TypeOf("FeatureName", "Common")
                 .Returns(typeof(StepDefinitions));
 
-            var Feature = Parser.FeatureFrom(new FeatureFile
-            {
-                Content = 
+            var Feature = Parser.FeatureFrom(new FeatureFile {
+                Content =
                 @"
                     Feature: Feature Name
                 "
@@ -106,11 +106,9 @@ namespace Specs
         }
 
         [Test]
-        public void should_find_the_StepDefinitions()
-        {
-            var Feature = Parser.FeatureFrom(new FeatureFile
-            {
-                Content = 
+        public void should_find_the_StepDefinitions() {
+            var Feature = Parser.FeatureFrom(new FeatureFile {
+                Content =
                 @"
                     Feature: Name
 
@@ -119,7 +117,7 @@ namespace Specs
                     using StepDefinitionsInSameNamespace
                 "
             }, FeatureItem);
-            
+
             Feature.DeclaredStepDefinitions.ShouldBe(DeclaredStepDefinitions);
 
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
@@ -128,11 +126,9 @@ namespace Specs
         }
 
         [Test]
-        public void should_find_the_StepDefinitions_before_the_Scenarios()
-        {
-            var Feature = Parser.FeatureFrom(new FeatureFile
-            {
-                Content = 
+        public void should_find_the_StepDefinitions_before_the_Scenarios() {
+            var Feature = Parser.FeatureFrom(new FeatureFile {
+                Content =
                 @"
                     Feature: Name
 
@@ -143,23 +139,21 @@ namespace Specs
                     using Another Step Definitions
                 "
             }, FeatureItem);
-            
+
             ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
 
             Feature.StepDefinitions.Count.ShouldBe(1);
         }
 
         [Test]
-        public void should_include_the_StepsDefinitions_from_Settings()
-        {
+        public void should_include_the_StepsDefinitions_from_Settings() {
             Settings.StepDefinitions = new List<string> 
             {
                 "StepDefinitions", "AnotherStepDefinitions", "StepDefinitionsInSameNamespace"
             };
 
-            var Feature = Parser.FeatureFrom(new FeatureFile
-            {
-                Content = 
+            var Feature = Parser.FeatureFrom(new FeatureFile {
+                Content =
                 @"
                     Feature: Name
                 "
@@ -187,6 +181,8 @@ namespace Specs
 
             Feature.StepDefinitions[0].ShouldBe(typeof(StepDefinitionsInLibrary));
         }
+
+        #endregion
 
         [Test]
         public void should_find_types_in_different_assemblies()
@@ -331,6 +327,35 @@ namespace Specs
 
             Feature.Steps[0].Method
                 .ShouldBe(Common.StepDefinitions.StepMethod);
+        }
+
+        [Test]
+        public void should_not_find_private_Steps_in_StepDefitions()
+        {
+            var Feature = new Feature 
+            { 
+                Name = "StepDefinitions",
+                Scenarios = { new Scenario { Steps = { new Step { Name = "StepPrivate", } }
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Method
+                .ShouldBe(Common.StepDefinitions.PrivateStep);
+        }
+
+        [Test]
+        public void should_find_private_Steps_in_other_DefaultStepDefitions()
+        {
+            var Feature = new Feature 
+            { 
+                Name = "FeatureName",
+                Scenarios = { new Scenario { Steps = { new Step { Name = "StepPrivate", } }
+            }}};
+
+            ObjectFactory.NewFeatureCompiler.Compile(Feature, FeatureItem);
+
+            Feature.Steps[0].Method.ShouldBeNull();
         }
 
         [Test]
@@ -495,16 +520,15 @@ namespace Specs
         {
             ArgFormatter.Format(Arg, Type).ShouldBe(ExpectedFormat);
         }
-
+        
         [Test]
-        [MbUnit.Framework.Ignore]
         [Row("UserName")]
         [Row("username")]
         [Row("User Name")]
         [Row("user name")]
         public void should_match_Header_to_ObjectArg_field(string UserName)
         {
-            var Feature = new Feature 
+            Feature = new Feature 
             { 
                 Name = "StepDefinitions",
                 DeclaredStepDefinitions = new List<string> { "StepDefinitions" },

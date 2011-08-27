@@ -41,8 +41,10 @@ namespace Raconteur.Compilers
             this.Feature = Feature;
 
             LoadAssemblies(FeatureItem);
+
             return StepDefinitions.SelectMany(type => 
-                type.GetMethods(BindingFlags.Public | BindingFlags.Instance).Select(method => method.Name.InNaturalLanguage()));
+                type.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                .Select(method => method.Name.InNaturalLanguage()));
         }
 
         void LoadAssemblies(FeatureItem FeatureItem) 
@@ -53,11 +55,28 @@ namespace Raconteur.Compilers
 
         void CompileSteps()
         {
-            foreach (var Step in Feature.Steps)
+            Feature.Steps.ForEach(Step =>
                 Step.Method = Feature.StepDefinitions
-                    .SelectMany(l => l.GetMethods())
+                    .SelectMany(Methods)
                     .Where(Method => StepCompiler.Matches(Method, Step))
-                    .FirstOrDefault();
+                    .FirstOrDefault());
+        }
+
+        const BindingFlags IncludingPrivate = 
+            BindingFlags.Public | 
+            BindingFlags.NonPublic | 
+            BindingFlags.Instance;
+
+        MethodInfo[] Methods(Type StepDefinition)
+        {
+            return 
+                IsDefault(StepDefinition) ? StepDefinition.GetMethods(IncludingPrivate) :
+                StepDefinition.GetMethods();
+        }
+
+        bool IsDefault(Type StepDefinition)
+        {
+            return StepDefinition.Name == Feature.Name;
         }
 
         void CompileFeature() 

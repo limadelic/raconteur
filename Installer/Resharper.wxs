@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?include Common.wxi?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <ComponentGroup Id="CompGroup_Resharper">
+      <ComponentRef Id="Comp_ResharperPlugin" />
+    </ComponentGroup>
+
+    <DirectoryRef Id="INSTALLLOCATION">
+      <Directory Id="AppDataFolder" Name="AppDataFolder">
+        <Directory Id="JetBrains" Name="JetBrains">
+          <Directory Id="ReSharper" Name="ReSharper">
+            <Directory Id="v6.0" Name="v6.0">
+              <Directory Id="vs10.0" Name="vs10.0">
+                <Directory Id="Plugins" Name="Plugins">
+                  <Directory Id="RRaconteur" Name="Raconteur">
+                    <Component Id="Comp_ResharperPlugin" Guid="6BE9323D-74C8-449a-9E9A-F159D098D93B">
+                      <RegistryValue Root="HKCU" Key="SOFTWARE\Limadelic\Raconteur" Type="string" Value="" KeyPath="yes" />                    
+                      <File Id="RRaconteur.dll" Name="Raconteur.dll" Source="$(var.LiveDir)Raconteur.dll" />
+                      <File Id="RRaconteur.Resharper.dll" Name="Raconteur.Resharper.dll" Source="$(var.LiveDir)Raconteur.Resharper.dll" />
+                      <RemoveFolder Id="RemoveRaconteur" Directory="RRaconteur" On="uninstall" />
+                      <RemoveFolder Id="RemovePlugins" Directory="Plugins" On="uninstall" />
+                      <RemoveFolder Id="Removevs10.0" Directory="vs10.0" On="uninstall" />
+                      <RemoveFolder Id="Removev6.0" Directory="v6.0" On="uninstall" />
+                      <RemoveFolder Id="RemoveReSharper" Directory="ReSharper" On="uninstall" />
+                      <RemoveFolder Id="RemoveJetBrains" Directory="JetBrains" On="uninstall" />
+                    </Component>
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+
+  </Fragment>
+</Wix>

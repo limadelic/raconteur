@@ -10,6 +10,7 @@
 <?include Common.wxi?>
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  
 	<Product Id="*" 
 					 UpgradeCode="$(var.UpgradeCode)" 
 					 Name="$(var.ProductShortName) $(var.ProductVersionText)" 
@@ -48,23 +49,48 @@
 		</Directory>
 
 		<!-- core feature -->
-		<Feature Id="Feature_Complete" ConfigurableDirectory="INSTALLLOCATION" 
-						 Absent="disallow" AllowAdvertise="no" Display="expand" Level="1" InstallDefault="local"
+		<Feature Id="Feature_Complete" 
+             ConfigurableDirectory="INSTALLLOCATION" 
+						 Absent="disallow" 
+             AllowAdvertise="no" 
+             Display="expand" 
+             Level="1" 
+             InstallDefault="local"
 						 Title="$(var.ProductShortName) $(var.ProductVersionText)" >
 
-			<Feature Id="Feature_Core" Absent="disallow" AllowAdvertise="no" Level="1"
+			<Feature Id="Feature_Core" 
+               Absent="disallow" 
+               AllowAdvertise="no" 
+               Level="1"
 							 Title="Core Components">
+        
 				<ComponentGroupRef Id="CompGroup_CoreFiles" />
 				<ComponentGroupRef Id="Product.Generated" />
+        
 			</Feature>
 
-			<Feature Id="Feature_VS2010" Level="1" AllowAdvertise="no"
-							 Title="Visual Studio 2010 Integration" Description="Visual Studio 2010 Integration">
+			<Feature Id="Feature_VS2010" 
+               Level="1" 
+               AllowAdvertise="no"
+							 Title="Visual Studio 2010 Integration" 
+               Description="Visual Studio 2010 Integration">
+        
 				<Condition Level="0"> NOT VS2010DEVENV </Condition>
 				<ComponentGroupRef Id="CompGroup_VS2010" />
+        
 			</Feature>
 
-		</Feature>
+      <Feature Id="Resharper_Plugin"
+               Level="1"
+               AllowAdvertise="no"
+							 Title="Resharper 6 Plugin"
+               Description="Resharper 6 Plugin">
+
+        <ComponentGroupRef Id="CompGroup_Resharper" />
+
+      </Feature>
+
+    </Feature>
 
 		<!-- Custom actions -->
 		<CustomActionRef Id="VS2010InstallVSTemplates" />
@@ -93,6 +119,5 @@
 		<UIRef Id="WixUI_FeatureTree" />
 
 	</Product>
-	
-	
+		
 </Wix>

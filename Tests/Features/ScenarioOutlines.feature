@@ -12,7 +12,7 @@ Scenario: Using Scenario Outlines
 			It should be ""interest""
 
 			Examples:
-			|account|amount|interest|
+			[account|amount|interest]
 			|23     |42    |1       |
 			|56     |23    |3       |    
 	"

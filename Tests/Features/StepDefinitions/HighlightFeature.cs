@@ -44,10 +44,14 @@ namespace Features.StepDefinitions
             ).ShouldBeFalse("Highlighted " + Text.Quoted());
         }
 
+        public void Raconteur_should_not_highlight(string[] Text)
+        {
+            Text.ForEach(Raconteur_should_not_highlight);
+        }
+
         public void Raconteur_should_highlight_like_a(string Style, int Count, string Text)
         {
             Raconteur_should_highlight(Count, Text, Style);
-
         }
 
         public void Raconteur_should_highlight___like_a(int Count, string Text, string Style)
@@ -61,6 +65,11 @@ namespace Features.StepDefinitions
                 Tag.Text.TrimLines() == Text.TrimLines() && 
                 FeatureClassifier.Styles[Tag.Type] == Style)
                 .ShouldBeTrue("Did not highlight " + Text.Quoted() + " like a " + Style.Quoted());
+        }
+
+        public void Raconteur_should_highlight_like_a(string Style, string[] Text)
+        {
+            Text.ForEach(T => Raconteur_should_highlight_like_a(Style, T));
         }
 
         class SUT : FeatureTokenTagger

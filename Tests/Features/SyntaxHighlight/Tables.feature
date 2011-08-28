@@ -16,7 +16,31 @@ Scenario: Table Values are displayed like Strings
 
 	Raconteur should highlight like a "String"
 	[ Text ]
-	|   a  |
-	|   b  |
-	|   c  |
-	|   d  |
+	|  a   |
+	|  d   |
+	|  b   |
+	|  c   |
+
+Scenario: Table Headers are not highlighted
+
+	Given the Feature contains
+	"
+		Scenario: Name
+			
+			Step with Table
+			[ X | Y ]
+			| a | b |
+
+		Scenario Outline: Name
+			
+			Step with X
+
+			Examples: 
+			[ X ]
+			| a |
+	"
+
+	Raconteur should not highlight
+	[ Text ]
+	|  X   |
+	|  Y   |

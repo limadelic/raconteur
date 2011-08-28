@@ -19,8 +19,9 @@ Scenario: Interest Rate
 Given ""account"" has ""amount""
 When interest is calculated
 It should be ""interest""
+
 Examples:
-|account|amount|interest|
+[account|amount|interest]
 |23     |42    |1       |
 |56     |23    |3       |
 ");        
@@ -33,6 +34,7 @@ Given__has(23, 42);
 When_interest_is_calculated();
 It_should_be(1);
 }
+
 [TestMethod]
 public void InterestRate_2()
 {
@@ -53,6 +55,7 @@ Given
 ""
 """"values"""" in """"arg""""
 ""
+
 Examples:
 |values|arg|
 |42    |1  |
@@ -68,6 +71,7 @@ Given(
 42 in 1
 "");
 }
+
 [TestMethod]
 public void Outline_2()
 {
@@ -88,9 +92,11 @@ Scenario: Interest Rate
 Given ""account"" has ""amount""
 When interest is calculated
 It should be ""interest""
+
 Examples: Poor Man
 |account|amount|interest|
 |23     |42    |0.01    |
+
 Examples: Rich Man
 |account|amount  |interest|
 |007    |10000000|5       |
@@ -105,6 +111,7 @@ Given__has(23, 42);
 When_interest_is_calculated();
 It_should_be(0.01);
 }
+
 [TestMethod]
 public void InterestRate_RichMan1()
 {
@@ -112,6 +119,7 @@ Given__has(007, 10000000);
 When_interest_is_calculated();
 It_should_be(5);
 }
+
 [TestMethod]
 public void InterestRate_RichMan2()
 {

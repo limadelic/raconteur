@@ -21,6 +21,13 @@ namespace Raconteur.Helpers
             return Items.Where((Item, Index) => Index % 2 != 0);
         }
 
+        public static string Chop(this string Item, int Length)
+        {
+            return 
+                Length * 2 >= Item.Length ? string.Empty : 
+                Item.Substring(Length, Item.Length - Length * 2);
+        }
+
         public static IEnumerable<T> Chop<T>(this IEnumerable<T> Items, int Length)
         {
             return Items.Skip(Length).Take(Items.Count() - 2 * Length);

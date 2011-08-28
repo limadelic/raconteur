@@ -55,7 +55,7 @@ Scenario Outline: Find Waldo, Crusoe & Ali Baba
 	I should find one whose "attribute" is "actual value"
 
 	Examples:
-	| criteria    | operator    | expected value | attribute  | actual value |
+	[ criteria    | operator    | expected value | attribute  | actual value ]
 	| first name  | is          | Waldo          | first name | Waldo        |
 	| first name  | starts with | Robin          | last name  | Crusoe       |
 	| last name   | contains    | Baba           | first name | Ali          |

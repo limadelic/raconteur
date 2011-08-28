@@ -23,7 +23,7 @@ namespace Specs
                     "Scenario Outline: Add",
                     @"The sum of ""A"" + ""B"" should be ""C""",
                     "Examples: Name",
-                    "|A|B|C|",
+                    "[A|B|C]",
                     "|0|0|0|",
                     "|0|1|1|"
                 }.AsLocations());

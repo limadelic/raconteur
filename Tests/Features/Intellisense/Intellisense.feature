@@ -16,7 +16,7 @@ Scenario Outline: Completion
 	Then "suggestion" should be displayed
 
 	Examples:
-	| fragment | suggestion            |
+	[ fragment | suggestion            ]
 	| Sc       | Scenario:             |
 	| Sc       | Scenario Outline:     |
 	| Ex       | Examples:             |
@@ -44,7 +44,7 @@ Scenario Outline: Ignore non-steps
 	Then "suggestion" should not be displayed
 
 	Examples:
-	| fragment | suggestion              |
+	[ fragment | suggestion              ]
 	| De       | Description             |
 	| Sc       | Scenario: Scenario Name |
 	| Fe       | Feature: Feature Name   |

@@ -101,8 +101,8 @@ namespace Raconteur.Parsers
         List<string> ParseTableRow(string Row)
         {
             return Row
-                .Split('|')
                 .Chop(1)
+                .Split('|')
                 .Select(x => x.Trim())
                 .ToList();
         }

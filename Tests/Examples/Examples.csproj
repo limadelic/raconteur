@@ -69,14 +69,6 @@
     <Compile Include="Demo\EmployeeSearch.steps.cs">
       <DependentUpon>EmployeeSearch.feature</DependentUpon>
     </Compile>
-    <Compile Include="Demo\Feature1.runner.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Feature1.feature</DependentUpon>
-    </Compile>
-    <Compile Include="Demo\Feature1.steps.cs">
-      <DependentUpon>Feature1.feature</DependentUpon>
-    </Compile>
     <Compile Include="Demo\Screencast02.runner.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -155,10 +147,6 @@
     <None Include="Demo\EmployeeSearch.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>EmployeeSearch.runner.cs</LastGenOutput>
-    </None>
-    <None Include="Demo\Feature1.feature">
-      <Generator>RaconteurSingleFileGenerator</Generator>
-      <LastGenOutput>Feature1.runner.cs</LastGenOutput>
     </None>
     <None Include="Demo\Screencast02.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>

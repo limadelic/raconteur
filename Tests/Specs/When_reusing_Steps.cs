@@ -84,8 +84,6 @@ namespace Specs
 
         #endregion
 
-        #region find StepDefinitions
-        
         [Test]
         public void should_include_default_StepDefinitions_in_Feature() {
             Compiler.TypeResolver
@@ -181,8 +179,6 @@ namespace Specs
 
             Feature.StepDefinitions[0].ShouldBe(typeof(StepDefinitionsInLibrary));
         }
-
-        #endregion
 
         [Test]
         public void should_find_types_in_different_assemblies()

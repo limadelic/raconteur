@@ -121,6 +121,16 @@
       <DependentUpon>StaticStructures.feature</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Minesweeper\Extensions.cs" />
+    <Compile Include="Minesweeper\Game.cs" />
+    <Compile Include="Minesweeper\Minesweeper.runner.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Minesweeper.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Minesweeper\Minesweeper.steps.cs">
+      <DependentUpon>Minesweeper.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Demo\Screencast02.steps.cs">
       <DependentUpon>Screencast02.feature</DependentUpon>
@@ -172,6 +182,10 @@
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>StaticStructures.runner.cs</LastGenOutput>
     </None>
+    <None Include="Minesweeper\Minesweeper.feature">
+      <Generator>RaconteurSingleFileGenerator</Generator>
+      <LastGenOutput>Minesweeper.runner.cs</LastGenOutput>
+    </None>
     <None Include="TicTacToe\TicTacToe.feature">
       <Generator>RaconteurSingleFileGenerator</Generator>
       <LastGenOutput>TicTacToe.runner.cs</LastGenOutput>
@@ -195,9 +209,7 @@
       <Name>Specs</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Web\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

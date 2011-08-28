@@ -1,3 +1,4 @@
+// ReSharper disable UnusedMember.Local
 using System.Linq;
 using System.Reflection;
 
@@ -92,3 +93,4 @@ namespace Uncommon
         public void Step_from_another_Step_Definitions(){}
     }
 }
+// ReSharper restore UnusedMember.Local

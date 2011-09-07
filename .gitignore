@@ -4,7 +4,7 @@ raconteur.pdb
 *.user
 bin/
 obj/
-*ReSharper*/
+*_ReSharper*/
 ErrorLogs/
 testResults/
 TestResults/

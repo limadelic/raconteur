@@ -125,34 +125,40 @@ namespace Raconteur.IDEIntegration.Intellisense
         {
             SetUpCommandInfo(pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
 
-            if (pguidCmdGroup == VSConstants.GUID_VSStandardCommandSet97)
-                switch ((VSConstants.VSStd97CmdID)nCmdID)
-                {
-                    case VSConstants.VSStd97CmdID.GotoDefn:
-                        GotoDefinition();
-                        return VSConstants.S_OK;
-                }
-            
-            if (VsShellUtilities.IsInAutomationFunction(Provider.ServiceProvider))
-                return PassCommandAlong;
+            var Result = VSConstants.S_OK;
 
-            if (IsCommitCharacter && IsSelection)
+            try
             {
-                if (IsFullySelected)
+                if (pguidCmdGroup == VSConstants.GUID_VSStandardCommandSet97)
+                    switch ((VSConstants.VSStd97CmdID)nCmdID)
+                    {
+                        case VSConstants.VSStd97CmdID.GotoDefn:
+                            GotoDefinition();
+                            return Result;
+                    }
+            
+                if (VsShellUtilities.IsInAutomationFunction(Provider.ServiceProvider))
+                    return PassCommandAlong;
+
+                if (IsCommitCharacter && IsSelection)
                 {
-                    Session.Commit();
-                    return VSConstants.S_OK;
+                    if (IsFullySelected)
+                    {
+                        Session.Commit();
+                        return Result;
+                    }
+                    Session.Dismiss();
                 }
-                Session.Dismiss();
-            }
 
-            var Result = PassCommandAlong;
+                Result = PassCommandAlong;
 
-            return LetterOrDigit 
-                || DeletionCharacter 
-                || AutocompleteCommand ? 
-                    VSConstants.S_OK : 
-                    Result;
+                return LetterOrDigit 
+                    || DeletionCharacter 
+                    || AutocompleteCommand ? 
+                        VSConstants.S_OK : 
+                        Result;
+            
+            } catch { return Result; }
         }
 
         void GotoDefinition()

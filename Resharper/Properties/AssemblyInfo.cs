@@ -33,8 +33,8 @@ using JetBrains.Application.PluginSupport;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.4.5.0")]
-[assembly: AssemblyFileVersion("0.4.5.0")]
+[assembly: AssemblyVersion("0.4.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]
 [assembly: PluginTitle("Raconteur")]
 [assembly: PluginDescription("Allows Raconteur integration with ReSharper 6.0")]
 [assembly: PluginVendor("Limadelic")]

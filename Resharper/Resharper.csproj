@@ -227,11 +227,6 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Language\IRaconteurDeclaredElement.cs" />
-    <Compile Include="Language\RaconteurLanguage.cs" />
-    <Compile Include="Language\RaconteurLanguageService.cs" />
-    <Compile Include="Language\RaconteurProjectFileLanguageService.cs" />
-    <Compile Include="Language\RaconteurProjectFileType.cs" />
     <Compile Include="RenameStepWorkflow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenameStep.cs" />

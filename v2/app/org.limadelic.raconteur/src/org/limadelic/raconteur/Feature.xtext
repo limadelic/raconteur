@@ -1,0 +1,9 @@
+grammar org.limadelic.raconteur.Feature with org.eclipse.xtext.common.Terminals
+
+generate feature "http://www.limadelic.org/raconteur/Feature"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';

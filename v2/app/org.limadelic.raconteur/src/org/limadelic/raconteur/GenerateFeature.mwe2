@@ -13,9 +13,6 @@ Workflow {
     bean = StandaloneSetup {
         scanClassPath = true
         platformUri = "${runtimeProject}/.."
-        // The following two lines ca be removed, if Xbase is not used.
-        registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
-        registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
     }
 
     component = DirectoryCleaner {
@@ -48,9 +45,7 @@ Workflow {
             }
 
             // Serializer 2.0
-            fragment = serializer.SerializerFragment {
-            	generateStub = false
-            }
+            fragment = serializer.SerializerFragment {}
             
             // the serialization component (1.0)
             // fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
@@ -69,8 +64,8 @@ Workflow {
 
             // java-based API for validation
             fragment = validation.JavaValidatorFragment {
-            //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-            //    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+                composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+                composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
             }
 
             // scoping and exporting API
@@ -84,8 +79,8 @@ Workflow {
 
             // generator API
             fragment = generator.GeneratorFragment {
-                generateMwe = false
-                generateJavaMain = false
+                generateMwe = true
+                generateJavaMain = true
             }
 
             // formatter API

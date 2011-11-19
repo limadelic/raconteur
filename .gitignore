@@ -17,3 +17,7 @@ dotnet/lib/resharper/
 desktop.ini
 /devs/msuarz/workspace
 /v2/app/raconteur/target
+/v2/app/org.limadelic.raconteur/src-gen
+/v2/app/org.limadelic.raconteur/xtend-gen
+/v2/app/org.limadelic.raconteur.tests/src-gen
+/v2/app/org.limadelic.raconteur.ui/src-gen
